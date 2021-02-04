@@ -1,14 +1,13 @@
 -- phpMyAdmin SQL Dump
--- version 4.9.1
+-- version 5.0.4
 -- https://www.phpmyadmin.net/
 --
--- Hôte : database
--- Généré le :  mer. 13 jan. 2021 à 11:55
--- Version du serveur :  5.7.28
--- Version de PHP :  7.2.23
+-- Host: database
+-- Generation Time: Feb 04, 2021 at 10:33 AM
+-- Server version: 5.7.32
+-- PHP Version: 7.4.11
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET AUTOCOMMIT = 0;
 START TRANSACTION;
 SET time_zone = "+00:00";
 
@@ -19,16 +18,18 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Base de données :  `mvcdocker2`
+-- Database: `odyssey`
 --
+CREATE DATABASE IF NOT EXISTS `odyssey` DEFAULT CHARACTER SET utf8 COLLATE utf8_bin;
+USE `odyssey`;
 
 -- --------------------------------------------------------
 
 --
--- Structure de la table `mqwp_`
+-- Table structure for table `ody_test`
 --
 
-CREATE TABLE `mqwp_` (
+CREATE TABLE `ody_test` (
   `id` int(11) NOT NULL,
   `firstname` varchar(120) NOT NULL,
   `lastname` varchar(255) NOT NULL,
@@ -40,26 +41,26 @@ CREATE TABLE `mqwp_` (
   `status` tinyint(4) NOT NULL DEFAULT '0',
   `createdAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updatedAt` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Index pour les tables déchargées
+-- Indexes for dumped tables
 --
 
 --
--- Index pour la table `mqwp_`
+-- Indexes for table `ody_test`
 --
-ALTER TABLE `mqwp_`
+ALTER TABLE `ody_test`
   ADD PRIMARY KEY (`id`);
 
 --
--- AUTO_INCREMENT pour les tables déchargées
+-- AUTO_INCREMENT for dumped tables
 --
 
 --
--- AUTO_INCREMENT pour la table `mqwp_`
+-- AUTO_INCREMENT for table `ody_test`
 --
-ALTER TABLE `mqwp_`
+ALTER TABLE `ody_test`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 COMMIT;
 

@@ -2,7 +2,7 @@ version: '3'
 services:
   web:
     build: site
-    container_name: apache-3IW
+    container_name: apache-ODYSSEY
     ports :
      - "8080:80"
     volumes:
@@ -19,7 +19,7 @@ services:
     ports :
       - "3306:3306"
     environment:
-      MYSQL_DATABASE: mvcdocker2
+      MYSQL_DATABASE: odyssey
       MYSQL_ROOT_PASSWORD: password
       MYSQL_USER: root
       MYSQL_PASSWORD: password
@@ -29,7 +29,7 @@ services:
 
   phpmyadmin:
     image: phpmyadmin/phpmyadmin:latest
-    container_name: phpmyadmin-mvc
+    container_name: phpmyadmin-odyssey
     depends_on:
       - database
     ports:
