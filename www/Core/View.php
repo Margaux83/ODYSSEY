@@ -3,6 +3,7 @@
 namespace App\Core;
 
 use App\Core\Form;
+use App\Core\MenuBuilder;
 
 class View
 {
@@ -12,9 +13,11 @@ class View
 	private $view; // default, dashboard, profile, ....
 	private $data = [];
 
-	public function __construct($view="default", $template="front"){
+	public function __construct($view="default", $template="front", $menuData = [], $actualUri = ""){
 		$this->setTemplate($template);
 		$this->setView($view);
+		$this->assign("menuData", $menuData);
+		$this->assign("actualUri", $actualUri);
 		
 	}
 

@@ -13,14 +13,15 @@ class Routing{
 
 
 	public function __construct($uri){
-		//Faut vérifier que le fichier existe
+		if (!file_exists($this->routesPath)){
+			die("Error : file ".$this->routesPath." don't exist.");
+		}
 		$this->routes = yaml_parse_file($this->routesPath);
 		//Faut vérifier qu'il y a un controller pour cette route
 		if(!empty($this->routes[$uri])){
 			$this->setController($this->routes[$uri]["controller"]);
 			$this->setAction($this->routes[$uri]["action"]);
 		}
-
 
 		foreach ($this->routes as $slug=>$info) {
 			$this->slugs[$info["controller"]][$info["action"]] = $slug;
@@ -50,6 +51,9 @@ class Routing{
 		return APP_NAMESPACE.$this->controller;
 	}
 
+	public function getMenuData(){
+		return $this->routes;
+	}
 
 	/*
 		/list-des-utilisateurs:
