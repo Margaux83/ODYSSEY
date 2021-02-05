@@ -18,6 +18,21 @@ class View
 		
 	}
 
+	public static function getAssets(string $nameFile){
+		$explodedNameFile = explode(".", trim($nameFile));
+		$nameFileType = array_pop($explodedNameFile);
+		switch ($nameFileType){
+			case "css" :
+				echo 'public/styles/'.$nameFile;
+				return;
+			case ($nameFileType == "png" || $nameFileType == "jpg" || $nameFileType == "svg") :
+				echo 'public/images/'.$nameFile;
+				return;
+			default :
+				return;
+		}
+	}
+
 
 	public function setTemplate($template){
 		if(file_exists("Views/Templates/".$template."_tpl.php")){
