@@ -9,7 +9,7 @@ use App\Core\View;
 class Base{
 
 
-	public function defaultAction(){
+	public function defaultAction($menuData, $actualUri){
 
 		//Je vais cherche en bdd le pseudo du user
 		$pseudo = "Prof";
@@ -18,14 +18,14 @@ class Base{
 		$view = new View();
 		$view->assign("pseudo", $pseudo);
 		$view->assign("age", 17);
-		$view->assign("genre", "h");
+		$view->assign("genre", "h", $menuData, $actualUri);
 
 		//envoyer le pseudo à la vue
 	}
 
 
 	//Must be connected
-	public function dashboardAction(){
+	public function dashboardAction($menuData, $actualUri){
 		
 		$security = new Security(); 
 		if(!$security->isConnected()){
@@ -34,7 +34,7 @@ class Base{
 
 
 		//Affiche moi la vue dashboard;
-		$view = new View("dashboard", "back");
+		$view = new View("dashboard", "back", $menuData, $actualUri);
 		
 		
 	}
