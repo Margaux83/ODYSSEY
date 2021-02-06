@@ -31,6 +31,9 @@ class View
 			case ($nameFileType == "png" || $nameFileType == "jpg" || $nameFileType == "svg") :
 				echo 'public/images/'.$nameFile;
 				return;
+			case ($nameFileType == "js") :
+				echo 'public/scripts/js/'.$nameFile;
+				return;
 			default :
 				return;
 		}
@@ -64,8 +67,6 @@ class View
 		extract($this->data);
 		include $this->template;
 	}
-
-
 }
 
 
