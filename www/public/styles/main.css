@@ -284,9 +284,14 @@ body #back-mainPage-menu ul li {
 }
 
 body #back-mainPage-menu ul li a {
+  display: flex;
   height: 100%;
   text-decoration: none;
   color: white;
+}
+
+body #back-mainPage-menu ul li a p {
+  flex: 1;
 }
 
 body #back-mainPage-menu ul li.selected {
@@ -341,9 +346,14 @@ body #back-mainPage-menuResponsive ul li {
 }
 
 body #back-mainPage-menuResponsive ul li a {
+  display: flex;
   height: 100%;
   text-decoration: none;
   color: white;
+}
+
+body #back-mainPage-menuResponsive ul li a p {
+  flex: 1;
 }
 
 body #back-mainPage-menuResponsive ul li.selected {

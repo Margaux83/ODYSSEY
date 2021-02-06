@@ -13,7 +13,7 @@ class MenuBuilder
                 if ($data['menuData']['visible']){
                     $class = $actualUri == $link ? ' class="selected"' : '';
                     $html= '<li'.$class.'><a href="'.$link.'">'
-                            .'<img src="public/images/icons/'.$data['menuData']['icon'].'.png" alt="" class="icon iconWhite">'.$data['menuData']['label'].'</a>'
+                            .'<img src="public/images/icons/'.$data['menuData']['icon'].'.png" alt="" class="icon iconWhite"><p>'.$data['menuData']['label'].'</p></a>'
                             .'</a></li>';
                     if (array_key_exists($data['menuData']['listId'], $menuListBuilder)){
                         $menuListBuilder[$data['menuData']['listId']] .= $html;
