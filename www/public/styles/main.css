@@ -236,6 +236,7 @@ body header .fullButton {
   background-color: transparent;
   border: 0;
   color: white;
+  cursor: pointer;
 }
 
 body header .fullButton img {
@@ -283,9 +284,14 @@ body #back-mainPage-menu ul li {
 }
 
 body #back-mainPage-menu ul li a {
+  display: flex;
   height: 100%;
   text-decoration: none;
   color: white;
+}
+
+body #back-mainPage-menu ul li a p {
+  flex: 1;
 }
 
 body #back-mainPage-menu ul li.selected {
@@ -340,9 +346,14 @@ body #back-mainPage-menuResponsive ul li {
 }
 
 body #back-mainPage-menuResponsive ul li a {
+  display: flex;
   height: 100%;
   text-decoration: none;
   color: white;
+}
+
+body #back-mainPage-menuResponsive ul li a p {
+  flex: 1;
 }
 
 body #back-mainPage-menuResponsive ul li.selected {
@@ -869,7 +880,7 @@ ul.listItemBasic li.listItem .listItem-cpt {
   text-align: center;
 }
 
-.statisticsBasic {
+.statisticsBasicContainer .statisticsBasic {
   min-height: 100px;
   min-width: 170px;
   flex: 5;
@@ -878,39 +889,39 @@ ul.listItemBasic li.listItem .listItem-cpt {
   box-shadow: 0px 0px 6px 0px rgba(0, 0, 0, 0.3);
 }
 
-.statisticsBasic h1 {
+.statisticsBasicContainer .statisticsBasic h1 {
   font-weight: unset;
   margin-bottom: 5px;
 }
 
-.statisticsBasic div {
+.statisticsBasicContainer .statisticsBasic div {
   margin: 5px 0;
 }
 
-.statisticsBasic div p {
+.statisticsBasicContainer .statisticsBasic div p {
   margin-top: 5px;
 }
 
-.statisticsBasic h2.numberStat,
-.statisticsBasic h2.numberStat span {
+.statisticsBasicContainer .statisticsBasic h2.numberStat,
+.statisticsBasicContainer .statisticsBasic h2.numberStat span {
   font-weight: unset;
   font-size: 25px;
 }
 
-.statisticsBasic .numberStat-positive {
+.statisticsBasicContainer .statisticsBasic .numberStat-positive {
   color: #39b400;
 }
 
-.statisticsBasic .numberStat-positive::after {
+.statisticsBasicContainer .statisticsBasic .numberStat-positive::after {
   content: " \2197";
   font-weight: 700;
 }
 
-.statisticsBasic .numberStat-negative {
+.statisticsBasicContainer .statisticsBasic .numberStat-negative {
   color: darkred;
 }
 
-.statisticsBasic .numberStat-negative::after {
+.statisticsBasicContainer .statisticsBasic .numberStat-negative::after {
   content: " \2198";
   font-weight: 700;
 }
@@ -933,6 +944,8 @@ ul.listItemBasic li.listItem .listItem-cpt {
   border-radius: 100%;
   background-color: #99e1e5;
   margin-right: 10px;
+  transition: background-color;
+  transition-duration: 0.5s;
 }
 
 .quickAccesContainer li p.quickAccesTitle {
@@ -942,6 +955,8 @@ ul.listItemBasic li.listItem .listItem-cpt {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+  transition: color;
+  transition-duration: 0.5s;
 }
 
 .quickAccesContainer li img {
@@ -955,11 +970,57 @@ ul.listItemBasic li.listItem .listItem-cpt {
   filter: brightness(0) invert(100%);
 }
 
+.quickAccesContainer li:hover {
+  background-color: #155263;
+}
+
+.quickAccesContainer li:hover p.quickAccesTitle {
+  color: white;
+}
+
+.callToActionContainer {
+  margin-top: 5px;
+  margin-bottom: 5px;
+  justify-content: flex-end !important;
+}
+
+.callToActionContainer .callToAction-withIcon {
+  margin: 5px;
+  border: 0;
+  border-radius: 25px;
+  background-color: #99e1e5;
+  transition: background-color;
+  transition-duration: 0.5s;
+  cursor: pointer;
+}
+
+.callToActionContainer .callToAction-withIcon img {
+  width: 50px;
+  height: auto;
+  padding: 10px;
+  transition: filter;
+  transition-duration: 0.5s;
+}
+
+.callToActionContainer .callToAction-withIcon:hover {
+  background-color: #155263;
+}
+
+.callToActionContainer .callToAction-withIcon:hover img {
+  filter: brightness(0) invert(100%);
+}
+
+button:focus {
+  outline: 0;
+}
+
 * {
   box-sizing: border-box;
   padding: 0;
   margin: 0;
   font-size: 14px;
+  scrollbar-color: #155263 lightgrey;
+  scrollbar-width: thin;
 }
 
 *::-webkit-scrollbar {

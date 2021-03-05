@@ -1,11 +1,82 @@
 /:
   controller: Base
   action: Default
+  menuData:
+    visible: false
+    min-statut: true
+    listId: basics
+    label: Accueil
+    icon: icon_home
 
-/tableau-de-bord:
+/dashboard:
   controller: Base
   action: dashboard
+  menuData:
+    visible: true
+    min-statut: true
+    listId: basics
+    label: Tableau de bord
+    icon: icon_home
 
+/articles:
+  controller: Article
+  action: default
+  menuData:
+    visible: true
+    min-statut: true
+    listId: basics
+    label: Articles
+    icon: icon_page
+
+/users:
+  controller: User
+  action: default
+  menuData:
+    visible: true
+    min-statut: true
+    listId: basics
+    label: Utilisateurs
+    icon: icon_user
+
+/comments:
+  controller: Comment
+  action: default
+  menuData:
+    visible: true
+    min-statut: true
+    listId: basics
+    label: Commentaires
+    icon: icon_comment
+
+/template:
+  controller: Template
+  action: default
+  menuData:
+    visible: true
+    min-statut: true
+    listId: management
+    label: Templates
+    icon: icon_page
+
+/menu-management:
+  controller: MenuManagement
+  action: default
+  menuData:
+    visible: true
+    min-statut: true
+    listId: management
+    label: Gestion du menu
+    icon: icon_menu
+
+/newsletter:
+  controller: Newsletter
+  action: default
+  menuData:
+    visible: true
+    min-statut: true
+    listId: management
+    label: Newsletter
+    icon: icon_newsletter
 
 /s-inscrire:
   controller: Security
@@ -28,3 +99,23 @@
 /liste-des-utilisateurs:
   controller: Security
   action: listofusers
+
+/web-access:
+  controller: WebAccess
+  action: default
+  menuData:
+    visible: true
+    min-statut: true
+    listId: settings
+    label: Accès au site
+    icon: icon_web
+
+/settings:
+  controller: Settings
+  action: default
+  menuData:
+    visible: true
+    min-statut: true
+    listId: settings
+    label: Paramètres
+    icon: icon_settings
