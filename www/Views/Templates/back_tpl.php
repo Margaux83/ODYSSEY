@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
   	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>Odyssey - </title>
+	<title>Odyssey - <?= App\Core\View::getActualPageTitle($menuData, $actualUri) ?></title>
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 
     <link rel="stylesheet" type="text/css" href=<?php App\Core\View::getAssets("main.css")?>>
@@ -30,7 +30,10 @@
     <main id="back-mainPage-mainContent">
         <div id="back-manPage-gridContent" class="d-flex-wrap d-lg-grid">
 			<?php include $this->view ?>
+
+
         </div>
     </main>
 </body>
+
 </html>
