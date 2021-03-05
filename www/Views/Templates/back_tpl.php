@@ -34,4 +34,5 @@
         </div>
     </main>
 </body>
+<script src=<?php App\Core\View::getAssets("settings.js")?>></script>
 </html>
