@@ -23,6 +23,7 @@ $uriExploded = explode("?", $_SERVER["REQUEST_URI"]);
 $uri = $uriExploded[0];
 
 $route = new Routing($uri);
+$menuData = $route->getMenuData();
 $c = $route->getController();
 $a = $route->getAction();
 
@@ -56,7 +57,7 @@ if( file_exists("./Controllers/".$c.".php")){
 
 		if(method_exists($cObject, $a)){
 			//$a = loginAction // defaultAction
-			$cObject->$a();
+			$cObject->$a($menuData, $uri);
 		}else{
 			die("L'action ".$a." n'existe pas");
 		}
