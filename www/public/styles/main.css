@@ -451,7 +451,6 @@ section.multipleSectionContainer h1.titleSection {
 
 section.multipleSectionContainer div.multipleSection {
   flex: 1;
-  margin: 15px 5px 5px 5px;
 }
 
 section.multipleSectionContainer div.multipleSection:first-child {
@@ -460,7 +459,7 @@ section.multipleSectionContainer div.multipleSection:first-child {
 
 @media screen and (min-width: 450px) {
   section.multipleSectionContainer div.multipleSection {
-    margin: 0 10px 5px 10px;
+    margin-bottom: 1em;
   }
 
   section.multipleSectionContainer div.multipleSection:first-child {

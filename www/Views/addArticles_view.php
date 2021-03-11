@@ -7,14 +7,6 @@
     </div>
     <div class="col-12 multipleSection">
         <div class="sectionHeader">
-            <h1 class="titleSection">Description</h1>
-        </div>
-        <br>
-        <p id="modalCommentButton" class="actionVerticalSection"><img src=<?php App\Core\View::getAssets("icons/plus-solid.svg")?> alt="" height="15" width="15">Ajouter une description</p>
-    </div>
-    <br>
-    <div class="col-12 multipleSection">
-        <div class="sectionHeader">
             <h1 class="titleSection">Catégorie</h1>
         </div>
         <br>

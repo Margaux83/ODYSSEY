@@ -20,11 +20,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d861f3b1-3dab-4781-b59a-ba8ea869d642" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/docker-compose.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/www/Views/Templates/back_tpl.php" beforeDir="false" afterPath="$PROJECT_DIR$/www/Views/Templates/back_tpl.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/www/public/scripts/js/chart.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/www/Views/addArticles_view.php" beforeDir="false" afterPath="$PROJECT_DIR$/www/Views/addArticles_view.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/www/public/styles/main.css" beforeDir="false" afterPath="$PROJECT_DIR$/www/public/styles/main.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/www/routes.yml" beforeDir="false" afterPath="$PROJECT_DIR$/www/routes.yml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -108,7 +107,7 @@
       <workItem from="1615221049185" duration="6232000" />
       <workItem from="1615319469800" duration="5295000" />
       <workItem from="1615404713028" duration="5322000" />
-      <workItem from="1615486314379" duration="655000" />
+      <workItem from="1615486314379" duration="4390000" />
     </task>
     <servers />
   </component>
