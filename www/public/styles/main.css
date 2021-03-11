@@ -411,12 +411,12 @@ section:nth-child(2n) {
   }
 }
 
-section h1.titleSection {
+/*section h1.titleSection {
   margin: 5px 0;
   padding-left: 5px;
   width: 100%;
   color: #155263;
-}
+}*/
 
 section h1.titleSection img {
   height: 16px;
@@ -446,6 +446,7 @@ section.multipleSectionContainer {
 section.multipleSectionContainer h1.titleSection {
   padding-left: 0;
   margin-bottom: 10px;
+  width: 100%;
 }
 
 section.multipleSectionContainer div.multipleSection {
@@ -966,7 +967,7 @@ ul.listItemBasic li.listItem .listItem-cpt {
   opacity: 0.5;
   position: absolute;
   -o-object-fit: cover;
-     object-fit: cover;
+  object-fit: cover;
   filter: brightness(0) invert(100%);
 }
 
@@ -1042,3 +1043,342 @@ body {
   font-family: "Roboto", Verdana, "Geneva", Tahoma, sans-serif;
 }
 
+div .listDate{
+  align-content: flex-start;
+  margin: 0;
+  max-width: 12%;
+}
+.listActions {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+
+}
+
+.listActions img{
+
+  transition: all 0.5s;
+}
+
+.listActions img:hover{
+  transform: translateY(-10px);
+}
+
+/*HEADER DES TABLEAUX*/
+div.sectionHeader{
+  display: flex;
+}
+
+div.verticalSectionMargin{
+  margin-bottom: 5%;
+}
+section div.sectionHeader h1.titleSection {
+  display: flex;
+  justify-content: flex-start;
+  width: 100%;
+  margin: 5px 0;
+  padding-left: 5px;
+  color: #155263;
+  font-size: 1em;
+}
+
+section div.sectionHeader h1.searchButtonSection {
+  display: flex;
+  justify-content: flex-end;
+  margin: 5px 0;
+  padding-right: 5px;
+  color: #155263;
+}
+
+.searchButtonSection img {
+  height: 16px;
+  width: auto;
+  vertical-align: text-bottom;
+  margin-left: 10px;
+}
+.colorSearchButton {
+  filter: invert(24%) sepia(87%) saturate(390%) hue-rotate(146deg) brightness(93%) contrast(96%);
+}
+
+h1.searchButtonSection{
+  transition: all 0.5s;
+}
+
+h1.searchButtonSection:hover{
+  transform: translateY(-5px);
+  cursor: pointer;
+}
+
+
+/*STATISTIQUES UTILISEES EN DEHORS DE LA PAGE DE DASHBORD*/
+.statsBasic .statisticsBasic {
+  flex: 5;
+  padding: 10px 15px;
+}
+
+.statsBasic .statisticsBasic h1 {
+  font-weight: unset;
+  margin-bottom: 5px;
+}
+
+.statsBasic .statisticsBasic div {
+  margin: 5px 0;
+}
+
+.statsBasic .statisticsBasic div p {
+  margin-top: 5px;
+}
+
+.statsBasic .statisticsBasic h2.numberStat,
+.statsBasic .statisticsBasic h2.numberStat span {
+  font-weight: unset;
+  font-size: 20px;
+}
+
+.statsBasic .statisticsBasic .numberStat-positive {
+  color: #39b400;
+}
+
+.statsBasic .statisticsBasic .numberStat-positive::after {
+  content: " \2197";
+  font-weight: 700;
+}
+
+.statsBasic .statisticsBasic .numberStat-negative {
+  color: darkred;
+}
+
+.statsBasic .statisticsBasic .numberStat-negative::after {
+  content: " \2198";
+  font-weight: 700;
+}
+
+.buttonComponent{
+  display: flex;
+  justify-content: flex-end;
+  background-color: #155263;
+  color: #EBEBEB;
+  padding: 15px 15px;
+  border-style: none;
+  transition: all 0.5s;
+}
+
+.buttonComponent:hover{
+  background-color: #3FA1BC;
+  cursor: pointer;
+}
+.buttonComponent img{
+  vertical-align: text-bottom;
+  margin-right: 10px;
+  filter: invert(98%) sepia(0%) saturate(271%) hue-rotate(73deg) brightness(117%) contrast(84%);
+}
+
+
+/*MODAL*/
+.modal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 3; /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+/* Modal Content/Box */
+.modal-content-Article {
+  background-color: #fefefe;
+  margin: 15% auto; /* 15% from the top and centered */
+  padding: 20px;
+  border: 1px solid #888;
+  width: 40%; /* Could be more or less, depending on screen size */
+  height: 42%;
+  border-radius: 5px;
+}
+
+.modal-content-Article h1{
+  font-size: 2em;
+  margin-bottom: 1.5rem;
+}
+
+.modal-content-Article form{
+  margin-left: 4%;
+}
+
+.modal-content-Article form label{
+  font-size: 1.2em;
+  margin-right: 2%;
+}
+
+.modal-content-Article form input {
+  margin-bottom: 3%;
+}
+
+#inputTitleArticle {
+  width: 50%;
+}
+
+.modal-content-Article form select{
+  margin-bottom: 3%;
+  margin-right: 4%;
+}
+
+/*MODAL COMMENT*/
+.modal-comment {
+  background-color: #fefefe;
+  margin: 15% auto; /* 15% from the top and centered */
+  padding: 20px;
+  border: 1px solid #888;
+  width: 40%; /* Could be more or less, depending on screen size */
+  height: 42%;
+  border-radius: 5px;
+}
+
+.modal-comment h1{
+  font-size: 2em;
+  margin-bottom: 1.5rem;
+}
+
+.modal-comment form{
+  margin-left: 4%;
+  height: 60%;
+}
+
+.modal-comment form label{
+  font-size: 1.2em;
+  margin-right: 2%;
+}
+
+.textareaComment{
+  width: 70%;
+  height: 100%;
+  border-radius: 5px;
+  border: 1px solid #888;
+}
+
+/* The Close Button */
+.close {
+  color: black;
+  float: right;
+  font-size: 2.5em;
+  font-weight: bold;
+  transition: all 0.5s;
+}
+
+.close:hover,
+.close:focus {
+  transform: scale(1.3);
+  text-decoration: none;
+  cursor: pointer;
+}
+
+#searchModalButton{
+  float: right;
+  margin-bottom: 3%;
+}
+
+#dateCreationArticle{
+  padding-bottom: 0.8em;
+  padding-top: 0.8em;
+}
+
+.titleOfPage{
+  font-size: 2em;
+  width: 1000%;
+  height: 20%;
+}
+
+.formTitleHeadOfPage{
+  justify-content: flex-start;
+  width: 100%;
+  left: 0;
+  top: 0;
+}
+
+.label{
+  font-size: 1em;
+  margin-right: 2%;
+}
+
+.input{
+  margin-bottom: 3%;
+  width: 100%;
+}
+
+div.sectionHeader button{
+  display: flex;
+  justify-content: flex-end;
+  background-color: #155263;
+  color: #EBEBEB;
+  padding: 10px 10px;
+  border-style: none;
+  transition: all 0.5s;
+}
+
+div.sectionHeader button.buttonComponentThin{
+  margin-right: 5%;
+
+}
+div.sectionFooter{
+  margin-top: 5%;
+}
+div.sectionFooter button.buttonComponentThin{
+  margin-right: 5%;
+}
+
+div.sectionHeader button:hover{
+  background-color: #3FA1BC;
+  cursor: pointer;
+}
+
+div.sectionFooter{
+  display: flex;
+}
+
+div.sectionFooter button{
+  display: flex;
+  justify-content: flex-end;
+  background-color: #155263;
+  color: #EBEBEB;
+  padding: 10px 10px;
+  border-style: none;
+  transition: all 0.5s;
+}
+
+div.sectionFooter button:hover{
+  background-color: #3FA1BC;
+  cursor: pointer;
+}
+
+
+.actionVerticalSection{
+  margin-left: 4%;
+  color: #155263;
+  transition: all 0.5s;
+}
+
+.actionVerticalSection:hover, .actionVerticalSection:focus{
+  cursor: pointer;
+  transform: scale(1.05);
+}
+
+.actionVerticalSection img{
+  margin-right: 2%;
+  filter: invert(24%) sepia(87%) saturate(390%) hue-rotate(146deg) brightness(93%) contrast(96%);
+}
+
+.selectVerticalSection{
+  margin-left: 4%;
+  width: 50%;
+}
+
+.trumbowygTextarea{
+  height: 100%;
+}
+
+.floatRight{
+  float: right;
+}

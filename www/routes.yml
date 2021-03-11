@@ -28,6 +28,26 @@
     label: Articles
     icon: icon_page
 
+/ajouter-article:
+  controller: Article
+  action: addArticle
+  menuData:
+    visible: true
+    min-statut: true
+    listId: basics
+    label: Ajouter un article
+    icon: icon_page
+
+/modifier-article:
+  controller: Article
+  action: editArticle
+  menuData:
+    visible: true
+    min-statut: true
+    listId: basics
+    label: Modifier un article
+    icon: icon_page
+
 /users:
   controller: User
   action: default
