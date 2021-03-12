@@ -29,7 +29,7 @@
     icon: icon_page
 
 /users:
-  controller: User
+  controller: Users
   action: default
   menuData:
     visible: true
