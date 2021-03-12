@@ -39,6 +39,13 @@ class View
 		}
 	}
 
+    public static function getActualPageTitle($menuInfos, $actualUri) {
+        foreach ($menuInfos as $link => $data) {
+            if($actualUri == $link) {
+                return $data['menuData']['label'];
+            }
+        }
+    }
 
 	public function setTemplate($template){
 		if(file_exists("Views/Templates/".$template."_tpl.php")){
