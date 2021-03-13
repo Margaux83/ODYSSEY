@@ -2,7 +2,7 @@
     <h1 class="titleSection"><img src=<?php App\Core\View::getAssets("icons/icon_user.png")?> alt="">Utilisateurs</h1>
     <div class="d-flex-wrap statisticsBasicContainer" id="dashboard-section-statisticsContainer">
         <article class="statisticsBasic">
-            <h1>Utilisateurs</h1>
+            <h1>Utilisateur</h1>
             <div>
                 <h2 class="numberStat numberStat-negative">20</h2>
                 <p>Depuis hier</p>
