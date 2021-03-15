@@ -396,11 +396,11 @@ body.trumbowyg-body-fullscreen {
   position: fixed;
   top: 0;
   left: 0;
-  width: 50%;
-  height: 50%;
+  width: 100%;
+  height: 100%;
   margin: 0;
   padding: 0;
-  z-index: 99999; }
+  z-index: 27; }
   .trumbowyg-fullscreen.trumbowyg-box,
   .trumbowyg-fullscreen .trumbowyg-editor {
     border: none; }

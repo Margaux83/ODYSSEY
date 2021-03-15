@@ -2,8 +2,8 @@
    <!-- <h1 class="titleOfPage">Modifier une page</h1>-->
 
 <section class="col-12" style="grid-column: 1/ 13; grid-row: 1;">
-    <div class="sectionHeader">
-        <h1 class="titleSection"><img src=<?php App\Core\View::getAssets("icons/icon_page.png")?> alt="">Liste des articles</h1>
+    <div class="sectionHeader d-flex">
+        <h1 class="titleSection d-flex"><img src=<?php App\Core\View::getAssets("icons/icon_page.png")?> alt="">Liste des articles</h1>
         <h1 id="modalButton" class="searchButtonSection">Rechercher<img class="colorSearchButton" src=<?php App\Core\View::getAssets("icons/search-solid.svg")?> alt="" ></h1>
     </div>
     <ul class="listItemBasic limit-height-900">
@@ -158,21 +158,21 @@
 </section>
 
 <section class="col-12 d-flex-column multipleSectionContainer" style="grid-column: 10 / 13; grid-row: 3;">
-    <div class="sectionHeader verticalSectionMargin">
-        <h1 class="titleSection">Article</h1>
-        <button class="buttonComponentThin">Appercu</button>
+    <div class="sectionHeader verticalSectionMargin d-flex">
+        <h1 class="titleSection d-flex">Article</h1>
+        <button class="buttonComponentThin d-flex">Appercu</button>
     </div>
     <div class="col-12 multipleSection">
-        <div class="sectionHeader">
+        <div class="sectionHeader d-flex">
             <h1 class="titleSection">Description</h1>
         </div>
         <br>
-        <p id="modalCommentButton" class="actionVerticalSection"><img src=<?php App\Core\View::getAssets("icons/plus-solid.svg")?> alt="" height="15" width="15">Ajouter une description</p>
+        <p id="modalButtonEditArticle" class="actionVerticalSection"><img src=<?php App\Core\View::getAssets("icons/plus-solid.svg")?> alt="" height="15" width="15">Ajouter une description</p>
     </div>
     <br>
     <div class="col-12 multipleSection">
-        <div class="sectionHeader">
-            <h1 class="titleSection">Catégorie</h1>
+        <div class="sectionHeader d-flex">
+            <h1 class="titleSection d-flex">Catégorie</h1>
         </div>
         <br>
         <select name="category" class="selectVerticalSection">
@@ -186,8 +186,8 @@
     </div>
     <br>
     <div class="col-12 multipleSection">
-        <div class="sectionHeader">
-            <h1 class="titleSection">Page</h1>
+        <div class="sectionHeader d-flex">
+            <h1 class="titleSection d-flex">Page</h1>
         </div>
         <br>
         <select name="category" class="selectVerticalSection">
@@ -201,8 +201,8 @@
     </div>
     <br>
     <div class="col-12 multipleSection">
-        <div class="sectionHeader">
-            <h1 class="titleSection">Publication</h1>
+        <div class="sectionHeader d-flex">
+            <h1 class="titleSection d-flex">Publication</h1>
         </div>
         <br>
         <select name="publication" class="selectVerticalSection">
@@ -215,19 +215,23 @@
         <p class="actionVerticalSection"><img src=<?php App\Core\View::getAssets("icons/clock-regular.svg")?> alt="" height="15" width="15">Choisir une heure de publication</p>
     </div>
 
-    <div class="sectionFooter">
-        <h1 class="titleSection"></h1>
-        <button class="buttonComponentThin">Publier</button>
+    <div class="sectionFooter d-flex">
+        <h1 class="titleSection d-flex"></h1>
+        <button class="buttonComponentThin d-flex">Publier</button>
     </div>
 </section>
 
-<div id="myModal" class="col-6 modal">
+<div id="myModal" class="col-12 modal" >
 
     <!-- Modal content -->
-    <div class="modal-content-Article">
-        <span class="close">&times;</span>
-        <h1>Recherche d'article</h1>
-        <form>
+    <div class="modal-content-Article d-flex-wrap d-flex">
+        <div class="headerForModalSearch d-flex">
+            <h1 class="titleModal d-flex">Recherche d'article</h1>
+            <span class="close d-flex">&times;</span>
+        </div>
+        <br><br>
+
+        <form class="d-flex d-flex-wrap">
             <label for="title"  class="labelModal">Titre</label>
             <input type="text" id="inputTitleArticle" name="title" class="inputModal">
             <br>
@@ -274,32 +278,35 @@
             <input id="dateCreationArticle" type="date" name="dateCreation" class="inputModal">
             <br>
 
-            <button type="submit" class="buttonComponent" id="searchModalButton">Rechercher</button>
+            <button type="submit" class="buttonComponent d-flex" id="searchModalButton">Rechercher</button>
         </form>
     </div>
 
 </div>
 
 
-   <div id="ModalComment" class="col-6 modal">
+   <div id="ModalDescEditArticle" class="col-12 modal">
 
        <!-- Modal content -->
-       <div class="modal-comment">
-           <span class="close">&times;</span>
-           <h1>Ajout d'une description</h1>
-           <form>
+       <div class="modal-comment d-flex-wrap d-flex">
+           <div class="headerForModalDesc d-flex">
+               <h1 class="titleModal d-flex">Ajout d'une description</h1>
+               <span class="closeComment d-flex">&times;</span>
+           </div>
+
+           <form class="d-flex d-flex-wrap">
                <label>
-                   <textarea class="textareaComment" name="comment"></textarea>
+                   <textarea class="textareaComment d-flex" name="comment"></textarea>
                </label>
                <br><br>
-               <button type="submit" class="buttonComponent" id="searchModalButton">Enregistrer</button>
+               <button type="submit" class="buttonComponent d-flex" id="saveModalButton">Enregistrer</button>
            </form>
        </div>
 
    </div>
 
 
-<section class="col-12" style="grid-column: 1 / 10; grid-row: 3;">
+<section class="col-12" style="grid-column: 1 / 10; grid-row: 3; ">
     <div class="formTitleHeadOfPage">
         <form class="formHeadOfPage">
 
@@ -310,11 +317,12 @@
         </form>
     </div>
 
-<label for="hello"></label><textarea class="trumbowygTextarea" id="hello" name="hello"></textarea>
+
     <br>
+    <label for="hello"></label><textarea class="trumbowygTextarea" id="hello" name="hello"></textarea>
     <label for="status" class="label">Statut</label>
 
-    <select name="status" id="">
+    <select name="status">
         <option value="Validé et posté">Validé et posté</option>
         <option value="En attente de validation">En attente de validation</option>
         <option value="Brouillon">Brouillon</option>
@@ -323,12 +331,12 @@
     &emsp;
     &emsp;
     <label for="visibility" class="label">Visibilité</label>
-    <select name="visibility" id="">
+    <select name="visibility">
         <option value="Protégé">Protégé</option>
         <option value="Public">Public</option>
         <option value="Privé">Privé</option>
     </select>
-    <button class="buttonComponent floatRight" style="float: right">Enregistrer le brouillon</button>
+    <button class="buttonComponent d-flex floatRight" style="float: right">Enregistrer le brouillon</button>
 
 
 </section>

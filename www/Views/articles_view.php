@@ -2,12 +2,12 @@
 <h1 class="titleOfPage">Pages des Articles</h1><br>
 
 <form action="ajouter-article">
-    <button type="submit" class="buttonComponent"><img src=<?php App\Core\View::getAssets("icons/plus-solid.svg")?> height="15" width="15">Ajouter article</button>
+    <button type="submit" class="buttonComponent d-flex"><img src=<?php App\Core\View::getAssets("icons/plus-solid.svg")?> height="15" width="15">Ajouter article</button>
 </form>
 
 <section class="col-12" style="grid-column: 1/ 13; grid-row: 1;">
-    <div class="sectionHeader">
-        <h1 class="titleSection"><img src=<?php App\Core\View::getAssets("icons/icon_page.png")?> alt="">Liste des articles</h1>
+    <div class="sectionHeader d-flex">
+        <h1 class="titleSection d-flex"><img src=<?php App\Core\View::getAssets("icons/icon_page.png")?> alt="">Liste des articles</h1>
         <h1 id="modalButton" class="searchButtonSection">Rechercher<img class="colorSearchButton" src=<?php App\Core\View::getAssets("icons/search-solid.svg")?> alt="" ></h1>
     </div>
     <ul class="listItemBasic limit-height-900">
@@ -48,8 +48,8 @@
 </section>
 
 <section class="col-12" style="grid-column: 1 / 7; grid-row: 2;">
-    <div class="sectionHeader">
-        <h1 class="titleSection">Mes articles</h1>
+    <div class="sectionHeader d-flex">
+        <h1 class="titleSection d-flex">Mes articles</h1>
     </div>
     <ul class="listItemBasic limit-height-900">
         <li class="legend">
@@ -90,8 +90,8 @@
 </section>
 
 <section class="col-12" style="grid-column: 7 / 13; grid-row: 2;">
-    <div class="sectionHeader">
-        <h1 class="titleSection">Evolution du nombre de vues par articles</h1>
+    <div class="sectionHeader d-flex">
+        <h1 class="titleSection d-flex">Evolution du nombre de vues par articles</h1>
     </div>
     <canvas id="viewPerChart" width="775" height="400"></canvas>
 </section>
@@ -151,7 +151,7 @@
             <input id="dateCreationArticle" type="date" name="dateCreation" class="inputModal">
             <br>
 
-            <button type="submit" class="buttonComponent" id="searchModalButton">Rechercher</button>
+            <button type="submit" class="buttonComponent d-flex" id="searchModalButton">Rechercher</button>
         </form>
     </div>
 
