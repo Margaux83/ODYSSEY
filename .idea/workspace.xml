@@ -21,13 +21,6 @@
   <component name="ChangeListManager">
     <list default="true" id="d861f3b1-3dab-4781-b59a-ba8ea869d642" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/www/Core/View.php" beforeDir="false" afterPath="$PROJECT_DIR$/www/Core/View.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/www/Trumbowyg/dist/ui/trumbowyg.css" beforeDir="false" afterPath="$PROJECT_DIR$/www/Trumbowyg/dist/ui/trumbowyg.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/www/Trumbowyg/dist/ui/trumbowyg.min.css" beforeDir="false" afterPath="$PROJECT_DIR$/www/Trumbowyg/dist/ui/trumbowyg.min.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/www/Views/Templates/back_tpl.php" beforeDir="false" afterPath="$PROJECT_DIR$/www/Views/Templates/back_tpl.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/www/Views/addArticles_view.php" beforeDir="false" afterPath="$PROJECT_DIR$/www/Views/addArticles_view.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/www/Views/articles_view.php" beforeDir="false" afterPath="$PROJECT_DIR$/www/Views/articles_view.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/www/Views/editArticles_view.php" beforeDir="false" afterPath="$PROJECT_DIR$/www/Views/editArticles_view.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/www/public/scripts/js/modal.js" beforeDir="false" afterPath="$PROJECT_DIR$/www/public/scripts/js/modal.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/www/public/styles/main.css" beforeDir="false" afterPath="$PROJECT_DIR$/www/public/styles/main.css" afterDir="false" />
     </list>
@@ -57,7 +50,7 @@
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="/var/www/html/integrationweb/site1" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
@@ -116,6 +109,7 @@
       <workItem from="1615486314379" duration="5345000" />
       <workItem from="1615582267170" duration="5784000" />
       <workItem from="1615726088794" duration="21410000" />
+      <workItem from="1615840017492" duration="2990000" />
     </task>
     <servers />
   </component>

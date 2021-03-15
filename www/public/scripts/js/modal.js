@@ -1,17 +1,16 @@
 // Get the modal
 var modalDescEditArticle = document.getElementById("ModalDescEditArticle");
 
+if(document.getElementById("ModalDescEditArticle") != null) {
 // When the user clicks on the button, open the modal
-$("#modalButtonEditArticle").on('click', function(){
-    modalDescEditArticle.style.display = "block";
-})
+    $("#modalButtonEditArticle").on('click', function () {
+        modalDescEditArticle.style.display = "block";
+    });
+    $(".closeComment").on('click', function () {
+        modalDescEditArticle.style.display = "none";
+    });
+}
 
-/* When the user clicks anywhere outside of the modal, close it
-window.onclick = function(event) {
-    if (event.target == modalComment) {
-        modalComment.style.display = "none";
-    }
-}*/
 
 
 // Get the modal
@@ -23,18 +22,13 @@ if(document.getElementById("ModalDescAddArticle") != null) {
         modalDescAddArticle.style.display = "block";
     });
     $(".closeComment").on('click', function () {
-        modalDescAddArticle.style.display = "block";
+        modalDescAddArticle.style.display = "none";
     });
 }
 
 
 
-/* When the user clicks anywhere outside of the modal, close it
-window.onclick = function(event) {
-    if (event.target == modalComment) {
-        modalComment.style.display = "none";
-    }
-}*/
+
 
 
 // Get the modal
@@ -49,14 +43,19 @@ if(document.getElementById("myModal") != null) {
     $(".close").on('click', function () {
         modal.style.display = "none";
     });
+
 }
 
 
-
-/* When the user clicks anywhere outside of the modal, close it
 window.onclick = function(event) {
+    if (event.target == modalDescEditArticle) {
+        modalDescEditArticle.style.display = "none";
+    }
+    if (event.target == modalDescAddArticle) {
+        modalDescAddArticle.style.display = "none";
+    }
     if (event.target == modal) {
         modal.style.display = "none";
     }
-}*/
+}
 

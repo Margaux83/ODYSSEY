@@ -869,7 +869,6 @@ img.iconBlack {
     justify-content: flex-end;
     color: black;
     height: 1em;
-    width: 100%;
     font-size: 2.5em;
     font-weight: bold;
     transition: all 0.5s;
@@ -1011,7 +1010,6 @@ img.iconBlack {
     justify-content: flex-end;
     color: black;
     height: 1em;
-    width: 100%;
     font-size: 2.5em;
     font-weight: bold;
     transition: all 0.5s;
