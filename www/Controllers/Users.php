@@ -15,6 +15,11 @@ class Users{
 
     }
 
+    public function addUsersAction($menuData, $actualUri)
+    {
+        $view = new View("addUsers", "back", $menuData, $actualUri);
+
+    }
 
 
 }

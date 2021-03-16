@@ -21,7 +21,7 @@ class View
 		
 	}
 
-	static function getAssets(string $nameFile){
+	public static function getAssets(string $nameFile){
 		$explodedNameFile = explode(".", trim($nameFile));
 		$nameFileType = array_pop($explodedNameFile);
 		switch ($nameFileType){

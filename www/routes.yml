@@ -38,6 +38,16 @@
     label: Utilisateurs
     icon: icon_user
 
+/add-users:
+  controller: Users
+  action: addUsers
+  menuData:
+    visible: true
+    min-statut: true
+    listId: basics
+    label: Ajouter un utilisateur
+    icon: icon_user
+
 /comments:
   controller: Comment
   action: default
