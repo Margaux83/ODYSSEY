@@ -1050,7 +1050,7 @@ body {
 }
 .form-input input, select {
   background: none;
-  color: #c6c6c6;
+  color: #000000;
   font-size: 18px;
   padding: 10px 10px 10px 15px;
   width: 490px;
@@ -1082,4 +1082,13 @@ body {
 }
 .btn-standard.is-blue{
   background-color: #155263;
+}
+
+.container i {
+  margin-left: -30px;
+  cursor: pointer;
+}
+
+.checkbox-input {
+  padding-bottom: 20px;
 }
