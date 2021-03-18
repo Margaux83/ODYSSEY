@@ -4,7 +4,7 @@
 <section class="col-12" style="grid-column: 1/ 13; grid-row: 1;">
     <div class="sectionHeader d-flex">
         <h1 class="titleSection d-flex"><img src=<?php App\Core\View::getAssets("icons/icon_page.png")?> alt="">Liste des articles</h1>
-        <h1 id="modalButton" class="searchButtonSection">Rechercher<img class="colorSearchButton" src=<?php App\Core\View::getAssets("icons/search-solid.svg")?> alt="" ></h1>
+        <h1 id="modalButton" class="searchButtonSection d-flex">Rechercher<img class="colorSearchButton" src=<?php App\Core\View::getAssets("icons/search-solid.svg")?> alt="" ></h1>
     </div>
     <ul class="listItemBasic limit-height-900">
         <li class="legend">
@@ -182,7 +182,7 @@
             <option value="Pays">Pays</option>
         </select>
         <br><br>
-        <p class="actionVerticalSection"><img src=<?php App\Core\View::getAssets("icons/plus-solid.svg")?> alt="" height="15" width="15">Créer une nouvelle catégorie</p>
+        <p id="modalButtonEditCategoryArticle" class="actionVerticalSection"><img src=<?php App\Core\View::getAssets("icons/plus-solid.svg")?> alt="" height="15" width="15">Créer une nouvelle catégorie</p>
     </div>
     <br>
     <div class="col-12 multipleSection">
@@ -197,7 +197,7 @@
             <option value="Contact">Contact</option>
         </select>
         <br><br>
-        <p class="actionVerticalSection"><img src=<?php App\Core\View::getAssets("icons/plus-solid.svg")?> alt="" height="15" width="15">Créer une nouvelle Page</p>
+        <p id="modalButtonEditPageArticle" class="actionVerticalSection"><img src=<?php App\Core\View::getAssets("icons/plus-solid.svg")?> alt="" height="15" width="15">Créer une nouvelle Page</p>
     </div>
     <br>
     <div class="col-12 multipleSection">
@@ -285,8 +285,7 @@
 </div>
 
 
-   <div id="ModalDescEditArticle" class="col-12 modal">
-
+   <div id="ModalDescEditArticle" class="col-12 modal" >
        <!-- Modal content -->
        <div class="modal-comment d-flex-wrap d-flex">
            <div class="headerForModalDesc d-flex">
@@ -295,14 +294,40 @@
            </div>
 
            <form class="d-flex d-flex-wrap">
-               <label>
-                   <textarea class="textareaComment d-flex" name="comment"></textarea>
-               </label>
-               <br><br>
+               <textarea class="textareaComment d-flex" name="comment"></textarea>
                <button type="submit" class="buttonComponent d-flex" id="saveModalButton">Enregistrer</button>
            </form>
        </div>
+   </div>
 
+   <div id="ModalCategoryEditArticle" class="col-12 modal" >
+       <!-- Modal content -->
+       <div class="modal-comment d-flex-wrap d-flex">
+           <div class="headerForModalDesc d-flex">
+               <h1 class="titleModal d-flex">Ajout d'une catégorie</h1>
+               <span class="closeComment d-flex">&times;</span>
+           </div>
+
+           <form class="d-flex d-flex-wrap formModalOneInput">
+               <input type="text" name="title" class="inputOneModal d-flex">
+               <button type="submit" class="buttonComponent d-flex" id="saveModalButton">Enregistrer</button>
+           </form>
+       </div>
+   </div>
+
+   <div id="ModalPageEditArticle" class="col-12 modal" >
+       <!-- Modal content -->
+       <div class="modal-comment d-flex-wrap d-flex">
+           <div class="headerForModalDesc d-flex">
+               <h1 class="titleModal d-flex">Ajout d'une page</h1>
+               <span class="closeComment d-flex">&times;</span>
+           </div>
+
+           <form class="d-flex d-flex-wrap formModalOneInput">
+               <input type="text" name="title" class="inputOneModal d-flex">
+               <button type="submit" class="buttonComponent d-flex" id="saveModalButton">Enregistrer</button>
+           </form>
+       </div>
    </div>
 
 

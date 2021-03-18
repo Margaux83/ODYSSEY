@@ -819,7 +819,7 @@ img.iconBlack {
     padding: 20px;
     border: 1px solid #888;
     width: 50%; /* Could be more or less, depending on screen size */
-    height: 50%;
+    height: 100%;
     border-radius: 5px;
   }
 
@@ -832,9 +832,7 @@ img.iconBlack {
   }
 
   .modal-comment form{
-    margin-left: 4%;
     width: 100%;
-    height: 100%;
   }
 
   .modal-comment form label{
@@ -845,7 +843,6 @@ img.iconBlack {
   .textareaComment{
     width: 100%;
     height: 100%;
-    align-content: center;
     border-radius: 5px;
     border: 1px solid #888;
   }
@@ -886,11 +883,11 @@ img.iconBlack {
     margin-bottom: 3%;
   }
 
-  .modal-content form button#saveModalButton{
-    display: flex;
-    justify-content: flex-end;
+  button #saveModalButton{
     margin-bottom: 3%;
+    height: 2em;
   }
+
 }
 
 @media screen and (min-width: 900px) {
@@ -960,7 +957,7 @@ img.iconBlack {
     padding: 20px;
     border: 1px solid #888;
     width: 50%; /* Could be more or less, depending on screen size */
-    height: 50%;
+    height: 75%;
     border-radius: 5px;
   }
 
@@ -973,9 +970,7 @@ img.iconBlack {
   }
 
   .modal-comment form{
-    margin-left: 4%;
     width: 100%;
-    height: 100%;
   }
 
   .modal-comment form label{
@@ -986,7 +981,6 @@ img.iconBlack {
   .textareaComment{
     width: 40%;
     height: 50%;
-    align-content: center;
     border-radius: 5px;
     border: 1px solid #888;
   }
@@ -1027,8 +1021,9 @@ img.iconBlack {
     margin-bottom: 3%;
   }
 
-  .modal-content form #saveModalButton{
-    justify-content: flex-end;
+  button #saveModalButton{
+    margin-bottom: 3%;
+    height: 2em;
   }
 }
 
@@ -1340,7 +1335,6 @@ section div.sectionHeader h1.titleSection {
 }
 
 section div.sectionHeader h1.searchButtonSection {
-  display: flex;
   justify-content: flex-end;
   margin: 5px 0;
   padding-right: 5px;
@@ -1504,15 +1498,11 @@ h1.searchButtonSection:hover{
 .modal-comment h1{
   justify-content: flex-start;
   font-size: 2em;
-  margin-bottom: 1.5rem;
   height: 2em;
   width: 100%;
 }
 
-.modal-comment form{
-  justify-content: flex-start;
-  width: 100%;
-}
+
 
 .modal-comment form label{
   font-size: 1.2em;
@@ -1522,8 +1512,6 @@ h1.searchButtonSection:hover{
 .textareaComment{
   width: 100%;
   height: 50%;
-  justify-content: space-around;
-  align-items: center;
   border-radius: 5px;
   border: 1px solid #888;
 }
@@ -1557,7 +1545,9 @@ h1.searchButtonSection:hover{
   font-weight: bold;
   transition: all 0.5s;
 }
-
+.formModalOneInput{
+  height: 20%;
+}
 .closeComment:hover,
 .closeComment:focus {
   transform: scale(1.3);
@@ -1570,8 +1560,7 @@ h1.searchButtonSection:hover{
   margin-bottom: 3%;
 }
 
-.buttonComponent #saveModalButton{
-  float: right;
+button #saveModalButton{
   margin-bottom: 3%;
   height: 2em;
 }
@@ -1601,6 +1590,13 @@ h1.searchButtonSection:hover{
 
 .input{
   margin-bottom: 3%;
+  width: 100%;
+}
+
+
+.inputOneModal{
+  height: 10%;
+  margin-bottom: 1%;
   width: 100%;
 }
 
@@ -1669,6 +1665,7 @@ div.sectionFooter button:hover{
   height: 100%;
 }
 
-.floatRight{
-  float: right;
+.modalOneInput{
+  margin-bottom: 3%;
+  width: 100%;
 }

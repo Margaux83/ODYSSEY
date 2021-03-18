@@ -15,6 +15,7 @@
 
 
     <script src=<?php App\Core\View::getAssets("menu.js")?>></script>
+
     <script src=<?php App\Core\View::getAssets("libraries/chart.js")?>></script>
     <script src=<?php App\Core\View::getAssets("libraries/sweetalert2Library.js")?>></script>
     <script src=<?php App\Core\View::getAssets("libraries/sweetalert2LibraryAll.min.js")?>></script>

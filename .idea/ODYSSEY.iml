@@ -4,8 +4,5 @@
     <content url="file://$MODULE_DIR$" />
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" name="jquery" level="application" />
-    <orderEntry type="library" name="trumbowyg" level="application" />
-    <orderEntry type="library" name="trumbowyg.colors" level="application" />
   </component>
 </module>

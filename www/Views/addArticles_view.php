@@ -25,7 +25,7 @@
             <option value="Pays">Pays</option>
         </select>
         <br><br>
-        <p class="actionVerticalSection"><img src=<?php App\Core\View::getAssets("icons/plus-solid.svg")?> alt="" height="15" width="15">Créer une nouvelle catégorie</p>
+        <p id="modalButtonAddCategoryArticle" class="actionVerticalSection"><img src=<?php App\Core\View::getAssets("icons/plus-solid.svg")?> alt="" height="15" width="15">Créer une nouvelle catégorie</p>
     </div>
     <br>
     <div class="col-12 multipleSection">
@@ -40,7 +40,7 @@
             <option value="Contact">Contact</option>
         </select>
         <br><br>
-        <p class="actionVerticalSection"><img src=<?php App\Core\View::getAssets("icons/plus-solid.svg")?> alt="" height="15" width="15">Créer une nouvelle Page</p>
+        <p id="modalButtonAddPageArticle" class="actionVerticalSection"><img src=<?php App\Core\View::getAssets("icons/plus-solid.svg")?> alt="" height="15" width="15">Créer une nouvelle Page</p>
     </div>
     <br>
     <div class="col-12 multipleSection">
@@ -65,7 +65,6 @@
 </section>
 
 <div id="ModalDescAddArticle" class="col-12 modal" >
-
     <!-- Modal content -->
     <div class="modal-comment d-flex-wrap d-flex">
         <div class="headerForModalDesc d-flex">
@@ -74,15 +73,42 @@
         </div>
 
         <form class="d-flex d-flex-wrap">
-            <label>
                 <textarea class="textareaComment d-flex" name="comment"></textarea>
-            </label>
-            <br><br>
             <button type="submit" class="buttonComponent d-flex" id="saveModalButton">Enregistrer</button>
         </form>
     </div>
-
 </div>
+
+<div id="ModalCategoryAddArticle" class="col-12 modal" >
+    <!-- Modal content -->
+    <div class="modal-comment d-flex-wrap d-flex">
+        <div class="headerForModalDesc d-flex">
+            <h1 class="titleModal d-flex">Ajout d'une catégorie</h1>
+            <span class="closeComment d-flex">&times;</span>
+        </div>
+
+        <form class="d-flex d-flex-wrap formModalOneInput">
+                <input type="text" name="title" class="inputOneModal d-flex">
+            <button type="submit" class="buttonComponent d-flex" id="saveModalButton">Enregistrer</button>
+        </form>
+    </div>
+</div>
+
+<div id="ModalPageAddArticle" class="col-12 modal" >
+    <!-- Modal content -->
+    <div class="modal-comment d-flex-wrap d-flex">
+        <div class="headerForModalDesc d-flex">
+            <h1 class="titleModal d-flex">Ajout d'une page</h1>
+            <span class="closeComment d-flex">&times;</span>
+        </div>
+
+        <form class="d-flex d-flex-wrap formModalOneInput">
+            <input type="text" name="title" class="inputOneModal d-flex">
+            <button type="submit" class="buttonComponent d-flex" id="saveModalButton">Enregistrer</button>
+        </form>
+    </div>
+</div>
+
 
 <section class="col-12" style="grid-column: 1 / 10; grid-row: 1;">
     <div class="formTitleHeadOfPage">

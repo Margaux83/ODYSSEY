@@ -8,7 +8,7 @@
 <section class="col-12" style="grid-column: 1/ 13; grid-row: 1;">
     <div class="sectionHeader d-flex">
         <h1 class="titleSection d-flex"><img src=<?php App\Core\View::getAssets("icons/icon_page.png")?> alt="">Liste des articles</h1>
-        <h1 id="modalButton" class="searchButtonSection">Rechercher<img class="colorSearchButton" src=<?php App\Core\View::getAssets("icons/search-solid.svg")?> alt="" ></h1>
+        <h1 id="modalButton" class="searchButtonSection d-flex">Rechercher<img class="colorSearchButton" src=<?php App\Core\View::getAssets("icons/search-solid.svg")?> alt="" ></h1>
     </div>
     <ul class="listItemBasic limit-height-900">
         <li class="legend">

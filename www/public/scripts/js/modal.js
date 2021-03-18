@@ -26,10 +26,53 @@ if(document.getElementById("ModalDescAddArticle") != null) {
     });
 }
 
+var modalCategoryAddArticle = document.getElementById("ModalCategoryAddArticle");
 
+if(document.getElementById("ModalCategoryAddArticle") != null) {
+// When the user clicks on the button, open the modal
+    $("#modalButtonAddCategoryArticle").on('click', function () {
+        modalCategoryAddArticle.style.display = "block";
+    });
+    $(".closeComment").on('click', function () {
+        modalCategoryAddArticle.style.display = "none";
+    });
+}
 
+var modalCategoryEditArticle = document.getElementById("ModalCategoryEditArticle");
 
+if(document.getElementById("ModalCategoryEditArticle") != null) {
+// When the user clicks on the button, open the modal
+    $("#modalButtonEditCategoryArticle").on('click', function () {
+        modalCategoryEditArticle.style.display = "block";
+    });
+    $(".closeComment").on('click', function () {
+        modalCategoryEditArticle.style.display = "none";
+    });
+}
 
+var modalPageAddArticle = document.getElementById("ModalPageAddArticle");
+
+if(document.getElementById("ModalPageAddArticle") != null) {
+// When the user clicks on the button, open the modal
+    $("#modalButtonAddPageArticle").on('click', function () {
+        modalPageAddArticle.style.display = "block";
+    });
+    $(".closeComment").on('click', function () {
+        modalPageAddArticle.style.display = "none";
+    });
+}
+
+var modalPageEditArticle = document.getElementById("ModalPageEditArticle");
+
+if(document.getElementById("ModalCategoryEditArticle") != null) {
+// When the user clicks on the button, open the modal
+    $("#modalButtonEditPageArticle").on('click', function () {
+        modalPageEditArticle.style.display = "block";
+    });
+    $(".closeComment").on('click', function () {
+        modalPageEditArticle.style.display = "none";
+    });
+}
 
 // Get the modal
 var modal = document.getElementById("myModal");
@@ -45,7 +88,6 @@ if(document.getElementById("myModal") != null) {
     });
 
 }
-
 
 window.onclick = function(event) {
     if (event.target == modalDescEditArticle) {
