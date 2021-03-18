@@ -19,20 +19,7 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d861f3b1-3dab-4781-b59a-ba8ea869d642" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/ODYSSEY.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/ODYSSEY.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/codeStyles/codeStyleConfig.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/jsLibraryMappings.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/watcherTasks.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/www/Views/Templates/back_tpl.php" beforeDir="false" afterPath="$PROJECT_DIR$/www/Views/Templates/back_tpl.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/www/Views/addArticles_view.php" beforeDir="false" afterPath="$PROJECT_DIR$/www/Views/addArticles_view.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/www/Views/articles_view.php" beforeDir="false" afterPath="$PROJECT_DIR$/www/Views/articles_view.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/www/Views/editArticles_view.php" beforeDir="false" afterPath="$PROJECT_DIR$/www/Views/editArticles_view.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/www/public/scripts/js/modal.js" beforeDir="false" afterPath="$PROJECT_DIR$/www/public/scripts/js/modal.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/www/public/styles/main.css" beforeDir="false" afterPath="$PROJECT_DIR$/www/public/styles/main.css" afterDir="false" />
-    </list>
+    <list default="true" id="d861f3b1-3dab-4781-b59a-ba8ea869d642" name="Default Changelist" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -120,7 +107,7 @@
       <workItem from="1615726088794" duration="21410000" />
       <workItem from="1615840017492" duration="3542000" />
       <workItem from="1616015346068" duration="1613000" />
-      <workItem from="1616099489543" duration="5682000" />
+      <workItem from="1616099489543" duration="6366000" />
     </task>
     <servers />
   </component>
