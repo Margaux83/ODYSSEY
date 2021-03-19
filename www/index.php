@@ -1,9 +1,9 @@
 <?php
 namespace App;
 
-
 use App\Core\Routing; 
 use App\Core\ConstantManager; 
+use App\Core\MenuBuilder; 
 
 require "Autoloader.php";
 Autoloader::register();
@@ -24,6 +24,7 @@ $uri = $uriExploded[0];
 
 $route = new Routing($uri);
 $menuData = $route->getMenuData();
+$menuBuilder = MenuBuilder::getInstance($menuData, $uri);
 $c = $route->getController();
 $a = $route->getAction();
 
@@ -57,7 +58,7 @@ if( file_exists("./Controllers/".$c.".php")){
 
 		if(method_exists($cObject, $a)){
 			//$a = loginAction // defaultAction
-			$cObject->$a($menuData, $uri);
+			$cObject->$a();
 		}else{
 			die("L'action ".$a." n'existe pas");
 		}

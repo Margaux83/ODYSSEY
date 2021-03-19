@@ -13,12 +13,9 @@ class View
 	private $view; // default, dashboard, profile, ....
 	private $data = [];
 
-	public function __construct($view="default", $template="front", $menuData = [], $actualUri = ""){
+	public function __construct($view="default", $template="front"){
 		$this->setTemplate($template);
 		$this->setView($view);
-		$this->assign("menuData", $menuData);
-		$this->assign("actualUri", $actualUri);
-		
 	}
 
 	public static function getAssets(string $nameFile){
