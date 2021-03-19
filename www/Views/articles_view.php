@@ -40,7 +40,7 @@
                 <img src=<?php App\Core\View::getAssets("icons/eye-solid.svg")?> alt="" height="20" width="20">
                 <img src=<?php App\Core\View::getAssets("icons/pen-solid.svg")?> alt="" height="20" width="20">
                 <img src=<?php App\Core\View::getAssets("icons/check-solid.svg")?> alt="" height="20" width="20">
-                <img class="deleteArticle" src=<?php App\Core\View::getAssets("icons/trash-solid.svg")?> alt="" height="20" width="20">
+                <img src=<?php App\Core\View::getAssets("icons/trash-solid.svg")?> alt="" height="20" width="20">
             </div>
         </li>
         <?php } ?>
@@ -82,7 +82,7 @@
                 <img src=<?php App\Core\View::getAssets("icons/tag-solid.svg")?> alt="" height="20" width="20">
                 <img src=<?php App\Core\View::getAssets("icons/eye-solid.svg")?> alt="" height="20" width="20">
                 <img src=<?php App\Core\View::getAssets("icons/pen-solid.svg")?> alt="" height="20" width="20">
-                <img class="deleteArticle" src=<?php App\Core\View::getAssets("icons/trash-solid.svg")?> alt="" height="20" width="20">
+                <img src=<?php App\Core\View::getAssets("icons/trash-solid.svg")?> alt="" height="20" width="20">
             </div>
         </li>
         <?php } ?>
@@ -98,13 +98,17 @@
 
 
 
-<div id="myModal" class="col-6 modal">
+<div id="myModal" class="col-12 modal" >
 
     <!-- Modal content -->
-    <div class="modal-content-Article">
-        <span class="close">&times;</span>
-        <h1>Recherche d'article</h1>
-        <form>
+    <div class="modal-content-Article d-flex-wrap d-flex">
+        <div class="headerForModalSearch d-flex">
+            <h1 class="titleModal d-flex">Recherche d'article</h1>
+            <span class="close d-flex">&times;</span>
+        </div>
+        <br><br>
+
+        <form class="d-flex d-flex-wrap">
             <label for="title"  class="labelModal">Titre</label>
             <input type="text" id="inputTitleArticle" name="title" class="inputModal">
             <br>
@@ -154,81 +158,4 @@
             <button type="submit" class="buttonComponent d-flex" id="searchModalButton">Rechercher</button>
         </form>
     </div>
-
 </div>
-
-<script>
-    var barChartData = {
-        labels: [
-            "Absence of OB",
-            "Closeness",
-            "Credibility",
-            "Heritage",
-            "M Disclosure",
-            "Provenance",
-            "Reliability",
-            "Transparency"
-        ],
-        datasets: [
-            {
-                label: "Blue",
-                backgroundColor: '#155263',
-                borderWidth: 1,
-                data: [3, 5, 6, 7,3, 5, 6, 7]
-            },
-            {
-                label: "Grey",
-                backgroundColor: '#C4C4C4',
-                borderWidth: 1,
-                data: [4, 7, 3, 6, 10,7,4,6]
-            }
-        ]
-    };
-
-    var chartOptions = {
-        responsive: true,
-        scales: {
-            yAxes: [{
-                ticks: {
-                    beginAtZero: true
-                }
-            }]
-        }
-    }
-
-    window.onload = function() {
-        var ctx = document.getElementById("viewPerChart").getContext("2d");
-        window.myBar = new Chart(ctx, {
-            type: "bar",
-            data: barChartData,
-            options: chartOptions
-        });
-    };
-
-
-    // Get the modal
-    var modal = document.getElementById("myModal");
-
-    // Get the button that opens the modal
-    var btn = document.getElementById("modalButton");
-
-    // Get the <span> element that closes the modal
-    var span = document.getElementsByClassName("close")[0];
-
-    // When the user clicks on the button, open the modal
-    btn.onclick = function() {
-        modal.style.display = "block";
-    }
-
-    // When the user clicks on <span> (x), close the modal
-    span.onclick = function() {
-        modal.style.display = "none";
-    }
-
-    // When the user clicks anywhere outside of the modal, close it
-    window.onclick = function(event) {
-        if (event.target == modal) {
-            modal.style.display = "none";
-        }
-    }
-</script>

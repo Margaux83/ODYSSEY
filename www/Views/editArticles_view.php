@@ -222,7 +222,6 @@
 </section>
 
 <div id="myModal" class="col-12 modal" >
-
     <!-- Modal content -->
     <div class="modal-content-Article d-flex-wrap d-flex">
         <div class="headerForModalSearch d-flex">
@@ -281,7 +280,6 @@
             <button type="submit" class="buttonComponent d-flex" id="searchModalButton">Rechercher</button>
         </form>
     </div>
-
 </div>
 
 
