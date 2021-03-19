@@ -326,3 +326,7 @@ div .listDate{
 .listActions img:hover{
     transform: translateY(-10px);
 }
+
+.marginBottomtMultipleSection{
+    margin-bottom: 4%; !important;
+}

@@ -5,7 +5,7 @@
         <h1 class="titleSection d-flex">Article</h1>
         <button class="buttonComponentThin d-flex">Appercu</button>
     </div>
-    <div class="col-12 multipleSection">
+    <div class="col-12 marginBottomtMultipleSection">
         <div class="sectionHeader d-flex">
             <h1 class="titleSection d-flex">Description</h1>
         </div>
@@ -13,7 +13,7 @@
         <p id="modalButtonAddArticle" class="actionVerticalSection"><img src=<?php App\Core\View::getAssets("icons/plus-solid.svg")?> alt="" height="15" width="15">Ajouter une description</p>
     </div>
     <br>
-    <div class="col-12 multipleSection">
+    <div class="col-12 marginBottomtMultipleSection">
         <div class="sectionHeader d-flex">
             <h1 class="titleSection d-flex">Catégorie</h1>
         </div>
@@ -28,7 +28,7 @@
         <p id="modalButtonAddCategoryArticle" class="actionVerticalSection"><img src=<?php App\Core\View::getAssets("icons/plus-solid.svg")?> alt="" height="15" width="15">Créer une nouvelle catégorie</p>
     </div>
     <br>
-    <div class="col-12 multipleSection">
+    <div class="col-12 marginBottomtMultipleSection">
         <div class="sectionHeader d-flex">
             <h1 class="titleSection d-flex">Page</h1>
         </div>
@@ -43,7 +43,7 @@
         <p id="modalButtonAddPageArticle" class="actionVerticalSection"><img src=<?php App\Core\View::getAssets("icons/plus-solid.svg")?> alt="" height="15" width="15">Créer une nouvelle Page</p>
     </div>
     <br>
-    <div class="col-12 multipleSection">
+    <div class="col-12 marginBottomtMultipleSection">
         <div class="sectionHeader d-flex">
             <h1 class="titleSection d-flex">Publication</h1>
         </div>
