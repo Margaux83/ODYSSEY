@@ -82,6 +82,11 @@
   controller: Security
   action: register
 
+/exam-form:
+  controller: Base
+  action: form
+  
+
 /login:
   controller: Security
   action: login

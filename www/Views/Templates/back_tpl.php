@@ -21,12 +21,10 @@
             <button onclick="toggleMenu('back-mainPage-menuResponsive')" class="fullButton d-inline-block d-lg-none"><img src=<?php App\Core\View::getAssets("icons/icon_menu.png")?> alt="Menu" class="iconWhite"></button>
         </div>
     </header>
-    <nav id="back-mainPage-menu" class="d-none d-lg-flex">
-        <?php  App\Core\MenuBuilder::createMenu($menuData, $actualUri); ?>
-    </nav>
-    <nav id="back-mainPage-menuResponsive" class="d-block d-lg-none hidden">
-		<?php  App\Core\MenuBuilder::createMenu($menuData, $actualUri); ?>
-    </nav>
+    <?php 
+        $menuBuilder = App\Core\MenuBuilder::getInstance();
+        $menuBuilder::createMenu(); 
+    ?>
     <main id="back-mainPage-mainContent">
         <div id="back-manPage-gridContent" class="d-flex-wrap d-lg-grid">
 			<?php include $this->view ?>
