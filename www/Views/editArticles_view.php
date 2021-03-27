@@ -221,66 +221,70 @@
     </div>
 </section>
 
-<div id="myModal" class="col-12 modal" >
-    <!-- Modal content -->
-    <div class="modal-content-Article d-flex-wrap d-flex">
-        <div class="headerForModalSearch d-flex">
-            <h1 class="titleModal d-flex">Recherche d'article</h1>
-            <span class="close d-flex">&times;</span>
-        </div>
-        <br><br>
+   <div id="myModal" class="col-12 modal">
 
-        <form class="d-flex d-flex-wrap">
-            <label for="title"  class="labelModal">Titre</label>
-            <input type="text" id="inputTitleArticle" name="title" class="inputModal">
-            <br>
+       <!-- Modal content -->
+       <div class="modal-content-Article d-flex-wrap" style="flex-grow: 1">
+           <div>
+               <div class="headerForModalSearch d-flex">
+                   <h1 class="titleModal d-flex">Recherche d'article</h1>
+                   <span class="close d-flex">&times;</span>
+               </div>
+               <br><br>
 
-            <label for="category" class="labelModal">Catégorie</label>
-            <select name="category" id="">
-                <option value="Voyage">Voyage</option>
-                <option value="Nature">Nature</option>
-                <option value="Culture">Culture</option>
-                <option value="Pays">Pays</option>
-            </select>
+               <form class="d-flex d-flex-wrap">
+                   <div class="d-flex divformModal d-flex-wrap">
+                       <label for="title"  class="labelModal ">Titre</label>
+                       <input type="text" name="title">
+                       <br>
+                       <label for="creator" class="labelModal ">Créateur</label>
+                       <input type="text" name="creator">
+                       <br>
+                       <label for="dateCreation" class="labelModal">Date de création</label>
+                       <input id="dateCreationArticle" type="date" name="dateCreation">
+                   </div>
+                   <div class="d-flex divformModal d-flex-wrap">
+                       <label for="category" class="labelModal d-flex">Catégorie</label>
+                       <select name="category" id="">
+                           <option value="Voyage">Voyage</option>
+                           <option value="Nature">Nature</option>
+                           <option value="Culture">Culture</option>
+                           <option value="Pays">Pays</option>
+                       </select>
+                       <br>
+                       <label for="page" class="labelModal d-flex">Page</label>
+                       <select name="page" id="">
+                           <option value="Accueil">Accueil</option>
+                           <option value="Voyages">Voyages</option>
+                           <option value="Réservations">Réservations</option>
+                           <option value="Contact">Contact</option>
+                       </select>
+                   </div>
+                   <br>
 
-            <label for="page" class="labelModal">Page</label>
-            <select name="page" id="">
-                <option value="Accueil">Accueil</option>
-                <option value="Voyages">Voyages</option>
-                <option value="Réservations">Réservations</option>
-                <option value="Contact">Contact</option>
-            </select>
-            <br>
+                   <div class="d-flex divformModal d-flex-wrap">
+                       <label for="publication" class="labelModal d-flex">Publication</label>
+                       <select name="publication" id="">
+                           <option value="Tout de suite">Tout de suite</option>
+                           <option value="Dans 5 minutes">Dans 5 minutes</option>
+                           <option value="Dans 30 minutes">Dans 30 minutes</option>
+                           <option value="Dans 1 heure">Dans 1 heure</option>
+                       </select>
+                       <br>
+                       <label for="status" class="labelModal d-flex">Statut</label>
+                       <select name="status" id="">
+                           <option value="Validé et posté">Validé et posté</option>
+                           <option value="En attente de validation">En attente de validation</option>
+                           <option value="Brouillon">Brouillon</option>
+                           <option value="Créé">Créé</option>
+                       </select>
+                   </div>
 
-            <label for="publication" class="labelModal">Publication</label>
-            <select name="publication" id="">
-                <option value="Tout de suite">Tout de suite</option>
-                <option value="Dans 5 minutes">Dans 5 minutes</option>
-                <option value="Dans 30 minutes">Dans 30 minutes</option>
-                <option value="Dans 1 heure">Dans 1 heure</option>
-            </select>
-
-            <label for="status" class="labelModal">Statut</label>
-            <select name="status" id="">
-                <option value="Validé et posté">Validé et posté</option>
-                <option value="En attente de validation">En attente de validation</option>
-                <option value="Brouillon">Brouillon</option>
-                <option value="Créé">Créé</option>
-            </select>
-            <br>
-
-            <label for="creator" class="labelModal">Créateur</label>
-            <input type="text" name="creator" class="inputModal">
-            <br>
-
-            <label for="dateCreation" class="labelModal">Date de création</label>
-            <input id="dateCreationArticle" type="date" name="dateCreation" class="inputModal">
-            <br>
-
-            <button type="submit" class="buttonComponent d-flex" id="searchModalButton">Rechercher</button>
-        </form>
-    </div>
-</div>
+                   <button type="submit" class="buttonComponent d-flex" id="searchModalButton">Rechercher</button>
+               </form>
+           </div>
+       </div>
+   </div>
 
 
    <div id="ModalDescEditArticle" class="col-12 modal" >
@@ -364,6 +368,8 @@
 
 </section>
    <br><br>
+
+
 
 <script>
     $(document).ready(function(){
