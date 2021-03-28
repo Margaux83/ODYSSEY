@@ -9,7 +9,7 @@ use App\Core\View;
 class Article
 {
 
-    public function defaultAction($menuData, $actualUri)
+    public function defaultAction()
     {
         $security = new Security();
         if(!$security->isConnected()){
@@ -18,11 +18,11 @@ class Article
 
 
         //Affiche moi la vue dashboard;
-        $view = new View("articles", "back", $menuData, $actualUri);
+        $view = new View("articles", "back");
 
     }
 
-    public function addArticleAction($menuData, $actualUri)
+    public function addArticleAction()
     {
         $security = new Security();
         if(!$security->isConnected()){
@@ -31,11 +31,11 @@ class Article
 
 
         //Affiche moi la vue dashboard;
-        $view = new View("addArticles", "back", $menuData, $actualUri);
+        $view = new View("addArticles", "back");
 
     }
 
-    public function editArticleAction($menuData, $actualUri)
+    public function editArticleAction()
     {
         $security = new Security();
         if(!$security->isConnected()){
@@ -44,7 +44,7 @@ class Article
 
 
         //Affiche moi la vue dashboard;
-        $view = new View("editArticles", "back", $menuData, $actualUri);
+        $view = new View("editArticles", "back");
 
     }
 }

@@ -38,9 +38,11 @@ var chartOptions = {
 
 window.onload = function() {
     var ctx = document.getElementById("viewPerChart").getContext("2d");
-    window.myBar = new Chart(ctx, {
-        type: "bar",
-        data: barChartData,
-        options: chartOptions
-    });
+    if(document.getElementById("viewPerChart") != null) {
+        window.myBar = new Chart(ctx, {
+            type: "bar",
+            data: barChartData,
+            options: chartOptions
+        });
+    }
 };

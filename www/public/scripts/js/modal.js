@@ -64,7 +64,7 @@ if(document.getElementById("ModalPageAddArticle") != null) {
 
 var modalPageEditArticle = document.getElementById("ModalPageEditArticle");
 
-if(document.getElementById("ModalCategoryEditArticle") != null) {
+if(document.getElementById("ModalPageEditArticle") != null) {
 // When the user clicks on the button, open the modal
     $("#modalButtonEditPageArticle").on('click', function () {
         modalPageEditArticle.style.display = "block";
@@ -89,15 +89,28 @@ if(document.getElementById("myModal") != null) {
 
 }
 
-window.onclick = function(event) {
-    if (event.target == modalDescEditArticle) {
-        modalDescEditArticle.style.display = "none";
+window.addEventListener('click',function(event) {
+    console.log("ok");
+    if (event.target === modalDescEditArticle) {
+        $(modalDescEditArticle).css('display','none');
     }
-    if (event.target == modalDescAddArticle) {
-        modalDescAddArticle.style.display = "none";
+    if (event.target === modalDescAddArticle) {
+        $(modalDescAddArticle).css('display','none');
     }
-    if (event.target == modal) {
-        modal.style.display = "none";
+    if (event.target === modalCategoryAddArticle) {
+        $(modalCategoryAddArticle).css('display','none');
     }
-}
+    if (event.target === modalCategoryEditArticle) {
+        $(modalCategoryEditArticle).css('display','none');
+    }
+    if (event.target === modalPageAddArticle) {
+        $(modalPageAddArticle).css('display','none');
+    }
+    if (event.target === modalPageEditArticle) {
+        $(modalPageEditArticle).css('display','none');
+    }
+    if (event.target === modal) {
+        $(modal).css('display','none');
+    }
+});
 

@@ -150,3 +150,6 @@
         });
     });
 </script>
+
+<script src=<?php App\Core\View::getAssets("modal.js")?>></script>
+<script src=<?php App\Core\View::getAssets("popups.js")?>></script>

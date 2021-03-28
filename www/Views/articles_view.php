@@ -89,6 +89,7 @@
     </ul>
 </section>
 
+
 <section class="col-12" style="grid-column: 7 / 13; grid-row: 2;">
     <div class="sectionHeader d-flex">
         <h1 class="titleSection d-flex">Evolution du nombre de vues par articles</h1>
@@ -185,3 +186,6 @@
             </div>
         </div>
 </div>
+<script src=<?php App\Core\View::getAssets("charts.js")?>></script>
+<script src=<?php App\Core\View::getAssets("modal.js")?>></script>
+<script src=<?php App\Core\View::getAssets("popups.js")?>></script>
