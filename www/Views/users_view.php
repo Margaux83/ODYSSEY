@@ -77,10 +77,10 @@
 
 <section class="col-8" style="grid-column: 1 / 7; grid-row: 2;">
     <h1 class="titleSection"><img src=<?php App\Core\View::getAssets("icons/icon_stat.png")?> alt="">Evolution du nombre de connexion</h1>
-    <canvas id="bar-chart" width="400" height="400"></canvas>
+    <canvas id="bar-chart" width="775" height="400"></canvas>
 </section>
 
 <section class="col-8" style="grid-column: 7 / 13; grid-row: 2;">
     <h1 class="titleSection"><img src=<?php App\Core\View::getAssets("icons/icon_stat.png")?> alt="">Evolution des inscriptions</h1>
-    <canvas id="line-chart" width="400" height="400"></canvas>
+    <canvas id="line-chart" width="775" height="400"></canvas>
 </section>
