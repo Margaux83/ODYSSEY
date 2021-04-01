@@ -12,12 +12,12 @@ use App\Models\User;
 class Security{
 
 
-    public function defaultAction($menuData, $actualUri){
+    public function defaultAction(){
         echo "controller security action default";
     }
 
 
-    public function registerAction($menuData, $actualUri){
+    public function registerAction(){
 
         $user = new User();
         $user->setId(1);
@@ -44,7 +44,7 @@ class Security{
         //$user->save();
 
         $user = new User();
-        $view = new View("register", "front", $menuData, $actualUri);
+        $view = new View("register", "front");
         $form = $user->buildFormRegister();
         $view->assign("form", $form);
 
