@@ -3,9 +3,10 @@
 
 namespace App\Models;
 
+use App\Core\ArticleRepository;
 use App\Core\Database;
 
-class Article extends Database
+class Article extends ArticleRepository
 {
 
     private $id;

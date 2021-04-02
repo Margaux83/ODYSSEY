@@ -4,7 +4,9 @@
 
 
 <section class="col-12" style="grid-column: 1 / 10; grid-row: 1;">
-    <form method="post" enctype="multipart/form-data">
+    <form method="post" enctype="multipart/form-data" action="../Controllers/Article.php">
+        <?php echo($_SERVER['PHP_SELF']);
+        die();?>
     <div class="formTitleHeadOfPage">
 
             <label for="title"  class="label">Veuillez choisir le titre pour votre article</label>

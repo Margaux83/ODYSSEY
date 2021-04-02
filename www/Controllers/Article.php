@@ -30,8 +30,8 @@ class Article
         if(!$security->isConnected()){
             die("Error not authorized");
         }
-       /* $article = new Arti();
-        $article->setTitle("Titre de l'article");
+      $article = new Arti();
+        /*$article->setTitle("Titre de l'article");
         $article->setContent("Lorem Ipsum is simply dummy
          text of the printing and typesetting industry. Lorem Ipsum 
          has been the industry's standard dummy text ever since the 
@@ -58,8 +58,11 @@ class Article
         $article->setIsdeleted(0);
         $article->setId_category(1);
         $article->setId_article_page(1);
-        $article->setId_user(1);
-        $article->saveArticle();*/
+        $article->setId_user(1);*/
+
+        var_dump($_POST['title']);
+        die();
+       // $article->saveArticle();
 
         //Affiche moi la vue dashboard;
 
@@ -107,7 +110,7 @@ class Article
         $article->setId_category(1);
         $article->setId_article_page(1);
         $article->setId_user(1);
-        $article->saveArticle();
+        //$article->saveArticle();
 
         //Affiche moi la vue dashboard;
         $view = new View("editArticles", "back");
