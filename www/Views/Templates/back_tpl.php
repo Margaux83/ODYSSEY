@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
   	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>Odyssey - <?= App\Core\View::getActualPageTitle($menuData, $actualUri) ?></title>
+	<title>Odyssey - <?php App\Core\View::getActualPageTitle() ?></title>
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 
     <link rel="stylesheet" type="text/css" href=<?php App\Core\View::getAssets("main.css")?>>
@@ -27,6 +27,7 @@
         $menuBuilder::createMenu(); 
     ?>
     <main id="back-mainPage-mainContent">
+        <h1><?php App\Core\View::getActualPageTitle() ?></h1>
         <div id="back-manPage-gridContent" class="d-flex-wrap d-lg-grid">
 			<?php include $this->view ?>
 

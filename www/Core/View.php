@@ -36,12 +36,9 @@ class View
 		}
 	}
 
-    public static function getActualPageTitle($menuInfos, $actualUri) {
-        foreach ($menuInfos as $link => $data) {
-            if($actualUri == $link) {
-                return $data['menuData']['label'];
-            }
-        }
+    public static function getActualPageTitle() {
+		$actualPageInfo = MenuBuilder::getActualPageInfo();
+		echo $actualPageInfo['menuData']['label'] ?? '';
     }
 
 	public function setTemplate($template){
