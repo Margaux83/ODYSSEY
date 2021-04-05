@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
   	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>Odyssey - </title>
+	<title>Odyssey - <?php App\Core\View::getActualPageTitle() ?></title>
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 
     <link rel="stylesheet" type="text/css" href=<?php App\Core\View::getAssets("main.css")?>>
@@ -22,17 +22,20 @@
             <button onclick="toggleMenu('back-mainPage-menuResponsive')" class="fullButton d-inline-block d-lg-none"><img src=<?php App\Core\View::getAssets("icons/icon_menu.png")?> alt="Menu" class="iconWhite"></button>
         </div>
     </header>
-    <nav id="back-mainPage-menu" class="d-none d-lg-flex">
-        <?php  App\Core\MenuBuilder::createMenu($menuData, $actualUri); ?>
-    </nav>
-    <nav id="back-mainPage-menuResponsive" class="d-block d-lg-none hidden">
-		<?php  App\Core\MenuBuilder::createMenu($menuData, $actualUri); ?>
-    </nav>
+    <?php 
+        $menuBuilder = App\Core\MenuBuilder::getInstance();
+        $menuBuilder::createMenu(); 
+    ?>
     <main id="back-mainPage-mainContent">
+        <h1><?php App\Core\View::getActualPageTitle() ?></h1>
         <div id="back-manPage-gridContent" class="d-flex-wrap d-lg-grid">
 			<?php include $this->view ?>
+
+
         </div>
     </main>
 </body>
+
 <script src=<?php App\Core\View::getAssets("settings.js")?>></script>
+
 </html>

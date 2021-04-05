@@ -13,12 +13,9 @@ class View
 	private $view; // default, dashboard, profile, ....
 	private $data = [];
 
-	public function __construct($view="default", $template="front", $menuData = [], $actualUri = ""){
+	public function __construct($view="default", $template="front"){
 		$this->setTemplate($template);
 		$this->setView($view);
-		$this->assign("menuData", $menuData);
-		$this->assign("actualUri", $actualUri);
-		
 	}
 
 	static function getAssets(string $nameFile){
@@ -39,6 +36,10 @@ class View
 		}
 	}
 
+    public static function getActualPageTitle() {
+		$actualPageInfo = MenuBuilder::getActualPageInfo();
+		echo $actualPageInfo['menuData']['label'] ?? '';
+    }
 
 	public function setTemplate($template){
 		if(file_exists("Views/Templates/".$template."_tpl.php")){
