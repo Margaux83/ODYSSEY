@@ -92,9 +92,20 @@
   controller: Security
   action: register
 
+/exam-form:
+  controller: Base
+  action: form
+  
+
 /login:
   controller: Security
   action: login
+  menuData:
+    visible: false
+    min-statut: false
+    listId: connexion
+    label: Connexion
+    icon: icon_web
 
 /se-connecter:
   controller: Security
@@ -104,6 +115,12 @@
 /logout:
   controller: Security
   action: logout
+  menuData:
+    visible: false
+    min-statut: false
+    listId: connexion
+    label: Déconnexion
+    icon: icon_web
 
 
 /liste-des-utilisateurs:
@@ -128,4 +145,14 @@
     min-statut: true
     listId: settings
     label: Paramètres
+    icon: icon_settings
+
+/installer:
+  controller: Installer
+  action: setup
+  menuData:
+    visible: false
+    min-statut: true
+    listId: installer
+    label: Installation
     icon: icon_settings

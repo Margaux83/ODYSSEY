@@ -4,10 +4,47 @@ namespace App\Core;
 
 class MenuBuilder
 {
-    public static function createMenu($menuInfos, $actualUri){
+    private static $_instance = null;
+
+    private static $_menuData;
+    private static $_actualUri;
+
+    public function getMenuData(){
+        return self::$_menuData;
+    }
+    public function getActualUri(){
+        return self::$_actualUri;
+    }
+
+    private function __construct($menuData, $actualUri) {
+        self::$_menuData = $menuData;
+        self::$_actualUri = $actualUri;
+    }
+
+    public static function getActualPageInfo() {
+        $menuData = self::getMenuData();
+        if (!empty($menuData)){
+            $actualUri = self::getActualUri();
+            $actualPageInfo = $menuData[$actualUri];
+            $actualPageInfo['uri'] = $actualUri;
+            return $actualPageInfo;
+        }
+    }
+
+    public static function getInstance($menuData = [], $actualUri = '') {
+        if(is_null(self::$_instance)) {
+            self::$_instance = new MenuBuilder($menuData, $actualUri);  
+        }
+
+        return self::$_instance;
+    }
+
+    public static function createMenu(){
+        $menuData = self::$_menuData;
+        $actualUri = self::$_actualUri;
         $menuListBuilder = [];
         $html = '';
-        foreach ($menuInfos as $link => $data) {
+        foreach ($menuData as $link => $data) {
             if (!empty($data['menuData'])){
                 //TODO : check the min-status
                 if ($data['menuData']['visible']){
@@ -28,6 +65,11 @@ class MenuBuilder
         foreach ($menuListBuilder as $listId => $htmlValue) {
             $html.= '<ul id="'.$listId.'">'.$htmlValue.'</ul>';
         }
-        echo $html;
+
+        $htmlMenu = '<nav id="back-mainPage-menu" class="d-none d-lg-flex">'
+            . $html . '</nav>'
+            . '<nav id="back-mainPage-menuResponsive" class="d-block d-lg-none hidden">'
+            . $html . '</nav>';
+        echo $htmlMenu;
     }
 }
