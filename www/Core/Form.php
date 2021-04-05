@@ -6,11 +6,7 @@ class Form
 {
     public static function validator($data, $config){
         print_r($data);
-        $errors = [];
-
-        if( count($data) == count($config["input"])){
-
-            foreach ($config["input"] as $name => $configInput) {
+		$errors = [];
 
                 if( !empty($configInput["lengthMin"])
                     && is_numeric($configInput["lengthMin"])
@@ -20,13 +16,13 @@ class Form
 
                 }
 
-                if( !empty($configInput["lengthMax"])
-                    && is_numeric($configInput["lengthMax"])
-                    && strlen($data[$name])>$configInput["lengthMax"] ){
+                if( !empty($configInput["lengthMax"]) 
+					&& is_numeric($configInput["lengthMax"]) 
+					&& strlen($data[$name])>$configInput["lengthMax"] ){
+					
+					$errors[] = $configInput["error"];
 
-                    $errors[] = $configInput["error"];
-
-                }
+				}
 
                 if ($configInput["type"] === 'date'){
                     if( !empty($configInput["dateMin"])){
@@ -41,14 +37,9 @@ class Form
                     }
                 }
 
-            }
+                    $errors[] = $configInput["error"];
 
-        }else{
-            $errors[] = "Tentative de Hack (Faille XSS)";
-        }
-
-        return $errors; //tableau des erreurs
-    }
+                }
 
     public static function showForm($form){
         $html = "<form class='".($form["config"]["class"]??"")."' method='".( self::cleanWord($form["config"]["method"]) ?? "GET" )."' action='".( $form["config"]["action"] ?? "" )."'>";
@@ -81,7 +72,7 @@ class Form
                             <label for='".$value."'>".$optionValue["label"]."</label>";
                 }
             }
-
+            
             else {
                 $html .= "<input 
                             id='".$name."'
@@ -95,19 +86,16 @@ class Form
 
             $html .= "</div>";
 
+                $html .= "</select>";
+            }
 
-        }
+            $html .= "</div>";
 
-
-        $html .= "<input type='submit' value='".( self::cleanWord($form["config"]["Submit"]) ?? "Valider" )."'></form>";
-
-
-        echo $html;
+		echo $html;
     }
 
 
-    public static function cleanWord($word){
-        return str_replace("'", "&apos;", $word);
-    }
+	public static function cleanWord($word){
+		return str_replace("'", "&apos;", $word);
+	}
 }
-

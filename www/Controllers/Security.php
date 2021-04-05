@@ -12,12 +12,13 @@ use App\Models\User;
 class Security{
 
 
-    public function defaultAction(){
+    public function defaultAction($menuData, $actualUri){
         echo "controller security action default";
     }
 
 
-    public function registerAction(){
+    public function registerAction($menuData, $actualUri){
+
 
         $user = new User();
         $user->setId(1);
@@ -29,19 +30,21 @@ class Security{
         $user->setId(3);
         $user->setLastname("Tutu");
 
-            [id:App\Models\User:private] => 3
+         
+            [id:App\Models\User:private] => 3 
             [firstname:protected] => Toto
-            [lastname:protected] => Tutu
+            [lastname:protected] => Tutu 
             [email:protected] => y.skrzypczyk@gmail.com
             [pwd:protected] => Test1234
             [country:protected] => fr
-            [status:protected] => 0
+            [status:protected] => 0 
             [role:protected] => 0
             [isDeleted:protected] => 0
         */
 
 
         //$user->save();
+
 
         $user = new User();
         $view = new View("register", "front");
