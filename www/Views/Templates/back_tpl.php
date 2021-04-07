@@ -2,9 +2,9 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Odyssey - <?= App\Core\View::getActualPageTitle($menuData, $actualUri) ?></title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+  	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>Odyssey - <?php App\Core\View::getActualPageTitle() ?></title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
 
     <link rel="stylesheet" type="text/css" href=<?php App\Core\View::getAssets("main.css")?>>
 
@@ -28,29 +28,28 @@
 
 </head>
 <body>
+    <header>
+        <img src=<?php App\Core\View::getAssets("logos/odyssey_logo_v2.svg")?> alt="Odyssey" class="back-mainPage-header-logo">
+        <p class="back-mainPage-header-websiteName">Mon projet annuel Web</p>
+        <div class="back-mainPage-header-actionContainer">
+            <button class="fullButton"><img src=<?php App\Core\View::getAssets("icons/icon_user.png")?> alt="Accès au site" class="iconWhite"></button>
+            <button onclick="alert('Accès au site non disponible')" class="fullButton"><img src=<?php App\Core\View::getAssets("icons/icon_web.png")?> alt="Accès au site" class="iconWhite"></button>
+            <button onclick="toggleMenu('back-mainPage-menuResponsive')" class="fullButton d-inline-block d-lg-none"><img src=<?php App\Core\View::getAssets("icons/icon_menu.png")?> alt="Menu" class="iconWhite"></button>
+        </div>
+    </header>
+    <?php 
+        $menuBuilder = App\Core\MenuBuilder::getInstance();
+        $menuBuilder::createMenu(); 
+    ?>
+    <main id="back-mainPage-mainContent">
+        <h1><?php App\Core\View::getActualPageTitle() ?></h1>
+        <div id="back-manPage-gridContent" class="d-flex-wrap d-lg-grid">
+			<?php include $this->view ?>
 
-<header>
-    <img src=<?php App\Core\View::getAssets("logos/odyssey_logo_v2.svg")?> alt="Odyssey" class="back-mainPage-header-logo">
-    <p class="back-mainPage-header-websiteName">Mon projet annuel Web</p>
-    <div class="back-mainPage-header-actionContainer">
-        <button class="fullButton"><img src=<?php App\Core\View::getAssets("icons/icon_user.png")?> alt="Accès au site" class="iconWhite"></button>
-        <button class="fullButton"><img src=<?php App\Core\View::getAssets("icons/icon_web.png")?> alt="Accès au site" class="iconWhite"></button>
-        <button onclick="toggleMenu('back-mainPage-menuResponsive')" class="fullButton d-inline-block d-lg-none"><img src=<?php App\Core\View::getAssets("icons/icon_menu.png")?> alt="Menu" class="iconWhite"></button>
-    </div>
-</header>
-<?php
-$menuBuilder = App\Core\MenuBuilder::getInstance();
-$menuBuilder::createMenu();
-?>
-<main id="back-mainPage-mainContent">
-    <div id="back-manPage-gridContent" class="d-flex-wrap d-lg-grid">
-        <?php include $this->view ?>
 
-    </div>
-</main>
-
+        </div>
+    </main>
 <script src="../../Trumbowyg/dist/trumbowyg.min.js"></script>
 </body>
-
 
 </html>

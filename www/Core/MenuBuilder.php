@@ -21,9 +21,21 @@ class MenuBuilder
         self::$_actualUri = $actualUri;
     }
 
+
+    public static function getActualPageInfo() {
+        $menuData = self::getMenuData();
+        if (!empty($menuData)){
+            $actualUri = self::getActualUri();
+            $actualPageInfo = $menuData[$actualUri];
+            $actualPageInfo['uri'] = $actualUri;
+            return $actualPageInfo;
+        }
+    }
+
     public static function getInstance($menuData = [], $actualUri = '') {
         if(is_null(self::$_instance)) {
-            self::$_instance = new MenuBuilder($menuData, $actualUri);
+            self::$_instance = new MenuBuilder($menuData, $actualUri);  
+
         }
 
         return self::$_instance;

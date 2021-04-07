@@ -5,7 +5,7 @@ namespace App\Core;
 class Form
 {
     public static function validator($data, $config){
-        print_r($data);
+
         $errors = [];
 
         if( count($data) == count($config["input"])){
@@ -18,27 +18,6 @@ class Form
 
                     $errors[] = $configInput["error"];
 
-                }
-
-                if( !empty($configInput["lengthMax"])
-                    && is_numeric($configInput["lengthMax"])
-                    && strlen($data[$name])>$configInput["lengthMax"] ){
-
-                    $errors[] = $configInput["error"];
-
-                }
-
-                if ($configInput["type"] === 'date'){
-                    if( !empty($configInput["dateMin"])){
-                        if (date($configInput["dateMin"]) > $data[$name] ){
-                            array_push($errors, "La date minimale est ". $configInput["dateMin"]);
-                        }
-                    }
-                    if( !empty($configInput["dateMax"])){
-                        if (date($configInput["dateMax"] < $data[$name] )){
-                            array_push($errors, "La date minimale est ". $configInput["dateMax"]);
-                        }
-                    }
                 }
 
             }
@@ -59,12 +38,14 @@ class Form
             $html .="<div><label for='".$name."'>".($dataInput["label"]??"")." </label>";
 
 
+
             if ($dataInput["type"] === "select"){
                 $html .= "<select 
                             id='".$name."' 
                             name='".$name."'
                             ".((!empty($dataInput["required"]))?"required='required'":"")."
                             >";
+
 
                 foreach ($dataInput["options"] as $value => $optionValue) {
                     $html .= "<option
@@ -94,8 +75,6 @@ class Form
             }
 
             $html .= "</div>";
-
-
         }
 
 
@@ -110,4 +89,3 @@ class Form
         return str_replace("'", "&apos;", $word);
     }
 }
-
