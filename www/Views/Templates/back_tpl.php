@@ -31,7 +31,6 @@
         <div id="back-manPage-gridContent" class="d-flex-wrap d-lg-grid">
 			<?php include $this->view ?>
 
-
         </div>
     </main>
 </body>
