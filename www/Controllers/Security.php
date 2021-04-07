@@ -29,7 +29,6 @@ class Security{
         $user = new User();
         $user->setId(3);
         $user->setLastname("Tutu");
-
          
             [id:App\Models\User:private] => 3 
             [firstname:protected] => Toto
@@ -37,7 +36,7 @@ class Security{
             [email:protected] => y.skrzypczyk@gmail.com
             [pwd:protected] => Test1234
             [country:protected] => fr
-            [status:protected] => 0 
+            [status:protected] => 0
             [role:protected] => 0
             [isDeleted:protected] => 0
         */

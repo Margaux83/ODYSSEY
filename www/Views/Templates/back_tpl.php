@@ -23,9 +23,6 @@
     <script src=<?php App\Core\View::getAssets("libraries/chart.js")?>></script>
     <script src=<?php App\Core\View::getAssets("libraries/jquery-3.5.1.min.js")?>></script>
 
-    <link rel="stylesheet" href="../../Trumbowyg/dist/ui/trumbowyg.min.css">
-   <link rel="stylesheet" href="../../Trumbowyg/dist/plugins/colors/ui/trumbowyg.colors.min.css">
-
 </head>
 <body>
     <header>

@@ -33,7 +33,8 @@ class MenuBuilder
 
     public static function getInstance($menuData = [], $actualUri = '') {
         if(is_null(self::$_instance)) {
-            self::$_instance = new MenuBuilder($menuData, $actualUri);
+            self::$_instance = new MenuBuilder($menuData, $actualUri);  
+
         }
 
         return self::$_instance;

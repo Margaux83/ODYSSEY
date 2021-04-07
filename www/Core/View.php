@@ -7,7 +7,6 @@ use App\Core\MenuBuilder;
 
 class View
 {
-
 	// front_tpl.php
 	private $template; // front ou back
 	// default_view.php

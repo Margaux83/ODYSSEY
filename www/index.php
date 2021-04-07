@@ -27,9 +27,11 @@ if( file_exists("./Controllers/".$c.".php")){
 
     include "./Controllers/".$c.".php";
 
+
     if(class_exists($cWithNamespace)){
         //$c = App\Security // User
         $cObject = new $cWithNamespace();
+
 		if(method_exists($cObject, $a)){
 			//$a = loginAction // defaultAction
 			$cObject->$a();
@@ -40,5 +42,6 @@ if( file_exists("./Controllers/".$c.".php")){
     }else{
         die("La classe ".$c." n'existe pas");
     }
-
+}else {
+    die("Le fichier " . $c . " n'existe pas");
 }
