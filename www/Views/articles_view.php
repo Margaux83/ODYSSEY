@@ -124,18 +124,18 @@
                 <div class="d-flex divformModal d-flex-wrap">
                     <label for="category" class="labelModal d-flex">Catégorie</label>
                     <select name="category" id="">
-                        <option value="Voyage">Voyage</option>
-                        <option value="Nature">Nature</option>
-                        <option value="Culture">Culture</option>
-                        <option value="Pays">Pays</option>
+                        <option value="1">Voyage</option>
+                        <option value="2">Nature</option>
+                        <option value="3">Culture</option>
+                        <option value="4">Pays</option>
                     </select>
                     <br>
                     <label for="page" class="labelModal d-flex">Page</label>
                     <select name="page" id="">
-                        <option value="Accueil">Accueil</option>
-                        <option value="Voyages">Voyages</option>
-                        <option value="Réservations">Réservations</option>
-                        <option value="Contact">Contact</option>
+                        <option value="1">Accueil</option>
+                        <option value="2">Voyages</option>
+                        <option value="3">Réservations</option>
+                        <option value="4">Contact</option>
                     </select>
                 </div>
                 <br>
@@ -143,18 +143,18 @@
                 <div class="d-flex divformModal d-flex-wrap">
                     <label for="publication" class="labelModal d-flex">Publication</label>
                     <select name="publication" id="">
-                        <option value="Tout de suite">Tout de suite</option>
-                        <option value="Dans 5 minutes">Dans 5 minutes</option>
-                        <option value="Dans 30 minutes">Dans 30 minutes</option>
-                        <option value="Dans 1 heure">Dans 1 heure</option>
+                        <option value="1">Tout de suite</option>
+                        <option value="2">Dans 5 minutes</option>
+                        <option value="3">Dans 30 minutes</option>
+                        <option value="4">Dans 1 heure</option>
                     </select>
                     <br>
                     <label for="status" class="labelModal d-flex">Statut</label>
                     <select name="status" id="">
-                        <option value="Validé et posté">Validé et posté</option>
-                        <option value="En attente de validation">En attente de validation</option>
-                        <option value="Brouillon">Brouillon</option>
-                        <option value="Créé">Créé</option>
+                        <option value="1">Validé et posté</option>
+                        <option value="2">En attente de validation</option>
+                        <option value="3">Brouillon</option>
+                        <option value="4">Créé</option>
                     </select>
                 </div>
 
