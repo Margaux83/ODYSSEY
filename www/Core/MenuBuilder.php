@@ -21,21 +21,9 @@ class MenuBuilder
         self::$_actualUri = $actualUri;
     }
 
-
-    public static function getActualPageInfo() {
-        $menuData = self::getMenuData();
-        if (!empty($menuData)){
-            $actualUri = self::getActualUri();
-            $actualPageInfo = $menuData[$actualUri];
-            $actualPageInfo['uri'] = $actualUri;
-            return $actualPageInfo;
-        }
-    }
-
     public static function getInstance($menuData = [], $actualUri = '') {
         if(is_null(self::$_instance)) {
             self::$_instance = new MenuBuilder($menuData, $actualUri);  
-
         }
 
         return self::$_instance;
@@ -52,8 +40,8 @@ class MenuBuilder
                 if ($data['menuData']['visible']){
                     $class = $actualUri == $link ? ' class="selected"' : '';
                     $html= '<li'.$class.'><a href="'.$link.'">'
-                        .'<img src="public/images/icons/'.$data['menuData']['icon'].'.png" alt="" class="icon iconWhite"><p>'.$data['menuData']['label'].'</p></a>'
-                        .'</a></li>';
+                            .'<img src="public/images/icons/'.$data['menuData']['icon'].'.png" alt="" class="icon iconWhite"><p>'.$data['menuData']['label'].'</p></a>'
+                            .'</a></li>';
                     if (array_key_exists($data['menuData']['listId'], $menuListBuilder)){
                         $menuListBuilder[$data['menuData']['listId']] .= $html;
                     }else {
