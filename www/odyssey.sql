@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : database
--- Généré le : mar. 06 avr. 2021 à 20:24
+-- Généré le : jeu. 08 avr. 2021 à 17:33
 -- Version du serveur :  5.7.32
 -- Version de PHP : 7.4.11
 
@@ -170,7 +170,7 @@ ALTER TABLE `ody_Article_Page`
 -- Index pour la table `ody_Category`
 --
 ALTER TABLE `ody_Category`
-  ADD UNIQUE KEY `ID` (`ID`);
+  ADD PRIMARY KEY (`ID`) USING BTREE;
 
 --
 -- Index pour la table `ody_Comment`
@@ -183,7 +183,7 @@ ALTER TABLE `ody_Comment`
 -- Index pour la table `ody_Config`
 --
 ALTER TABLE `ody_Config`
-  ADD UNIQUE KEY `ID` (`ID`);
+  ADD PRIMARY KEY (`ID`) USING BTREE;
 
 --
 -- Index pour la table `ody_Page`
@@ -200,6 +200,52 @@ ALTER TABLE `ody_User`
   ADD PRIMARY KEY (`ID`) USING BTREE;
 
 --
+-- AUTO_INCREMENT pour les tables déchargées
+--
+
+--
+-- AUTO_INCREMENT pour la table `ody_Article`
+--
+ALTER TABLE `ody_Article`
+  MODIFY `ID` int(11) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT pour la table `ody_Article_Page`
+--
+ALTER TABLE `ody_Article_Page`
+  MODIFY `ID` int(11) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT pour la table `ody_Category`
+--
+ALTER TABLE `ody_Category`
+  MODIFY `ID` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT pour la table `ody_Comment`
+--
+ALTER TABLE `ody_Comment`
+  MODIFY `ID` int(11) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT pour la table `ody_Config`
+--
+ALTER TABLE `ody_Config`
+  MODIFY `ID` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT pour la table `ody_Page`
+--
+ALTER TABLE `ody_Page`
+  MODIFY `ID` int(11) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT pour la table `ody_User`
+--
+ALTER TABLE `ody_User`
+  MODIFY `ID` int(11) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
 -- Contraintes pour les tables déchargées
 --
 
@@ -214,8 +260,8 @@ ALTER TABLE `ody_Article`
 -- Contraintes pour la table `ody_Category`
 --
 ALTER TABLE `ody_Category`
-  ADD CONSTRAINT `ody_Category_ibfk_1` FOREIGN KEY (`ID`) REFERENCES `ody_Page` (`id_Category`),
-  ADD CONSTRAINT `ody_Category_ibfk_2` FOREIGN KEY (`ID`) REFERENCES `ody_Article` (`id_Category`);
+  ADD CONSTRAINT `ody_Category_ibfk_1` FOREIGN KEY (`ID`) REFERENCES `ody_Article` (`id_Category`),
+  ADD CONSTRAINT `ody_Category_ibfk_2` FOREIGN KEY (`ID`) REFERENCES `ody_Page` (`id_Category`);
 
 --
 -- Contraintes pour la table `ody_Page`
@@ -227,10 +273,8 @@ ALTER TABLE `ody_Page`
 -- Contraintes pour la table `ody_User`
 --
 ALTER TABLE `ody_User`
-  ADD CONSTRAINT `ody_User_ibfk_1` FOREIGN KEY (`ID`) REFERENCES `ody_Article` (`id_User`),
-  ADD CONSTRAINT `ody_User_ibfk_2` FOREIGN KEY (`ID`) REFERENCES `ody_Page` (`id_User`),
-  ADD CONSTRAINT `ody_User_ibfk_3` FOREIGN KEY (`ID`) REFERENCES `ody_Page` (`id_User`),
-  ADD CONSTRAINT `ody_User_ibfk_4` FOREIGN KEY (`ID`) REFERENCES `ody_Page` (`id_User`);
+  ADD CONSTRAINT `ody_User_ibfk_1` FOREIGN KEY (`ID`) REFERENCES `ody_Page` (`id_User`),
+  ADD CONSTRAINT `ody_User_ibfk_2` FOREIGN KEY (`ID`) REFERENCES `ody_Article` (`id_User`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
