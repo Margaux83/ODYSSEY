@@ -28,6 +28,7 @@ class Security{
         $user = new User();
         $user->setId(3);
         $user->setLastname("Tutu");
+
          
             [id:App\Models\User:private] => 3 
             [firstname:protected] => Toto
@@ -37,20 +38,18 @@ class Security{
             [country:protected] => fr
             [status:protected] => 0 
             [role:protected] => 0 
->>>>>>> develop
             [isDeleted:protected] => 0
         */
 
 
         //$user->save();
 
-
         $user = new User();
         $view = new View("register", "front", $menuData, $actualUri);
         $form = $user->buildFormRegister();
         $view->assign("form", $form);
 
-
+        
 
         if(!empty($_POST)){
             $view->assign("form", $form);
@@ -84,7 +83,7 @@ class Security{
 
     public function listofusersAction($menuData, $actualUri){
 
-        $security = new coreSecurity();
+        $security = new coreSecurity(); 
         if(!$security->isConnected()){
             die("Error not authorized");
         }
