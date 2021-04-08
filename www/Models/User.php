@@ -5,23 +5,23 @@ use App\Core\Database;
 
 class User extends Database
 {
-	private $id=null;
-	protected $firstname;
-	protected $lastname;
-	protected $email;
-	protected $pwd;
-	protected $country;
-	protected $status;
-	protected $role;
-	protected $isDeleted;
+    private $id=null;
+    protected $firstname;
+    protected $lastname;
+    protected $email;
+    protected $pwd;
+    protected $country;
+    protected $status;
+    protected $role;
+    protected $isDeleted;
 
-	public function __construct(){
-		parent::__construct();
-	}
+    public function __construct(){
+        parent::__construct();
+    }
 
-	public function setId($id){
+    public function setId($id){
         $this->id = $id;
-		//Il va chercher en BDD toutes les informations de l'utilisateur
+        //Il va chercher en BDD toutes les informations de l'utilisateur
 
         $statement = $this->pdo->prepare("SELECT id, firstname, lastname, email, pwd, country FROM ".$this->table." WHERE id=:id");
         $statement->execute(array(":id" => $this->getId()));
@@ -35,92 +35,93 @@ class User extends Database
 
 
         //et il va alimenter l'objet avec toutes ces données
-       // $objects = [];
-       /* while ($obj = $statement->fetchObject(__CLASS__)) {
-           //var_dump($obj);
-            $array = (array)$obj;
-            var_dump($array);
-        }*/
-            //var_dump(array_diff_key($array,$myfields));
+        // $objects = [];
+        /* while ($obj = $statement->fetchObject(__CLASS__)) {
+            //var_dump($obj);
+             $array = (array)$obj;
+             var_dump($array);
+         }*/
+        //var_dump(array_diff_key($array,$myfields));
 
 
-	}
+    }
     public function getId(){
         return $this->id;
     }
 
 
-	public function setFirstname($firstname){
-		$this->firstname = $firstname;
-	}
+    public function setFirstname($firstname){
+        $this->firstname = $firstname;
+    }
 
     public function getFirstname()
     {
         return $this->firstname;
-	}
+    }
 
-	public function setLastname($lastname){
-		$this->lastname = $lastname;
-	}
+    public function setLastname($lastname){
+        $this->lastname = $lastname;
+    }
 
     public function getLastname()
     {
         return $this->lastname;
     }
 
-	public function setEmail($email){
-		$this->email = $email;
-	}
+    public function setEmail($email){
+        $this->email = $email;
+    }
 
     public function getEmail()
     {
         return $this->email;
     }
 
-	public function setPwd($pwd){
-		$this->pwd = $pwd;
-	}
+    public function setPwd($pwd){
+        $this->pwd = $pwd;
+    }
 
     public function getPwd()
     {
         return $this->pwd;
     }
 
-	public function setCountry($country){
-		$this->country = $country;
-	}
+    public function setCountry($country){
+        $this->country = $country;
+    }
 
     public function getCountry()
     {
         return $this->country;
     }
 
-	public function setStatus($status){
-		$this->status = $status;
-	}
+    public function setStatus($status){
+        $this->status = $status;
+    }
 
     public function getStatus()
     {
         return $this->status;
     }
 
-	public function setRole($role){
-		$this->role = $role;
-	}
+    public function setRole($role){
+        $this->role = $role;
+    }
 
     public function getRole()
     {
         return $this->role;
     }
 
-	public function setIsDeleted($isDeleted){
-		$this->isDeleted = $isDeleted;
-	}
+    public function setIsDeleted($isDeleted){
+        $this->isDeleted = $isDeleted;
+    }
 
     public function getIsDeleted()
     {
         return $this->isDeleted;
     }
+
 
 	public function buildFormRegister(){
 		return [
@@ -235,12 +236,4 @@ class User extends Database
 	}
 
 }
-
-
-
-
-
-
-
-
 

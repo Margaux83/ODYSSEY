@@ -8,6 +8,7 @@
     label: Accueil
     icon: icon_home
 
+
 /dashboard:
   controller: Base
   action: dashboard
@@ -18,6 +19,7 @@
     label: Tableau de bord
     icon: icon_home
 
+
 /articles:
   controller: Article
   action: default
@@ -26,6 +28,26 @@
     min-statut: true
     listId: basics
     label: Articles
+    icon: icon_page
+
+/ajouter-article:
+  controller: Article
+  action: addArticle
+  menuData:
+    visible: true
+    min-statut: true
+    listId: basics
+    label: Ajouter un article
+    icon: icon_page
+
+/modifier-article:
+  controller: Article
+  action: editArticle
+  menuData:
+    visible: true
+    min-statut: true
+    listId: basics
+    label: Modifier un article
     icon: icon_page
 
 /users:
@@ -90,6 +112,12 @@
 /login:
   controller: Security
   action: login
+  menuData:
+    visible: false
+    min-statut: false
+    listId: connexion
+    label: Connexion
+    icon: icon_web
 
 /se-connecter:
   controller: Security
@@ -99,6 +127,12 @@
 /logout:
   controller: Security
   action: logout
+  menuData:
+    visible: false
+    min-statut: false
+    listId: connexion
+    label: Déconnexion
+    icon: icon_web
 
 
 /liste-des-utilisateurs:
@@ -123,4 +157,14 @@
     min-statut: true
     listId: settings
     label: Paramètres
+    icon: icon_settings
+
+/installer:
+  controller: Installer
+  action: setup
+  menuData:
+    visible: false
+    min-statut: true
+    listId: installer
+    label: Installation
     icon: icon_settings

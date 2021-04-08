@@ -5,6 +5,7 @@ namespace App\Core;
 class FormBuilder
 {
     public static function validator($data, $config){
+
 		$errors = [];
 
 		if( count($data) == count($config["input"])){
@@ -37,6 +38,7 @@ class FormBuilder
 			$html .="<div><label for='".$name."'>".($dataInput["label"]??"")." </label>";
 
 
+
             if ($dataInput["type"] === "select"){
                 $html .= "<select 
                             id='".$name."' 
@@ -44,6 +46,7 @@ class FormBuilder
                             ".((!empty($dataInput["required"]))?"required='required'":"")."
                             >";
                 
+
                 foreach ($dataInput["options"] as $value => $optionValue) {
                     $html .= "<option
                             value='".$value."'
@@ -59,7 +62,7 @@ class FormBuilder
                             <label for='".$value."'>".$optionValue["label"]."</label>";
                 }
             }
-            
+
             else {
                 $html .= "<input 
                             id='".$name."'
@@ -72,8 +75,6 @@ class FormBuilder
             }
 
             $html .= "</div>";
-
-
 		}
 		
 
