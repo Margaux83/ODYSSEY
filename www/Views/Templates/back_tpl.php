@@ -23,6 +23,9 @@
     <script src=<?php App\Core\View::getAssets("libraries/chart.js")?>></script>
     <script src=<?php App\Core\View::getAssets("libraries/jquery-3.5.1.min.js")?>></script>
 
+
+    <script src=<?php App\Core\View::getAssets("chart.js")?>></script>
+
 </head>
 <body>
     <header>
