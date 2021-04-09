@@ -12,7 +12,7 @@
             <label for="login-pwd" class="requiredLabel">Mot de passe</label>
             <input name="login-pwd" id="config-pwd" type="password" required>
         </div>
-        <div class="formElement">
+        <div class="formElement ">
             <p>Mot de passe oublié ?</p>
         </div>
 
