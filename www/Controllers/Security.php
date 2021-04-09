@@ -17,7 +17,7 @@ class Security{
     }
 
 
-    public function registerAction($menuData, $actualUri){
+    public function registerAction(){
 
         $user = new User();
         $user->setId(1);

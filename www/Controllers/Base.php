@@ -11,7 +11,7 @@ use App\Core\Form;
 class Base{
 
 
-	public function defaultAction($menuData, $actualUri){
+	public function defaultAction(){
 
 		//Je vais cherche en bdd le pseudo du user
 		$pseudo = "Prof";
@@ -20,7 +20,7 @@ class Base{
 		$view = new View();
 		$view->assign("pseudo", $pseudo);
 		$view->assign("age", 17);
-		$view->assign("register", "h", $menuData, $actualUri);
+		$view->assign("register", "h");
 
 		//envoyer le pseudo à la vue
 	}
