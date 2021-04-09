@@ -70,15 +70,24 @@ class Security{
             }
 
         }
-
     }
 
     public function loginAction(){
+        $coreSecurity = coreSecurity::getInstance();
+
+        if ($coreSecurity->getConnectedUser()){
+            header('Status: 400 Connected', true, 400);
+            header('Location: /dashboard');
+            return;
+        }
+
         $view = new View("login", "back_management");
     }
 
     public function logoutAction(){
-        echo "controller security action logout";
+        $coreSecurity = coreSecurity::getInstance();
+        unset($_SESSION["userId"]);
+        header('Location: /login');
     }
 
     public function listofusersAction(){

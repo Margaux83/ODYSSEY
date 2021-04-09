@@ -181,12 +181,10 @@ class Base{
 
 	//Must be connected
 	public function dashboardAction(){
-		
-		$security = new Security(); 
+		$security = Security::getInstance();
 		if(!$security->isConnected()){
-			die("Error not authorized");
+            header('Location: /login');
 		}
-
 
 		//Affiche moi la vue dashboard;
 		$view = new View("dashboard", "back");
