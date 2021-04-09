@@ -36,10 +36,6 @@ class View
 		}
 	}
 
-    public static function getActualPageTitle() {
-		$actualPageInfo = MenuBuilder::getActualPageInfo();
-		echo $actualPageInfo['menuData']['label'] ?? '';
-    }
 
 	public function setTemplate($template){
 		if(file_exists("Views/Templates/".$template."_tpl.php")){
