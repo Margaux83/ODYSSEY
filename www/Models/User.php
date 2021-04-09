@@ -43,8 +43,8 @@ class User extends Database
          }*/
         //var_dump(array_diff_key($array,$myfields));
 
-
     }
+  
     public function getId(){
         return $this->id;
     }

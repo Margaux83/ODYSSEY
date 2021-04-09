@@ -12,12 +12,12 @@ use App\Models\User;
 class Security{
 
 
-    public function defaultAction($menuData, $actualUri){
+    public function defaultAction(){
         echo "controller security action default";
     }
 
 
-    public function registerAction($menuData, $actualUri){
+    public function registerAction(){
 
         $user = new User();
         $user->setId(1);
@@ -46,7 +46,7 @@ class Security{
 
 
         $user = new User();
-        $view = new View("register", "front", $menuData, $actualUri);
+        $view = new View("register", "front");
         $form = $user->buildFormRegister();
         $view->assign("form", $form);
 
@@ -71,18 +71,27 @@ class Security{
             }
 
         }
-
     }
 
-    public function loginAction($menuData, $actualUri){
-        echo "controller security action login";
+    public function loginAction(){
+        $coreSecurity = coreSecurity::getInstance();
+
+        if ($coreSecurity->getConnectedUser()){
+            header('Status: 400 Connected', true, 400);
+            header('Location: /dashboard');
+            return;
+        }
+
+        $view = new View("login", "back_management");
     }
 
-    public function logoutAction($menuData, $actualUri){
-        echo "controller security action logout";
+    public function logoutAction(){
+        $coreSecurity = coreSecurity::getInstance();
+        unset($_SESSION["userId"]);
+        header('Location: /login');
     }
 
-    public function listofusersAction($menuData, $actualUri){
+    public function listofusersAction(){
 
         $security = new coreSecurity();
         if(!$security->isConnected()){
