@@ -69,7 +69,3 @@ class View
 		include $this->template;
 	}
 }
-
-
-
-

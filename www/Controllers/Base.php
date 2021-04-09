@@ -10,11 +10,10 @@ use App\Core\Form;
 
 class Base{
 
-
 	public function defaultAction(){
 
-		//Je vais cherche en bdd le pseudo du user
-		$pseudo = "Prof";
+        //Je vais cherche en bdd le pseudo du user
+        $pseudo = "Prof";
 
 		//Affiche moi la vue home;
 		$view = new View();
@@ -22,8 +21,8 @@ class Base{
 		$view->assign("age", 17);
 		$view->assign("register", "h");
 
-		//envoyer le pseudo à la vue
-	}
+        //envoyer le pseudo à la vue
+    }
 
 	public function formAction($menuData, $actualUri){
         $user = new User();
@@ -45,7 +44,7 @@ class Base{
 
 		}
 
-		$view = new View("register", "front", $menuData, $actualUri);
+		$view = new View("register", "front");
 		// (text, email, date, password, radio, checkbox) 
 		$form = [
 
@@ -186,7 +185,13 @@ class Base{
 		if(!$security->isConnected()){
 			die("Error not authorized");
 		}
-
+                $user = new User();
+                $user->setFirstname("Toto");
+                $user->setLastname("Titi");
+                $user->setEmail("y.skrzypczyk@gmail.com");
+                $user->setPwd("Test1234");
+                $user->setCountry("fr");
+                //$user->save();
 
 		//Affiche moi la vue dashboard;
 		$view = new View("dashboard", "back");
@@ -196,3 +201,4 @@ class Base{
 
 
 }
+
