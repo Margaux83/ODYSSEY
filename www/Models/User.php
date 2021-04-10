@@ -15,10 +15,16 @@ class User extends Database
     protected $role;
     protected $isDeleted;
 
+    /**
+     * User constructor.
+     */
     public function __construct(){
         parent::__construct();
     }
 
+    /**
+     * @param $id
+     */
     public function setId($id){
         $this->id = $id;
         //Il va chercher en BDD toutes les informations de l'utilisateur
@@ -44,25 +50,39 @@ class User extends Database
         //var_dump(array_diff_key($array,$myfields));
 
     }
-  
+
+    /**
+     * @return |null
+     */
     public function getId(){
         return $this->id;
     }
 
-
+    /**
+     * @param $firstname
+     */
     public function setFirstname($firstname){
         $this->firstname = $firstname;
     }
 
+    /**
+     * @return mixed
+     */
     public function getFirstname()
     {
         return $this->firstname;
     }
 
+    /**
+     * @param $lastname
+     */
     public function setLastname($lastname){
         $this->lastname = $lastname;
     }
 
+    /**
+     * @return mixed
+     */
     public function getLastname()
     {
         return $this->lastname;
@@ -72,11 +92,17 @@ class User extends Database
         $this->email = $email;
     }
 
+    /**
+     * @return mixed
+     */
     public function getEmail()
     {
         return $this->email;
     }
 
+    /**
+     * @param $pwd
+     */
     public function setPwd($pwd){
         $this->pwd = $pwd;
     }
@@ -86,15 +112,24 @@ class User extends Database
         return $this->pwd;
     }
 
+    /**
+     * @param $country
+     */
     public function setCountry($country){
         $this->country = $country;
     }
 
+    /**
+     * @return mixed
+     */
     public function getCountry()
     {
         return $this->country;
     }
 
+    /**
+     * @param $status
+     */
     public function setStatus($status){
         $this->status = $status;
     }
@@ -104,25 +139,39 @@ class User extends Database
         return $this->status;
     }
 
+    /**
+     * @param $role
+     */
     public function setRole($role){
         $this->role = $role;
     }
 
+    /**
+     * @return mixed
+     */
     public function getRole()
     {
         return $this->role;
     }
 
+    /**
+     * @param $isDeleted
+     */
     public function setIsDeleted($isDeleted){
         $this->isDeleted = $isDeleted;
     }
 
+    /**
+     * @return mixed
+     */
     public function getIsDeleted()
     {
         return $this->isDeleted;
     }
 
-
+    /**
+     * @return array
+     */
 	public function buildFormRegister(){
 		return [
 
