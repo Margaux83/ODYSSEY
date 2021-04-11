@@ -50,29 +50,6 @@ if(document.getElementById("ModalCategoryEditArticle") != null) {
     });
 }
 
-var modalPageAddArticle = document.getElementById("ModalPageAddArticle");
-
-if(document.getElementById("ModalPageAddArticle") != null) {
-// When the user clicks on the button, open the modal
-    $("#modalButtonAddPageArticle").on('click', function () {
-        modalPageAddArticle.style.display = "block";
-    });
-    $(".closeComment").on('click', function () {
-        modalPageAddArticle.style.display = "none";
-    });
-}
-
-var modalPageEditArticle = document.getElementById("ModalPageEditArticle");
-
-if(document.getElementById("ModalPageEditArticle") != null) {
-// When the user clicks on the button, open the modal
-    $("#modalButtonEditPageArticle").on('click', function () {
-        modalPageEditArticle.style.display = "block";
-    });
-    $(".closeComment").on('click', function () {
-        modalPageEditArticle.style.display = "none";
-    });
-}
 
 // Get the modal
 var modal = document.getElementById("myModal");
@@ -102,12 +79,6 @@ window.addEventListener('click',function(event) {
     }
     if (event.target === modalCategoryEditArticle) {
         $(modalCategoryEditArticle).css('display','none');
-    }
-    if (event.target === modalPageAddArticle) {
-        $(modalPageAddArticle).css('display','none');
-    }
-    if (event.target === modalPageEditArticle) {
-        $(modalPageEditArticle).css('display','none');
     }
     if (event.target === modal) {
         $(modal).css('display','none');

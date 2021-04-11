@@ -176,10 +176,10 @@
         </div>
         <br>
         <select name="category" class="selectVerticalSection">
-            <option value="Voyage">Voyage</option>
-            <option value="Nature">Nature</option>
-            <option value="Culture">Culture</option>
-            <option value="Pays">Pays</option>
+            <option value="1">Voyage</option>
+            <option value="2">Nature</option>
+            <option value="3">Culture</option>
+            <option value="4">Pays</option>
         </select>
         <br><br>
         <p id="modalButtonEditCategoryArticle" class="actionVerticalSection"><img src=<?php App\Core\View::getAssets("icons/plus-solid.svg")?> alt="" height="15" width="15">Créer une nouvelle catégorie</p>
@@ -191,13 +191,12 @@
         </div>
         <br>
         <select name="category" class="selectVerticalSection">
-            <option value="Accueil">Accueil</option>
-            <option value="Voyages">Voyages</option>
-            <option value="Réservations">Réservations</option>
-            <option value="Contact">Contact</option>
+            <option value="1">Accueil</option>
+            <option value="2">Voyages</option>
+            <option value="3">Réservations</option>
+            <option value="4">Contact</option>
         </select>
         <br><br>
-        <p id="modalButtonEditPageArticle" class="actionVerticalSection"><img src=<?php App\Core\View::getAssets("icons/plus-solid.svg")?> alt="" height="15" width="15">Créer une nouvelle Page</p>
     </div>
     <br>
     <div class="col-12 marginBottomtMultipleSection">
@@ -206,13 +205,13 @@
         </div>
         <br>
         <select name="publication" class="selectVerticalSection">
-            <option value="Tout de suite">Tout de suite</option>
-            <option value="Dans 5 minutes">Dans 5 minutes</option>
-            <option value="Dans 30 minutes">Dans 30 minutes</option>
-            <option value="Dans 1 heure">Dans 1 heure</option>
+            <option value="1">Tout de suite</option>
+            <option value="2">Dans 5 minutes</option>
+            <option value="3">Dans 30 minutes</option>
+            <option value="4">Dans 1 heure</option>
         </select>
         <br><br>
-        <p class="actionVerticalSection"><img src=<?php App\Core\View::getAssets("icons/clock-regular.svg")?> alt="" height="15" width="15">Choisir une heure de publication</p>
+       <!-- <p class="actionVerticalSection"><img src=<?php //App\Core\View::getAssets("icons/clock-regular.svg")?> alt="" height="15" width="15">Choisir une heure de publication</p>-->
     </div>
 
     <div class="sectionFooter d-flex">
@@ -246,18 +245,18 @@
                    <div class="d-flex divformModal d-flex-wrap">
                        <label for="category" class="labelModal d-flex">Catégorie</label>
                        <select name="category" id="">
-                           <option value="Voyage">Voyage</option>
-                           <option value="Nature">Nature</option>
-                           <option value="Culture">Culture</option>
-                           <option value="Pays">Pays</option>
+                           <option value="1">Voyage</option>
+                           <option value="2">Nature</option>
+                           <option value="3">Culture</option>
+                           <option value="4">Pays</option>
                        </select>
                        <br>
                        <label for="page" class="labelModal d-flex">Page</label>
                        <select name="page" id="">
-                           <option value="Accueil">Accueil</option>
-                           <option value="Voyages">Voyages</option>
-                           <option value="Réservations">Réservations</option>
-                           <option value="Contact">Contact</option>
+                           <option value="1">Accueil</option>
+                           <option value="2">Voyages</option>
+                           <option value="4">Réservations</option>
+                           <option value="3">Contact</option>
                        </select>
                    </div>
                    <br>
@@ -265,18 +264,18 @@
                    <div class="d-flex divformModal d-flex-wrap">
                        <label for="publication" class="labelModal d-flex">Publication</label>
                        <select name="publication" id="">
-                           <option value="Tout de suite">Tout de suite</option>
-                           <option value="Dans 5 minutes">Dans 5 minutes</option>
-                           <option value="Dans 30 minutes">Dans 30 minutes</option>
-                           <option value="Dans 1 heure">Dans 1 heure</option>
+                           <option value="1">Tout de suite</option>
+                           <option value="2">Dans 5 minutes</option>
+                           <option value="3">Dans 30 minutes</option>
+                           <option value="4">Dans 1 heure</option>
                        </select>
                        <br>
                        <label for="status" class="labelModal d-flex">Statut</label>
                        <select name="status" id="">
-                           <option value="Validé et posté">Validé et posté</option>
-                           <option value="En attente de validation">En attente de validation</option>
-                           <option value="Brouillon">Brouillon</option>
-                           <option value="Créé">Créé</option>
+                           <option value="1">Validé et posté</option>
+                           <option value="2">En attente de validation</option>
+                           <option value="3">Brouillon</option>
+                           <option value="4">Créé</option>
                        </select>
                    </div>
 
@@ -317,22 +316,6 @@
        </div>
    </div>
 
-   <div id="ModalPageEditArticle" class="col-12 modal" >
-       <!-- Modal content -->
-       <div class="modal-comment d-flex-wrap d-flex">
-           <div class="headerForModalDesc d-flex">
-               <h1 class="titleModal d-flex">Ajout d'une page</h1>
-               <span class="closeComment d-flex">&times;</span>
-           </div>
-
-           <form class="d-flex d-flex-wrap formModalOneInput">
-               <input type="text" name="title" class="inputOneModal d-flex">
-               <button type="submit" class="buttonComponent d-flex" id="saveModalButton">Enregistrer</button>
-           </form>
-       </div>
-   </div>
-
-
 <section class="col-12" style="grid-column: 1 / 10; grid-row: 3; ">
     <div class="formTitleHeadOfPage">
         <form class="formHeadOfPage">
@@ -350,18 +333,18 @@
     <label for="status" class="label">Statut</label>
 
     <select name="status">
-        <option value="Validé et posté">Validé et posté</option>
-        <option value="En attente de validation">En attente de validation</option>
-        <option value="Brouillon">Brouillon</option>
-        <option value="Créé">Créé</option>
+        <option value="1">Validé et posté</option>
+        <option value="2">En attente de validation</option>
+        <option value="3">Brouillon</option>
+        <option value="4">Créé</option>
     </select>
     &emsp;
     &emsp;
     <label for="visibility" class="label">Visibilité</label>
     <select name="visibility">
-        <option value="Protégé">Protégé</option>
-        <option value="Public">Public</option>
-        <option value="Privé">Privé</option>
+        <option value="1">Protégé</option>
+        <option value="2">Public</option>
+        <option value="3">Privé</option>
     </select>
     <button class="buttonComponent d-flex floatRight" style="float: right">Enregistrer le brouillon</button>
 

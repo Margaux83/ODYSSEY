@@ -60,8 +60,8 @@ class Article
         $article->setId_article_page(1);
         $article->setId_user(1);*/
 
-        var_dump($_POST['title']);
-        die();
+        //var_dump($_POST['title']);
+        //die();
        // $article->saveArticle();
 
         //Affiche moi la vue dashboard;
@@ -80,7 +80,7 @@ class Article
         }
 
 
-        $article = new Arti();
+       /* $article = new Arti();
         $article->setID(1);
         $article->setTitle("Nouveau titre de l'article");
         $article->setContent("Lorem Ipsum is simply dummy
@@ -110,7 +110,7 @@ class Article
         $article->setId_category(1);
         $article->setId_article_page(1);
         $article->setId_user(1);
-        //$article->saveArticle();
+        //$article->saveArticle();*/
 
         //Affiche moi la vue dashboard;
         $view = new View("editArticles", "back");
