@@ -1,6 +1,3 @@
-
-<h1 class="titleOfPage">Pages des Articles</h1><br>
-
 <form action="ajouter-article">
     <button type="submit" class="buttonComponent d-flex"><img src=<?php App\Core\View::getAssets("icons/plus-solid.svg")?> height="15" width="15">Ajouter article</button>
 </form>
@@ -36,10 +33,8 @@
                 <p class="listItem-cpt">En attente de validation</p>
             </div>
             <div class="listItem-cpt listActions">
-                <img src=<?php App\Core\View::getAssets("icons/tag-solid.svg")?> alt="" height="20" width="20">
                 <img src=<?php App\Core\View::getAssets("icons/eye-solid.svg")?> alt="" height="20" width="20">
                 <img src=<?php App\Core\View::getAssets("icons/pen-solid.svg")?> alt="" height="20" width="20">
-                <img src=<?php App\Core\View::getAssets("icons/check-solid.svg")?> alt="" height="20" width="20">
                 <img class="openModalConfirmDeleteArticle" src=<?php App\Core\View::getAssets("icons/trash-solid.svg")?> alt="" height="20" width="20">
             </div>
         </li>
@@ -79,7 +74,6 @@
                 </div>
             </div>
             <div class="listItem-cpt listActions">
-                <img src=<?php App\Core\View::getAssets("icons/tag-solid.svg")?> alt="" height="20" width="20">
                 <img src=<?php App\Core\View::getAssets("icons/eye-solid.svg")?> alt="" height="20" width="20">
                 <img src=<?php App\Core\View::getAssets("icons/pen-solid.svg")?> alt="" height="20" width="20">
                 <img class="openModalConfirmDeleteArticle" src=<?php App\Core\View::getAssets("icons/trash-solid.svg")?> alt="" height="20" width="20">

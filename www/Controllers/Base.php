@@ -166,18 +166,10 @@ class Base{
 
 	//Must be connected
 	public function dashboardAction(){
-		
-		$security = new Security(); 
+		$security = Security::getInstance();
 		if(!$security->isConnected()){
-			die("Error not authorized");
-		}
-                $user = new User();
-                $user->setFirstname("Toto");
-                $user->setLastname("Titi");
-                $user->setEmail("y.skrzypczyk@gmail.com");
-                $user->setPwd("Test1234");
-                $user->setCountry("fr");
-                //$user->save();
+           // header('Location: /login');
+    }
 
 		//Affiche moi la vue dashboard;
 		$view = new View("dashboard", "back");

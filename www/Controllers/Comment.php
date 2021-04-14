@@ -10,10 +10,11 @@ class Comment
 
     public function defaultAction()
     {
-        $security = new Security();
-        if(!$security->isConnected()){
+
+        $security = Security::getInstance();
+       /* if(!$security->isConnected()){
             die("Error not authorized");
-        }
+        }*/
 
 
         //Affiche moi la vue dashboard;

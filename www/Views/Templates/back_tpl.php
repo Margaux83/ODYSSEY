@@ -27,14 +27,17 @@
 
     <link rel="stylesheet" href="../../Trumbowyg/dist/ui/trumbowyg.min.css">
     <link rel="stylesheet" href="../../Trumbowyg/dist/plugins/colors/ui/trumbowyg.colors.min.css">
+
+    <script src=<?php App\Core\View::getAssets("chart.js")?>></script>
+
 </head>
 <body>
     <header>
         <img src=<?php App\Core\View::getAssets("logos/odyssey_logo_v2.svg")?> alt="Odyssey" class="back-mainPage-header-logo">
         <p class="back-mainPage-header-websiteName">Mon projet annuel Web</p>
         <div class="back-mainPage-header-actionContainer">
-            <button class="fullButton"><img src=<?php App\Core\View::getAssets("icons/icon_user.png")?> alt="Accès au site" class="iconWhite"></button>
             <button onclick="alert('Accès au site non disponible')" class="fullButton"><img src=<?php App\Core\View::getAssets("icons/icon_web.png")?> alt="Accès au site" class="iconWhite"></button>
+            <button onclick="alert('Accès au profil non disponible')" class="fullButton"><img src=<?php App\Core\View::getAssets("icons/icon_user.png")?> alt="Profil" class="iconWhite"></button>
             <button onclick="toggleMenu('back-mainPage-menuResponsive')" class="fullButton d-inline-block d-lg-none"><img src=<?php App\Core\View::getAssets("icons/icon_menu.png")?> alt="Menu" class="iconWhite"></button>
         </div>
     </header>
@@ -48,6 +51,7 @@
 			<?php include $this->view ?>
 
             <script src="../../Trumbowyg/dist/trumbowyg.min.js"></script>
+
 
         </div>
     </main>

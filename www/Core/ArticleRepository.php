@@ -8,7 +8,7 @@ class ArticleRepository extends Database
 {
     public function saveArticle()
     {
-
+        var_dump($_POST);
 
         $data = array_diff_key(
 

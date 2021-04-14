@@ -25,111 +25,177 @@ class Article extends ArticleRepository
         parent::__construct();
     }
 
+    /**
+     * @param $id
+     */
     public function setID($id)
     {
         $this->id = $id;
     }
 
+    /**
+     * @return mixed
+     */
     public function getID()
     {
         return $this->id;
     }
 
+    /**
+     * @param $title
+     */
     public function setTitle($title)
     {
         $this->title = $title;
     }
 
+    /**
+     * @return mixed
+     */
     public function getTitle()
     {
         return $this->title;
     }
 
+    /**
+     * @param $content
+     */
     public function setContent($content)
     {
         $this->content = $content;
     }
 
+    /**
+     * @return mixed
+     */
     public function getContent()
     {
         return $this->content;
     }
 
+    /**
+     * @param $status
+     */
     public function setStatus($status)
     {
         $this->status = $status;
     }
 
+    /**
+     * @return mixed
+     */
     public function getStatus()
     {
         return $this->status;
     }
 
+    /**
+     * @param $visibility
+     */
     public function setVisibility($visibility)
     {
         $this->visibility = $visibility;
     }
 
+    /**
+     * @return mixed
+     */
     public function getVisibility()
     {
         return $this->visibility;
     }
 
+    /**
+     * @param $isdraft
+     */
     public function setIsdraft($isdraft)
     {
         $this->isdraft = $isdraft;
     }
 
+    /**
+     * @return mixed
+     */
     public function getIsdraft()
     {
         return $this->isdraft;
     }
 
+    /**
+     * @param $description
+     */
     public function setDescription($description)
     {
         $this->description = $description;
     }
 
+    /**
+     * @return mixed
+     */
     public function getDescription()
     {
         return $this->description;
     }
 
+    /**
+     * @param $isdeleted
+     */
     public function setIsdeleted($isdeleted)
     {
         $this->isdeleted = $isdeleted;
     }
 
+    /**
+     * @return mixed
+     */
     public function getIsdeleted()
     {
         return $this->isdeleted;
     }
 
+    /**
+     * @param $category
+     */
     public function setId_category($category)
     {
         $this->id_category = $category;
     }
 
+    /**
+     * @return mixed
+     */
     public function getId_category()
     {
         return $this->id_category;
     }
 
+    /**
+     * @param $id_article_page
+     */
     public function setId_article_page($id_article_page)
     {
         $this->id_article_page = $id_article_page;
     }
 
+    /**
+     * @return mixed
+     */
     public function getId_article_page()
     {
         return $this->id_article_page;
     }
 
+    /**
+     * @param $id_user
+     */
     public function setId_user($id_user)
     {
         $this->id_user = $id_user;
     }
 
+    /**
+     * @return mixed
+     */
     public function getId_user()
     {
         return $this->id_user;
