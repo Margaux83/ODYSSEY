@@ -201,15 +201,15 @@ class Article extends ArticleRepository
         return $this->id_user;
     }
 
-   /* public function buildFormSearchArticle()
+    public function buildFormArticle()
     {
         return [
 
             "config"=>[
                 "method"=>"POST",
                 "Action"=>"",
-                "Submit"=>"Rechercher",
-                "class"=>"d-flex d-flex-wrap"
+                "Submit"=>"Publier",
+                "class"=>"",
             ],
                 "input"=>[
                     "title"=>[
@@ -218,24 +218,15 @@ class Article extends ArticleRepository
                         "lengthMax"=>"255",
                         "lengthMin"=>"2",
                         "required"=>true,
+                        "class"=>"input",
                         "error"=>"Le titre de l'article doit faire entre 2 et 255 caractères",
                     ],
-                    "creator"=>[
-                        "type"=>"text",
-                        "label"=>"Créateur",
-                        "lengthMax"=>"255",
-                        "lengthMin"=>"2",
+                    "content"=>[
+                        "type"=>"textarea",
+                        "class"=>"trumbowygTextarea",
+                        "id"=>"content",
+                        "label"=>"",
                         "required"=>true,
-                        "error"=>"Votre nom doit faire entre 2 et 255 caractères",
-                        "placeholder"=>"Votre nom"
-                    ],
-                    "dateCreation"=>[
-                        "type"=>"date",
-                        "label"=>"Date de création",
-                        "required"=>true,
-                        "dateMax"=>"".date('Y-m-d')."",
-                        "dateMin"=>"1920-01-01",
-                        "placeholder"=>"Votre email"
                     ],
 
                     "category"=>[
@@ -323,9 +314,10 @@ class Article extends ArticleRepository
                                 "label" => "Créé"
                             ]
                         ]
-                    ]
+                    ],
+
                     ]
 
         ];
-    }*/
+    }
 }

@@ -3,6 +3,7 @@
 
 namespace App;
 
+use App\Core\FormBuilderArticle;
 use App\Core\Security;
 use App\Core\View;
 use App\Core\ArticleRepository;
@@ -34,8 +35,28 @@ class Article
         /* if(!$security->isConnected()){
            die("Error not authorized");
        }*/
-
+        $article = new Arti();
         $view = new View("addArticles", "back");
+
+        $form = $article->buildFormArticle();
+        $view->assign("form", $form);
+
+
+
+        if(!empty($_POST)){
+            $view->assign("form", $form);
+
+            $errors = FormBuilderArticle::validator($_POST, $form);
+
+            if(empty($errors)){
+
+                $article->save();
+
+            }else{
+                $view->assign("formErrors", $errors);
+            }
+
+        }
 
         /*if(isset($_POST['title'])){
             var_dump($_POST['title']);
