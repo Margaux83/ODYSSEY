@@ -18,7 +18,6 @@ class Article extends ArticleRepository
     protected $description;
     protected $isdeleted;
     protected $id_category;
-    protected $id_article_page;
     protected $id_user;
 
     public function __construct(){
@@ -170,22 +169,6 @@ class Article extends ArticleRepository
     }
 
     /**
-     * @param $id_article_page
-     */
-    public function setId_article_page($id_article_page)
-    {
-        $this->id_article_page = $id_article_page;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getId_article_page()
-    {
-        return $this->id_article_page;
-    }
-
-    /**
      * @param $id_user
      */
     public function setId_user($id_user)
@@ -236,16 +219,16 @@ class Article extends ArticleRepository
                         "error"=>"Veuillez sélectionner un élément",
                         "placeholder"=>"Choisir une catégorie",
                         "options"=>[
-                            "Voyage"=>[
+                            "1"=>[
                                 "label" => "Voyage",
                             ],
-                            "Nature"=>[
+                            "2"=>[
                                 "label" => "Nature",
                             ],
-                            "Culture"=>[
+                            "3"=>[
                                 "label" => "Culture"
                             ],
-                            "Pays"=>[
+                            "4"=>[
                                 "label" => "Pays"
                             ]
                         ],
@@ -258,42 +241,21 @@ class Article extends ArticleRepository
                         "error"=>"Veuillez sélectionner un élément",
                         "placeholder"=>"Choisir une page",
                         "options"=>[
-                            "Accueil"=>[
+                            "1"=>[
                                 "label" => "Accueil",
                             ],
-                            "Voyages"=>[
+                            "2"=>[
                                 "label" => "Voyages",
                             ],
-                            "Réservations"=>[
+                            "3"=>[
                                 "label" => "Réservations"
                             ],
-                            "Contact"=>[
+                            "4"=>[
                                 "label" => "Contact"
                             ]
                         ],
 
                     ],
-                    "publication"=>[
-                        "type"=>"select",
-                        "label"=>"Publication",
-                        "required"=>true,
-                        "error"=>"Veuillez sélectionner un élément",
-                        "placeholder"=>"Choisir une publication",
-                        "options"=>[
-                            "Tout de suite"=>[
-                                "label" => "Tout de suite",
-                            ],
-                            "Dans 5 minutes"=>[
-                                "label" => "Dans 5 minutes",
-                            ],
-                            "Dans 30 minutes"=>[
-                                "label" => "Dans 30 minutes"
-                            ],
-                            "Dans 1 heure"=>[
-                                "label" => "Dans 1 heure"
-                            ]
-                        ]
-                        ],
                     "status"=>[
                         "type"=>"select",
                         "label"=>"Statut",
@@ -301,22 +263,40 @@ class Article extends ArticleRepository
                         "error"=>"Veuillez sélectionner un élément",
                         "placeholder"=>"Choisir un statut",
                         "options"=>[
-                            "Validé et posté"=>[
-                                "label" => "Tout de suite",
+                            "1"=>[
+                                "label" => "Validé et posté",
                             ],
-                            "En attente de validation"=>[
-                                "label" => "Dans 5 minutes",
+                            "2"=>[
+                                "label" => "En attente de validation",
                             ],
-                            "Brouillon"=>[
-                                "label" => "Dans 30 minutes"
+                            "3"=>[
+                                "label" => "Brouillon"
                             ],
-                            "Créé"=>[
+                            "4"=>[
                                 "label" => "Créé"
                             ]
                         ]
                     ],
-
+                    "visibility"=>[
+                        "type"=>"select",
+                        "label"=>"Visibilité",
+                        "required"=>true,
+                        "error"=>"Veuillez sélectionner un élément",
+                        "placeholder"=>"Choisir une visibilité",
+                        "options"=>[
+                            "1"=>[
+                                "label" => "Protégé",
+                            ],
+                            "2"=>[
+                                "label" => "Public",
+                            ],
+                            "3"=>[
+                                "label" => "Privé"
+                            ]
+                        ]
                     ]
+
+                ]
 
         ];
     }
