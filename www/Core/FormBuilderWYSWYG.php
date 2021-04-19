@@ -4,7 +4,7 @@
 namespace App\Core;
 
 
-class FormBuilderArticle
+class FormBuilderWYSWYG
 {
     public static function validator($data, $config){
         $errors = [];
@@ -12,16 +12,32 @@ class FormBuilderArticle
         if( !empty($configInput["lengthMin"])
             && is_numeric($configInput["lengthMin"])
             && strlen($data[$name])<$configInput["lengthMin"] ){
+
             $errors[] = $configInput["error"];
+
         }
 
         if( !empty($configInput["lengthMax"])
             && is_numeric($configInput["lengthMax"])
             && strlen($data[$name])>$configInput["lengthMax"] ){
             $errors[] = $configInput["error"];
+
         }
 
-        //$errors[] = $configInput["error"];
+        if ($configInput["type"] === 'date'){
+            if( !empty($configInput["dateMin"])){
+                if (date($configInput["dateMin"]) > $data[$name] ){
+                    array_push($errors, "La date minimale est ". $configInput["dateMin"]);
+                }
+            }
+            if( !empty($configInput["dateMax"])){
+                if (date($configInput["dateMax"] < $data[$name] )){
+                    array_push($errors, "La date minimale est ". $configInput["dateMax"]);
+                }
+            }
+        }
+
+        $errors[] = $configInput["error"];
 
         return $errors; //tableau des erreurs
     }
@@ -30,8 +46,9 @@ class FormBuilderArticle
         $html = "<form class='".($form["config"]["class"]??"")."' method='".( self::cleanWord($form["config"]["method"]) ?? "GET" )."' action='".( $form["config"]["action"] ?? "" )."'>";
 
         foreach ($form["input"] as $name => $dataInput) {
-
+            $html .= "&emsp;&emsp;";
             $html .="<label for='".$name."'>".($dataInput["label"]??"")." </label>";
+            $html .= "&ensp;";
 
 
         if ($dataInput["type"] === "textarea"){
@@ -41,8 +58,11 @@ class FormBuilderArticle
                             name='".$name."'
                             ".((!empty($dataInput["required"]))?"required='required'":"")."
                             ></textarea>";
+            $html .= "<br>";
+            $html .= "<br>";
         }
             elseif ($dataInput["type"] === "select"){
+
                 $html .= "<select 
                             id='".$name."' 
                             name='".$name."'
@@ -79,6 +99,8 @@ class FormBuilderArticle
 
         }
 
+        $html .= "<br>";
+        $html .= "<br>";
 
         $html .= "<button type='submit' value='".( self::cleanWord($form["config"]["Submit"]) ?? "Valider" )."' class='buttonComponent d-flex floatRight'>Publier</button></form>";
 

@@ -197,7 +197,7 @@ class Article extends ArticleRepository
                 "input"=>[
                     "title"=>[
                         "type"=>"text",
-                        "label"=>"Titre",
+                        "label"=>"Veuillez choisir un titre pour votre article",
                         "lengthMax"=>"255",
                         "lengthMin"=>"2",
                         "required"=>true,

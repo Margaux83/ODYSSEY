@@ -14,7 +14,7 @@
         <?php endforeach;?>
         <?php endif;?>
 
-        <?php  App\Core\FormBuilderArticle::showFormArticle($form); ?>
+        <?php  App\Core\FormBuilderWYSWYG::showFormArticle($form); ?>
 </section>
 
 

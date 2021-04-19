@@ -3,7 +3,7 @@
 
 namespace App;
 
-use App\Core\FormBuilderArticle;
+use App\Core\FormBuilderWYSWYG;
 use App\Core\Security;
 use App\Core\View;
 use App\Core\ArticleRepository;
@@ -43,10 +43,10 @@ class Article
 
 
 
-        if(!empty($_POST)){
+        /*if(!empty($_POST)){
             $view->assign("form", $form);
 
-            $errors = FormBuilderArticle::validator($_POST, $form);
+            $errors = FormBuilderWYSWYG::validator($_POST, $form);
 
             if(empty($errors)){
 
@@ -69,7 +69,7 @@ class Article
                 $view->assign("formErrors", $errors);
             }
 
-        }
+        }*/
     }
 
     public function editArticleAction()
@@ -87,10 +87,10 @@ class Article
 
 
 
-        if(!empty($_POST)){
+       /* if(!empty($_POST)){
             $view->assign("form", $form);
 
-            $errors = FormBuilderArticle::validator($_POST, $form);
+            $errors = FormBuilderWYSWYG::validator($_POST, $form);
 
             if(empty($errors)){
 
@@ -113,7 +113,7 @@ class Article
                 $view->assign("formErrors", $errors);
             }
 
-        }
+        }*/
 
     }
 
