@@ -43,15 +43,13 @@ class Article
 
 
 
-        /*if(!empty($_POST)){
-            $view->assign("form", $form);
-
+        if(!empty($_POST)){
             $errors = FormBuilderWYSWYG::validator($_POST, $form);
 
             if(empty($errors)){
 
                    $article->setTitle(htmlspecialchars(addslashes($_POST['title'])));
-                   $article->setContent(htmlspecialchars(addslashes($_POST['content'])));
+                   $article->setContent(addslashes($_POST['content']));
                    $article->setStatus($_POST['status']);
                    $article->setVisibility($_POST['visibility']);
                    if($_POST['status'] == "Brouillon"){
@@ -69,7 +67,7 @@ class Article
                 $view->assign("formErrors", $errors);
             }
 
-        }*/
+        }
     }
 
     public function editArticleAction()

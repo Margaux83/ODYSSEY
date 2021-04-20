@@ -7,6 +7,7 @@
 
     <p id="modalButtonAddCategoryArticle" class="actionVerticalSection"><img src=<?php App\Core\View::getAssets("icons/plus-solid.svg")?> alt="" height="15" width="15">Créer une nouvelle catégorie</p>
 </section>
+
 <section class="col-12" style="grid-column: 1 / 13; grid-row: 1;">
     <?php if(!empty($formErrors)):?>
     <?php foreach($formErrors as $error):?>
