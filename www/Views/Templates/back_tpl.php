@@ -10,7 +10,7 @@
 
 
     <link rel="stylesheet" type="text/css" href=<?php App\Core\View::getAssets("article.css")?>>
-    <link rel="stylesheet" type="text/css" href=<?php App\Core\View::getAssets("errormessage.css")?>>
+    <link rel="stylesheet" type="text/css" href=<?php App\Core\View::getAssets("messages.css")?>>
 
 
     <link rel="preconnect" href="https://fonts.gstatic.com">
