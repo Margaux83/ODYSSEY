@@ -204,14 +204,17 @@ class Article extends ArticleRepository
                         "lengthMin"=>"2",
                         "required"=>true,
                         "class"=>"input",
-                        "error"=>"Le titre de l'article doit faire entre 2 et 255 caractères",
+                        "error"=>"Le titre de l'article doit faire entre 2 et 255 caractères"
                     ],
                     "content"=>[
                         "type"=>"textarea",
-                        "class"=>"trumbowygTextarea",
-                        "id"=>"content",
                         "label"=>"",
+                        "lengthMax"=>"255",
+                        "lengthMin"=>"2",
+                        "id"=>"content",
                         "required"=>true,
+                        "class"=>"trumbowygTextarea",
+                        "error"=>"Le titre de l'article doit faire entre 2 et 255 caractères"
                     ],
 
                     "category"=>[

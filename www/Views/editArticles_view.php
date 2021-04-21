@@ -1,6 +1,3 @@
-
-   <!-- <h1 class="titleOfPage">Modifier une page</h1>-->
-
 <section class="col-12" style="grid-column: 1/ 13; grid-row: 1;">
     <div class="sectionHeader d-flex">
         <h1 class="titleSection d-flex"><img src=<?php App\Core\View::getAssets("icons/icon_page.png")?> alt="">Liste des articles</h1>
@@ -161,12 +158,13 @@
 
 
    <section class="col-12" style="grid-column: 1 / 13; grid-row: 2;">
-       <?php if(!empty($formErrors)):?>
+       <?php if(!empty($formErrors)){?>
        <?php foreach($formErrors as $error):?>
-       <li><?= $error ;?>
+               <div class="error"><?= $error ;?></div>
            <?php endforeach;?>
-           <?php endif;?>
-
+           <?php } else { ?>
+       <div class="success">L'article a bien été modifié</div>
+       <?php } ?>
            <?php  App\Core\FormBuilderWYSWYG::showFormArticle($form); ?>
    </section>
 

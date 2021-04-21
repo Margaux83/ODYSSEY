@@ -15,7 +15,6 @@ class FormBuilderWYSWYG
                 if (!empty($configInput["lengthMin"])
                     && is_numeric($configInput["lengthMin"])
                     && strlen($data[$name]) < $configInput["lengthMin"]) {
-
                     $errors[] = $configInput["error"];
 
                 }

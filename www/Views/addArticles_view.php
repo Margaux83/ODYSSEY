@@ -9,12 +9,14 @@
 </section>
 
 <section class="col-12" style="grid-column: 1 / 13; grid-row: 1;">
-    <?php if(!empty($formErrors)):?>
+    <?php if(!empty($formErrors)){?>
     <?php foreach($formErrors as $error):?>
-    <li><?= $error ;?>
-        <?php endforeach;?>
-        <?php endif;?>
+            <div class="error"><?= $error ;?></div>
 
+        <?php endforeach;?>
+    <?php } else { ?>
+    <div class="success">L'article a bien été ajouté</div>
+    <?php } ?>
         <?php  App\Core\FormBuilderWYSWYG::showFormArticle($form); ?>
 </section>
 

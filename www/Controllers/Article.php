@@ -85,13 +85,13 @@ class Article
 
 
 
-       /* if(!empty($_POST)){
+       if(!empty($_POST)){
             $view->assign("form", $form);
 
             $errors = FormBuilderWYSWYG::validator($_POST, $form);
 
             if(empty($errors)){
-
+                $article->setID(7);
                 $article->setTitle(htmlspecialchars(addslashes($_POST['title'])));
                 $article->setContent(htmlspecialchars(addslashes($_POST['content'])));
                 $article->setStatus($_POST['status']);
@@ -111,7 +111,7 @@ class Article
                 $view->assign("formErrors", $errors);
             }
 
-        }*/
+        }
 
     }
 
