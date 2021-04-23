@@ -5,6 +5,7 @@ namespace App;
 use App\Core\Routing; 
 use App\Core\ConstantManager;
 use App\Core\MenuBuilder;
+use App\Core\View;
 
 require "Autoloader.php";
 Autoloader::register();
@@ -36,7 +37,7 @@ if( file_exists("./Controllers/".$c.".php")){
 			//$a = loginAction // defaultAction
 			$cObject->$a();
 		}else{
-			die("L'action ".$a." n'existe pas");
+            $view = new View("404", "error");
 		}
 
     }else{

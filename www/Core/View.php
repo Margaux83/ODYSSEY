@@ -16,6 +16,7 @@ class View
 	public function __construct($view="default", $template="front"){
 		$this->setTemplate($template);
 		$this->setView($view);
+		//$this->setErrorView($view);
 	}
 
 	public static function getAssets(string $nameFile){
@@ -56,6 +57,14 @@ class View
 			die("La vue n'existe pas");
 		}
 	}
+
+   /* public function setErrorView($view){
+        if(file_exists("Views/Error/".$view."_view.php")){
+            $this->errorview = "Views/Error/".$view."_view.php";
+        }else{
+            die("La vue n'existe pas");
+        }
+    }*/
 
 	public function assign($key, $value){
 		$this->data[$key] = $value;
