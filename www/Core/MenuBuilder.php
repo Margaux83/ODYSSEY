@@ -21,7 +21,6 @@ class MenuBuilder
         self::$_actualUri = $actualUri;
     }
 
-
     public static function getActualPageInfo() {
         $menuData = self::getMenuData();
         if (!empty($menuData)){

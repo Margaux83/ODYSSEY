@@ -75,6 +75,7 @@ class Database
                                             ) VALUES (
                                             :".implode(",:", $columns)."
                                             )");
+
         }else{
             foreach ($data as $key => $value) {
                 if (!is_null($value)) {
@@ -90,7 +91,10 @@ class Database
                     $query->bindValue(":$key", $value);
                 }
             }
-            $query->execute();
+           // $query->execute();
         }
     }
+
+
+
 }

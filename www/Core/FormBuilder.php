@@ -5,26 +5,38 @@ namespace App\Core;
 class FormBuilder
 {
     public static function validator($data, $config){
+        print_r($data);
+        $errors = [];
 
-		$errors = [];
+        if( !empty($configInput["lengthMin"])
+            && is_numeric($configInput["lengthMin"])
+            && strlen($data[$name])<$configInput["lengthMin"] ){
 
-		if( count($data) == count($config["input"])){
+            $errors[] = $configInput["error"];
 
-			foreach ($config["input"] as $name => $configInput) {
-				
-				if( !empty($configInput["lengthMin"]) 
-					&& is_numeric($configInput["lengthMin"]) 
-					&& strlen($data[$name])<$configInput["lengthMin"] ){
-					
-					$errors[] = $configInput["error"];
+        }
 
-				}
+        if( !empty($configInput["lengthMax"])
+            && is_numeric($configInput["lengthMax"])
+            && strlen($data[$name])>$configInput["lengthMax"] ){
+            $errors[] = $configInput["error"];
 
-			}
+        }
 
-		}else{
-			$errors[] = "Tentative de Hack (Faille XSS)";
-		}
+        if ($configInput["type"] === 'date'){
+            if( !empty($configInput["dateMin"])){
+                if (date($configInput["dateMin"]) > $data[$name] ){
+                    array_push($errors, "La date minimale est ". $configInput["dateMin"]);
+                }
+            }
+            if( !empty($configInput["dateMax"])){
+                if (date($configInput["dateMax"] < $data[$name] )){
+                    array_push($errors, "La date minimale est ". $configInput["dateMax"]);
+                }
+            }
+        }
+
+        $errors[] = $configInput["error"];
 
 		return $errors; //tableau des erreurs
 	}
@@ -45,7 +57,6 @@ class FormBuilder
                             name='".$name."'
                             ".((!empty($dataInput["required"]))?"required='required'":"")."
                             >";
-                
 
                 foreach ($dataInput["options"] as $value => $optionValue) {
                     $html .= "<option

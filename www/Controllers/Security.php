@@ -19,6 +19,7 @@ class Security{
 
     public function registerAction(){
 
+
         $user = new User();
         $user->setId(1);
         $user->setFirstname("margaux");
@@ -35,9 +36,8 @@ class Security{
             [email:protected] => y.skrzypczyk@gmail.com
             [pwd:protected] => Test1234
             [country:protected] => fr
-            [status:protected] => 0 
-            [role:protected] => 0 
->>>>>>> develop
+            [status:protected] => 0
+            [role:protected] => 0
             [isDeleted:protected] => 0
         */
 
@@ -93,8 +93,8 @@ class Security{
 
     public function listofusersAction(){
 
-        $security = new coreSecurity();
-        if(!$security->isConnected()){
+        $coreSecurity = coreSecurity::getInstance();
+        if(!$coreSecurity->isConnected()){
             die("Error not authorized");
         }
 

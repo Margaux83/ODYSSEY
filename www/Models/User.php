@@ -283,6 +283,5 @@ class User extends Database
 
 		];
 	}
-
 }
 

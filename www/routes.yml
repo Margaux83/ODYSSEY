@@ -32,7 +32,7 @@
 
 /ajouter-article:
   controller: Article
-  action: addArticle
+  action: addarticle
   menuData:
     visible: true
     min-statut: true

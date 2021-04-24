@@ -1,11 +1,12 @@
 <?php
 
+
 namespace App\Core;
 
-class Form
+
+class FormBuilderWYSWYG
 {
     public static function validator($data, $config){
-        print_r($data);
         $errors = [];
 
         if( !empty($configInput["lengthMin"])
@@ -41,17 +42,27 @@ class Form
         return $errors; //tableau des erreurs
     }
 
-    public static function showForm($form){
+    public static function showFormArticle($form){
         $html = "<form class='".($form["config"]["class"]??"")."' method='".( self::cleanWord($form["config"]["method"]) ?? "GET" )."' action='".( $form["config"]["action"] ?? "" )."'>";
 
-
         foreach ($form["input"] as $name => $dataInput) {
+            $html .= "&emsp;&emsp;";
+            $html .="<label for='".$name."'>".($dataInput["label"]??"")." </label>";
+            $html .= "&ensp;";
 
-            $html .="<div><label for='".$name."'>".($dataInput["label"]??"")." </label>";
 
+        if ($dataInput["type"] === "textarea"){
+            $html .= "<textarea 
+                            id='".$name."'
+                             class='".($dataInput["class"]??"")."' 
+                            name='".$name."'
+                            ".((!empty($dataInput["required"]))?"required='required'":"")."
+                            ></textarea>";
+            $html .= "<br>";
+            $html .= "<br>";
+        }
+            elseif ($dataInput["type"] === "select"){
 
-
-            if ($dataInput["type"] === "select"){
                 $html .= "<select 
                             id='".$name."' 
                             name='".$name."'
@@ -74,6 +85,7 @@ class Form
                 }
             }
 
+
             else {
                 $html .= "<input 
                             id='".$name."'
@@ -85,11 +97,12 @@ class Form
                             >";
             }
 
-            $html .= "</div>";
         }
 
+        $html .= "<br>";
+        $html .= "<br>";
 
-        $html .= "<input type='submit' value='".( self::cleanWord($form["config"]["Submit"]) ?? "Valider" )."'></form>";
+        $html .= "<button type='submit' value='".( self::cleanWord($form["config"]["Submit"]) ?? "Valider" )."' class='buttonComponent d-flex floatRight'>Publier</button></form>";
 
 
         echo $html;
