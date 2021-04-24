@@ -181,10 +181,10 @@ class Base{
 	//Must be connected
 	public function dashboardAction(){
 		$security = Security::getInstance();
-		if(!$security->isConnected()){
+		/*if(!$security->isConnected()){
             header('Location: /login');
     }
-
+    */
 		//Affiche moi la vue dashboard;
 		$view = new View("dashboard", "back");
 		

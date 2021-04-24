@@ -76,12 +76,12 @@ class Security{
     public function loginAction(){
         $coreSecurity = coreSecurity::getInstance();
 
-        if ($coreSecurity->getConnectedUser()){
+        /* if ($coreSecurity->getConnectedUser()){
             header('Status: 400 Connected', true, 400);
             header('Location: /dashboard');
             return;
         }
-
+        */
         $view = new View("login", "back_management");
     }
 
