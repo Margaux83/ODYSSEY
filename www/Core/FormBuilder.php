@@ -77,7 +77,7 @@ class FormBuilder
             else {
                 $html .= "<input 
                             id='".$name."'
-                             class='".($dataInput["class"]??"")."' 
+                            class='".($dataInput["class"]??"")."' 
                             name='".$name."'
                             type='".($dataInput["type"] ?? "text")."'
                             placeholder='".($dataInput["placeholder"] ?? "")."'
