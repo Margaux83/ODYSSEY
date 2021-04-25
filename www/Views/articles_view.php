@@ -15,22 +15,29 @@
             <p class="flex-weight-1">Status</p>
             <p class="flex-weight-1">Actions</p>
         </li>
-        <?php for ($i=0;$i<6;$i++){?>
+        <?php //var_dump($infoArticles);
+        if(!empty($infoArticles)){ ?>
+
+        <?php foreach ($infoArticles as $article){
+            ?>
         <li class="listItem">
             <div class="listItem-cpt">
-                <p><img src=<?php App\Core\View::getAssets("icons/plus-solid.svg")?> alt="" height="15" width="15">&nbsp;&nbsp;  12/12/2021</p>
-                <p><img src=<?php App\Core\View::getAssets("icons/pen-solid.svg")?> alt="" height="15" width="15">&nbsp;&nbsp;  12/12/2021</p>
-                <p><img src=<?php App\Core\View::getAssets("icons/check-solid.svg")?> alt="" height="15" width="15">&nbsp;&nbsp; 12/12/2021</p>
+                <p><img src=<?php App\Core\View::getAssets("icons/plus-solid.svg")?> alt="" height="15" width="15">&nbsp;&nbsp;  <?= $article["DateCreation"] ?></p>
+                <p><img src=<?php App\Core\View::getAssets("icons/pen-solid.svg")?> alt="" height="15" width="15">&nbsp;&nbsp;  <?php if(!empty($article["DateEdit"])){
+                    var_dump($article["DateEdit"]);
+                    }
+                    else{
+                        echo "Cet article n'a pas été modifié";
+                    }?></p>
             </div>
             <div>
-                <p class="listItem-cpt"><b>Titre de l'article</b> - Ceci est la description de l’article, elle permet à un utilisateur de savoir rapidement si le contenu
-                    est intéressant ou non, il faut donc être concis et précis dans la réalisation de cette partie...</p>
+                <p class="listItem-cpt"><b><?= $article["Title"] ?></b><?= $article["Description"] ?></p>
             </div>
             <div>
-                <p class="listItem-cpt"><b>Prénom NOM</b><br>Rôle Editeur</p>
+                <p class="listItem-cpt"><b><?= $article["Firstname"]." ".$article["Lastname"] ?></b><br><?= "Rôle ". $article["Role"] ?></p>
             </div>
             <div>
-                <p class="listItem-cpt">En attente de validation</p>
+                <p class="listItem-cpt"><?= $article["Status"] //Mettre le statut de l'article ?></p>
             </div>
             <div class="listItem-cpt listActions">
                 <img src=<?php App\Core\View::getAssets("icons/eye-solid.svg")?> alt="" height="20" width="20">
@@ -38,6 +45,7 @@
                 <img class="openModalConfirmDeleteArticle" src=<?php App\Core\View::getAssets("icons/trash-solid.svg")?> alt="" height="20" width="20">
             </div>
         </li>
+        <?php } ?>
         <?php } ?>
     </ul>
 </section>
@@ -59,7 +67,6 @@
             <div class="listItem-cpt">
                 <p><img src=<?php App\Core\View::getAssets("icons/plus-solid.svg")?> alt="" height="15" width="15">&nbsp;&nbsp;  12/12/2021</p>
                 <p><img src=<?php App\Core\View::getAssets("icons/pen-solid.svg")?> alt="" height="15" width="15">&nbsp;&nbsp;  12/12/2021</p>
-                <p><img src=<?php App\Core\View::getAssets("icons/check-solid.svg")?> alt="" height="15" width="15">&nbsp;&nbsp; 12/12/2021</p>
             </div>
             <div>
                 <p class="listItem-cpt"><b>Titre de l'article</b></p>

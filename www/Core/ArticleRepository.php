@@ -3,12 +3,12 @@
 
 namespace App\Core;
 use App\Core\Database;
+use function Couchbase\defaultDecoder;
 
 class ArticleRepository extends Database
 {
     public function saveArticle()
     {
-        var_dump($_POST);
 
         $data = array_diff_key(
 
@@ -46,6 +46,19 @@ class ArticleRepository extends Database
                 }
             }
             $query->execute();
+
         }
+    }
+
+    public function getAllArticles()
+    {
+
+        $sql = "SELECT * FROM " . $this->table . " INNER JOIN ody_User ON ". $this->table.".id_User = ody_User.ID";
+        $query = $this->pdo->prepare($sql);
+        $query->execute();
+        //var_dump($query);
+        //die();
+        return $query->fetchAll();
+
     }
 }

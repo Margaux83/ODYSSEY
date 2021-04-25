@@ -21,10 +21,15 @@ class Article
            die("Error not authorized");
        }*/
 
+        $articles = new Arti();
+        $articles->getAllArticles();
+
+
 
 
         //Affiche moi la vue dashboard;
         $view = new View("articles", "back");
+        $view->assign("infoArticles", $articles->getAllArticles());
 
     }
 
@@ -78,7 +83,9 @@ class Article
        }*/
 
         $article = new Arti();
+        $article->getAllArticles();
         $view = new View("editArticles", "back");
+        $view->assign("infoArticles", $article->getAllArticles());
 
         $form = $article->buildFormArticle();
         $view->assign("form", $form);
