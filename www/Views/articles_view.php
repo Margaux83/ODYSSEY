@@ -37,12 +37,27 @@
                 <p class="listItem-cpt"><b><?= $article["Firstname"]." ".$article["Lastname"] ?></b><br><?= "Rôle ". $article["Role"] ?></p>
             </div>
             <div>
-                <p class="listItem-cpt"><?= $article["Status"] //Mettre le statut de l'article ?></p>
+                <p class="listItem-cpt"><?php //Mettre le statut de l'article
+                    switch ($article["Status"]) {
+                        case 1:
+                            echo "Validé et posté";
+                            break;
+                        case 2:
+                            echo "En attente de validation";
+                            break;
+                        case 3:
+                            echo "Brouillon";
+                            break;
+                        case 4:
+                            echo "Créé";
+                            break;
+                    }
+                    ?></p>
             </div>
             <div class="listItem-cpt listActions">
                 <img src=<?php App\Core\View::getAssets("icons/eye-solid.svg")?> alt="" height="20" width="20">
                 <img src=<?php App\Core\View::getAssets("icons/pen-solid.svg")?> alt="" height="20" width="20">
-                <img class="openModalConfirmDeleteArticle" src=<?php App\Core\View::getAssets("icons/trash-solid.svg")?> alt="" height="20" width="20">
+                <img class="openModalConfirmDeleteArticle" data-target="ModalConfirmDeleteArticle" data-id="<?= $article["ID"] ?>"  src=<?php App\Core\View::getAssets("icons/trash-solid.svg")?> alt="" height="20" width="20">
             </div>
         </li>
         <?php } ?>
@@ -181,7 +196,7 @@
             <div class="footerDeleteArticleModal d-flex d-flex-wrap">
 
                 &emsp;
-                <button class="buttonComponent">Oui, je supprime</button>
+                <button class="buttonComponent" id="deleteArticleFromIndexArticle">Oui, je supprime</button>
                 &emsp;
                 <button class="buttonComponent-alert closeModalDelete">Annuler</button>
             </div>

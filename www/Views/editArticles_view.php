@@ -33,7 +33,22 @@
                         <p class="listItem-cpt"><b><?= $article["Firstname"]." ".$article["Lastname"] ?></b><br><?= "Rôle ". $article["Role"] ?></p>
                     </div>
                     <div>
-                        <p class="listItem-cpt"><?= $article["Status"] //Mettre le statut de l'article ?></p>
+                        <p class="listItem-cpt"><?php
+                    switch ($article["Status"]) {
+                        case 1:
+                            echo "Validé et posté";
+                            break;
+                        case 2:
+                            echo "En attente de validation";
+                            break;
+                        case 3:
+                            echo "Brouillon";
+                            break;
+                        case 4:
+                            echo "Créé";
+                            break;
+                    }
+                    ?></p>
                     </div>
                     <div class="listItem-cpt listActions">
                         <img src=<?php App\Core\View::getAssets("icons/eye-solid.svg")?> alt="" height="20" width="20">
@@ -170,6 +185,29 @@
        </div>
    </div>
 
+
+
+<div id="ModalConfirmDeleteArticle" class="col-12 modal">
+    <div class="modal-deleteArticle d-flex-wrap d-flex">
+        <div class="success-checkmark d-flex">
+            <div class="check-icon d-flex">
+                <img src=<?php App\Core\View::getAssets("icons/exclamation-solid.svg")?> alt="" height="50" width="50">
+            </div>
+        </div>
+        <div class="deleteConfirmation d-flex d-flex-wrap">
+            <p>Etes-vous sûr(e) de vouloir supprimer cet article ?</p>
+        </div>
+        <br>
+
+        <div class="footerDeleteArticleModal d-flex d-flex-wrap">
+
+            &emsp;
+            <button class="buttonComponent">Oui, je supprime</button>
+            &emsp;
+            <button class="buttonComponent-alert closeModalDelete">Annuler</button>
+        </div>
+    </div>
+</div>
 
 <script>
     $(document).ready(function(){
