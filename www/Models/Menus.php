@@ -13,6 +13,7 @@ class Menus
     protected $order;
     protected $primaryMenu;
     protected $secondaryMenu;
+    protected $isdeleted;
 
     /**
      * @return mixed
@@ -124,5 +125,21 @@ class Menus
     public function setSecondaryMenu($secondaryMenu)
     {
         $this->secondaryMenu = $secondaryMenu;
+    }
+
+    /**
+     * @param mixed $isdeleted
+     */
+    public function setIsdeleted($isdeleted)
+    {
+        $this->isdeleted = $isdeleted;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getIsdeleted()
+    {
+        return $this->isdeleted;
     }
 }
