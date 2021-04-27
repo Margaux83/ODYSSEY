@@ -966,7 +966,7 @@ ul.listItemBasic li.listItem .listItem-cpt {
   opacity: 0.5;
   position: absolute;
   -o-object-fit: cover;
-     object-fit: cover;
+  object-fit: cover;
   filter: brightness(0) invert(100%);
 }
 
@@ -1041,7 +1041,6 @@ button:focus {
 body {
   font-family: "Roboto", Verdana, "Geneva", Tahoma, sans-serif;
 }
-
 .form-group {
   padding: 25px 25px 0px 25px;
 }

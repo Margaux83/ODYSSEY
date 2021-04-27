@@ -2,14 +2,13 @@
 
 namespace App\Core;
 
-
 class Database
 {
 
     protected $pdo;
     protected $table;
 
-    public function __construct()
+    public function __construct($class = null)
     {
         try {
             $this->pdo = new \PDO(DBDRIVER . ":dbname=" . DBNAME . ";host=" . DBHOST . ";port=" . DBPORT, DBUSER, DBPWD);
@@ -22,8 +21,8 @@ class Database
         }
 
         //echo get_called_class(); //  App\Models\User ici on peut récupérer le nom de la table
-        $classExploded = explode("\\", get_called_class());
-        $this->table = DBPREFIX . end($classExploded);
+        $classExploded = $class !== null ? $class : explode("\\", get_called_class());
+        $this->table = DBPREFIX . ($class !== null ? $class : end($classExploded));
 
     }
 
@@ -32,26 +31,29 @@ class Database
         return array_keys(get_class_vars(__CLASS__));
     }
 
+    public function query($requestedParams = [], $filter = [])
+    {
+        $columnFilter = [];
+        foreach ($filter as $key => $value) {
+            if (!is_null($value)) {
+                $columnFilter[] = $key . "=:" . $key;
+            }
+        }
+
+        $sql = "SELECT " . implode(",", $requestedParams) . " FROM " . $this->table . " WHERE " . implode(" AND ", $columnFilter);
+        $query = $this->pdo->prepare($sql);
+        foreach ($filter as $key => $value) {
+            if (!is_null($value)) {
+                $query->bindValue(":$key", $value);
+            }
+        }
+        $query->execute();
+
+        return $query->fetchAll();
+    }
 
     public function save()
     {
-
-        //INSERT ou un UPDATE
-
-
-        // Array ([firstname] => Yves [lastname] => Skrzypczyk [email] => y.skrzypczyk@gmail.com [pwd] => Test1234 [country] => fr [status] => 0 [role] => 0 [isDeleted] => 0 [pdo] => PDO Object ( ) [table] => )
-        //print_r(get_object_vars($this));
-
-        //Array ( [pdo] => [table] => )
-        //print_r(get_class_vars(get_class()));
-
-        //Créer une requête SQL Dynamique en fonction de la class enfant
-        //Pour faire un insert ou un update.
-        //Si l'objet a un ID il s'agit d'un update
-
-        //Array ( [firstname] => Yves [lastname] => Skrzypczyk [email] => y.skrzypczyk@gmail.com [pwd] => Test1234 [country] => fr [status] => 0 [role] => 0 [isDeleted] => 0 )
-
-
         $data = array_diff_key(
 
             get_object_vars($this),
@@ -62,7 +64,10 @@ class Database
 
         $columns = array_keys($data);
         $values = array_values($data);
-        /*if(is_null($this->getId())){
+
+        $columnForUpdate = [];
+
+        if(is_null($this->getId())){
             //INSERT
             $columns = array_keys($data);
             $query = $this->pdo->prepare("INSERT INTO ".$this->table." (
@@ -71,33 +76,25 @@ class Database
                                             :".implode(",:", $columns)."
                                             )");
 
-        }else{*/
-
-
-        //UPDATE
-
-
-        //REQUETE UPDATE
-//On associe chaque nom de colonne à chaque clé de donnée avec une concaténation et on ajoute le résultat dans le tableau columnForUpdate
-//On vérifie si une valeur $i existe pour la colonne $k dans le tableau $data, sinon on enlève la colonne du tableau pour update
-        //seulement les colonnes qui nous intéressent
-
-        $columnForUpdate = [];
-        foreach ($data as $key => $value) {
-            if (!is_null($value)) {
-                $columnForUpdate[] = $key . "=:" . $key;
+        }else{
+            foreach ($data as $key => $value) {
+                if (!is_null($value)) {
+                    $columnForUpdate[] = $key . "=:" . $key;
+                }
             }
-        }
 
-        $sql = "UPDATE " . $this->table . " SET " . implode(",", $columnForUpdate) . " WHERE id=" . $this->getId();
-        $query = $this->pdo->prepare($sql);
+            $sql = "UPDATE " . $this->table . " SET " . implode(",", $columnForUpdate) . " WHERE id=" . $this->getId();
+            $query = $this->pdo->prepare($sql);
 
-        foreach ($data as $key => $value) {
-            if (!is_null($value)) {
-                $query->bindValue(":$key", $value);
+            foreach ($data as $key => $value) {
+                if (!is_null($value)) {
+                    $query->bindValue(":$key", $value);
+                }
             }
+           // $query->execute();
         }
-        $query->execute();
-
     }
+
+
+
 }

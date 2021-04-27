@@ -10,21 +10,6 @@ use App\Core\Form;
 
 class Base{
 
-
-	public function defaultAction($menuData, $actualUri){
-
-		//Je vais cherche en bdd le pseudo du user
-		$pseudo = "Prof";
-
-		//Affiche moi la vue home;
-		$view = new View();
-		$view->assign("pseudo", $pseudo);
-		$view->assign("age", 17);
-		$view->assign("register", "h", $menuData, $actualUri);
-
-		//envoyer le pseudo à la vue
-	}
-
 	public function formAction($menuData, $actualUri){
         $user = new User();
 		if(!empty($_POST)){
@@ -45,7 +30,7 @@ class Base{
 
 		}
 
-		$view = new View("register", "front", $menuData, $actualUri);
+		$view = new View("register", "front");
 		// (text, email, date, password, radio, checkbox) 
 		$form = [
 
@@ -181,12 +166,10 @@ class Base{
 
 	//Must be connected
 	public function dashboardAction(){
-		
-		$security = new Security(); 
+		$security = Security::getInstance();
 		if(!$security->isConnected()){
-			die("Error not authorized");
-		}
-
+           // header('Location: /login');
+    }
 
 		//Affiche moi la vue dashboard;
 		$view = new View("dashboard", "back");
@@ -196,3 +179,4 @@ class Base{
 
 
 }
+

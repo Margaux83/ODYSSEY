@@ -12,12 +12,13 @@ use App\Models\User;
 class Security{
 
 
-    public function defaultAction($menuData, $actualUri){
+    public function defaultAction(){
         echo "controller security action default";
     }
 
 
-    public function registerAction($menuData, $actualUri){
+    public function registerAction(){
+
 
         $user = new User();
         $user->setId(1);
@@ -28,7 +29,6 @@ class Security{
         $user = new User();
         $user->setId(3);
         $user->setLastname("Tutu");
-
          
             [id:App\Models\User:private] => 3 
             [firstname:protected] => Toto
@@ -36,20 +36,21 @@ class Security{
             [email:protected] => y.skrzypczyk@gmail.com
             [pwd:protected] => Test1234
             [country:protected] => fr
-            [status:protected] => 0 
-            [role:protected] => 0 
+            [status:protected] => 0
+            [role:protected] => 0
             [isDeleted:protected] => 0
         */
 
 
         //$user->save();
 
+
         $user = new User();
-        $view = new View("register", "front", $menuData, $actualUri);
+        $view = new View("register", "front");
         $form = $user->buildFormRegister();
         $view->assign("form", $form);
 
-        
+
 
         if(!empty($_POST)){
             $view->assign("form", $form);
@@ -70,21 +71,30 @@ class Security{
             }
 
         }
-
     }
 
-    public function loginAction($menuData, $actualUri){
-        echo "controller security action login";
+    public function loginAction(){
+        $coreSecurity = coreSecurity::getInstance();
+
+        if ($coreSecurity->getConnectedUser()){
+            header('Status: 400 Connected', true, 400);
+            header('Location: /dashboard');
+            return;
+        }
+
+        $view = new View("login", "back_management");
     }
 
-    public function logoutAction($menuData, $actualUri){
-        echo "controller security action logout";
+    public function logoutAction(){
+        $coreSecurity = coreSecurity::getInstance();
+        unset($_SESSION["userId"]);
+        header('Location: /login');
     }
 
-    public function listofusersAction($menuData, $actualUri){
+    public function listofusersAction(){
 
-        $security = new coreSecurity(); 
-        if(!$security->isConnected()){
+        $coreSecurity = coreSecurity::getInstance();
+        if(!$coreSecurity->isConnected()){
             die("Error not authorized");
         }
 
