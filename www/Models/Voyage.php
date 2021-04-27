@@ -11,6 +11,8 @@ class Voyage
     protected $departure;
     protected $arrivaldate;
     protected $departuredate;
+    protected $arrivalhour;
+    protected $departurehour;
     protected $creationdate;
     protected $editdate;
     protected $isdeleted;
@@ -93,6 +95,38 @@ class Voyage
     public function setDeparturedate($departuredate)
     {
         $this->departuredate = $departuredate;
+    }
+
+    /**
+     * @param mixed $arrivalhour
+     */
+    public function setArrivalhour($arrivalhour)
+    {
+        $this->arrivalhour = $arrivalhour;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getArrivalhour()
+    {
+        return $this->arrivalhour;
+    }
+
+    /**
+     * @param mixed $departurehour
+     */
+    public function setDeparturehour($departurehour)
+    {
+        $this->departurehour = $departurehour;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getDeparturehour()
+    {
+        return $this->departurehour;
     }
 
     /**
