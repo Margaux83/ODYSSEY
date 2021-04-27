@@ -29,6 +29,7 @@
 
 <section class="col-12" style="grid-column: 3 / 13; grid-row: 1">
     <h1 class="titleSection"><img src=<?php App\Core\View::getAssets("icons/icon_comment.png")?> alt="">Liste des utilisateurs</h1>
+    <h1 id="modalButton" class="searchButtonSection d-flex">Rechercher<img class="colorSearchButton" src=<?php App\Core\View::getAssets("icons/search-solid.svg")?> alt="" ></h1>
     <ul class="listItemBasic limit-height-900">
         <li class="legend">
             <p class="flex-weight-1">Nom</p>

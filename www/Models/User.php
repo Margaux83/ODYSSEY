@@ -9,8 +9,8 @@ class User extends Database
     protected $firstname;
     protected $lastname;
     protected $email;
-    protected $pwd;
-    protected $country;
+    protected $password;
+    protected $phone;
     protected $status;
     protected $role;
     protected $isDeleted;
@@ -101,30 +101,51 @@ class User extends Database
     }
 
     /**
-     * @param $pwd
+     * @param $password
      */
-    public function setPwd($pwd){
-        $this->pwd = $pwd;
-    }
-
-    public function getPwd()
-    {
-        return $this->pwd;
-    }
-
-    /**
-     * @param $country
-     */
-    public function setCountry($country){
-        $this->country = $country;
+    public function setPassword($password){
+        $this->password = $password;
     }
 
     /**
      * @return mixed
      */
-    public function getCountry()
+    public function getPassword()
     {
-        return $this->country;
+        return $this->password;
+    }
+
+    /*/**
+     * @param mixed $confirmpwd
+
+    public function setConfirmpwd($confirmpwd)
+    {
+        $this->confirmpwd = $confirmpwd;
+    }*/
+
+    /*/**
+     * @return mixed
+
+    public function getConfirmpwd()
+    {
+        return $this->confirmpwd;
+    }
+    */
+
+    /**
+     * @param mixed $phone
+     */
+    public function setPhone($phone)
+    {
+        $this->phone = $phone;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getPhone()
+    {
+        return $this->phone;
     }
 
     /**
@@ -222,6 +243,7 @@ class User extends Database
 								"error"=>"Votre mot de passe de confirmation est incorrect",
 								"placeholder"=>"Confirmation"
 								],
+
 				"selectForm"=>[
 								"type"=>"select",
 								"label"=>"Pays",
@@ -283,5 +305,172 @@ class User extends Database
 
 		];
 	}
+
+    public function buildFormRegisterU(){
+        return [
+            "config"=>[
+                "method"=>"POST",
+                "Action"=>"",
+                "reset" => "Annuler",
+                "Submit"=>"Enregistrer",
+                "class"=>"form-group"
+            ],
+            "input"=>[
+                "lastname"=>[
+                    "type"=>"text",
+                    "label"=>"Nom",
+                    "lengthMax"=>"255",
+                    "lengthMin"=>"2",
+                    "required"=>true,
+                    "error"=>"Votre nom doit faire entre 2 et 255 caractères",
+                    "placeholder"=>"Votre nom"
+                ],
+                "firstname"=>[
+                    "type"=>"text",
+                    "label"=>"Prénom",
+                    "lengthMax"=>"120",
+                    "lengthMin"=>"2",
+                    "required"=>true,
+                    "error"=>"Votre prénom doit faire entre 2 et 120 caractères",
+                    "placeholder"=>"Votre prénom"
+                ],
+                "email"=>[
+                    "type"=>"email",
+                    "label"=>"Adresse Mail",
+                    "lengthMax"=>"320",
+                    "lengthMin"=>"8",
+                    "required"=>true,
+                    "error"=>"Votre email doit faire entre 8 et 320 caractères",
+                    "placeholder"=>"Votre email"
+                ],
+                "password"=>[
+                    "type"=>"password",
+                    "label"=>"Mot de passe",
+                    "lengthMin"=>"8",
+                    "required"=>true,
+                    "error"=>"Votre mot de passe doit faire plus de 8 caractères",
+                    "placeholder"=>"Votre mot de passe"
+                ],
+                /*"pwdConfirm"=>[
+                    "type"=>"password",
+                    "label"=>"Confirmation de mot de passe",
+                    "confirm"=>"pwd",
+                    "required"=>true,
+                    "error"=>"Votre mot de passe de confirmation est incorrect",
+                    "placeholder"=>"Confirmation"
+                ],*/
+                "phone"=>[
+                    "type"=>"text",
+                    "label"=>"Numéro de téléphone",
+                    "lengthMin"=>"10",
+                    "required"=>true,
+                    "error"=>"Votre numéro de téléphone doit contenir 10 chiffres",
+                    "placeholder"=>"Votre numéro de téléphone"
+                ],
+                "conditions"=>[
+                    "type"=>"checkbox",
+                    "required"=>false,
+                    "options" => [
+                        "acceptConditions" => [
+                            "label" => "Envoyer un mail au nouvel utilisateur pour le prévenir de la création de son compte"
+                        ]
+                    ]
+                ],
+            ]
+
+        ];
+    }
+
+    public function buildFormUpdate(){
+        return [
+            "config"=>[
+                "method"=>"POST",
+                "Action"=>"",
+                "reset" => "Annuler",
+                "Submit"=>"Enregistrer",
+                "class"=>"form-group"
+            ],
+            "input"=>[
+                "lastname"=>[
+                    "type"=>"text",
+                    "label"=>"Nom",
+                    "lengthMax"=>"255",
+                    "lengthMin"=>"2",
+                    "required"=>true,
+                    "error"=>"Votre nom doit faire entre 2 et 255 caractères",
+                    "placeholder"=>"Votre nom"
+                ],
+                "firstname"=>[
+                    "type"=>"text",
+                    "label"=>"Prénom",
+                    "lengthMax"=>"120",
+                    "lengthMin"=>"2",
+                    "required"=>true,
+                    "error"=>"Votre prénom doit faire entre 2 et 120 caractères",
+                    "placeholder"=>"Votre prénom"
+                ],
+                "email"=>[
+                    "type"=>"email",
+                    "label"=>"Adresse Mail",
+                    "lengthMax"=>"320",
+                    "lengthMin"=>"8",
+                    "required"=>true,
+                    "error"=>"Votre email doit faire entre 8 et 320 caractères",
+                    "placeholder"=>"Votre email"
+                ],
+                "pwd"=>[
+                    "type"=>"password",
+                    "label"=>"Mot de passe",
+                    "lengthMin"=>"8",
+                    "required"=>true,
+                    "error"=>"Votre mot de passe doit faire plus de 8 caractères",
+                    "placeholder"=>"Votre mot de passe"
+                ],
+                "pwdConfirm"=>[
+                    "type"=>"password",
+                    "label"=>"Confirmation de mot de passe",
+                    "confirm"=>"pwd",
+                    "required"=>true,
+                    "error"=>"Votre mot de passe de confirmation est incorrect",
+                    "placeholder"=>"Confirmation"
+                ],
+                "phone"=>[
+                    "type"=>"text",
+                    "label"=>"Numéro de téléphone",
+                    "lengthMax"=>"10",
+                    "lengthMin"=>"10",
+                    "required"=>true,
+                    "error"=>"Votre numéro de téléphone doit contenir 10 chiffres",
+                    "placeholder"=>"Votre numéro de téléphone"
+                ],
+                "selectForm"=>[
+                    "type"=>"select",
+                    "label"=>"Rôle",
+                    "required"=>true,
+                    "error"=>"Veuillez sélectionner un élément",
+                    "placeholder"=>"Choisir un rôle",
+                    "options"=>[
+                        "registered"=>[
+                            "label" => "Inscrit",
+                    ],
+                        "create"=>[
+                            "label" => "Crée",
+                    ],
+                ],
+
+            ],
+                "conditions"=>[
+                    "type"=>"checkbox",
+                    "required"=>false,
+                    "options" => [
+                        "acceptConditions" => [
+                            "label" => "Envoyer un mail au nouvel utilisateur pour le prévenir de la création de son compte"
+                        ]
+                    ]
+                ],
+            ]
+
+        ];
+    }
 }
 

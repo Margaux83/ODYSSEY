@@ -1045,10 +1045,8 @@ body {
 .form-group {
   padding: 25px 25px 0px 25px;
 }
-.form-input {
-  padding-bottom: 18px;
-}
-.form-input input, select {
+
+input, select {
   background: none;
   color: #000000;
   font-size: 18px;
@@ -1056,8 +1054,9 @@ body {
   width: 490px;
   border-radius: 10px;
   border: 1px solid #c6c6c6;
+  margin-bottom: 15px;
 }
-.form-input label {
+label {
   padding-right: 50px;
   display: inline-block;
   width: 180px;

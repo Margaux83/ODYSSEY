@@ -70,6 +70,16 @@
     label: Ajouter un utilisateur
     icon: icon_user
 
+/edit-users:
+  controller: Users
+  action: editUsers
+  menuData:
+    visible: true
+    min-statut: true
+    listId: basics
+    label: Modifier un utilisateur
+    icon: icon_user
+
 /comments:
   controller: Comment
   action: default
