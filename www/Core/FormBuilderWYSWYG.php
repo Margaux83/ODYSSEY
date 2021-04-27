@@ -89,7 +89,7 @@ class FormBuilderWYSWYG
             else {
                 $html .= "<input 
                             id='".$name."'
-                             class='".($dataInput["class"]??"")."' 
+                            class='".($dataInput["class"]??"")."' 
                             name='".$name."'
                             type='".($dataInput["type"] ?? "text")."'
                             placeholder='".($dataInput["placeholder"] ?? "")."'
@@ -103,6 +103,65 @@ class FormBuilderWYSWYG
         $html .= "<br>";
 
         $html .= "<button type='submit' value='".( self::cleanWord($form["config"]["Submit"]) ?? "Valider" )."' class='buttonComponent d-flex floatRight'>Publier</button></form>";
+
+
+        echo $html;
+    }
+
+    public static function showFormSettings($form){
+        $html = "<form class='".($form["config"]["class"]??"")."' method='".( self::cleanWord($form["config"]["method"]) ?? "GET" )."' action='".( $form["config"]["action"] ?? "" )."'>";
+
+        foreach ($form["input"] as $name => $dataInput) {
+            $html .= "<div class='".($dataInput["class"]??"")."'>";
+
+            if ($dataInput["type"] === "textarea"){
+                $html .= "<textarea 
+                            id='".$name."'
+                            class='".($dataInput["class"]??"")."' 
+                            name='".$name."'
+                            ".((!empty($dataInput["required"]))?"required='required'":"")."
+                            ></textarea>";
+                $html .= "<br>";
+                $html .= "<br>";
+            } elseif ($dataInput["type"] === "select") {
+                $html .="<label for='".$name."'>".($dataInput["label"]??"")." </label>";
+
+                $html .= "<select 
+                            id='".$name."' 
+                            name='".$name."'
+                            ".((!empty($dataInput["required"]))?"required='required'":"")."
+                            >";
+
+                foreach ($dataInput["options"] as $value => $optionValue) {
+                    $html .= "<option
+                            value='".$value."'
+                            >".$optionValue['label']."
+                        </option>";
+                }
+
+                $html .= "</select>";
+
+            } else {
+                $html .="<label for='".$name."'>".($dataInput["label"]??"")." </label>";
+
+                $html .= "<input 
+                            id='".$name."'
+                            class='".($dataInput["class"]??"")."' 
+                            value='".($dataInput["value"]??"")."' 
+                            name='".$name."'
+                            type='".($dataInput["type"] ?? "text")."'
+                            placeholder='".($dataInput["placeholder"] ?? "")."'
+                            ".((!empty($dataInput["required"]))?"required='required'":"")."
+                            >";
+            }
+            $html .= "</div>";
+
+
+        }
+        $html .= "<br>";
+        $html .= "<br>";
+
+        $html .= "<button type='submit' value='" . (self::cleanWord($form["config"]["Submit"]) ?? "Valider") . "' class='buttonComponent d-flex floatRight'>" . (self::cleanWord($form["config"]["Submit"]) ?? "Valider") . "</button></form>";
 
 
         echo $html;

@@ -15,6 +15,8 @@ class Config
     protected $server_name;
     protected $port;
 
+
+
     /**
      * @param $id
      */
@@ -142,5 +144,102 @@ class Config
     public function getPort()
     {
         return $this->port;
+    }
+
+    public function buildFormConfig($result)
+    {
+        extract($result[0]);
+        return [
+
+            "config"=>[
+                "method"=>"POST",
+                "Action"=>"",
+                "Submit"=>"Enregistrer",
+                "class"=>"form-group",
+            ],
+            "input"=>[
+                "bdd"=>[
+                    "type"=>"text",
+                    "label"=>"Nom de la base de données",
+                    "lengthMax"=>"255",
+                    "lengthMin"=>"2",
+                    "required"=>true,
+                    "class"=>"form-input",
+                    "value"=>"$Database_name",
+                    "error"=>"Le nom de la bdd doit faire entre 2 et 255 caractères"
+                ],
+                "site"=>[
+                    "type"=>"text",
+                    "label"=>"Nom du site",
+                    "lengthMax"=>"255",
+                    "lengthMin"=>"2",
+                    "required"=>true,
+                    "class"=>"form-input",
+                    "value"=>"$Website_name",
+                    "error"=>"Le titre du nom du site doit faire entre 2 et 255 caractères"
+                ],
+                "url"=>[
+                    "type"=>"text",
+                    "label"=>"URL du site",
+                    "lengthMax"=>"255",
+                    "lengthMin"=>"2",
+                    "required"=>true,
+                    "class"=>"form-input",
+                    "value"=>"$URL_name",
+                    "error"=>"L'url du site doit faire entre 2 et 255 caractères"
+                ],
+                "langue"=>[
+                    "type"=>"select",
+                    "label"=>"Langue du site",
+                    "required"=>true,
+                    "error"=>"Veuillez sélectionner un élément",
+                    "placeholder"=>"Choisir une langue",
+                    "class"=>"form-input",
+                    "options"=>[
+                        "1"=>[
+                            "label" => "Français (fr_FR)",
+                        ],
+                        "2"=>[
+                            "label" => "Anglais (en_EN)",
+                        ]
+                    ],
+                ],
+                "fuseau"=>[
+                    "type"=>"select",
+                    "label"=>"Fuseau horaire",
+                    "required"=>true,
+                    "error"=>"Veuillez sélectionner un élément",
+                    "placeholder"=>"Choisir un fuseau horaire",
+                    "class"=>"form-input",
+                    "options"=>[
+                        "1"=>[
+                            "label" => "(UTC+01:00) Paris",
+                        ]
+                    ],
+                ],
+                "adresse_serveur"=>[
+                    "type"=>"text",
+                    "label"=>"Adresse serveur",
+                    "lengthMax"=>"255",
+                    "lengthMin"=>"2",
+                    "required"=>true,
+                    "class"=>"form-input",
+                    "value"=>"$Server_name",
+                    "error"=>"Le titre de l'adresse web ODYSSEY doit faire entre 2 et 255 caractères"
+                ],
+                "port"=>[
+                    "type"=>"text",
+                    "label"=>"Port",
+                    "lengthMax"=>"255",
+                    "lengthMin"=>"2",
+                    "required"=>true,
+                    "class"=>"form-input",
+                    "value"=>"$Port",
+                    "error"=>"Le port du site doit faire entre 2 et 255 caractères"
+                ]
+            ],
+
+
+        ];
     }
 }

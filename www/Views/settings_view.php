@@ -1,7 +1,14 @@
-<style>
-
-</style>
 <section class="col-8" style="grid-column: 1 / 8; grid-row: 1;">
+    <?php if(!empty($formErrors)):?>
+    <?php foreach($formErrors as $error):?>
+    <li><?= $error ;?>
+        <?php endforeach;?>
+        <?php endif;?>
+
+        <?php  App\Core\FormBuilderWYSWYG::showFormSettings($form); ?>
+</section>
+<!--
+<section class="col-8" style="grid-column: 1 / 8; grid-row: 2;">
     <h1>Informations du site</h1>
     <form action="#" method="post" class="form-group">
         <div class="form-input">
@@ -33,8 +40,7 @@
         <button type="submit" class="btn-standard is-blue">Enregistrer</button>
     </form>
 </section>
-
-<section class="col-8" style="grid-column: 1 / 8; grid-row: 2;">
+<section class="col-8" style="grid-column: 1 / 8; grid-row: 3;">
     <h1>Informations d'adresses</h1>
     <form action="#" method="post" class="form-group">
         <div class="form-input">
@@ -52,8 +58,8 @@
         <button type="submit" class="btn-standard is-blue">Enregistrer</button>
     </form>
 </section>
-
-<section class="col-12" style="grid-column: 8 / 13; grid-row: 1 / span 2;">
+-->
+<section class="col-12" style="grid-column: 8 / 13; grid-row: 1;">
     <h1>Données du site</h1>
     <canvas id="dataChart" width="400" height="400"></canvas>
 </section>

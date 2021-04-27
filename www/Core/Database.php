@@ -40,7 +40,11 @@ class Database
             }
         }
 
-        $sql = "SELECT " . implode(",", $requestedParams) . " FROM " . $this->table . " WHERE " . implode(" AND ", $columnFilter);
+        $sql = "SELECT " . implode(",", $requestedParams) . " FROM " . $this->table;
+        if(!empty($filter)) {
+            $sql .= " WHERE " . implode(" AND ", $columnFilter);
+        }
+
         $query = $this->pdo->prepare($sql);
         foreach ($filter as $key => $value) {
             if (!is_null($value)) {
