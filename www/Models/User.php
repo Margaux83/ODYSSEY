@@ -14,6 +14,7 @@ class User extends Database
     protected $status;
     protected $role;
     protected $isDeleted;
+    protected $isverified;
 
     /**
      * User constructor.
@@ -167,6 +168,22 @@ class User extends Database
     public function getIsDeleted()
     {
         return $this->isDeleted;
+    }
+
+    /**
+     * @param mixed $isverified
+     */
+    public function setIsverified($isverified)
+    {
+        $this->isverified = $isverified;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getIsverified()
+    {
+        return $this->isverified;
     }
 
     /**

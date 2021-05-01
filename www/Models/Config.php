@@ -7,13 +7,8 @@ namespace App\Models;
 class Config
 {
     protected $id=null;
-    protected $database_name;
-    protected $website_name;
-    protected $url_name;
-    protected $langue;
-    protected $timezone;
-    protected $server_name;
-    protected $port;
+    protected $options;
+    protected $values;
 
     /**
      * @param $id
@@ -32,115 +27,35 @@ class Config
     }
 
     /**
-     * @param $database_name
+     * @param mixed $options
      */
-    public function setDatabase_name($database_name)
+    public function setOptions($options)
     {
-        $this->database_name = $database_name;
+        $this->options = $options;
     }
 
     /**
      * @return mixed
      */
-    public function getDatabase_name()
+    public function getOptions()
     {
-        return $this->database_name;
-    }
-
-
-    /**
-     * @param $website_name
-     */
-    public function setWebsite_name($website_name)
-    {
-        $this->website_name = $website_name;
+        return $this->options;
     }
 
     /**
-     * @return mixed
+     * @param mixed $values
      */
-    public function getWebsite_name()
+    public function setValues($values)
     {
-       return $this->website_name;
-    }
-
-    /**
-     * @param $url_name
-     */
-    public function setUrl_name($url_name)
-    {
-        $this->url_name = $url_name;
+        $this->values = $values;
     }
 
     /**
      * @return mixed
      */
-    public function getUrl_name()
+    public function getValues()
     {
-        return $this->url_name;
+        return $this->values;
     }
 
-    /**
-     * @param mixed $langue
-     */
-    public function setLangue($langue)
-    {
-        $this->langue = $langue;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getLangue()
-    {
-        return $this->langue;
-    }
-
-    /**
-     * @param mixed $timezone
-     */
-    public function setTimezone($timezone)
-    {
-        $this->timezone = $timezone;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getTimezone()
-    {
-        return $this->timezone;
-    }
-
-    /**
-     * @param mixed $server_name
-     */
-    public function setServerName($server_name)
-    {
-        $this->server_name = $server_name;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getServerName()
-    {
-        return $this->server_name;
-    }
-
-    /**
-     * @param mixed $port
-     */
-    public function setPort($port)
-    {
-        $this->port = $port;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getPort()
-    {
-        return $this->port;
-    }
 }
