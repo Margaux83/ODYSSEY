@@ -14,8 +14,8 @@
             <div class="error"><?= $error ;?></div>
 
         <?php endforeach;?>
-    <?php } else { ?>
-    <div class="success">L'article a bien été ajouté</div>
+    <?php } else { //?>
+
     <?php } ?>
         <?php  App\Core\FormBuilderWYSWYG::showFormArticle($form); ?>
 </section>

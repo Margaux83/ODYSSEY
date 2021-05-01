@@ -239,28 +239,6 @@ class Article extends ArticleRepository
                         ],
 
                     ],
-                    "page"=>[
-                        "type"=>"select",
-                        "label"=>"Page",
-                        "required"=>true,
-                        "error"=>"Veuillez sélectionner un élément",
-                        "placeholder"=>"Choisir une page",
-                        "options"=>[
-                            "1"=>[
-                                "label" => "Accueil",
-                            ],
-                            "2"=>[
-                                "label" => "Voyages",
-                            ],
-                            "3"=>[
-                                "label" => "Réservations"
-                            ],
-                            "4"=>[
-                                "label" => "Contact"
-                            ]
-                        ],
-
-                    ],
                     "status"=>[
                         "type"=>"select",
                         "label"=>"Statut",

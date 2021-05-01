@@ -29,6 +29,8 @@ class ArticleRepository extends Database
                                             :".implode(",:", $columns)."
                                             )");
             $query->execute($data);
+
+            $success = "<div class=\"success\">L'article a bien été ajouté</div>";
         }
         else{
             foreach ($data as $key => $value) {

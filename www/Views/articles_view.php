@@ -15,7 +15,7 @@
             <p class="flex-weight-1">Status</p>
             <p class="flex-weight-1">Actions</p>
         </li>
-        <?php //var_dump($infoArticles);
+        <?php
         if(!empty($infoArticles)){ ?>
 
         <?php foreach ($infoArticles as $article){

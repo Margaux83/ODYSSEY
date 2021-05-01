@@ -68,6 +68,8 @@ class Article
                    $article->setId_user(1);
                    $article->saveArticle();
 
+
+
             }else{
                 $view->assign("formErrors", $errors);
             }
