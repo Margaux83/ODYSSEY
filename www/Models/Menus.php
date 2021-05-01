@@ -11,7 +11,6 @@ class Menus
     protected $order;
     protected $isdeleted;
 
-
     /**
      * @return mixed
      */
@@ -75,5 +74,4 @@ class Menus
     {
         return $this->isdeleted;
     }
-
 }
