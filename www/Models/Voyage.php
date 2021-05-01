@@ -11,8 +11,7 @@ class Voyage
     protected $departure;
     protected $arrivaldate;
     protected $departuredate;
-    protected $creationdate;
-    protected $editdate;
+    protected $status;
     protected $isdeleted;
 
     /**
@@ -98,33 +97,17 @@ class Voyage
     /**
      * @return mixed
      */
-    public function getCreationdate()
+    public function getStatus()
     {
-        return $this->creationdate;
+        return $this->status;
     }
 
     /**
-     * @param mixed $creationdate
+     * @param mixed $status
      */
-    public function setCreationdate($creationdate)
+    public function setStatus($status)
     {
-        $this->creationdate = $creationdate;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getEditdate()
-    {
-        return $this->editdate;
-    }
-
-    /**
-     * @param mixed $editdate
-     */
-    public function setEditdate($editdate)
-    {
-        $this->editdate = $editdate;
+        $this->status = $status;
     }
 
     /**
