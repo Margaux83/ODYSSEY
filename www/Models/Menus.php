@@ -9,6 +9,7 @@ class Menus
     protected $id;
     protected $name;
     protected $order;
+    protected $isdeleted
 
     /**
      * @return mixed
@@ -58,4 +59,19 @@ class Menus
         $this->order = $order;
     }
 
+    /**
+     * @param mixed $isdeleted
+     */
+    public function setIsdeleted($isdeleted)
+    {
+        $this->isdeleted = $isdeleted;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getIsdeleted()
+    {
+        return $this->isdeleted;
+    }
 }
