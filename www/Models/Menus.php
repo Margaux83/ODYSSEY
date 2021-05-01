@@ -9,7 +9,7 @@ class Menus
     protected $id;
     protected $name;
     protected $order;
-    protected $isdeleted
+    protected $isdeleted;
 
     /**
      * @return mixed
