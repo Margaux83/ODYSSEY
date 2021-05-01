@@ -13,11 +13,11 @@ class Article extends ArticleRepository
     protected $title;
     protected $content;
     protected $status;
-    protected $visibility;
+    protected $isvisible;
+    protected $category;
     protected $isdraft;
     protected $description;
     protected $isdeleted;
-    protected $id_category;
     protected $id_user;
 
     public function __construct(){
@@ -89,19 +89,35 @@ class Article extends ArticleRepository
     }
 
     /**
-     * @param $visibility
+     * @param $isvisible
      */
-    public function setVisibility($visibility)
+    public function setIsvisible($isvisible)
     {
-        $this->visibility = $visibility;
+        $this->isvisible = $isvisible;
     }
 
     /**
      * @return mixed
      */
-    public function getVisibility()
+    public function getIsvisible()
     {
-        return $this->visibility;
+        return $this->isvisible;
+    }
+
+    /**
+     * @param mixed $category
+     */
+    public function setCategory($category)
+    {
+        $this->category = $category;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getCategory()
+    {
+        return $this->category;
     }
 
     /**
@@ -150,22 +166,6 @@ class Article extends ArticleRepository
     public function getIsdeleted()
     {
         return $this->isdeleted;
-    }
-
-    /**
-     * @param $category
-     */
-    public function setId_category($category)
-    {
-        $this->id_category = $category;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getId_category()
-    {
-        return $this->id_category;
     }
 
     /**
@@ -260,7 +260,7 @@ class Article extends ArticleRepository
                             ]
                         ]
                     ],
-                    "visibility"=>[
+                    "isvisible"=>[
                         "type"=>"select",
                         "label"=>"Visibilité",
                         "required"=>true,

@@ -4,14 +4,14 @@
 namespace App\Models;
 
 
-class Article_Page
+class CategoryPage
 {
-    protected $id=null;
-    protected $id_article;
+    protected $id;
+    protected $id_category;
     protected $id_page;
 
     /**
-     * @param null $id
+     * @param mixed $id
      */
     public function setId($id)
     {
@@ -19,7 +19,7 @@ class Article_Page
     }
 
     /**
-     * @return null
+     * @return mixed
      */
     public function getId()
     {
@@ -27,19 +27,19 @@ class Article_Page
     }
 
     /**
-     * @param mixed $id_article
+     * @param mixed $id_category
      */
-    public function setIdArticle($id_article)
+    public function setIdCategory($id_category)
     {
-        $this->id_article = $id_article;
+        $this->id_category = $id_category;
     }
 
     /**
      * @return mixed
      */
-    public function getIdArticle()
+    public function getIdCategory()
     {
-        return $this->id_article;
+        return $this->id_category;
     }
 
     /**

@@ -7,13 +7,11 @@ namespace App\Models;
 class Comment
 {
     protected $id=null;
-    protected $title;
     protected $content;
-    protected $firstname;
-    protected $lastname;
     protected $id_article;
-    protected $email;
     protected $isdeleted;
+    protected $id_user;
+    protected $id_comment;
 
     /**
      * @param $id
@@ -30,21 +28,7 @@ class Comment
         return $this->id;
     }
 
-    /**
-     * @param $title
-     */
-    public function setTitle($title)
-    {
-       $this->title = $title;
-    }
 
-    /**
-     * @return mixed
-     */
-    public function getTitle()
-    {
-        return $this->title;
-    }
 
     /**
      * @param $content
@@ -63,32 +47,19 @@ class Comment
     }
 
     /**
-     * @param $firstname
+     * @param $isdeleted
      */
-    public function setFirstname($firstname)
+    public function setIsdeleted($isdeleted)
     {
-        $this->firstname = $firstname;
+        $this->isdeleted = $isdeleted;
     }
 
     /**
      * @return mixed
      */
-    public function getFirstname()
+    public function getIsdeleted()
     {
-        return $this->firstname;
-    }
-
-    /**
-     * @param $lastname
-     */
-    public function setLastname($lastname)
-    {
-        $this->lastname = $lastname;
-    }
-
-    public function getLastname()
-    {
-        return $this->lastname;
+        return $this->isdeleted;
     }
 
     /**
@@ -105,34 +76,34 @@ class Comment
     }
 
     /**
-     * @param $email
+     * @param mixed $id_user
      */
-    public function setEmail($email)
+    public function setIdUser($id_user)
     {
-        $this->email = $email;
+        $this->id_user = $id_user;
     }
 
     /**
      * @return mixed
      */
-    public function getEmail()
+    public function getIdUser()
     {
-        return $this->email;
+        return $this->id_user;
     }
 
     /**
-     * @param $isdeleted
+     * @param mixed $id_comment
      */
-    public function setIsdeleted($isdeleted)
+    public function setIdComment($id_comment)
     {
-        $this->isdeleted = $isdeleted;
+        $this->id_comment = $id_comment;
     }
 
     /**
      * @return mixed
      */
-    public function getIsdeleted()
+    public function getIdComment()
     {
-        return $this->isdeleted;
+        return $this->id_comment;
     }
 }
