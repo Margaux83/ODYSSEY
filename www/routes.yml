@@ -30,7 +30,7 @@
     label: Articles
     icon: icon_page
 
-/ajouter-article:
+/addarticle:
   controller: Article
   action: addarticle
   menuData:
@@ -40,7 +40,7 @@
     label: Ajouter un article
     icon: icon_page
 
-/modifier-article:
+/editarticle:
   controller: Article
   action: editArticle
   menuData:

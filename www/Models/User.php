@@ -9,11 +9,11 @@ class User extends Database
     protected $firstname;
     protected $lastname;
     protected $email;
-    protected $pwd;
-    protected $country;
+    protected $password;
+    protected $phone;
     protected $status;
     protected $role;
-    protected $isDeleted;
+    protected $isdeleted;
     protected $isverified;
 
     /**
@@ -102,30 +102,35 @@ class User extends Database
     }
 
     /**
-     * @param $pwd
+     * @param mixed $password
      */
-    public function setPwd($pwd){
-        $this->pwd = $pwd;
-    }
-
-    public function getPwd()
+    public function setPassword($password)
     {
-        return $this->pwd;
-    }
-
-    /**
-     * @param $country
-     */
-    public function setCountry($country){
-        $this->country = $country;
+        $this->password = $password;
     }
 
     /**
      * @return mixed
      */
-    public function getCountry()
+    public function getPassword()
     {
-        return $this->country;
+        return $this->password;
+    }
+
+    /**
+     * @param mixed $phone
+     */
+    public function setPhone($phone)
+    {
+        $this->phone = $phone;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getPhone()
+    {
+        return $this->phone;
     }
 
     /**
@@ -156,23 +161,21 @@ class User extends Database
     }
 
     /**
-     * @param $isDeleted
+     * @param mixed $isdeleted
      */
-    public function setIsDeleted($isDeleted){
-        $this->isDeleted = $isDeleted;
+    public function setIsdeleted($isdeleted)
+    {
+        $this->isdeleted = $isdeleted;
     }
 
     /**
      * @return mixed
      */
-    public function getIsDeleted()
+    public function getIsdeleted()
     {
-        return $this->isDeleted;
+        return $this->isdeleted;
     }
 
-    /**
-     * @param mixed $isverified
-     */
     public function setIsverified($isverified)
     {
         $this->isverified = $isverified;
