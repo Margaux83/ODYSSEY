@@ -18,23 +18,23 @@
                 ?>
                 <li class="listItem">
                     <div class="listItem-cpt">
-                        <p><img src=<?php App\Core\View::getAssets("icons/plus-solid.svg")?> alt="" height="15" width="15">&nbsp;&nbsp;  <?= $article["DateCreation"] ?></p>
-                        <p><img src=<?php App\Core\View::getAssets("icons/pen-solid.svg")?> alt="" height="15" width="15">&nbsp;&nbsp;  <?php if(!empty($article["DateEdit"])){
-                                echo $article["DateEdit"];
+                        <p><img src=<?php App\Core\View::getAssets("icons/plus-solid.svg")?> alt="" height="15" width="15">&nbsp;&nbsp;  <?= $article["creationDate"] ?></p>
+                        <p><img src=<?php App\Core\View::getAssets("icons/pen-solid.svg")?> alt="" height="15" width="15">&nbsp;&nbsp;  <?php if(!empty($article["updateDate"])){
+                                echo $article["updateDate"];
                             }
                             else{
                                 echo "Cet article n'a pas été modifié";
                             }?></p>
                     </div>
                     <div>
-                        <p class="listItem-cpt"><b><?= $article["Title"] ?></b><?= $article["Description"] ?></p>
+                        <p class="listItem-cpt"><b><?= $article["title"] ?></b><?= $article["description"] ?></p>
                     </div>
                     <div>
-                        <p class="listItem-cpt"><b><?= $article["Firstname"]." ".$article["Lastname"] ?></b><br><?= "Rôle ". $article["Role"] ?></p>
+                        <p class="listItem-cpt"><b><?= $article["firstname"]." ".$article["lastname"] ?></b><br><?= "Rôle ". $article["role"] ?></p>
                     </div>
                     <div>
                         <p class="listItem-cpt"><?php
-                    switch ($article["Status"]) {
+                    switch ($article["status"]) {
                         case 1:
                             echo "Validé et posté";
                             break;

@@ -168,7 +168,7 @@ class Base{
 	public function dashboardAction(){
 		$security = Security::getInstance();
 		if(!$security->isConnected()){
-           // header('Location: /login');
+            header('Location: /login');
     }
 
 		//Affiche moi la vue dashboard;

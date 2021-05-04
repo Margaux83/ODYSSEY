@@ -55,12 +55,29 @@ class ArticleRepository extends Database
     public function getAllArticles()
     {
 
-        $sql = "SELECT * FROM " . $this->table . " INNER JOIN ody_User ON ". $this->table.".id_User = ody_User.ID";
+        $sql = "SELECT ody_Article.id, ody_Article.title, ody_Article.content, ody_Article.description, ody_Article.status, ody_Article.isVisible, ody_Article.isDraft,
+                    ody_Article.isDeleted, ody_Article.creationDate, ody_Article.updateDate, ody_Article.id_User, ody_User.firstname, ody_User.lastname, ody_User.role  FROM " . $this->table . " INNER JOIN ody_User ON ". $this->table.".id_User = ody_User.ID";
         $query = $this->pdo->prepare($sql);
         $query->execute();
         //var_dump($query);
         //die();
         return $query->fetchAll();
 
+    }
+
+    public function deleteArticle($id)
+    {
+        $sql ="DELETE * FROM ". $this->table ." WHERE id=".$id;
+        $query = $this->pdo->prepare($sql);
+        $query->execute();
+    }
+
+    public function getArticleByUser($id)
+    {
+        $sql ="SELECT ody_Article.id, ody_Article.title, ody_Article.content, ody_Article.description, ody_Article.status, ody_Article.isVisible, ody_Article.isDraft,
+                    ody_Article.isDeleted, ody_Article.creationDate, ody_Article.updateDate, ody_Article.id_User, ody_User.firstname, ody_User.lastname, ody_User.role  FROM " . $this->table . " INNER JOIN ody_User ON ". $this->table.".id_User = ody_User.ID WHERE id_User=".$id;
+        $query = $this->pdo->prepare($sql);
+        $query->execute();
+        return $query->fetchAll();
     }
 }

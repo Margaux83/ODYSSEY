@@ -29,7 +29,6 @@
     <link rel="stylesheet" href="../../Trumbowyg/dist/ui/trumbowyg.min.css">
     <link rel="stylesheet" href="../../Trumbowyg/dist/plugins/colors/ui/trumbowyg.colors.min.css">
 
-    <script src=<?php App\Core\View::getAssets("chart.js")?>></script>
 
 </head>
 <body>
