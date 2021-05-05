@@ -3,7 +3,7 @@
         <h1 class="titleSection d-flex"><img src=<?php App\Core\View::getAssets("icons/icon_page.png")?> alt="">Liste des articles</h1>
         <h1 id="modalButton" class="searchButtonSection d-flex">Rechercher<img class="colorSearchButton" src=<?php App\Core\View::getAssets("icons/search-solid.svg")?> alt="" ></h1>
     </div>
-    <ul class="listItemBasic limit-height-900">
+    <ul class="listItemBasic limit-height-450">
         <li class="legend">
             <p class="flex-weight-1">Dates</p>
             <p class="flex-weight-1">Titres et descriptions</p>
