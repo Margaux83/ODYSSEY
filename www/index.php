@@ -37,8 +37,9 @@ if( file_exists("./Controllers/".$c.".php")){
 			//$a = loginAction // defaultAction
 			$cObject->$a();
 		}else{
-            $view = new View("404", "error");
-		}
+            $view = new View("Error/404", "error");
+        }
+
 
     }else{
         die("La classe ".$c." n'existe pas");
