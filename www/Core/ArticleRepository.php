@@ -80,4 +80,9 @@ class ArticleRepository extends Database
         $query->execute();
         return $query->fetchAll();
     }
+
+    public function saveArticleCategory($category,$idArticle)
+    {
+        $query = $this->pdo->prepare("INSERT INTO ody_Category_Article (id_Article, id_Category) VALUES (".$idArticle.",".$category.")");
+    }
 }

@@ -26,7 +26,7 @@ class Article
         $articles->getAllArticles();
 
         //Affiche moi la vue dashboard;
-        $view = new View("articles", "back");
+        $view = new View("Article/articles", "back");
 
         $view->assign("infoArticlesByUser", $articles->getArticleByUser($_SESSION["userId"]));
         $view->assign("infoArticles", $articles->getAllArticles());
@@ -41,7 +41,7 @@ class Article
             header('Location: /login');
        }
         $article = new Arti();
-        $view = new View("addArticles", "back");
+        $view = new View("Article/addArticles", "back");
 
         $form = $article->buildFormArticle();
         $view->assign("form", $form);
@@ -56,7 +56,7 @@ class Article
                    $article->setTitle(htmlspecialchars(addslashes($_POST['title'])));
                    $article->setContent(addslashes($_POST['content']));
                    $article->setStatus($_POST['status']);
-                   $article->setIsvisible($_POST['visibility']);
+                   $article->setIsvisible($_POST['isvisible']);
                    if($_POST['status'] == "Brouillon"){
                        $article->setIsdraft(1);
                    }
@@ -64,10 +64,10 @@ class Article
                        $article->setIsdraft(0);
                    }
                    $article->setIsdeleted(0);
-                   $article->setId_user(1);
+                   $article->setId_user($_SESSION["userId"]);
                    $article->saveArticle();
 
-
+                   $article->saveArticleCategory($_POST['category'],$article->getID());
 
             }else{
                 $view->assign("formErrors", $errors);
@@ -85,7 +85,7 @@ class Article
 
         $article = new Arti();
         $article->getAllArticles();
-        $view = new View("editArticles", "back");
+        $view = new View("Article/editArticles", "back");
         $view->assign("infoArticles", $article->getAllArticles());
 
         $form = $article->buildFormArticle();

@@ -216,7 +216,6 @@ class Article extends ArticleRepository
                         "class"=>"trumbowygTextarea",
                         "error"=>"Le titre de l'article doit faire entre 2 et 255 caractères"
                     ],
-
                     "category"=>[
                         "type"=>"select",
                         "label"=>"Catégorie",
