@@ -9,7 +9,7 @@ use App\Core\Database;
 class Article extends ArticleRepository
 {
 
-    private $id;
+    protected $id;
     protected $title;
     protected $content;
     protected $status;

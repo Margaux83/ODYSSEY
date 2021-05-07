@@ -25,10 +25,12 @@ class Article
         $articles = new Arti();
         $articles->getAllArticles();
 
-        //Affiche moi la vue dashboard;
+        //Affiche moi la vue des articles;
         $view = new View("Article/articles", "back");
 
+        //Affiche la liste de tous les articles
         $view->assign("infoArticlesByUser", $articles->getArticleByUser($_SESSION["userId"]));
+        //Affiche la liste des articles qui ont été créés par l'utilisateur connecté
         $view->assign("infoArticles", $articles->getAllArticles());
 
     }
@@ -36,23 +38,29 @@ class Article
     public function addarticleAction()
     {
 
+
         $security = Security::getInstance();
+        //Vérifie si l'utilisateur est connecté, sinon on le redirige sur la page de login
         if(!$security->isConnected()){
             header('Location: /login');
        }
+
         $article = new Arti();
+        //Affiche la vue pour ajouter un article
         $view = new View("Article/addArticles", "back");
 
+        //Création du formBuilder des articles
         $form = $article->buildFormArticle();
         $view->assign("form", $form);
 
 
-
+        //On vérifie si des données sont bien envoyées
         if(!empty($_POST)){
+
             $errors = FormBuilderWYSWYG::validator($_POST, $form);
-
+            //On vérifie si le tableau des erreurs est nul
             if(empty($errors)){
-
+                    //S'il n'y a pas d'erreurs, on envoie les données dans la requête pour ajouter l'article
                    $article->setTitle(htmlspecialchars(addslashes($_POST['title'])));
                    $article->setContent(addslashes($_POST['content']));
                    $article->setStatus($_POST['status']);
@@ -70,6 +78,7 @@ class Article
                    $article->saveArticleCategory($_POST['category'],$article->getID());
 
             }else{
+                //S'il y a des erreurs, on prépare leur affichage
                 $view->assign("formErrors", $errors);
             }
 
@@ -91,15 +100,13 @@ class Article
         $form = $article->buildFormArticle();
         $view->assign("form", $form);
 
-
-
        if(!empty($_POST)){
             $view->assign("form", $form);
 
             $errors = FormBuilderWYSWYG::validator($_POST, $form);
 
             if(empty($errors)){
-                $article->setID(7);
+                $article->setID();
                 $article->setTitle(htmlspecialchars(addslashes($_POST['title'])));
                 $article->setContent(htmlspecialchars(addslashes($_POST['content'])));
                 $article->setStatus($_POST['status']);

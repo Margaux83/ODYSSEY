@@ -59,8 +59,9 @@
                     ?></p>
             </div>
             <div class="listItem-cpt listActions">
-                <img onclick="updateArticle(13)" src=<?php App\Core\View::getAssets("icons/eye-solid.svg")?> alt="" height="20" width="20">
-                <img src=<?php App\Core\View::getAssets("icons/pen-solid.svg")?> alt="" height="20" width="20">
+                <img src=<?php App\Core\View::getAssets("icons/eye-solid.svg")?> alt="" height="20" width="20">
+                <form action="editarticle"><button class="editarticleButton" type="submit"><img src=<?php App\Core\View::getAssets("icons/pen-solid.svg")?> alt="" height="20" width="20"><input
+                                type="hidden" value="<?= $article["id"] ?>"></button></form>
                 <img class="openModalConfirmDeleteComment" data-target="ModalConfirmDeleteComment" data-id="<?= $article["id"] ?>"  src=<?php App\Core\View::getAssets("icons/trash-solid.svg")?> alt="" height="20" width="20">
             </div>
         </li>

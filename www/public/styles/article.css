@@ -532,3 +532,8 @@ div .listDate{
         top: 38px;
     }
 }
+
+.editarticleButton{
+    border-style: none;
+    background: transparent;
+}

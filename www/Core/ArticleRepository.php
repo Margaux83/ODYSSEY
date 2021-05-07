@@ -17,6 +17,7 @@ class ArticleRepository extends Database
             get_class_vars(get_class())
 
         );
+        unset($data["category"]);
 
         $columns = array_keys($data);
         $values = array_values($data);

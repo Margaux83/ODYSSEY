@@ -51,8 +51,8 @@
                     ?></p>
                     </div>
                     <div class="listItem-cpt listActions">
-                        <img src=<?php App\Core\View::getAssets("icons/eye-solid.svg")?> alt="" height="20" width="20">
-                        <img src=<?php App\Core\View::getAssets("icons/pen-solid.svg")?> alt="" height="20" width="20">
+                        <a href=""><img src=<?php App\Core\View::getAssets("icons/eye-solid.svg")?> alt="" height="20" width="20"></a>
+                        <a href=""><img src=<?php App\Core\View::getAssets("icons/pen-solid.svg")?> alt="" height="20" width="20"></a>
                         <img class="openModalConfirmDeleteArticle" src=<?php App\Core\View::getAssets("icons/trash-solid.svg")?> alt="" height="20" width="20">
                     </div>
                 </li>
