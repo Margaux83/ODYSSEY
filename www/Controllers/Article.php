@@ -53,7 +53,7 @@ class Article
                    $article->setTitle(htmlspecialchars(addslashes($_POST['title'])));
                    $article->setContent(htmlspecialchars(addslashes($_POST['content'])));
                    $article->setStatus($_POST['status']);
-                   $article->setVisibility($_POST['visibility']);
+                   $article->setIsvisible($_POST['visibility']);
                    if($_POST['status'] == "Brouillon"){
                        $article->setIsdraft(1);
                    }
