@@ -51,6 +51,11 @@ class ArticleRepository extends Database
             $query->execute();
 
         }
+
+        $selectLastId="SELECT id FROM " . $this->table ." ORDER BY id DESC LIMIT 1 ";
+        $querySelect = $this->pdo->prepare($selectLastId);
+        $querySelect->execute();
+        return $querySelect->fetchAll();
     }
 
     public function getAllArticles()
@@ -60,17 +65,8 @@ class ArticleRepository extends Database
                     ody_Article.isDeleted, ody_Article.creationDate, ody_Article.updateDate, ody_Article.id_User, ody_User.firstname, ody_User.lastname, ody_User.role  FROM " . $this->table . " INNER JOIN ody_User ON ". $this->table.".id_User = ody_User.ID";
         $query = $this->pdo->prepare($sql);
         $query->execute();
-        //var_dump($query);
-        //die();
         return $query->fetchAll();
 
-    }
-
-    public function deleteArticle($id)
-    {
-        $sql ="DELETE * FROM ". $this->table ." WHERE id=".$id;
-        $query = $this->pdo->prepare($sql);
-        $query->execute();
     }
 
     public function getArticleByUser($id)
@@ -79,11 +75,23 @@ class ArticleRepository extends Database
                     ody_Article.isDeleted, ody_Article.creationDate, ody_Article.updateDate, ody_Article.id_User, ody_User.firstname, ody_User.lastname, ody_User.role  FROM " . $this->table . " INNER JOIN ody_User ON ". $this->table.".id_User = ody_User.ID WHERE id_User=".$id;
         $query = $this->pdo->prepare($sql);
         $query->execute();
+
         return $query->fetchAll();
     }
 
-    public function saveArticleCategory($category,$idArticle)
+
+    public function saveArticleCategory($category,$id_Article)
     {
-        $query = $this->pdo->prepare("INSERT INTO ody_Category_Article (id_Article, id_Category) VALUES (".$idArticle.",".$category.")");
+        $sql = $this->pdo->prepare("INSERT INTO ody_Category_Article (id_Category,id_Article) VALUES (".$category.",".$id_Article." )");
+        $sql->execute();
     }
+
+    public function deleteArticle($id)
+    {
+        $sql ="UPDATE ". $this->table ." SET isDeleted=1 WHERE id=".$id;
+        $query = $this->pdo->prepare($sql);
+        $query->execute();
+
+    }
+
 }

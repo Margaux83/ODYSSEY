@@ -24,9 +24,51 @@ class Article extends ArticleRepository
         parent::__construct();
     }
 
+    public function getID()
+    {
+        return $this->id;
+    }
+
+    public function setId($id){
+        $this->id = $id;
+        //Il va chercher en BDD toutes les informations de l'utilisateur
+        $data = array_diff_key(
+            get_object_vars($this),
+            get_class_vars(get_parent_class())
+        );
+        $columns = array_keys($data);
+
+
+        $statement = $this->pdo->prepare("SELECT " . implode(',', $columns) . " FROM ".$this->table." WHERE id=:id");
+        $statement->execute(array(":id" => $this->getId()));
+
+        $obj = $statement->fetchObject("Article");
+
+        $this->setArticleFromObj($obj);
+    }
+
+    private function setArticleFromObj($obj){
+        $data = array_diff_key(
+            get_object_vars($this),
+            get_class_vars(get_parent_class())
+        );
+        $columns = array_keys($data);
+
+        foreach ($columns as $key => $value) {
+            $getAction = 'get' . ucfirst(trim($value));
+            $objReturnedValue = $obj->$getAction();
+            if (!empty($objReturnedValue)){
+                $setAction = 'set' . ucfirst(trim($value));
+                if ($setAction !== 'setId'){
+                    $this->$setAction($objReturnedValue);
+                }
+            }
+        }
+    }
+
     /**
      * @param $id
-     */
+     * *
     public function setID($id)
     {
         $this->id = $id;
@@ -34,11 +76,11 @@ class Article extends ArticleRepository
 
     /**
      * @return mixed
-     */
+
     public function getID()
     {
         return $this->id;
-    }
+    }*/
 
     /**
      * @param $title

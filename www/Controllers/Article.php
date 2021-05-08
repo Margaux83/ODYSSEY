@@ -5,6 +5,7 @@ namespace App;
 
 use App\Core\Database;
 use App\Core\FormBuilderWYSWYG;
+use App\Core\Messages;
 use App\Core\Security;
 use App\Core\View;
 use App\Core\ArticleRepository;
@@ -58,7 +59,7 @@ class Article
         if(!empty($_POST)){
 
             $errors = FormBuilderWYSWYG::validator($_POST, $form);
-            //On vérifie si le tableau des erreurs est nul
+            //On vérifie s'il y a des erreurs
             if(empty($errors)){
                     //S'il n'y a pas d'erreurs, on envoie les données dans la requête pour ajouter l'article
                    $article->setTitle(htmlspecialchars(addslashes($_POST['title'])));
@@ -74,8 +75,9 @@ class Article
                    $article->setIsdeleted(0);
                    $article->setId_user($_SESSION["userId"]);
                    $article->saveArticle();
+                   $result =  $article->saveArticle();
 
-                   $article->saveArticleCategory($_POST['category'],$article->getID());
+                   $article->saveArticleCategory($_POST['category'],$result[0]["id"]);
 
             }else{
                 //S'il y a des erreurs, on prépare leur affichage
@@ -100,13 +102,15 @@ class Article
         $form = $article->buildFormArticle();
         $view->assign("form", $form);
 
+        //Récupérer l'ID
+
        if(!empty($_POST)){
             $view->assign("form", $form);
 
             $errors = FormBuilderWYSWYG::validator($_POST, $form);
 
             if(empty($errors)){
-                $article->setID();
+                $article->setID($_POST["id"]);
                 $article->setTitle(htmlspecialchars(addslashes($_POST['title'])));
                 $article->setContent(htmlspecialchars(addslashes($_POST['content'])));
                 $article->setStatus($_POST['status']);
@@ -118,8 +122,11 @@ class Article
                     $article->setIsdraft(0);
                 }
                 $article->setIsdeleted(0);
-                $article->setId_user(1);
+                $article->setId_user($_SESSION["userId"]);
                 $article->saveArticle();
+                $view->assign('article',$article);
+
+
 
             }else{
                 $view->assign("formErrors", $errors);
@@ -129,7 +136,7 @@ class Article
 
     }
 
-    public static function deletearticleAction(int $id)
+    public static function deletearticleAction($id)
     {
         $article = new Arti();
         $article->deleteArticle($id);
