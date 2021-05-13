@@ -52,7 +52,7 @@
                     </div>
                     <div class="listItem-cpt listActions">
                         <a href=""><img src=<?php App\Core\View::getAssets("icons/eye-solid.svg")?> alt="" height="20" width="20"></a>
-                        <form action="editarticle"><button class="editarticleButton" type="submit"><img src=<?php App\Core\View::getAssets("icons/pen-solid.svg")?> alt="" height="20" width="20"><input
+                        <form action="editarticle" method="post"><button class="editarticleButton" type="submit"><img src=<?php App\Core\View::getAssets("icons/pen-solid.svg")?> alt="" height="20" width="20"><input
                                         type="hidden" name="id" value="<?= $article["id"] ?>"></button></form>
                         <img class="openModalConfirmDeleteArticle" src=<?php App\Core\View::getAssets("icons/trash-solid.svg")?> alt="" height="20" width="20">
                     </div>
@@ -74,7 +74,7 @@
        <div class="success">L'article a bien été modifié</div>
 
        <?php } ?>
-       <?= $article->getID(); ?>
+       <?php var_dump($selectedArticle->getID());?>
            <?php  App\Core\FormBuilderWYSWYG::showFormArticle($form); ?>
    </section>
 

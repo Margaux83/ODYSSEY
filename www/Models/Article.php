@@ -31,20 +31,22 @@ class Article extends ArticleRepository
 
     public function setId($id){
         $this->id = $id;
-        //Il va chercher en BDD toutes les informations de l'utilisateur
+
         $data = array_diff_key(
             get_object_vars($this),
             get_class_vars(get_parent_class())
         );
+        unset($data["category"]);
         $columns = array_keys($data);
-
 
         $statement = $this->pdo->prepare("SELECT " . implode(',', $columns) . " FROM ".$this->table." WHERE id=:id");
         $statement->execute(array(":id" => $this->getId()));
 
-        $obj = $statement->fetchObject("Article");
+        var_dump($statement->fetchAll());
+        die();
+        //$obj = $statement->fetchObject(CLASS);
 
-        $this->setArticleFromObj($obj);
+        //$this->setArticleFromObj($obj);
     }
 
     private function setArticleFromObj($obj){

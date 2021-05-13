@@ -74,8 +74,8 @@ class Article
                    }
                    $article->setIsdeleted(0);
                    $article->setId_user($_SESSION["userId"]);
-                   $article->saveArticle();
-                   $result =  $article->saveArticle();
+                   $article->save();
+                   $result =  $article->save();
 
                    $article->saveArticleCategory($_POST['category'],$result[0]["id"]);
 
@@ -96,13 +96,14 @@ class Article
 
         $article = new Arti();
         $article->getAllArticles();
+        $article->setId($_POST["id_article"]);
         $view = new View("Article/editArticles", "back");
         $view->assign("infoArticles", $article->getAllArticles());
 
         $form = $article->buildFormArticle();
-        $view->assign("form", $form);
 
-        //Récupérer l'ID
+        $view->assign("selectedArticle",$article);
+        $view->assign("form", $form);
 
        if(!empty($_POST)){
             $view->assign("form", $form);
@@ -110,7 +111,7 @@ class Article
             $errors = FormBuilderWYSWYG::validator($_POST, $form);
 
             if(empty($errors)){
-                $article->setID($_POST["id"]);
+                $article->setId($_POST["id"]);
                 $article->setTitle(htmlspecialchars(addslashes($_POST['title'])));
                 $article->setContent(htmlspecialchars(addslashes($_POST['content'])));
                 $article->setStatus($_POST['status']);
@@ -123,7 +124,7 @@ class Article
                 }
                 $article->setIsdeleted(0);
                 $article->setId_user($_SESSION["userId"]);
-                $article->saveArticle();
+                //$article->saveArticle();
                 $view->assign('article',$article);
 
 
