@@ -4,7 +4,7 @@
 namespace App\Models;
 
 
-class Config
+class Settings
 {
     protected $id=null;
     protected $database_name;
@@ -148,7 +148,6 @@ class Config
 
     public function buildFormConfig($result)
     {
-        extract($result[0]);
         return [
 
             "config"=>[
@@ -165,7 +164,7 @@ class Config
                     "lengthMin"=>"2",
                     "required"=>true,
                     "class"=>"form-input",
-                    "value"=>"$Database_name",
+                    "value"=>"{$result[0][1]}",
                     "error"=>"Le nom de la bdd doit faire entre 2 et 255 caractères"
                 ],
                 "site"=>[
@@ -175,7 +174,7 @@ class Config
                     "lengthMin"=>"2",
                     "required"=>true,
                     "class"=>"form-input",
-                    "value"=>"$Website_name",
+                    "value"=>"{$result[1][1]}",
                     "error"=>"Le titre du nom du site doit faire entre 2 et 255 caractères"
                 ],
                 "url"=>[
@@ -185,7 +184,7 @@ class Config
                     "lengthMin"=>"2",
                     "required"=>true,
                     "class"=>"form-input",
-                    "value"=>"$URL_name",
+                    "value"=>"{$result[2][1]}",
                     "error"=>"L'url du site doit faire entre 2 et 255 caractères"
                 ],
                 "langue"=>[
@@ -198,9 +197,11 @@ class Config
                     "options"=>[
                         "1"=>[
                             "label" => "Français (fr_FR)",
+                            "selected" => true
                         ],
                         "2"=>[
                             "label" => "Anglais (en_EN)",
+                            "selected" => false
                         ]
                     ],
                 ],
@@ -214,6 +215,15 @@ class Config
                     "options"=>[
                         "1"=>[
                             "label" => "(UTC+01:00) Paris",
+                            "selected" => false
+                        ],
+                        "2"=>[
+                            "label" => "(UTC+02:00) Berlin",
+                            "selected" => true
+                        ],
+                        "3"=>[
+                            "label" => "(UTC+03:00) Moscou",
+                            "selected" => false
                         ]
                     ],
                 ],
@@ -224,7 +234,7 @@ class Config
                     "lengthMin"=>"2",
                     "required"=>true,
                     "class"=>"form-input",
-                    "value"=>"$Server_name",
+                    "value"=>"{$result[5][1]}",
                     "error"=>"Le titre de l'adresse web ODYSSEY doit faire entre 2 et 255 caractères"
                 ],
                 "port"=>[
@@ -234,7 +244,7 @@ class Config
                     "lengthMin"=>"2",
                     "required"=>true,
                     "class"=>"form-input",
-                    "value"=>"$Port",
+                    "value"=>"{$result[6][1]}",
                     "error"=>"Le port du site doit faire entre 2 et 255 caractères"
                 ]
             ],

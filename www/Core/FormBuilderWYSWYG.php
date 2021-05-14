@@ -130,11 +130,13 @@ class FormBuilderWYSWYG
                             id='".$name."' 
                             name='".$name."'
                             ".((!empty($dataInput["required"]))?"required='required'":"")."
+                            ".((!empty($dataInput["required"]))?"required='required'":"")."
                             >";
 
                 foreach ($dataInput["options"] as $value => $optionValue) {
                     $html .= "<option
                             value='".$value."'
+                            ".((!empty($optionValue["selected"]))?"selected='selected'":"")."
                             >".$optionValue['label']."
                         </option>";
                 }
