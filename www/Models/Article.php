@@ -32,7 +32,7 @@ class Article extends ArticleRepository
     public function setId($id){
         $this->id = $id;
 
-        $data = array_diff_key(
+      /*  $data = array_diff_key(
             get_object_vars($this),
             get_class_vars(get_parent_class())
         );
@@ -46,10 +46,10 @@ class Article extends ArticleRepository
         die();
         //$obj = $statement->fetchObject(CLASS);
 
-        //$this->setArticleFromObj($obj);
+        //$this->setArticleFromObj($obj);*/
     }
 
-    private function setArticleFromObj($obj){
+   /* private function setArticleFromObj($obj){
         $data = array_diff_key(
             get_object_vars($this),
             get_class_vars(get_parent_class())
@@ -66,7 +66,7 @@ class Article extends ArticleRepository
                 }
             }
         }
-    }
+    }*/
 
     /**
      * @param $id
@@ -258,7 +258,17 @@ class Article extends ArticleRepository
                         "id"=>"content",
                         "required"=>true,
                         "class"=>"trumbowygTextarea",
-                        "error"=>"Le titre de l'article doit faire entre 2 et 255 caractères"
+                        "error"=>"Le contenu de l'article doit faire entre 2 et 255 caractères"
+                    ],
+                    "comment"=>[
+                        "type"=>"textarea",
+                        "label"=>"Desciption",
+                        "lengthMax"=>"255",
+                        "lengthMin"=>"2",
+                        "id"=>"content",
+                        "required"=>false,
+                        "class"=>"textareaComment d-flex",
+                        "error"=>"La description de l'article doit faire entre 2 et 255 caractères"
                     ],
                     "category"=>[
                         "type"=>"select",
@@ -320,7 +330,7 @@ class Article extends ArticleRepository
                                 "label" => "Privé"
                             ]
                         ]
-                    ]
+                    ],
 
                 ]
 

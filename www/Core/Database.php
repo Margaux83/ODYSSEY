@@ -94,7 +94,4 @@ class Database
            // $query->execute();
         }
     }
-
-
-
 }

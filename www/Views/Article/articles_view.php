@@ -61,7 +61,7 @@
             <div class="listItem-cpt listActions">
                 <img src=<?php App\Core\View::getAssets("icons/eye-solid.svg")?> alt="" height="20" width="20">
                 <form action="editarticle"  method="post"><button class="editarticleButton" type="submit"><img src=<?php App\Core\View::getAssets("icons/pen-solid.svg")?> alt="" height="20" width="20"><input
-                                type="hidden" name="id_article" value="<?= $article["id"] ?>"></button></form>
+                                type="hidden"  ></button></form>
                 <img class="openModalConfirmDeleteComment" data-target="ModalConfirmDeleteComment" data-id="<?= $article["id"] ?>"  src=<?php App\Core\View::getAssets("icons/trash-solid.svg")?> alt="" height="20" width="20">
             </div>
         </li>

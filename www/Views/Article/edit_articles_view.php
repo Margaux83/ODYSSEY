@@ -11,7 +11,7 @@
             <p class="flex-weight-1">Status</p>
             <p class="flex-weight-1">Actions</p>
         </li>
-        <?php //var_dump($infoArticles);
+        <?php
         if(!empty($infoArticles)){ ?>
 
             <?php foreach ($infoArticles as $article){
@@ -53,7 +53,7 @@
                     <div class="listItem-cpt listActions">
                         <a href=""><img src=<?php App\Core\View::getAssets("icons/eye-solid.svg")?> alt="" height="20" width="20"></a>
                         <form action="editarticle" method="post"><button class="editarticleButton" type="submit"><img src=<?php App\Core\View::getAssets("icons/pen-solid.svg")?> alt="" height="20" width="20"><input
-                                        type="hidden" name="id" value="<?= $article["id"] ?>"></button></form>
+                                        type="hidden" //name="id" value="<?php //$article["id"] ?>"></button></form>
                         <img class="openModalConfirmDeleteArticle" src=<?php App\Core\View::getAssets("icons/trash-solid.svg")?> alt="" height="20" width="20">
                     </div>
                 </li>

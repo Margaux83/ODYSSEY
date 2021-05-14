@@ -11,6 +11,7 @@ use App\Core\View;
 use App\Core\ArticleRepository;
 
 use App\Models\Article as Arti;
+use App\Models\Category;
 
 class Article
 {
@@ -47,13 +48,15 @@ class Article
        }
 
         $article = new Arti();
+       $category = new Category();
+        $category->setLabel($_POST["addcategory"]);
+        $category->save();
         //Affiche la vue pour ajouter un article
-        $view = new View("Article/addArticles", "back");
+        $view = new View("Article/add_articles", "back");
 
         //Création du formBuilder des articles
         $form = $article->buildFormArticle();
         $view->assign("form", $form);
-
 
         //On vérifie si des données sont bien envoyées
         if(!empty($_POST)){
@@ -73,16 +76,19 @@ class Article
                        $article->setIsdraft(0);
                    }
                    $article->setIsdeleted(0);
+                   $article->setDescription($_POST["comment"]);
                    $article->setId_user($_SESSION["userId"]);
-                   $article->save();
-                   $result =  $article->save();
+                $article->saveArticle();
+                   $result =   $article->saveArticle();
 
                    $article->saveArticleCategory($_POST['category'],$result[0]["id"]);
+
 
             }else{
                 //S'il y a des erreurs, on prépare leur affichage
                 $view->assign("formErrors", $errors);
             }
+
 
         }
     }
@@ -97,12 +103,12 @@ class Article
         $article = new Arti();
         $article->getAllArticles();
         $article->setId($_POST["id_article"]);
-        $view = new View("Article/editArticles", "back");
+        $view = new View("Article/edit_articles", "back");
         $view->assign("infoArticles", $article->getAllArticles());
 
         $form = $article->buildFormArticle();
 
-        $view->assign("selectedArticle",$article);
+        //$view->assign("selectedArticle",$article);
         $view->assign("form", $form);
 
        if(!empty($_POST)){
@@ -111,7 +117,7 @@ class Article
             $errors = FormBuilderWYSWYG::validator($_POST, $form);
 
             if(empty($errors)){
-                $article->setId($_POST["id"]);
+                $article->setId("7");
                 $article->setTitle(htmlspecialchars(addslashes($_POST['title'])));
                 $article->setContent(htmlspecialchars(addslashes($_POST['content'])));
                 $article->setStatus($_POST['status']);
@@ -140,7 +146,7 @@ class Article
     public static function deletearticleAction($id)
     {
         $article = new Arti();
-        $article->deleteArticle($id);
+        $article->delete($id);
     }
 
 }

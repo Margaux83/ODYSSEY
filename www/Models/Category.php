@@ -4,7 +4,9 @@
 namespace App\Models;
 
 
-class Category
+use App\Core\Database;
+
+class Category extends Database
 {
 
     protected $id=null;
@@ -42,4 +44,31 @@ class Category
     {
         return $this->label;
     }
+
+    /*public function buildFormCategory()
+    {
+        return [
+
+            "config"=>[
+                "method"=>"POST",
+                "Action"=>"",
+                "Submit"=>"Enregistrer",
+                "class"=>"d-flex d-flex-wrap formModalOneInput",
+            ],
+            "input"=>[
+                "addcategory"=>[
+                    "type"=>"textarea",
+                    "label"=>"Catégorie",
+                    "required"=>true,
+                    "lengthMax"=>"255",
+                    "lengthMin"=>"2",
+                    "error"=>"Le titre de l'article doit faire entre 2 et 255 caractères"
+
+
+                ]
+
+            ]
+
+        ];
+    }*/
 }

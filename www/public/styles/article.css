@@ -205,7 +205,7 @@ h1.searchButtonSection:hover{
 }
 
 .textareaComment{
-    width: 100%;
+    width: 20%;
     height: 50%;
     border-radius: 5px;
     border: 1px solid #888;

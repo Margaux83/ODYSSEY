@@ -11,6 +11,8 @@ class ArticleRepository extends Database
     {
         parent::__construct();
     }
+
+    //Ajout d'un article dans la base de données
     public function saveArticle()
     {
 
@@ -56,6 +58,7 @@ class ArticleRepository extends Database
 
         }
 
+        //On sélectionne l'id du dernier article
         $selectLastId="SELECT id FROM " . $this->table ." ORDER BY id DESC LIMIT 1 ";
         $querySelect = $this->pdo->prepare($selectLastId);
         $querySelect->execute();
@@ -89,8 +92,7 @@ class ArticleRepository extends Database
         $sql = $this->pdo->prepare("INSERT INTO ody_Category_Article (id_Category,id_Article) VALUES (".$category.",".$id_Article." )");
         $sql->execute();
     }
-
-    public function deleteArticle($id)
+    public function delete($id)
     {
         $sql ="UPDATE ". $this->table ." SET isDeleted=1 WHERE id=".$id;
         $query = $this->pdo->prepare($sql);
