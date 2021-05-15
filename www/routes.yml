@@ -50,6 +50,8 @@
     label: Modifier un article
     icon: icon_page
 
+
+
 /users:
   controller: User
   action: default
@@ -59,6 +61,16 @@
     listId: basics
     label: Utilisateurs
     icon: icon_user
+
+/pages:
+  controller: Page
+  action: default
+  menuData:
+    visible: true
+    min-statut: true
+    listId: basics
+    label: Pages
+    icon: icon_page
 
 /comments:
   controller: Comment

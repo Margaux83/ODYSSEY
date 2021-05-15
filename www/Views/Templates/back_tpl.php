@@ -56,4 +56,5 @@
         </div>
     </main>
 </body>
+<script src=<?php App\Core\View::getAssets("pages.js")?>></script>
 </html>
