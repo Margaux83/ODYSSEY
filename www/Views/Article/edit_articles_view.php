@@ -52,8 +52,8 @@
                     </div>
                     <div class="listItem-cpt listActions">
                         <a href=""><img src=<?php App\Core\View::getAssets("icons/eye-solid.svg")?> alt="" height="20" width="20"></a>
-                        <form action="editarticle" method="post"><button class="editarticleButton" type="submit"><img src=<?php App\Core\View::getAssets("icons/pen-solid.svg")?> alt="" height="20" width="20"><input
-                                        type="hidden" //name="id" value="<?php //$article["id"] ?>"></button></form>
+                        <form action="editarticle" method="post"><button class="editarticleButton" name="" type="submit"><img src=<?php App\Core\View::getAssets("icons/pen-solid.svg")?> alt="" height="20" width="20"><input
+                                        type="hidden" value="<?php //$article["id"] ?>"></button></form>
                         <img class="openModalConfirmDeleteArticle" src=<?php App\Core\View::getAssets("icons/trash-solid.svg")?> alt="" height="20" width="20">
                     </div>
                 </li>

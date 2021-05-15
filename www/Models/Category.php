@@ -45,7 +45,7 @@ class Category extends Database
         return $this->label;
     }
 
-    /*public function buildFormCategory()
+    public function buildFormCategory()
     {
         return [
 
@@ -55,10 +55,15 @@ class Category extends Database
                 "Submit"=>"Enregistrer",
                 "class"=>"d-flex d-flex-wrap formModalOneInput",
             ],
+            "button"=>[
+                "class"=>"buttonComponent d-flex",
+                "name"=>"insert_category"
+            ],
             "input"=>[
                 "addcategory"=>[
-                    "type"=>"textarea",
+                    "type"=>"text",
                     "label"=>"Catégorie",
+                    "class"=>"inputOneModal d-flex",
                     "required"=>true,
                     "lengthMax"=>"255",
                     "lengthMin"=>"2",
@@ -70,5 +75,5 @@ class Category extends Database
             ]
 
         ];
-    }*/
+    }
 }

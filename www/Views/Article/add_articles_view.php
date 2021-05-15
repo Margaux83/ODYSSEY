@@ -26,11 +26,7 @@
             <h1 class="titleModal d-flex">Ajout d'une catégorie</h1>
             <span class="closeComment d-flex">&times;</span>
         </div>
-
-        <form class="d-flex d-flex-wrap formModalOneInput" action="" method="post">
-            <input type="text" name="addcategory" class="inputOneModal d-flex">
-            <button type="submit" class="buttonComponent d-flex" id="saveModalButton">Enregistrer</button>
-        </form>
+        <?php  App\Core\FormBuilderWYSWYG::showFormArticle($formCategory); ?>
     </div>
 </div>
 

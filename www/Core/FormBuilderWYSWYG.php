@@ -92,7 +92,7 @@ class FormBuilderWYSWYG
         $html .= "<br>";
         $html .= "<br>";
 
-        $html .= "<button type='submit' value='".( self::cleanWord($form["config"]["Submit"]) ?? "Valider" )."' class='buttonComponent d-flex floatRight'>Publier</button></form>";
+        $html .= "<button type='submit' name='".( self::cleanWord($form["button"]["name"]) ?? "" )."' value='".( self::cleanWord($form["config"]["Submit"]) ?? "Valider" )."' class='".( self::cleanWord($form["button"]["class"]) ?? "" )."'>".( self::cleanWord($form["config"]["Submit"]) ?? "Valider" )."</button></form>";
 
 
         echo $html;

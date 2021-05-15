@@ -6,7 +6,7 @@ namespace App\Models;
 use App\Core\ArticleRepository;
 use App\Core\Database;
 
-class Article extends ArticleRepository
+class Article extends Database
 {
 
     protected $id;
@@ -32,24 +32,24 @@ class Article extends ArticleRepository
     public function setId($id){
         $this->id = $id;
 
-      /*  $data = array_diff_key(
+        $data = array_diff_key(
             get_object_vars($this),
             get_class_vars(get_parent_class())
         );
         unset($data["category"]);
         $columns = array_keys($data);
-
         $statement = $this->pdo->prepare("SELECT " . implode(',', $columns) . " FROM ".$this->table." WHERE id=:id");
         $statement->execute(array(":id" => $this->getId()));
+        //$result = $statement->fetchAll();
 
-        var_dump($statement->fetchAll());
-        die();
-        //$obj = $statement->fetchObject(CLASS);
+       $obj = $statement->fetchObject(__CLASS__);
+       var_dump($obj);
+       die();
 
-        //$this->setArticleFromObj($obj);*/
+       $this->setArticleFromObj($obj);
     }
 
-   /* private function setArticleFromObj($obj){
+    private function setArticleFromObj($obj){
         $data = array_diff_key(
             get_object_vars($this),
             get_class_vars(get_parent_class())
@@ -66,7 +66,7 @@ class Article extends ArticleRepository
                 }
             }
         }
-    }*/
+    }
 
     /**
      * @param $id
@@ -237,8 +237,13 @@ class Article extends ArticleRepository
                 "Action"=>"",
                 "Submit"=>"Publier",
                 "class"=>"",
+
             ],
-                "input"=>[
+            "button"=>[
+                "class"=>"buttonComponent d-flex floatRight",
+                "name"=>"insert_article"
+            ],
+            "input"=>[
 
                     "title"=>[
 

@@ -43,14 +43,13 @@ class Article
 
         $security = Security::getInstance();
         //Vérifie si l'utilisateur est connecté, sinon on le redirige sur la page de login
-        if(!$security->isConnected()){
+        if (!$security->isConnected()) {
             header('Location: /login');
-       }
+        }
 
         $article = new Arti();
-       $category = new Category();
-        $category->setLabel($_POST["addcategory"]);
-        $category->save();
+        $category = new Category();
+
         //Affiche la vue pour ajouter un article
         $view = new View("Article/add_articles", "back");
 
@@ -58,39 +57,57 @@ class Article
         $form = $article->buildFormArticle();
         $view->assign("form", $form);
 
+        $formCategory = $category->buildFormCategory();
+        $view->assign("formCategory", $formCategory);
+
         //On vérifie si des données sont bien envoyées
-        if(!empty($_POST)){
+        if (!empty($_POST['insert_article'])) {
+            if (!empty($_POST)) {
 
-            $errors = FormBuilderWYSWYG::validator($_POST, $form);
-            //On vérifie s'il y a des erreurs
-            if(empty($errors)){
+                $errors = FormBuilderWYSWYG::validator($_POST, $form);
+                //On vérifie s'il y a des erreurs
+                if (empty($errors)) {
                     //S'il n'y a pas d'erreurs, on envoie les données dans la requête pour ajouter l'article
-                   $article->setTitle(htmlspecialchars(addslashes($_POST['title'])));
-                   $article->setContent(addslashes($_POST['content']));
-                   $article->setStatus($_POST['status']);
-                   $article->setIsvisible($_POST['isvisible']);
-                   if($_POST['status'] == "Brouillon"){
-                       $article->setIsdraft(1);
-                   }
-                   else{
-                       $article->setIsdraft(0);
-                   }
-                   $article->setIsdeleted(0);
-                   $article->setDescription($_POST["comment"]);
-                   $article->setId_user($_SESSION["userId"]);
-                $article->saveArticle();
-                   $result =   $article->saveArticle();
+                    $article->setTitle(htmlspecialchars(addslashes($_POST['title'])));
+                    $article->setContent(addslashes($_POST['content']));
+                    $article->setStatus($_POST['status']);
+                    $article->setIsvisible($_POST['isvisible']);
+                    if ($_POST['status'] == "Brouillon") {
+                        $article->setIsdraft(1);
+                    } else {
+                        $article->setIsdraft(0);
+                    }
+                    $article->setIsdeleted(0);
+                    $article->setDescription($_POST["comment"]);
+                    $article->setId_user($_SESSION["userId"]);
+                    $result = $article->saveArticle();
 
-                   $article->saveArticleCategory($_POST['category'],$result[0]["id"]);
+                    $article->saveArticleCategory($_POST['category'], $result[0]["id"]);
 
 
-            }else{
-                //S'il y a des erreurs, on prépare leur affichage
-                $view->assign("formErrors", $errors);
+                } else {
+                    //S'il y a des erreurs, on prépare leur affichage
+                    $view->assign("formErrors", $errors);
+                }
+
+
             }
-
-
         }
+        elseif(!empty($_POST['insert_category'])){
+            if (!empty($_POST)) {
+
+                $errors = FormBuilderWYSWYG::validator($_POST, $formCategory);
+                if (empty($errors)) {
+                    $category->setLabel($_POST["addcategory"]);
+                    $category->save();
+                }
+                else{
+                    $view->assign("formErrors", $errors);
+                }
+
+            }
+        }
+
     }
 
     public static function editarticleAction()
@@ -102,46 +119,52 @@ class Article
 
         $article = new Arti();
         $article->getAllArticles();
-        $article->setId($_POST["id_article"]);
         $view = new View("Article/edit_articles", "back");
         $view->assign("infoArticles", $article->getAllArticles());
 
         $form = $article->buildFormArticle();
-
-        //$view->assign("selectedArticle",$article);
         $view->assign("form", $form);
 
-       if(!empty($_POST)){
-            $view->assign("form", $form);
-
-            $errors = FormBuilderWYSWYG::validator($_POST, $form);
-
-            if(empty($errors)){
-                $article->setId("7");
-                $article->setTitle(htmlspecialchars(addslashes($_POST['title'])));
-                $article->setContent(htmlspecialchars(addslashes($_POST['content'])));
-                $article->setStatus($_POST['status']);
-                $article->setIsvisible($_POST['visibility']);
-                if($_POST['status'] == "Brouillon"){
-                    $article->setIsdraft(1);
-                }
-                else{
-                    $article->setIsdraft(0);
-                }
-                $article->setIsdeleted(0);
-                $article->setId_user($_SESSION["userId"]);
-                //$article->saveArticle();
-                $view->assign('article',$article);
-
-
-
-            }else{
-                $view->assign("formErrors", $errors);
+        if(!empty($_POST["edit_article"])) {
+            if(!empty($_POST)) {
+                 $article->setId($_POST["id_article"]);
+                $view->assign("selectedArticle", $article);
             }
-
         }
 
-    }
+        if(!empty($_POST['insert_article'])) {
+            if (!empty($_POST)) {
+
+
+                $errors = FormBuilderWYSWYG::validator($_POST, $form);
+
+                if (empty($errors)) {
+                    $article->setId($_POST["id_article"]);
+                    $article->setTitle(htmlspecialchars(addslashes($_POST['title'])));
+                    $article->setContent(htmlspecialchars(addslashes($_POST['content'])));
+                    $article->setStatus($_POST['status']);
+                    $article->setIsvisible($_POST['visibility']);
+                    if ($_POST['status'] == "Brouillon") {
+                        $article->setIsdraft(1);
+                    } else {
+                        $article->setIsdraft(0);
+                    }
+                    $article->setIsdeleted(0);
+                    $article->setId_user($_SESSION["userId"]);
+                    //$article->saveArticle();
+                    $view->assign('article', $article);
+
+
+                } else {
+                    $view->assign("formErrors", $errors);
+                }
+
+
+            }
+        }
+        }
+
+
 
     public static function deletearticleAction($id)
     {
