@@ -103,6 +103,9 @@
                 <p class="listItem-cpt"><b><?= $articleByUser["title"] ?></b></p>
             </div>
             <div>
+                <p class="listItem-cpt"><b><?= $article["firstname"]." ".$article["lastname"] ?></b><br><?= "Rôle ". $article["role"] ?></p>
+            </div>
+            <div>
                 <p class="listItem-cpt"><?php //Mettre le statut de l'article
                     switch ($articleByUser["status"]) {
                         case 1:

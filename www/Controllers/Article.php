@@ -125,12 +125,19 @@ class Article
         $form = $article->buildFormArticle();
         $view->assign("form", $form);
 
-        if(!empty($_POST["edit_article"])) {
-            if(!empty($_POST)) {
+        //  if(!empty($_POST["edit_article"])) {
+        //    if(!empty($_POST)) {
+        $article->setId($_POST["id_article"]);
+        $view->assign("selectedArticle", $article);
+        //  }
+        //}
+
+      if(!empty($_POST["edit_article"])) {
+          if(!empty($_POST)) {
                  $article->setId($_POST["id_article"]);
                 $view->assign("selectedArticle", $article);
-            }
-        }
+           }
+      }
 
         if(!empty($_POST['insert_article'])) {
             if (!empty($_POST)) {

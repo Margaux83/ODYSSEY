@@ -43,8 +43,6 @@ class Article extends Database
         //$result = $statement->fetchAll();
 
        $obj = $statement->fetchObject(__CLASS__);
-       var_dump($obj);
-       die();
 
        $this->setArticleFromObj($obj);
     }
