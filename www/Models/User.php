@@ -105,13 +105,8 @@ class User extends Database
 <<<<<<< HEAD
      * @param $password
      */
-    public function setPassword($password){
-=======
-     * @param mixed $password
-     */
     public function setPassword($password)
     {
->>>>>>> develop
         $this->password = $password;
     }
 
@@ -215,7 +210,7 @@ class User extends Database
     /**
      * @return array
      */
-<<<<<<< HEAD
+
 	public function buildFormRegister(){
 		return [
 
@@ -350,21 +345,7 @@ class User extends Database
                 ],
                 "firstname"=>[
                     "type"=>"text",
-=======
-    public function buildFormRegister(){
-        return [
-
-            "config"=>[
-                "method"=>"POST",
-                "Action"=>"",
-                "Submit"=>"S'inscrire",
-                "class"=>"form_register"
-            ],
-            "input"=>[
-                "firstname"=>[
-                    "type"=>"text",
                     "class"=>"form_input",
->>>>>>> develop
                     "label"=>"Prénom",
                     "lengthMax"=>"120",
                     "lengthMin"=>"2",
@@ -372,7 +353,6 @@ class User extends Database
                     "error"=>"Votre prénom doit faire entre 2 et 120 caractères",
                     "placeholder"=>"Votre prénom"
                 ],
-<<<<<<< HEAD
                 "email"=>[
                     "type"=>"email",
                     "label"=>"Adresse Mail",
@@ -433,17 +413,12 @@ class User extends Database
                 "lastname"=>[
                     "type"=>"text",
                     "label"=>"Nom",
-=======
-                "lastname"=>[
-                    "type"=>"text",
->>>>>>> develop
                     "lengthMax"=>"255",
                     "lengthMin"=>"2",
                     "required"=>true,
                     "error"=>"Votre nom doit faire entre 2 et 255 caractères",
                     "placeholder"=>"Votre nom"
                 ],
-<<<<<<< HEAD
                 "firstname"=>[
                     "type"=>"text",
                     "label"=>"Prénom",
@@ -456,10 +431,6 @@ class User extends Database
                 "email"=>[
                     "type"=>"email",
                     "label"=>"Adresse Mail",
-=======
-                "email"=>[
-                    "type"=>"email",
->>>>>>> develop
                     "lengthMax"=>"320",
                     "lengthMin"=>"8",
                     "required"=>true,
@@ -468,10 +439,7 @@ class User extends Database
                 ],
                 "pwd"=>[
                     "type"=>"password",
-<<<<<<< HEAD
                     "label"=>"Mot de passe",
-=======
->>>>>>> develop
                     "lengthMin"=>"8",
                     "required"=>true,
                     "error"=>"Votre mot de passe doit faire plus de 8 caractères",
@@ -479,16 +447,12 @@ class User extends Database
                 ],
                 "pwdConfirm"=>[
                     "type"=>"password",
-<<<<<<< HEAD
                     "label"=>"Confirmation de mot de passe",
-=======
->>>>>>> develop
                     "confirm"=>"pwd",
                     "required"=>true,
                     "error"=>"Votre mot de passe de confirmation est incorrect",
                     "placeholder"=>"Confirmation"
                 ],
-<<<<<<< HEAD
                 "phone"=>[
                     "type"=>"text",
                     "label"=>"Numéro de téléphone",
@@ -520,62 +484,6 @@ class User extends Database
                     "options" => [
                         "acceptConditions" => [
                             "label" => "Envoyer un mail au nouvel utilisateur pour le prévenir de la création de son compte"
-=======
-                "selectForm"=>[
-                    "type"=>"select",
-                    "label"=>"Pays",
-                    "required"=>true,
-                    "error"=>"Veuillez sélectionner un élément",
-                    "placeholder"=>"Choisir un pays",
-                    "options"=>[
-                        "fr"=>[
-                            "label" => "France",
-                        ],
-                        "uk"=>[
-                            "label" => "Angleterre",
-                        ],
-                        "usa"=>[
-                            "label" => "Etats-Unis"
-                        ]
-                    ],
-
-                ],
-                "birthday"=>[
-                    "type"=>"date",
-                    "label"=>"Date de naissance",
-                    "confirm"=>"pwd",
-                    "required"=>true,
-                    "dateMax"=>"".date('Y-m-d')."",
-                    "dateMin"=>"1920-01-01",
-                    "error"=>"La date de naissance ne peut pas être supérieure à la date d'aujourd'hui",
-                    "placeholder"=>"Confirmation"
-                ],
-                "genre"=>[
-                    "type"=>"radio",
-                    "label"=>"Genre",
-                    "required"=>false,
-                    "placeholder"=>"Choisir un genre",
-                    "options" => [
-                        "homme" => [
-                            "label" => "Homme"
-                        ],
-                        "femme" => [
-                            "label" => "Femme"
-                        ]
-                    ]
-                ],
-                "conditions"=>[
-                    "type"=>"checkbox",
-                    "label"=>"Conditions",
-                    "required"=>false,
-                    "placeholder"=>"Choisir un genre",
-                    "options" => [
-                        "newsletter" => [
-                            "label" => "Je m'abonne à la newsletter"
-                        ],
-                        "acceptConditions" => [
-                            "label" => "J'accepte les conditions d'utilisations"
->>>>>>> develop
                         ]
                     ]
                 ],

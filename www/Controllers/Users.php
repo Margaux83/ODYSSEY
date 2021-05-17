@@ -31,7 +31,6 @@ class Users{
             $errors = FormBuilder::validator($_POST, $form);
 
             if(empty($errors)){
-                echo "odzdjkzehfuzgehfgzejkefhzuiefhjgerzbshjk";
                 $user->setFirstname(htmlspecialchars(addslashes($_POST['firstname'])));
                 $user->setLastname(htmlspecialchars(addslashes($_POST['lastname'])));
                 $user->setEmail(htmlspecialchars(addslashes($_POST['email'])));

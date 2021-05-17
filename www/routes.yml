@@ -8,7 +8,6 @@
     label: Accueil
     icon: icon_home
 
-
 /dashboard:
   controller: Base
   action: dashboard
@@ -18,7 +17,6 @@
     listId: basics
     label: Tableau de bord
     icon: icon_home
-
 
 /articles:
   controller: Article
@@ -120,14 +118,19 @@
     label: Newsletter
     icon: icon_newsletter
 
-/s-inscrire:
-  controller: Security
-  action: register
-
 /exam-form:
   controller: Base
   action: form
-  
+
+/register:
+  controller: Security
+  action: register
+  menuData:
+    visible: false
+    min-statut: false
+    listId: inscription
+    label: Inscription
+    icon: icon_web
 
 /login:
   controller: Security
@@ -139,11 +142,6 @@
     label: Connexion
     icon: icon_web
 
-/se-connecter:
-  controller: Security
-  action: login
-
-
 /logout:
   controller: Security
   action: logout
@@ -153,7 +151,6 @@
     listId: connexion
     label: Déconnexion
     icon: icon_web
-
 
 /liste-des-utilisateurs:
   controller: Security
