@@ -38,7 +38,7 @@ class View
 
     public static function getActualPageTitle() {
 		$actualPageInfo = MenuBuilder::getActualPageInfo();
-		echo $actualPageInfo['menuData']['label'] ?? '';
+		echo $actualPageInfo['label'] ?? '';
     }
 
 	public function setTemplate($template){
