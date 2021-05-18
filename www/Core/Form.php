@@ -35,7 +35,7 @@ class Form
 
         foreach ($form["input"] as $name => $dataInput) {
 
-            $html .="<div><label for='".$name."'>".($dataInput["label"]??"")." </label>";
+            $html .="<div class='formElement'><label for='".$name."'>".($dataInput["label"]??"")." </label>";
 
 
 
@@ -63,6 +63,19 @@ class Form
                 }
             }
 
+            elseif ($dataInput["type"] === "textarea"){
+                $html .= "<textarea 
+                    id='".$name."'
+                    class='".($dataInput["class"]??"")."' 
+                    name='".$name."'
+                    type='".($dataInput["type"] ?? "text")."'
+                    placeholder='".($dataInput["placeholder"] ?? "")."'
+                    ".((!empty($dataInput["required"]))?"required='required'":"")."
+                    ".((!empty($dataInput["defaultValue"]))?"value='" . $dataInput["defaultValue"] . "'":"")."
+                    >".$dataInput["innerHTML"]."
+                    </textarea>";
+            }
+
             else {
                 $html .= "<input 
                             id='".$name."'
@@ -71,6 +84,7 @@ class Form
                             type='".($dataInput["type"] ?? "text")."'
                             placeholder='".($dataInput["placeholder"] ?? "")."'
                             ".((!empty($dataInput["required"]))?"required='required'":"")."
+                            ".((!empty($dataInput["defaultValue"]))?"value='" . $dataInput["defaultValue"] . "'":"")."
                             >";
             }
 
@@ -78,7 +92,7 @@ class Form
         }
 
 
-        $html .= "<input type='submit' value='".( self::cleanWord($form["config"]["Submit"]) ?? "Valider" )."'></form>";
+        $html .= "<div class='formSubmitElement'><input type='submit' value='".( self::cleanWord($form["config"]["Submit"]) ?? "Valider" )."'></div></form>";
 
 
         echo $html;

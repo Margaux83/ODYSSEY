@@ -277,13 +277,13 @@ body #back-mainPage-menu ul li {
   cursor: pointer;
   border-radius: 5px;
   margin: 0 5px 5px 5px;
-  padding: 8px;
   opacity: 0.6;
   transition: opacity, background-color, max-height, margin, padding;
   transition-duration: 0.5s;
 }
 
 body #back-mainPage-menu ul li a {
+  padding: 10px;
   display: flex;
   height: 100%;
   text-decoration: none;
@@ -297,8 +297,7 @@ body #back-mainPage-menu ul li a p {
 body #back-mainPage-menu ul li.selected {
   margin: 0 0 5px 0;
   border-radius: 0;
-  padding-bottom: 5px;
-  padding-left: 13px;
+  padding-left: 5px;
   color: #155263;
   opacity: 1;
   background-color: #F4F4F4;
@@ -313,13 +312,33 @@ body #back-mainPage-menu ul li.selected a img {
   filter: invert(0);
 }
 
+body #back-mainPage-menu ul li.selected ul li {
+  padding: 5px;
+  color: #155263;
+}
+
 body #back-mainPage-menu ul li.selected:hover {
   background-color: rgba(255, 255, 255, 0.8);
+}
+
+body #back-mainPage-menu ul li ul li {
+  overflow: hidden;
+  margin: 0 !important;
+  padding: 0 0 0 5px !important;
+  padding: 5px;
+  color: white;
+  max-height: 0;
+  transition: 0.5s;
 }
 
 body #back-mainPage-menu ul li:hover {
   background-color: rgba(255, 255, 255, 0.2);
   opacity: 1;
+}
+
+body #back-mainPage-menu ul li:hover ul li {
+  padding: 5px !important;
+  max-height: 50px;
 }
 
 body #back-mainPage-menuResponsive {
@@ -341,11 +360,11 @@ body #back-mainPage-menuResponsive.hidden {
 }
 
 body #back-mainPage-menuResponsive ul li {
-  padding: 10px;
   opacity: 0.6;
 }
 
 body #back-mainPage-menuResponsive ul li a {
+  padding: 10px;
   display: flex;
   height: 100%;
   text-decoration: none;
@@ -377,23 +396,29 @@ body main.fullContent {
   border: 1px solid red;
 }
 
-body main #back-manPage-gridContent {
+main #back-manPage-gridContent {
   padding: 15px 0;
   width: 100%;
-  height: 100%;
+  height: auto;
   overflow: auto;
 }
 
 @media screen and (min-width: 450px) {
-  body main #back-manPage-gridContent {
+  main #back-manPage-gridContent {
     padding: 5px;
   }
 }
 
 @media screen and (min-width: 900px) {
-  body main #back-manPage-gridContent {
+  main #back-manPage-gridContent {
     padding: 15px;
   }
+}
+
+main .titlePage {
+  margin: 10px 0 0 30px;
+  color: #155263;
+  font-size: 24px;
 }
 
 section {
@@ -816,8 +841,25 @@ ul.listItemComplete li.listItem {
   padding: 10px 5px;
 }
 
-ul.listItemComplete li.listItem p {
+ul.listItemComplete li.listItem p,
+ul.listItemComplete li.listItem div {
   padding: 3px;
+  margin: auto;
+}
+
+ul.listItemComplete li.listItem p:last-child,
+ul.listItemComplete li.listItem div:last-child {
+  padding: 0;
+}
+
+ul.listItemComplete li.listItem p:last-child img,
+ul.listItemComplete li.listItem div:last-child img {
+  height: 25px;
+  width: auto;
+}
+
+ul.listItemComplete li.listItem .flex-weight-1 p {
+  padding: 0;
 }
 
 ul.listItemComplete li.listItem:nth-child(2n) {
@@ -926,7 +968,7 @@ ul.listItemBasic li.listItem .listItem-cpt {
   font-weight: 700;
 }
 
-.quickAccesContainer {
+.quickAccessContainer {
   list-style: none;
   display: flex;
   overflow-y: auto;
@@ -934,7 +976,7 @@ ul.listItemBasic li.listItem .listItem-cpt {
   cursor: pointer;
 }
 
-.quickAccesContainer li {
+.quickAccessContainer li {
   position: relative;
   display: flex;
   width: 70px;
@@ -948,7 +990,7 @@ ul.listItemBasic li.listItem .listItem-cpt {
   transition-duration: 0.5s;
 }
 
-.quickAccesContainer li p.quickAccesTitle {
+.quickAccessContainer li p.quickAccessTitle {
   z-index: 2;
   margin: auto;
   color: #155263;
@@ -959,23 +1001,36 @@ ul.listItemBasic li.listItem .listItem-cpt {
   transition-duration: 0.5s;
 }
 
-.quickAccesContainer li img {
+.quickAccessContainer li img {
   margin: 25%;
   width: 50%;
   height: auto;
   opacity: 0.5;
   position: absolute;
   -o-object-fit: cover;
-  object-fit: cover;
+     object-fit: cover;
   filter: brightness(0) invert(100%);
 }
 
-.quickAccesContainer li:hover {
+.quickAccessContainer li:hover {
   background-color: #155263;
 }
 
-.quickAccesContainer li:hover p.quickAccesTitle {
+.quickAccessContainer li:hover p.quickAccessTitle {
   color: white;
+}
+
+.quickAccessContainer li:last-child {
+  background-color: lightgrey;
+  font-weight: 500;
+}
+
+.quickAccessContainer li:last-child p.quickAccessTitle {
+  color: black;
+}
+
+.quickAccessContainer li:last-child:hover {
+  background-color: grey;
 }
 
 .callToActionContainer {
@@ -1010,8 +1065,77 @@ ul.listItemBasic li.listItem .listItem-cpt {
   filter: brightness(0) invert(100%);
 }
 
-button:focus {
+button:focus,
+input[type=submit]:focus {
   outline: 0;
+}
+
+form {
+  width: 100%;
+}
+
+form .formElement {
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+  margin-top: 20px;
+}
+
+form .formElement label {
+  min-width: 150px;
+  max-width: 150px;
+  flex: 1;
+  margin: auto 0;
+  margin-right: 10px;
+}
+
+@media screen and (min-width: 900px) {
+  form .formElement label {
+    text-align: end;
+  }
+}
+
+form .formElement label.requiredLabel::after {
+  content: " *";
+  color: red;
+}
+
+form .formElement input,
+form .formElement select,
+form .formElement textarea {
+  min-width: 250px;
+  max-width: 400px;
+  flex: 3;
+  padding: 8px 10px;
+  border: 1px solid lightgrey;
+  border-radius: 5px;
+}
+
+form .formSubmitElement {
+  width: 100%;
+  max-width: 500px;
+  margin-top: 30px;
+  text-align: end;
+}
+
+form .formSubmitElement input[type=submit] {
+  margin: 5px;
+  border: 0;
+  padding: 10px 20px;
+  border-radius: 25px;
+  background-color: #99e1e5;
+  color: #155263;
+  transition: 0.5s;
+  cursor: pointer;
+}
+
+form .formSubmitElement input[type=submit]:hover {
+  background-color: #155263;
+  color: white;
+}
+
+form .formSubmitElement input[type=submit]:hover img {
+  filter: brightness(0) invert(100%);
 }
 
 * {
@@ -1038,6 +1162,9 @@ button:focus {
   border-radius: 5px;
 }
 
-body {
+body,
+input,
+select textarea {
   font-family: "Roboto", Verdana, "Geneva", Tahoma, sans-serif;
 }
+

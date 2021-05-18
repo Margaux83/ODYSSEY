@@ -286,29 +286,29 @@
 <!-- Line 3 -->
 <section class="col-8" style="grid-column: 1 / 9; grid-row: 3;">
     <h1 class="titleSection"><img src=<?php App\Core\View::getAssets("icons/icon_quick_access.png")?> alt="">Accès rapides</h1>
-    <ul class="quickAccesContainer">
+    <ul class="quickAccessContainer">
         <li>
-            <p class="quickAccesTitle">Vols</p>
+            <p class="quickAccessTitle">Vols</p>
             <img src=<?php App\Core\View::getAssets("icons/icon_plane.png")?> alt="">
         </li>
         <li>
-            <p class="quickAccesTitle">Pages</p>
+            <p class="quickAccessTitle">Pages</p>
             <img src=<?php App\Core\View::getAssets("icons/icon_page.png")?> alt="">
         </li>
         <li>
-            <p class="quickAccesTitle">Articles</p>
+            <p class="quickAccessTitle">Articles</p>
             <img src=<?php App\Core\View::getAssets("icons/icon_book.png")?> alt="">
         </li>
         <li>
-            <p class="quickAccesTitle">Commentaires</p>
+            <p class="quickAccessTitle">Commentaires</p>
             <img src=<?php App\Core\View::getAssets("icons/icon_comment.png")?> alt="">
         </li>
         <li>
-            <p class="quickAccesTitle">Utilisateurs</p>
+            <p class="quickAccessTitle">Utilisateurs</p>
             <img src=<?php App\Core\View::getAssets("icons/icon_user.png")?> alt="">
         </li>
         <li>
-            <p class="quickAccesTitle">Statistiques</p>
+            <p class="quickAccessTitle">Statistiques</p>
             <img src=<?php App\Core\View::getAssets("icons/icon_stat.png")?> alt="">
         </li>
     </ul>

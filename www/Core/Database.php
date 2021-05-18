@@ -69,7 +69,6 @@ class Database
 
         if(is_null($this->getId())){
             //INSERT
-            $columns = array_keys($data);
             $query = $this->pdo->prepare("INSERT INTO ".$this->table." (
                                             ".implode(",", $columns)."
                                             ) VALUES (
@@ -90,7 +89,15 @@ class Database
                     $query->bindValue(":$key", $value);
                 }
             }
-            $query->execute();
+        }
+        $query->execute();
+    }
+
+    public function updateWithData($data = [])
+    {
+        foreach ($data as $key => $value) {
+            $setAction = 'set' . ucfirst(trim($key));
+            $this->$setAction($value);
         }
     }
 }
