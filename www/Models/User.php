@@ -13,8 +13,7 @@ class User extends Database
     protected $phone;
     protected $status;
     protected $role;
-    protected $isdeleted;
-    protected $isverified;
+    protected $isDeleted;
 
     /**
      * User constructor.
@@ -29,27 +28,36 @@ class User extends Database
     public function setId($id){
         $this->id = $id;
         //Il va chercher en BDD toutes les informations de l'utilisateur
+        $data = array_diff_key(
+            get_object_vars($this),
+            get_class_vars(get_parent_class())
+        );
+        $columns = array_keys($data);
 
-        $statement = $this->pdo->prepare("SELECT id, firstname, lastname, email, pwd, country FROM ".$this->table." WHERE id=:id");
+        $statement = $this->pdo->prepare("SELECT " . implode(',', $columns) . " FROM ".$this->table." WHERE id=:id");
         $statement->execute(array(":id" => $this->getId()));
         $obj = $statement->fetchObject(__CLASS__);
-        //$array = (array)$obj;
 
+        $this->setUserFromObj($obj);
+    }
 
-        var_dump($obj);
+    private function setUserFromObj($obj){
+        $data = array_diff_key(
+            get_object_vars($this),
+            get_class_vars(get_parent_class())
+        );
+        $columns = array_keys($data);
 
-
-
-
-        //et il va alimenter l'objet avec toutes ces données
-        // $objects = [];
-        /* while ($obj = $statement->fetchObject(__CLASS__)) {
-            //var_dump($obj);
-             $array = (array)$obj;
-             var_dump($array);
-         }*/
-        //var_dump(array_diff_key($array,$myfields));
-
+        foreach ($columns as $key => $value) {
+            $getAction = 'get' . ucfirst(trim($value));
+            $objReturnedValue = $obj->$getAction();
+            if (!empty($objReturnedValue)){
+                $setAction = 'set' . ucfirst(trim($value));
+                if ($setAction !== 'setId'){
+                    $this->$setAction($objReturnedValue);
+                }
+            }
+        }
     }
 
     /**
@@ -102,17 +110,12 @@ class User extends Database
     }
 
     /**
-<<<<<<< HEAD
-     * @param $password
+     * @param $pwd
      */
-    public function setPassword($password)
-    {
+    public function setPassword($password){
         $this->password = $password;
     }
 
-    /**
-     * @return mixed
-     */
     public function getPassword()
     {
         return $this->password;
@@ -152,6 +155,21 @@ class User extends Database
     }
 
     /**
+     * @param $country
+     */
+    public function setCountry($country){
+        $this->country = $country;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getCountry()
+    {
+        return $this->country;
+    }
+
+    /**
      * @param $status
      */
     public function setStatus($status){
@@ -179,37 +197,64 @@ class User extends Database
     }
 
     /**
-     * @param mixed $isdeleted
+     * @param $isDeleted
      */
-    public function setIsdeleted($isdeleted)
-    {
-        $this->isdeleted = $isdeleted;
+    public function setIsDeleted($isDeleted){
+        $this->isDeleted = $isDeleted;
     }
 
     /**
      * @return mixed
      */
-    public function getIsdeleted()
+    public function getIsDeleted()
     {
-        return $this->isdeleted;
+        return $this->isDeleted;
     }
 
-    public function setIsverified($isverified)
+    public function buildFormProfile()
     {
-        $this->isverified = $isverified;
+        return [
+            "config" => [
+                "method" => "POST",
+                "Action" => "",
+                "Submit" => "Modifier",
+                "class" => "form_register"
+            ],
+            "input" => [
+                "firstname"=>[
+                    "type"=>"text",
+                    "class"=>"form_input",
+                    "label"=>"Prénom",
+                    "lengthMax"=>"120",
+                    "lengthMin"=>"2",
+                    "required"=>true,
+                    "error"=>"Votre prénom doit faire entre 2 et 120 caractères",
+                    "placeholder"=>"Votre prénom",
+                    "defaultValue" => $this->getFirstname()
+                ],
+                "lastname"=>[
+                    "type"=>"text",
+                    "label"=>"Nom",
+                    "lengthMax"=>"255",
+                    "lengthMin"=>"2",
+                    "required"=>true,
+                    "error"=>"Votre nom doit faire entre 2 et 255 caractères",
+                    "placeholder"=>"Votre nom",
+                    "defaultValue" => $this->getLastname()
+                ],
+                "email"=>[
+                    "type"=>"email",
+                    "label"=>"Email",
+                    "lengthMax"=>"320",
+                    "lengthMin"=>"8",
+                    "required"=>true,
+                    "error"=>"Votre email doit faire entre 8 et 320 caractères",
+                    "placeholder"=>"Votre email",
+                    "defaultValue" => $this->getEmail()
+                ]
+            ]
+        ];
     }
-
-    /**
-     * @return mixed
-     */
-    public function getIsverified()
-    {
-        return $this->isverified;
-    }
-
-    /**
-     * @return array
-     */
 
 	public function buildFormRegister(){
 		return [
@@ -351,7 +396,8 @@ class User extends Database
                     "lengthMin"=>"2",
                     "required"=>true,
                     "error"=>"Votre prénom doit faire entre 2 et 120 caractères",
-                    "placeholder"=>"Votre prénom"
+                    "placeholder"=>"Votre prénom",
+                    "defaultValue" => $this->getFirstname()
                 ],
                 "email"=>[
                     "type"=>"email",
@@ -471,13 +517,13 @@ class User extends Database
                     "options"=>[
                         "registered"=>[
                             "label" => "Inscrit",
-                    ],
+                        ],
                         "create"=>[
                             "label" => "Crée",
+                        ],
                     ],
-                ],
 
-            ],
+                ],
                 "conditions"=>[
                     "type"=>"checkbox",
                     "required"=>false,
@@ -490,6 +536,6 @@ class User extends Database
             ]
 
         ];
-    }
-}
+	}
 
+}
