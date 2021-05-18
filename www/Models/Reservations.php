@@ -7,8 +7,7 @@ namespace App\Models;
 class Reservations
 {
     protected $id;
-    protected $iscanceled;
-    protected $reservationdate;
+    protected $status;
     protected $id_user;
     protected $id_voyage;
 
@@ -31,39 +30,23 @@ class Reservations
     /**
      * @return mixed
      */
-    public function getIscanceled()
+    public function getStatus()
     {
-        return $this->iscanceled;
+        return $this->status;
     }
 
     /**
-     * @param mixed $iscanceled
+     * @param mixed $status
      */
-    public function setIscanceled($iscanceled)
+    public function setStatus($status)
     {
-        $this->iscanceled = $iscanceled;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getReservationdate()
-    {
-        return $this->reservationdate;
-    }
-
-    /**
-     * @param mixed $reservationdate
-     */
-    public function setReservationdate($reservationdate)
-    {
-        $this->reservationdate = $reservationdate;
+        $this->status = $status;
     }
 
     /**
      * @return mixed
      */
-    public function getIdUser()
+    public function getId_user()
     {
         return $this->id_user;
     }
@@ -71,7 +54,7 @@ class Reservations
     /**
      * @param mixed $id_user
      */
-    public function setIdUser($id_user)
+    public function setId_user($id_user)
     {
         $this->id_user = $id_user;
     }
@@ -79,7 +62,7 @@ class Reservations
     /**
      * @return mixed
      */
-    public function getIdVoyage()
+    public function getId_voyage()
     {
         return $this->id_voyage;
     }
@@ -87,7 +70,7 @@ class Reservations
     /**
      * @param mixed $id_voyage
      */
-    public function setIdVoyage($id_voyage)
+    public function setId_voyage($id_voyage)
     {
         $this->id_voyage = $id_voyage;
     }

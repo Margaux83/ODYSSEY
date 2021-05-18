@@ -8,11 +8,7 @@ class Menus
 {
     protected $id;
     protected $name;
-    protected $creationDate;
-    protected $editDate;
     protected $order;
-    protected $primaryMenu;
-    protected $secondaryMenu;
     protected $isdeleted;
 
     /**
@@ -50,38 +46,6 @@ class Menus
     /**
      * @return mixed
      */
-    public function getCreationDate()
-    {
-        return $this->creationDate;
-    }
-
-    /**
-     * @param mixed $creationDate
-     */
-    public function setCreationDate($creationDate)
-    {
-        $this->creationDate = $creationDate;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getEditDate()
-    {
-        return $this->editDate;
-    }
-
-    /**
-     * @param mixed $editDate
-     */
-    public function setEditDate($editDate)
-    {
-        $this->editDate = $editDate;
-    }
-
-    /**
-     * @return mixed
-     */
     public function getOrder()
     {
         return $this->order;
@@ -93,38 +57,6 @@ class Menus
     public function setOrder($order)
     {
         $this->order = $order;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getPrimaryMenu()
-    {
-        return $this->primaryMenu;
-    }
-
-    /**
-     * @param mixed $primaryMenu
-     */
-    public function setPrimaryMenu($primaryMenu)
-    {
-        $this->primaryMenu = $primaryMenu;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getSecondaryMenu()
-    {
-        return $this->secondaryMenu;
-    }
-
-    /**
-     * @param mixed $secondaryMenu
-     */
-    public function setSecondaryMenu($secondaryMenu)
-    {
-        $this->secondaryMenu = $secondaryMenu;
     }
 
     /**

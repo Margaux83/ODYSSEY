@@ -11,10 +11,7 @@ class Voyage
     protected $departure;
     protected $arrivaldate;
     protected $departuredate;
-    protected $arrivalhour;
-    protected $departurehour;
-    protected $creationdate;
-    protected $editdate;
+    protected $status;
     protected $isdeleted;
 
     /**
@@ -98,67 +95,19 @@ class Voyage
     }
 
     /**
-     * @param mixed $arrivalhour
-     */
-    public function setArrivalhour($arrivalhour)
-    {
-        $this->arrivalhour = $arrivalhour;
-    }
-
-    /**
      * @return mixed
      */
-    public function getArrivalhour()
+    public function getStatus()
     {
-        return $this->arrivalhour;
+        return $this->status;
     }
 
     /**
-     * @param mixed $departurehour
+     * @param mixed $status
      */
-    public function setDeparturehour($departurehour)
+    public function setStatus($status)
     {
-        $this->departurehour = $departurehour;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getDeparturehour()
-    {
-        return $this->departurehour;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getCreationdate()
-    {
-        return $this->creationdate;
-    }
-
-    /**
-     * @param mixed $creationdate
-     */
-    public function setCreationdate($creationdate)
-    {
-        $this->creationdate = $creationdate;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getEditdate()
-    {
-        return $this->editdate;
-    }
-
-    /**
-     * @param mixed $editdate
-     */
-    public function setEditdate($editdate)
-    {
-        $this->editdate = $editdate;
+        $this->status = $status;
     }
 
     /**

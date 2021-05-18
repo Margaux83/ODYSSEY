@@ -5,38 +5,26 @@ namespace App\Core;
 class Form
 {
     public static function validator($data, $config){
-        print_r($data);
+
         $errors = [];
 
-        if( !empty($configInput["lengthMin"])
-            && is_numeric($configInput["lengthMin"])
-            && strlen($data[$name])<$configInput["lengthMin"] ){
+        if( count($data) == count($config["input"])){
 
-            $errors[] = $configInput["error"];
+            foreach ($config["input"] as $name => $configInput) {
 
-        }
+                if( !empty($configInput["lengthMin"])
+                    && is_numeric($configInput["lengthMin"])
+                    && strlen($data[$name])<$configInput["lengthMin"] ){
 
-        if( !empty($configInput["lengthMax"])
-            && is_numeric($configInput["lengthMax"])
-            && strlen($data[$name])>$configInput["lengthMax"] ){
-            $errors[] = $configInput["error"];
+                    $errors[] = $configInput["error"];
 
-        }
-
-        if ($configInput["type"] === 'date'){
-            if( !empty($configInput["dateMin"])){
-                if (date($configInput["dateMin"]) > $data[$name] ){
-                    array_push($errors, "La date minimale est ". $configInput["dateMin"]);
                 }
-            }
-            if( !empty($configInput["dateMax"])){
-                if (date($configInput["dateMax"] < $data[$name] )){
-                    array_push($errors, "La date minimale est ". $configInput["dateMax"]);
-                }
-            }
-        }
 
-        $errors[] = $configInput["error"];
+            }
+
+        }else{
+            $errors[] = "Tentative de Hack (Faille XSS)";
+        }
 
         return $errors; //tableau des erreurs
     }
@@ -47,7 +35,7 @@ class Form
 
         foreach ($form["input"] as $name => $dataInput) {
 
-            $html .="<div><label for='".$name."'>".($dataInput["label"]??"")." </label>";
+            $html .="<div class='formElement'><label for='".$name."'>".($dataInput["label"]??"")." </label>";
 
 
 
@@ -57,6 +45,7 @@ class Form
                             name='".$name."'
                             ".((!empty($dataInput["required"]))?"required='required'":"")."
                             >";
+
 
                 foreach ($dataInput["options"] as $value => $optionValue) {
                     $html .= "<option
@@ -74,6 +63,19 @@ class Form
                 }
             }
 
+            elseif ($dataInput["type"] === "textarea"){
+                $html .= "<textarea 
+                    id='".$name."'
+                    class='".($dataInput["class"]??"")."' 
+                    name='".$name."'
+                    type='".($dataInput["type"] ?? "text")."'
+                    placeholder='".($dataInput["placeholder"] ?? "")."'
+                    ".((!empty($dataInput["required"]))?"required='required'":"")."
+                    ".((!empty($dataInput["defaultValue"]))?"value='" . $dataInput["defaultValue"] . "'":"")."
+                    >".$dataInput["innerHTML"]."
+                    </textarea>";
+            }
+
             else {
                 $html .= "<input 
                             id='".$name."'
@@ -82,6 +84,7 @@ class Form
                             type='".($dataInput["type"] ?? "text")."'
                             placeholder='".($dataInput["placeholder"] ?? "")."'
                             ".((!empty($dataInput["required"]))?"required='required'":"")."
+                            ".((!empty($dataInput["defaultValue"]))?"value='" . $dataInput["defaultValue"] . "'":"")."
                             >";
             }
 
@@ -89,7 +92,7 @@ class Form
         }
 
 
-        $html .= "<input type='submit' value='".( self::cleanWord($form["config"]["Submit"]) ?? "Valider" )."'></form>";
+        $html .= "<div class='formSubmitElement'><input type='submit' value='".( self::cleanWord($form["config"]["Submit"]) ?? "Valider" )."'></div></form>";
 
 
         echo $html;

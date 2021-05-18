@@ -9,8 +9,7 @@ class User extends Database
     protected $firstname;
     protected $lastname;
     protected $email;
-    protected $pwd;
-    protected $country;
+    protected $password;
     protected $status;
     protected $role;
     protected $isDeleted;
@@ -28,27 +27,36 @@ class User extends Database
     public function setId($id){
         $this->id = $id;
         //Il va chercher en BDD toutes les informations de l'utilisateur
+        $data = array_diff_key(
+            get_object_vars($this),
+            get_class_vars(get_parent_class())
+        );
+        $columns = array_keys($data);
 
-        $statement = $this->pdo->prepare("SELECT id, firstname, lastname, email, pwd, country FROM ".$this->table." WHERE id=:id");
+        $statement = $this->pdo->prepare("SELECT " . implode(',', $columns) . " FROM ".$this->table." WHERE id=:id");
         $statement->execute(array(":id" => $this->getId()));
         $obj = $statement->fetchObject(__CLASS__);
-        //$array = (array)$obj;
 
+        $this->setUserFromObj($obj);
+    }
 
-        var_dump($obj);
+    private function setUserFromObj($obj){
+        $data = array_diff_key(
+            get_object_vars($this),
+            get_class_vars(get_parent_class())
+        );
+        $columns = array_keys($data);
 
-
-
-
-        //et il va alimenter l'objet avec toutes ces données
-        // $objects = [];
-        /* while ($obj = $statement->fetchObject(__CLASS__)) {
-            //var_dump($obj);
-             $array = (array)$obj;
-             var_dump($array);
-         }*/
-        //var_dump(array_diff_key($array,$myfields));
-
+        foreach ($columns as $key => $value) {
+            $getAction = 'get' . ucfirst(trim($value));
+            $objReturnedValue = $obj->$getAction();
+            if (!empty($objReturnedValue)){
+                $setAction = 'set' . ucfirst(trim($value));
+                if ($setAction !== 'setId'){
+                    $this->$setAction($objReturnedValue);
+                }
+            }
+        }
     }
 
     /**
@@ -103,13 +111,13 @@ class User extends Database
     /**
      * @param $pwd
      */
-    public function setPwd($pwd){
-        $this->pwd = $pwd;
+    public function setPassword($password){
+        $this->password = $password;
     }
 
-    public function getPwd()
+    public function getPassword()
     {
-        return $this->pwd;
+        return $this->password;
     }
 
     /**
@@ -167,6 +175,51 @@ class User extends Database
     public function getIsDeleted()
     {
         return $this->isDeleted;
+    }
+
+    public function buildFormProfile()
+    {
+        return [
+            "config" => [
+				"method" => "POST",
+				"Action" => "",
+				"Submit" => "Modifier",
+				"class" => "form_register"
+			],
+            "input" => [
+                "firstname"=>[
+                    "type"=>"text",
+                    "class"=>"form_input",
+                    "label"=>"Prénom",
+                    "lengthMax"=>"120",
+                    "lengthMin"=>"2",
+                    "required"=>true,
+                    "error"=>"Votre prénom doit faire entre 2 et 120 caractères",
+                    "placeholder"=>"Votre prénom",
+                    "defaultValue" => $this->getFirstname()
+                ],
+                "lastname"=>[
+                    "type"=>"text",
+                    "label"=>"Nom",
+                    "lengthMax"=>"255",
+                    "lengthMin"=>"2",
+                    "required"=>true,
+                    "error"=>"Votre nom doit faire entre 2 et 255 caractères",
+                    "placeholder"=>"Votre nom",
+                    "defaultValue" => $this->getLastname()
+                ],
+                "email"=>[
+                    "type"=>"email",
+                    "label"=>"Email",
+                    "lengthMax"=>"320",
+                    "lengthMin"=>"8",
+                    "required"=>true,
+                    "error"=>"Votre email doit faire entre 8 et 320 caractères",
+                    "placeholder"=>"Votre email",
+                    "defaultValue" => $this->getEmail()
+                ]
+            ]
+        ];
     }
 
     /**
@@ -283,5 +336,5 @@ class User extends Database
 
 		];
 	}
-}
 
+}
