@@ -1,5 +1,6 @@
 var ctx = document.getElementById('dataChart').getContext('2d');
-ctx.canvas.width = 300; ctx.canvas.height = 200;
+ctx.canvas.width = 300;
+ctx.canvas.height = 200;
 
 
 var myChart = new Chart(ctx, {
