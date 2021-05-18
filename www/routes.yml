@@ -109,6 +109,16 @@
   action: form
   
 
+/profile:
+  controller: Profile
+  action: default
+  menuData:
+    visible: false
+    min-statut: false
+    listId: connexion
+    label: Profil
+    icon: icon_user
+
 /login:
   controller: Security
   action: login
