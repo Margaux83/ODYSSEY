@@ -67,17 +67,18 @@ class Database
 
         $columnForUpdate = [];
 
-        if(is_null($this->getId())){
+        if (is_null($this->getId())) {
             //INSERT
-            $columns = array_keys($data);
-            $query = $this->pdo->prepare("INSERT INTO ".$this->table." (
-                                            ".implode(",", $columns)."
+            $query = $this->pdo->prepare("INSERT INTO " . $this->table . " (
+                                            " . implode(",", $columns) . "
                                             ) VALUES (
-                                            :".implode(",:", $columns)."
+                                            :" . implode(",:", $columns) . "
                                             )");
+
             $query->execute($data);
 
-        }else{
+
+        } else {
             foreach ($data as $key => $value) {
                 if (!is_null($value)) {
                     $columnForUpdate[] = $key . "=:" . $key;
@@ -91,6 +92,7 @@ class Database
                 if (!is_null($value)) {
                     $query->bindValue(":$key", $value);
                 }
+
             }
             $query->execute();
         }
@@ -179,9 +181,16 @@ class Database
 
     public function delete($id)
     {
-        $sql ="UPDATE ". $this->table ." SET isDeleted=1 WHERE id=".$id;
+        $sql = "UPDATE " . $this->table . " SET isDeleted=1 WHERE id=" . $id;
         $query = $this->pdo->prepare($sql);
         $query->execute();
+    }
 
+    public function updateWithData($data = [])
+    {
+        foreach ($data as $key => $value) {
+            $setAction = 'set' . ucfirst(trim($key));
+            $this->$setAction($value);
+        }
     }
 }

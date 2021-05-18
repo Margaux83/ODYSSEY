@@ -47,7 +47,6 @@ class Security
 		);
 
 		if (count($result)){
-
 			if (password_verify($pwdUserLogin, $result[0]["password"])){
 				$_SESSION["userId"] = $result[0]["id"];
 				return true;

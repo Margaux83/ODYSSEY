@@ -35,13 +35,13 @@ class Article
         //Affiche la liste des articles qui ont été créés par l'utilisateur connecté
         $view->assign("infoArticles", $articles->getAllArticles());
 
-        var_dump($_POST['submit_delete_article']);
+       /* var_dump($_POST['submit_delete_article']);
         if(!empty($_POST['submit_delete_article'])){
             echo "truc";
             die();
             echo $_POST['submit_delete_article'];
             $articles->delete($_POST['id_delete_article']);
-        }
+        }*/
 
     }
 
