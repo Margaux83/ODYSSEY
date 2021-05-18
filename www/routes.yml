@@ -123,6 +123,15 @@
   controller: Security
   action: login
 
+/register:
+  controller: Security
+  action: register
+  menuData:
+    visible: false
+    min-statut: false
+    listId: inscription
+    label: Inscription
+    icon: icon_web
 
 /logout:
   controller: Security
