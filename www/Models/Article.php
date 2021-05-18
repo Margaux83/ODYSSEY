@@ -339,4 +339,32 @@ class Article extends Database
 
         ];
     }
+
+    public function buildFormDeleteArticle()
+    {
+        return [
+
+            "config"=>[
+                "method"=>"POST",
+                "Action"=>"",
+                "Submit"=>"Publier",
+                "class"=>"",
+
+            ],
+            "button"=>[
+                "class"=>"buttonComponent",
+                "name"=>"submit_delete_article",
+                "id"=>"deleteArticleFromIndexArticle"
+            ],
+            "input"=>[
+
+                "id_delete_article"=>[
+                    "type"=>"hidden",
+                    "class"=>"input"
+                ]
+            ]
+
+        ];
+    }
+
 }

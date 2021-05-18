@@ -224,9 +224,10 @@
 
             <div class="footerDeleteArticleModal d-flex d-flex-wrap">
 
-                &emsp;
-                <button onclick="<?php //App\Article::deletearticleAction() ?>" class="buttonComponent" id="deleteArticleFromIndexArticle">Oui, je supprime</button>
-                &emsp;
+                <form method="post">
+                &emsp;  <input type="hidden" id="id_article_delete" name="id_delete_article" value="">
+                    <button type="submit" class="buttonComponent" name="submit_delete_article" id="deleteArticleFromIndexArticle">Oui, je supprime</button>
+                &emsp;</form>
                 <button class="buttonComponent-alert closeModalDelete">Annuler</button>
             </div>
         </div>
