@@ -85,6 +85,10 @@
                             <input type="checkbox" name="menu-locations[footer]" id="locations-footer" value="0" />
                             <label for="locations-footer">Menu secondaire</label>
                         </div>
+
+                        <div style="margin-left:24cm">
+                            <button type="submit" class="buttonComponent d-flex">Créer le menu </button>
+                        </div>
                         
             </div>
             
