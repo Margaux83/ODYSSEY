@@ -42,12 +42,12 @@ class Security
 
 		$db = new Database("User");
 		$result = $db->query(
-			["id", "pwd"], 
+			["id", "password"], 
 			["email" => $emailUserLogin]
 		);
 
 		if (count($result)){
-			if (password_verify($pwdUserLogin, $result[0]["pwd"])){
+			if (password_verify($pwdUserLogin, $result[0]["password"])){
 				$_SESSION["userId"] = $result[0]["id"];
 				return true;
 			}
