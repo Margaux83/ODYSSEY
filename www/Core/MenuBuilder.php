@@ -49,10 +49,35 @@ class MenuBuilder
             if (!empty($data['menuData'])){
                 //TODO : check the min-status
                 if ($data['menuData']['visible']){
-                    $class = $actualUri == $link ? ' class="selected"' : '';
+                    $subSectionSelected = false;
+
+                    //Create the sub-menu
+                    $htmlChildren = '';
+                    if (!empty($data['menuData']['children'])){
+                        $htmlChildren = '<ul>';
+                        foreach ($data['menuData']['children'] as $id => $linkChild) {
+                            if ($actualUri === $linkChild) {
+                                $subSectionSelected = true;
+                            }
+                            $classChildren = $actualUri == $linkChild ? ' class="selected"' : '';
+                            $htmlChildren .= '<li'.$classChildren.'><a href="'.$linkChild.'">'.$menuData[$linkChild]['label'].'</li>';
+                        }
+                        $htmlChildren .= '</ul>';
+                    }
+                    
+                    $class = ' class="'
+                        . ($actualUri == $link ? 'selected ' : '') 
+                        . ($subSectionSelected ? 'subChildrenSelected ' : '') 
+                        . '"';
+
                     $html= '<li'.$class.'><a href="'.$link.'">'
-                        .'<img src="public/images/icons/'.$data['menuData']['icon'].'.png" alt="" class="icon iconWhite"><p>'.$data['menuData']['label'].'</p></a>'
-                        .'</a></li>';
+                        .'<img src="public/images/icons/'.$data['menuData']['icon'].'.png" alt="" class="icon iconWhite"><p>'.$data['label'].'</p></a>'
+                        .'</a>';
+
+                    //Adding the sub-menu
+                    $html .= $htmlChildren;
+
+                    $html .= '</li>';
                     if (array_key_exists($data['menuData']['listId'], $menuListBuilder)){
                         $menuListBuilder[$data['menuData']['listId']] .= $html;
                     }else {
