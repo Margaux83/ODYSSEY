@@ -61,25 +61,29 @@
     min-statut: true
     listId: basics
     icon: icon_user
+    children: [
+       /add-users,
+       /edit-users
+  ]
 
 /add-users:
   controller: Users
   action: addUsers
+  label: Ajouter un utilisateur
   menuData:
-    visible: true
+    visible: false
     min-statut: true
     listId: basics
-    label: Ajouter un utilisateur
     icon: icon_user
 
 /edit-users:
   controller: Users
   action: editUsers
+  label: Modifier un utilisateur
   menuData:
-    visible: true
+    visible: false
     min-statut: true
     listId: basics
-    label: Modifier un utilisateur
     icon: icon_user
 
 /comments:
