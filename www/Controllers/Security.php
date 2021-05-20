@@ -23,8 +23,13 @@ class Security{
 
 
     public function registerAction(){
-
         $coreSecurity = coreSecurity::getInstance();
+        if ($coreSecurity->getConnectedUser()){
+            header('Status: 400 Connected', true, 400);
+            header('Location: /dashboard');
+            return;
+        }
+
         $mailer = new Mailer();
         $bodymail = new BodyMail();
         $user = new User();
@@ -32,7 +37,6 @@ class Security{
 
         $form = $user->buildFormRegister();
         $view->assign("form", $form);
-
         if(!empty($_POST)){
             $view->assign("form", $form);
 
@@ -41,15 +45,18 @@ class Security{
                 $user->setFirstname(htmlspecialchars(addslashes($_POST['firstname'])));
                 $user->setLastname(htmlspecialchars(addslashes($_POST['lastname'])));
                 $user->setEmail(htmlspecialchars(addslashes($_POST['email'])));
-                $user->setPassword(htmlspecialchars(addslashes($_POST['password'])));
+                if(!$user->verifyPassword(htmlspecialchars(addslashes($_POST['password'])), htmlspecialchars(addslashes($_POST['password-confirm'])))) {
+                    // TODO Rediriger avec une erreur
+                    header('location: /register?error');
+                } else {
+                    $user->setPassword(password_hash(htmlspecialchars(addslashes($_POST['password'])), PASSWORD_BCRYPT));
+                }
                 $user->setPhone(htmlspecialchars(addslashes($_POST['phone'])));
                 $user->setRole(1);
                 $user->setIsDeleted(0);
                 $user->save();
                 $object = "Email confirmation - ODYSSEY";;
                 $mailer->sendMail($_POST['firstname'], $_POST['lastname'], $_POST['email'], $object, $bodymail->buildBodyMailConfirmation());
-
-
             }else{
                 $view->assign("formErrors", $errors);
             }

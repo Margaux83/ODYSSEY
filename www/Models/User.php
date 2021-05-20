@@ -110,10 +110,16 @@ class User extends Database
     }
 
     /**
-     * @param $pwd
+     * @return $password
      */
     public function setPassword($password){
         $this->password = $password;
+    }
+
+    public function verifyPassword($password, $passwordConfirm){
+        if($password === $passwordConfirm) {
+            return true;
+        }
     }
 
     public function getPassword()
