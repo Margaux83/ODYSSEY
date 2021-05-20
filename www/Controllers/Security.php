@@ -9,6 +9,9 @@ use App\Core\Form;
 use App\Core\ConstantManager;
 use App\Models\User;
 use App\Core\FormBuilder;
+use App\Core\Mailer;
+use App\Models\BodyMail;
+
 
 
 class Security{
@@ -22,7 +25,8 @@ class Security{
     public function registerAction(){
 
         $coreSecurity = coreSecurity::getInstance();
-
+        $mailer = new Mailer();
+        $bodymail = new BodyMail();
         $user = new User();
         $view = new View("register", "back_management");
 
@@ -42,6 +46,9 @@ class Security{
                 $user->setRole(1);
                 $user->setIsDeleted(0);
                 $user->save();
+                $object = "Email confirmation - ODYSSEY";;
+                $mailer->sendMail($_POST['firstname'], $_POST['lastname'], $_POST['email'], $object, $bodymail->buildBodyMailConfirmation());
+
 
             }else{
                 $view->assign("formErrors", $errors);

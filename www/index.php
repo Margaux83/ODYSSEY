@@ -6,6 +6,9 @@ use App\Core\Routing;
 use App\Core\ConstantManager;
 use App\Core\MenuBuilder;
 
+// Class PHPMailer
+
+
 require "Autoloader.php";
 Autoloader::register();
 
