@@ -8,6 +8,8 @@ use App\Core\View;
 use App\Core\Form;
 use App\Core\ConstantManager;
 use App\Models\User;
+use App\Core\FormBuilder;
+
 
 class Security{
 
@@ -20,7 +22,32 @@ class Security{
     public function registerAction(){
 
         $coreSecurity = coreSecurity::getInstance();
+
+        $user = new User();
         $view = new View("register", "back_management");
+
+        $form = $user->buildFormRegister();
+        $view->assign("form", $form);
+
+        if(!empty($_POST)){
+            $view->assign("form", $form);
+
+            $errors = FormBuilder::validator($_POST, $form);
+            if(empty($errors)){
+                $user->setFirstname(htmlspecialchars(addslashes($_POST['firstname'])));
+                $user->setLastname(htmlspecialchars(addslashes($_POST['lastname'])));
+                $user->setEmail(htmlspecialchars(addslashes($_POST['email'])));
+                $user->setPassword(htmlspecialchars(addslashes($_POST['password'])));
+                $user->setPhone(htmlspecialchars(addslashes($_POST['phone'])));
+                $user->setRole(1);
+                $user->setIsDeleted(0);
+                $user->save();
+
+            }else{
+                $view->assign("formErrors", $errors);
+            }
+
+        }
 
     }
 

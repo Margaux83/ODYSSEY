@@ -2,6 +2,8 @@
     <h1>Inscription</h1>
 </section>
 <section>
+    <?php  App\Core\FormBuilder::showForm($form); ?>
+
     <form method="POST">
         <div class="formElement">
             <label for="name" class="requiredLabel">Nom</label>

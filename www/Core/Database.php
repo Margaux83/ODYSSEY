@@ -66,7 +66,7 @@ class Database
         $values = array_values($data);
 
         $columnForUpdate = [];
-
+        var_dump($this->getId());
         if(is_null($this->getId())){
             //INSERT
             $query = $this->pdo->prepare("INSERT INTO ".$this->table." (
@@ -74,6 +74,8 @@ class Database
                                             ) VALUES (
                                             :".implode(",:", $columns)."
                                             )");
+            $query->execute($data);
+            var_dump($query->execute($data));
         }else{
             foreach ($data as $key => $value) {
                 if (!is_null($value)) {
@@ -89,8 +91,9 @@ class Database
                     $query->bindValue(":$key", $value);
                 }
             }
+            $query->execute();
+
         }
-        $query->execute();
     }
 
     public function updateWithData($data = [])
