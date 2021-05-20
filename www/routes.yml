@@ -147,6 +147,16 @@
     label: Inscription
     icon: icon_web
 
+/verification:
+  controller: Security
+  action: verification
+  menuData:
+    visible: false
+    min-statut: false
+    listId: inscription
+    label: Inscription
+    icon: icon_web
+
 /logout:
   controller: Security
   action: logout

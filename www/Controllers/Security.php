@@ -34,6 +34,7 @@ class Security{
         $bodymail = new BodyMail();
         $user = new User();
         $view = new View("register", "back_management");
+        $token = bin2hex(openssl_random_pseudo_bytes(32));
 
         $form = $user->buildFormRegister();
         $view->assign("form", $form);
@@ -54,15 +55,38 @@ class Security{
                 $user->setPhone(htmlspecialchars(addslashes($_POST['phone'])));
                 $user->setRole(1);
                 $user->setIsDeleted(0);
+                $user->setToken($token);
+                $user->setIsVerified(0);
                 $user->save();
                 $object = "Email confirmation - ODYSSEY";;
-                $mailer->sendMail($_POST['firstname'], $_POST['lastname'], $_POST['email'], $object, $bodymail->buildBodyMailConfirmation());
+                $mailer->sendMail($_POST['firstname'], $_POST['lastname'], $_POST['email'], $object, $bodymail->buildBodyMailConfirmation($_POST['email'], $token));
             }else{
                 $view->assign("formErrors", $errors);
             }
 
         }
 
+    }
+
+    public function verificationAction() {
+        if (!empty($_GET)) {
+
+            if (isset($_GET['email']) && !empty($_GET['email']) && isset($_GET['token']) && !empty($_GET['token'])) {
+                $user = new User();
+
+                $db = new Database("User");
+                $result = $db->query(
+                    ["id"],
+                    ["email" => $_GET['email'], "token" => $_GET['token']]
+                );
+                if (count($result)){
+                    $user->setId($result[0]["id"]);
+                    $user->setIsVerified(1);
+                    $user->save();
+                    header('location: /login');
+                }
+            }
+        }
     }
 
     public function loginAction(){

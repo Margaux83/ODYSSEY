@@ -14,6 +14,8 @@ class User extends Database
     protected $status;
     protected $role;
     protected $isDeleted;
+    protected $token;
+    protected $isVerified;
 
     /**
      * User constructor.
@@ -127,21 +129,6 @@ class User extends Database
         return $this->password;
     }
 
-    /*/**
-   * @param mixed $confirmpwd
-  public function setConfirmpwd($confirmpwd)
-  {
-      $this->confirmpwd = $confirmpwd;
-  }*/
-
-    /*/**
-     * @return mixed
-    public function getConfirmpwd()
-    {
-        return $this->confirmpwd;
-    }
-    */
-
     /**
      * @param mixed $phone
      */
@@ -213,6 +200,36 @@ class User extends Database
     public function getIsDeleted()
     {
         return $this->isDeleted;
+    }
+
+    /**
+     * @param $role
+     */
+    public function setToken($token){
+        $this->token = $token;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getToken()
+    {
+        return $this->token;
+    }
+
+    /**
+     * @param $role
+     */
+    public function setIsVerified($isVerified){
+        $this->isVerified = $isVerified;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getIsVerified()
+    {
+        return $this->isVerified;
     }
 
     public function buildFormProfile()
