@@ -251,7 +251,9 @@ class Article extends Database
                         "lengthMin"=>"2",
                         "required"=>true,
                         "class"=>"input",
-                        "error"=>"Le titre de l'article doit faire entre 2 et 255 caractères"
+                        "error"=>"Le titre de l'article doit faire entre 2 et 255 caractères",
+                        "placeholder"=>"Votre titre",
+                        "defaultValue"=>$this->getTitle()
                     ],
                     "content"=>[
                         "type"=>"textarea",
@@ -261,7 +263,9 @@ class Article extends Database
                         "id"=>"content",
                         "required"=>true,
                         "class"=>"trumbowygTextarea",
-                        "error"=>"Le contenu de l'article doit faire entre 2 et 255 caractères"
+                        "error"=>"Le contenu de l'article doit faire entre 2 et 255 caractères",
+                         "placeholder"=>"Votre contenu",
+                        "defaultValue"=>$this->getContent()
                     ],
                     "comment"=>[
                         "type"=>"textarea",
@@ -347,7 +351,7 @@ class Article extends Database
             "config"=>[
                 "method"=>"POST",
                 "Action"=>"",
-                "Submit"=>"Publier",
+                "Submit"=>"Oui, je supprime",
                 "class"=>"",
 
             ],
@@ -360,7 +364,6 @@ class Article extends Database
 
                 "id_delete_article"=>[
                     "type"=>"hidden",
-                    "class"=>"input"
                 ]
             ]
 

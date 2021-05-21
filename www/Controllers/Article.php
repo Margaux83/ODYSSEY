@@ -35,13 +35,10 @@ class Article
         //Affiche la liste des articles qui ont été créés par l'utilisateur connecté
         $view->assign("infoArticles", $articles->getAllArticles());
 
-       /* var_dump($_POST['submit_delete_article']);
         if(!empty($_POST['submit_delete_article'])){
-            echo "truc";
-            die();
             echo $_POST['submit_delete_article'];
             $articles->delete($_POST['id_delete_article']);
-        }*/
+        }
 
     }
 
@@ -143,7 +140,6 @@ class Article
       if(!empty($_POST["edit_article"])) {
           if(!empty($_POST)) {
                  $article->setId($_POST["id_article"]);
-                $view->assign("selectedArticle", $article);
            }
       }
 
@@ -154,7 +150,7 @@ class Article
                 $errors = FormBuilderWYSWYG::validator($_POST, $form);
 
                 if (empty($errors)) {
-                    $article->setId($_POST["id_article"]);
+                    /*$article->setId($_POST["id_article"]);
                     $article->setTitle(htmlspecialchars(addslashes($_POST['title'])));
                     $article->setContent(htmlspecialchars(addslashes($_POST['content'])));
                     $article->setStatus($_POST['status']);
@@ -166,18 +162,20 @@ class Article
                     }
                     $article->setIsdeleted(0);
                     $article->setId_user($_SESSION["userId"]);
-                    //$article->saveArticle();
-                    $view->assign('article', $article);
+                    //$article->saveArticle();*/
+
+                    $article->updateWithData($_POST);
+                    $article->saveArticle();
 
 
                 } else {
                     $view->assign("formErrors", $errors);
                 }
+                $view->assign('article', $article);
 
 
             }
         }
-
         }
 
 }

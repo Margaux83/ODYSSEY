@@ -46,6 +46,9 @@ class FormBuilderWYSWYG
                              class='".($dataInput["class"]??"")."' 
                             name='".$name."'
                             ".((!empty($dataInput["required"]))?"required='required'":"")."
+                              placeholder='".($dataInput["placeholder"] ?? "")."'
+                            ".((!empty($dataInput["required"]))?"required='required'":"")." 
+                            ".((!empty($dataInput["defaultValue"]))?"value='" . $dataInput["defaultValue"] . "'":"")."
                             ></textarea>";
             $html .= "<br>";
             $html .= "<br>";
@@ -70,7 +73,9 @@ class FormBuilderWYSWYG
             }
             elseif ($dataInput["type"] === "radio" || $dataInput["type"] === "checkbox"){
                 foreach ($dataInput["options"] as $value => $optionValue) {
-                    $html .= "<input type='".$dataInput["type"]."' id='".$value."' name='".$name."'>
+                    $html .= "<input type='".$dataInput["type"]."' id='".$value."' name='".$name."'  placeholder='".($dataInput["placeholder"] ?? "")."'
+                    ".((!empty($dataInput["required"]))?"required='required'":"")."
+                    ".((!empty($dataInput["defaultValue"]))?"value='" . $dataInput["defaultValue"] . "'":"").">
                             <label for='".$value."'>".$optionValue["label"]."</label>";
                 }
             }
@@ -83,7 +88,8 @@ class FormBuilderWYSWYG
                             name='".$name."'
                             type='".($dataInput["type"] ?? "text")."'
                             placeholder='".($dataInput["placeholder"] ?? "")."'
-                            ".((!empty($dataInput["required"]))?"required='required'":"")."
+                            ".((!empty($dataInput["required"]))?"required='required'":"")." 
+                            ".((!empty($dataInput["defaultValue"]))?"value='" . $dataInput["defaultValue"] . "'":"")."
                             >";
             }
 
