@@ -124,8 +124,7 @@ class Database
             $query->execute($data);
 
             $success = "<div class=\"success\">L'article a bien été ajouté</div>";
-        }
-        else{
+        }else{
             foreach ($data as $key => $value) {
                 if (!is_null($value)) {
                     $columnForUpdate[] = $key . "=:" . $key;
