@@ -21,6 +21,14 @@ class MenuBuilder
         self::$_actualUri = $actualUri;
     }
 
+    public static function needToBeConnected() {
+        $pageInfo = self::getActualPageInfo();
+        if (!empty($pageInfo['freeAccess'])){
+            return !(self::getActualPageInfo()['freeAccess']);
+        }
+        return true;
+    }
+
     public static function getActualPageInfo() {
         $menuData = self::getMenuData();
         if (!empty($menuData)){

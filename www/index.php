@@ -5,6 +5,7 @@ namespace App;
 use App\Core\Routing; 
 use App\Core\ConstantManager;
 use App\Core\MenuBuilder;
+use App\Core\Security;
 
 // Class PHPMailer
 
@@ -37,7 +38,14 @@ if( file_exists("./Controllers/".$c.".php")){
 
 		if(method_exists($cObject, $a)){
 			//$a = loginAction // defaultAction
-			$cObject->$a();
+            $security = Security::getInstance();
+            if(!$security->isConnected()
+                && MenuBuilder::needToBeConnected()){
+               header('Location: /login');
+            }else {
+			    $cObject->$a();
+            }
+    
 		}else{
 			die("L'action ".$a." n'existe pas");
 		}
