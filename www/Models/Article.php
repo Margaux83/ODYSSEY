@@ -361,7 +361,6 @@ class Article extends Database
                 "id"=>"deleteArticleFromIndexArticle"
             ],
             "input"=>[
-
                 "id_delete_article"=>[
                     "type"=>"hidden",
                 ]

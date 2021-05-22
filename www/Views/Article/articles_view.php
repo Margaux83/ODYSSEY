@@ -224,10 +224,7 @@
 
             <div class="footerDeleteArticleModal d-flex d-flex-wrap">
 
-                <form method="post">
-                &emsp;  <input type="hidden" id="id_delete_article" name="id_delete_article" value="">
-                    <button type="submit" class="buttonComponent" name="submit_delete_article" id="deleteArticleFromIndexArticle">Oui, je supprime</button>
-                &emsp;</form>
+                <?php  App\Core\FormBuilderWYSWYG::showFormArticle($form); ?>
                 <button class="buttonComponent-alert closeModalDelete">Annuler</button>
             </div>
         </div>

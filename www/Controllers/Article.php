@@ -35,12 +35,24 @@ class Article
         //Affiche la liste des articles qui ont été créés par l'utilisateur connecté
         $view->assign("infoArticles", $articles->getAllArticles());
 
-        if(!empty($_POST['submit_delete_article'])){
-            echo $_POST['submit_delete_article'];
-            $articles->delete($_POST['id_delete_article']);
-        }
 
+        $article = new Arti();
+        $form = $article->buildFormDeleteArticle();
+        $view->assign("form", $form);
+
+        if (!empty($_POST)) {
+            if (!empty($_POST['submit_delete_article'])) {
+                try {
+                    $article->delete($_POST['id_delete_article']);
+                    header('location: /articles');
+                } catch (\Exception $e) {
+                  echo  $e->getMessage();
+                }
+            }
+        }
     }
+
+
 
     public function addarticleAction()
     {
@@ -176,6 +188,9 @@ class Article
 
             }
         }
+
         }
+
+
 
 }

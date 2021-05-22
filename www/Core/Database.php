@@ -161,7 +161,7 @@ class Database
     {
 
         $sql = "SELECT ody_Article.id, ody_Article.title, ody_Article.content, ody_Article.description, ody_Article.status, ody_Article.isVisible, ody_Article.isDraft,
-                    ody_Article.isDeleted, ody_Article.creationDate, ody_Article.updateDate, ody_Article.id_User, ody_User.firstname, ody_User.lastname, ody_User.role  FROM " . $this->table . " INNER JOIN ody_User ON ". $this->table.".id_User = ody_User.ID WHERE ody_Article.isDeleted=0";
+                    ody_Article.isDeleted, ody_Article.creationDate, ody_Article.updateDate, ody_Article.id_User, ody_User.firstname, ody_User.lastname, ody_User.role  FROM " . $this->table . " INNER JOIN ody_User ON ". $this->table.".id_User = ody_User.ID WHERE ody_Article.isDeleted!=1";
         $query = $this->pdo->prepare($sql);
         $query->execute();
         return $query->fetchAll();
@@ -180,8 +180,7 @@ class Database
 
     public function delete($id)
     {
-        $sql = "UPDATE " . $this->table . " SET isDeleted=1 WHERE id=" . $id;
-        $query = $this->pdo->prepare($sql);
+        $query = $this->pdo->prepare("UPDATE " . $this->table . " SET isDeleted=1 WHERE id=" . $id);
         $query->execute();
     }
 
