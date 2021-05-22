@@ -56,6 +56,13 @@ class MenuManagement
                 if (empty($errors)) {
                     //S'il n'y a pas d'erreurs, on envoie les données dans la requête pour ajouter l'article
                     $menu->setName(htmlspecialchars(addslashes($_POST['name'])));
+                    $menu->setCreationdate($_POST['creationdate']);
+                    $menu->setEditdate($_POST['editdate']);
+                    $menu->setOrder($_POST['order']);
+                    $menu->setRoute($_POST['route']);
+
+
+                    $result = $menu->saveMenu();
                     
                 } else {
                     //S'il y a des erreurs, on prépare leur affichage
