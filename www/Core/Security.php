@@ -42,15 +42,17 @@ class Security
 
 		$db = new Database("User");
 		$result = $db->query(
-			["id", "pwd"], 
+			["id", "password", "isVerified"],
 			["email" => $emailUserLogin]
 		);
 
 		if (count($result)){
-			if (password_verify($pwdUserLogin, $result[0]["pwd"])){
-				$_SESSION["userId"] = $result[0]["id"];
-				return true;
-			}
+		    if($result[0]["isVerified"] == "1") {
+                if (password_verify($pwdUserLogin, $result[0]["password"])){
+                    $_SESSION["userId"] = $result[0]["id"];
+                    return true;
+                }
+            }
 		}
 		return false;
 	}

@@ -8,8 +8,7 @@ class Category
 {
 
     protected $id=null;
-    protected $name;
-    protected $type;
+    protected $label;
 
 
     /**
@@ -29,34 +28,18 @@ class Category
     }
 
     /**
-     * @param $name
+     * @param mixed $label
      */
-    public function setName($name)
+    public function setLabel($label)
     {
-        $this->name = $name;
+        $this->label = $label;
     }
 
     /**
      * @return mixed
      */
-    public function getName()
+    public function getLabel()
     {
-        return $this->name;
-    }
-
-    /**
-     * @param $type
-     */
-    public function setType($type)
-    {
-        $this->type = $type;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getType()
-    {
-        return $this->type;
+        return $this->label;
     }
 }
