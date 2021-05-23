@@ -30,9 +30,9 @@ class Mailer
             $mail->Body    = "$body";
 
             $mail->send();
-            echo 'Message has been sent';
+            return;
         } catch (Exception $e) {
-            echo 'qzdqz';
+            return;
         }
     }
 }
