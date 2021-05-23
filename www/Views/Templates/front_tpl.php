@@ -9,9 +9,10 @@
 		<header>
 			<h1>Template Frontoffice</h1>
 		</header>
+        <!-- Intégration du modal d'affichage de message -->
+        <?php $this->addModal("alert"); ?>
 
-
-		<!-- intégrer le vue -->
+        <!-- intégrer le vue -->
 		<?php include $this->view ?>
 
 	</body>

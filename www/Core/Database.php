@@ -66,7 +66,6 @@ class Database
         $values = array_values($data);
 
         $columnForUpdate = [];
-
         if(is_null($this->getId())){
             //INSERT
             $query = $this->pdo->prepare("INSERT INTO ".$this->table." (

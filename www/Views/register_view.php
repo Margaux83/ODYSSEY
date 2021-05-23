@@ -5,7 +5,7 @@
     <form method="POST">
         <div class="formElement">
             <label for="name" class="requiredLabel">Nom</label>
-            <input name="name" id="name" type="text" placeholder="Votre nom" required>
+            <input name="lastname" id="name" type="text" placeholder="Votre nom" required>
         </div>
         <div class="formElement">
             <label for="firstname" class="requiredLabel">Prénom</label>
@@ -13,15 +13,19 @@
         </div>
         <div class="formElement">
             <label for="login-email" class="requiredLabel">Adresse Mail</label>
-            <input name="login-email" id="login-email" type="text" placeholder="your.email@exemple.com" required>
+            <input name="email" id="login-email" type="text" placeholder="your.email@exemple.com" required>
         </div>
         <div class="formElement">
             <label for="login-pwd" class="requiredLabel">Mot de passe</label>
-            <input name="login-pwd" id="config-pwd" type="password" required>
+            <input name="password" id="config-pwd" type="password" required>
+        </div>
+        <div class="formElement">
+            <label for="login-pwd" class="requiredLabel">Confirmer mot de passe</label>
+            <input name="password-confirm" id="config-pwd" type="password" required>
         </div>
         <div class="formElement">
             <label for="firstname" class="requiredLabel">Téléphone</label>
-            <input name="firstname" id="firstname" type="text" placeholder="Votre numéro de téléphone" required>
+            <input name="phone" id="firstname" type="text" placeholder="Votre numéro de téléphone" required>
         </div>
         <div class="formSubmitElement">
             <button id="login_submit" type="submit" class="primary">S'INSCRIRE</button>

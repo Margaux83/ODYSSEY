@@ -130,16 +130,6 @@
   controller: Base
   action: form
 
-/register:
-  controller: Security
-  action: register
-  menuData:
-    visible: false
-    min-statut: false
-    listId: inscription
-    label: Inscription
-    icon: icon_web
-
 /profile:
   controller: Profile
   action: default
@@ -154,16 +144,45 @@
   controller: Security
   action: login
   label: Connexion
+  freeAccess: true
   menuData:
     visible: false
     min-statut: false
     listId: connexion
     icon: icon_web
 
+/se-connecter:
+  controller: Security
+  action: login
+  freeAccess: true
+
+/register:
+  controller: Security
+  action: register
+  freeAccess: true
+  menuData:
+    visible: false
+    min-statut: false
+    listId: inscription
+    label: Inscription
+    icon: icon_web
+
+/verification:
+  controller: Security
+  action: verification
+  freeAccess: true
+  menuData:
+    visible: false
+    min-statut: false
+    listId: inscription
+    label: Inscription
+    icon: icon_web
+
 /logout:
   controller: Security
   action: logout
   label: Déconnexion
+  freeAccess: true
   menuData:
     visible: false
     min-statut: false
@@ -198,6 +217,7 @@
   controller: Installer
   action: setup
   label: Installation
+  freeAccess: true
   menuData:
     visible: false
     min-statut: true

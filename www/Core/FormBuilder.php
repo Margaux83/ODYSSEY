@@ -5,7 +5,6 @@ namespace App\Core;
 class FormBuilder
 {
     public static function validator($data, $config){
-        print_r($data);
         $errors = [];
 
         //Est-ce que j'ai le bon nb d'inputs ?
@@ -43,16 +42,16 @@ class FormBuilder
             }
         }
 
-		return $errors; //tableau des erreurs
-	}
+        return $errors; //tableau des erreurs
+    }
 
     public static function showForm($form){
         $html = "<form class='".($form["config"]["class"]??"")."' method='".( self::cleanWord($form["config"]["method"]) ?? "GET" )."' action='".( $form["config"]["action"] ?? "" )."'>";
 
 
-		foreach ($form["input"] as $name => $dataInput) {
+        foreach ($form["input"] as $name => $dataInput) {
 
-			$html .="<div><label for='".$name."'>".($dataInput["label"]??"")." </label>";
+            $html .="<div><label for='".$name."'>".($dataInput["label"]??"")." </label>";
 
 
 
@@ -91,17 +90,17 @@ class FormBuilder
             }
 
             $html .= "</div>";
-		}
-		
-
-		$html .= "<input type='submit' value='".( self::cleanWord($form["config"]["Submit"]) ?? "Valider" )."'></form>";
+        }
 
 
-		echo $html;
+        $html .= "<input type='submit' value='".( self::cleanWord($form["config"]["Submit"]) ?? "Valider" )."'></form>";
+
+
+        echo $html;
     }
 
 
-	public static function cleanWord($word){
-		return str_replace("'", "&apos;", $word);
-	}
+    public static function cleanWord($word){
+        return str_replace("'", "&apos;", $word);
+    }
 }

@@ -7,6 +7,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" href=<?php App\Core\View::getAssets("main.css")?>>
 
+    <link rel="stylesheet" type="text/css" href=<?php App\Core\View::getAssets("alert.css")?>>
 
     <link rel="stylesheet" type="text/css" href=<?php App\Core\View::getAssets("article.css")?>>
 
@@ -41,9 +42,13 @@
         $menuBuilder::createMenu(); 
     ?>
     <main id="back-mainPage-mainContent">
+        <!-- Intégration du modal d'affichage de message -->
+        <?php $this->addModal("alert"); ?>
         <h1 class="titlePage"><?php App\Core\View::getActualPageTitle() ?></h1>
         <div id="back-manPage-gridContent" class="d-flex-wrap d-lg-grid">
-			<?php include $this->view ?>
+
+
+            <?php include $this->view ?>
 
         </div>
     </main>
