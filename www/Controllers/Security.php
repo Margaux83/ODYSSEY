@@ -82,6 +82,7 @@ class Security{
                 if (count($result)){
                     $user->setId($result[0]["id"]);
                     $user->setIsVerified(1);
+                    $user->setToken("");
                     $user->save();
                     header('location: /login');
                 }
