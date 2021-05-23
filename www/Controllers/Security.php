@@ -87,6 +87,7 @@ class Security{
                 if (count($result)){
                     $user->setId($result[0]["id"]);
                     $user->setIsVerified(1);
+                    $user->setToken("");
                     $user->save();
                     // TODO Affichage du message après redirection ne fonctionne pas
                     $_SESSION['alert']['success'][] = 'Votre compte vient d\'être activé avec succès';
