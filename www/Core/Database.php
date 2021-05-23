@@ -182,6 +182,7 @@ class Database
     {
         $query = $this->pdo->prepare("UPDATE " . $this->table . " SET isDeleted=1 WHERE id=" . $id);
         $query->execute();
+
     }
 
     public function updateWithData($data = [])

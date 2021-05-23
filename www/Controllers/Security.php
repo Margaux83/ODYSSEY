@@ -47,8 +47,9 @@ class Security{
                 $user->setLastname(htmlspecialchars(addslashes($_POST['lastname'])));
                 $user->setEmail(htmlspecialchars(addslashes($_POST['email'])));
                 if(!$user->verifyPassword(htmlspecialchars(addslashes($_POST['password'])), htmlspecialchars(addslashes($_POST['password-confirm'])))) {
-                    // TODO Rediriger avec une erreur
-                    header('location: /register?error');
+                    $_SESSION['alert']['danger'][] = 'Les deux mots de passe ne correspondent pas';
+                    header('location: /register');
+                    session_write_close();
                 } else {
                     $user->setPassword(password_hash(htmlspecialchars(addslashes($_POST['password'])), PASSWORD_BCRYPT));
                 }
@@ -60,7 +61,11 @@ class Security{
                 $user->save();
                 $object = "Email confirmation - ODYSSEY";;
                 $mailer->sendMail($_POST['firstname'], $_POST['lastname'], $_POST['email'], $object, $bodymail->buildBodyMailConfirmation($_POST['email'], $token));
+                $_SESSION['alert']['success'][] = 'Un mail de validation vous a été envoyé';
+                header('location: /login');
+                session_write_close();
             }else{
+                $_SESSION['alert']['danger'][] = 'Les éléments du formulaire ne sont pas valides';
                 $view->assign("formErrors", $errors);
             }
 
@@ -82,8 +87,12 @@ class Security{
                 if (count($result)){
                     $user->setId($result[0]["id"]);
                     $user->setIsVerified(1);
+                    $user->setToken("");
                     $user->save();
+                    // TODO Affichage du message après redirection ne fonctionne pas
+                    $_SESSION['alert']['success'][] = 'Votre compte vient d\'être activé avec succès';
                     header('location: /login');
+                    session_write_close();
                 }
             }
         }
@@ -97,7 +106,6 @@ class Security{
             header('Location: /dashboard');
             return;
         }
-
         $view = new View("login", "back_management");
     }
 

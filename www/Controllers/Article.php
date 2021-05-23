@@ -16,15 +16,18 @@ use App\Models\Category;
 class Article
 {
 
+
     public function defaultAction()
     {
 
         $security = Security::getInstance();
+        //Vérifie si l'utilisateur est connecté, sinon on le redirige sur la page de login
          if(!$security->isConnected()){
              header('Location: /login');
        }
 
         $articles = new Arti();
+         //Fonction pour récupérer la liste de tous les articles
         $articles->getAllArticles();
 
         //Affiche moi la vue des articles;
@@ -39,15 +42,22 @@ class Article
         $article = new Arti();
         $form = $article->buildFormDeleteArticle();
         $view->assign("form", $form);
+        $formDeleteArticleOfUser = $article->buildFormDeleteArticleOfUser();
+        $view->assign("formDeleteArticleOfUser", $formDeleteArticleOfUser);
 
+        //Fonctinnalité pour supprimer un article
         if (!empty($_POST)) {
             if (!empty($_POST['submit_delete_article'])) {
-                try {
+                //Suppression d'un article par son id
                     $article->delete($_POST['id_delete_article']);
-                    header('location: /articles');
-                } catch (\Exception $e) {
-                  echo  $e->getMessage();
-                }
+                    $_SESSION['alert']['success'][] = 'Suppression effectuée avec succès !';
+                    header('refresh: 5, location: /articles');
+            }
+            if(!empty($_POST['submit_delete_article_of_user'])){
+                //Suppression d'un article de l'utilisateur connecté par son id
+                    $article->delete($_POST['id_delete_article_of_user']);
+                    $_SESSION['alert']['success'][] = 'Suppression effectuée avec succès !';
+                    header('refresh: 5, location: /articles');
             }
         }
     }
@@ -74,6 +84,7 @@ class Article
         $form = $article->buildFormArticle();
         $view->assign("form", $form);
 
+        //Création du formBuilder des catégories
         $formCategory = $category->buildFormCategory();
         $view->assign("formCategory", $formCategory);
 
@@ -101,25 +112,31 @@ class Article
 
                     $article->saveArticleCategory($_POST['category'], $result[0]["id"]);
 
-
+                    $_SESSION['alert']['success'][] = 'L\'article a bien été enregistré !';
                 } else {
                     //S'il y a des erreurs, on prépare leur affichage
-                    $view->assign("formErrors", $errors);
+                   // $view->assign("formErrors", $errors);
+                    $_SESSION['alert']['danger'][] = "'.$errors.'";
                 }
 
 
             }
         }
+        //On vérifie si des données sont bien envoyées
         elseif(!empty($_POST['insert_category'])){
             if (!empty($_POST)) {
 
                 $errors = FormBuilderWYSWYG::validator($_POST, $formCategory);
                 if (empty($errors)) {
+                    //S'il n'y a pas d'erreurs, on envoie les données dans la requête pour ajouter la catégorie
                     $category->setLabel($_POST["addcategory"]);
                     $category->save();
+                    $_SESSION['alert']['success'][] = 'La catégorie a bien été enregistrée !';
                 }
                 else{
-                    $view->assign("formErrors", $errors);
+                    //S'il y a des erreurs, on prépare leur affichage
+                   // $view->assign("formErrors", $errors);
+                    $_SESSION['alert']['danger'][] = "'.$errors.'";
                 }
 
             }
@@ -130,24 +147,26 @@ class Article
     public static function editarticleAction()
     {
         $security = Security::getInstance();
+        //Vérifie si l'utilisateur est connecté, sinon on le redirige sur la page de login
          if(!$security->isConnected()){
            header('Location: /login');
        }
 
         $article = new Arti();
+
+        //Fonction pour récupérer la liste de tous les articles
         $article->getAllArticles();
+
+        //Affiche la vue pour modifier un article
         $view = new View("Article/edit_articles", "back");
         $view->assign("infoArticles", $article->getAllArticles());
 
         $form = $article->buildFormArticle();
         $view->assign("form", $form);
 
-        //  if(!empty($_POST["edit_article"])) {
-        //    if(!empty($_POST)) {
         $article->setId($_POST["id_article"]);
         $view->assign("selectedArticle", $article);
-        //  }
-        //}
+
 
       if(!empty($_POST["edit_article"])) {
           if(!empty($_POST)) {
@@ -155,6 +174,7 @@ class Article
            }
       }
 
+        //On vérifie si des données sont bien envoyées
         if(!empty($_POST['insert_article'])) {
             if (!empty($_POST)) {
 
@@ -176,12 +196,16 @@ class Article
                     $article->setId_user($_SESSION["userId"]);
                     //$article->saveArticle();*/
 
+                    //Modification de l'article sélectionné
                     $article->updateWithData($_POST);
                     $article->saveArticle();
+                    $_SESSION['alert']['success'][] = 'L\'article a bien été modifié !';
 
 
                 } else {
-                    $view->assign("formErrors", $errors);
+                    //S'il y a des erreurs, on prépare leur affichage
+                    //$view->assign("formErrors", $errors);
+                    $_SESSION['alert']['danger'][] = "'.$errors.'";
                 }
                 $view->assign('article', $article);
 

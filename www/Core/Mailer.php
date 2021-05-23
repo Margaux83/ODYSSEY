@@ -17,8 +17,8 @@ class Mailer
             $mail->SMTPAuth   = true;                                   //Enable SMTP authentication
             $mail->Username   = MAILUSER;                     //SMTP username
             $mail->Password   = MAILPWD;                               //SMTP password
-            $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;         //Enable TLS encryption; `PHPMailer::ENCRYPTION_SMTPS` encouraged
-            $mail->Port       = 587;                                    //TCP port to connect to, use 465 for `PHPMailer::ENCRYPTION_SMTPS` above
+            $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;         //Enable TLS encryption; `PHPMailer::ENCRYPTION_SMTPS` encouraged
+            $mail->Port       = 465;                                    //TCP port to connect to, use 465 for `PHPMailer::ENCRYPTION_SMTPS` above
 
             //Recipients
             $mail->setFrom('contact@odyssey.com', 'Odyssey Mailer');
@@ -30,9 +30,9 @@ class Mailer
             $mail->Body    = "$body";
 
             $mail->send();
-            echo 'Message has been sent';
+            return;
         } catch (Exception $e) {
-            echo 'qzdqz';
+            return;
         }
     }
 }

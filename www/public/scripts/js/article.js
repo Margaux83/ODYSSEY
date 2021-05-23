@@ -1,6 +1,10 @@
 $(document).ready(function () {
     $('body').on('click', '.openModalConfirmDeleteComment',function(){
-        document.getElementById("id_delete_article").value = $(this).attr('data-id');
-        console.log($(this).attr('data-id'));
+        if( document.getElementById("id_delete_article").value){
+            document.getElementById("id_delete_article").value = $(this).attr('data-id');
+        }
+        if( document.getElementById("id_delete_article_of_user").value){
+            document.getElementById("id_delete_article_of_user").value = $(this).attr('data-id');
+        }
     });
 });
