@@ -62,7 +62,7 @@
                 <img src=<?php App\Core\View::getAssets("icons/eye-solid.svg")?> alt="" height="20" width="20">
                 <form action="editarticle" method="post"><button class="editarticleButton" name="edit_article" type="submit"><img src=<?php App\Core\View::getAssets("icons/pen-solid.svg")?> alt="" height="20" width="20"><input
                                 type="hidden" name="id_article" value="<?= $article["id"] ?>"></button></form>
-                <img class="openModalConfirmDeleteComment" data-target="ModalConfirmDeleteComment" data-id="<?= $article["id"] ?>"  src=<?php App\Core\View::getAssets("icons/trash-solid.svg")?> alt="" height="20" width="20">
+                <img class="openModalConfirmDeleteArticle" data-target="ModalConfirmDeleteArticle" data-id="<?= $article["id"] ?>"  src=<?php App\Core\View::getAssets("icons/trash-solid.svg")?> alt="" height="20" width="20">
             </div>
         </li>
         <?php } ?>
@@ -103,7 +103,7 @@
                 <p class="listItem-cpt"><b><?= $articleByUser["title"] ?></b></p>
             </div>
             <div>
-                <p class="listItem-cpt"><b><?= $article["firstname"]." ".$article["lastname"] ?></b><br><?= "Rôle ". $article["role"] ?></p>
+                <p class="listItem-cpt"><b><?= $articleByUser["firstname"]." ".$articleByUser["lastname"] ?></b><br><?= "Rôle ". $articleByUser["role"] ?></p>
             </div>
             <div>
                 <p class="listItem-cpt"><?php //Mettre le statut de l'article
@@ -126,7 +126,7 @@
             <div class="listItem-cpt listActions">
                 <img src=<?php App\Core\View::getAssets("icons/eye-solid.svg")?> alt="" height="20" width="20">
                 <img src=<?php App\Core\View::getAssets("icons/pen-solid.svg")?> alt="" height="20" width="20">
-                <img class="openModalConfirmDeleteComment" data-target="ModalConfirmDeleteComment" src=<?php App\Core\View::getAssets("icons/trash-solid.svg")?> alt="" height="20" width="20">
+                <img class="openModalConfirmDeleteArticleUser" data-target="ModalConfirmDeleteArticleUser"   data-id="<?= $articleByUser["id"] ?>" src=<?php App\Core\View::getAssets("icons/trash-solid.svg")?> alt="" height="20" width="20">
             </div>
         </li>
         <?php }
@@ -210,7 +210,7 @@
 </div>
 
 
-<div id="ModalConfirmDeleteComment" class="col-12 modal">
+<div id="ModalConfirmDeleteArticle" class="col-12 modal">
         <div class="modal-deleteArticle d-flex-wrap d-flex">
             <div class="success-checkmark d-flex">
                 <div class="check-icon d-flex">
@@ -229,6 +229,27 @@
             </div>
         </div>
 </div>
+
+<div id="ModalConfirmDeleteArticleUser" class="col-12 modal">
+    <div class="modal-deleteArticle d-flex-wrap d-flex">
+        <div class="success-checkmark d-flex">
+            <div class="check-icon d-flex">
+                <img src=<?php App\Core\View::getAssets("icons/exclamation-solid.svg")?> alt="" height="50" width="50">
+            </div>
+        </div>
+        <div class="deleteConfirmation d-flex d-flex-wrap">
+            <p>Etes-vous sûr(e) de vouloir supprimer cet article ?</p>
+        </div>
+        <br>
+
+        <div class="footerDeleteArticleModal d-flex d-flex-wrap">
+
+            <?php  App\Core\FormBuilderWYSWYG::showFormArticle($formDeleteArticleOfUser); ?>
+            <button class="buttonComponent-alert closeModalDelete">Annuler</button>
+        </div>
+    </div>
+</div>
+
 
 <script src=<?php App\Core\View::getAssets("article.js")?>></script>
 <script src=<?php App\Core\View::getAssets("charts.js")?>></script>
