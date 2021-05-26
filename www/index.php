@@ -49,7 +49,6 @@ if( file_exists("./Controllers/".$c.".php")){
             $view = new View("Error/404", "error");
         }
 
-
     }else{
         die("La classe ".$c." n'existe pas");
     }
