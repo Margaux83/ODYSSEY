@@ -16,6 +16,7 @@ class View
 	public function __construct($view="default", $template="front"){
 		$this->setTemplate($template);
 		$this->setView($view);
+		//$this->setErrorView($view);
 	}
 
 	public static function getAssets(string $nameFile){
