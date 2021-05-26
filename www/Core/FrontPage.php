@@ -3,6 +3,7 @@
 
 namespace App\Core;
 use App\Core\View;
+use App\Core\Error;
 use App\Models\Page;
 
 class FrontPage extends Database
@@ -54,7 +55,7 @@ class FrontPage extends Database
                 $view->assign("title", $resultPage[0]['title']);
                 $view->assign("content", $resultPage[0]['content']);
             }else {
-                die("404 : page introuvable");
+                Error::errorPage(404, 'La page n\'existe pas');
             }
         }
     }
