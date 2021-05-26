@@ -1,14 +1,3 @@
-/:
-  controller: Base
-  action: Default
-  label: Accueil
-  menuData:
-    visible: false
-    min-statut: true
-    listId: basics
-    icon: icon_home
-
-
 /dashboard:
   controller: Base
   action: dashboard
