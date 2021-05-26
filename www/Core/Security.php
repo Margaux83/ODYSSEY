@@ -30,11 +30,12 @@ class Security
 	public function getConnectedUser(){
 		if ($this->isConnected()){
 			var_dump("already connected");
-			return true;
+            $_SESSION['alert']['danger'][] = 'Vous êtes déjà connecté';
+            return true;
 		}
 
 		if (!isset($_POST['login-email']) || !isset($_POST['login-pwd'])){
-			return;
+            return;
 		}
 
 		$emailUserLogin = htmlspecialchars(addslashes($_POST['login-email']));
@@ -42,16 +43,21 @@ class Security
 
 		$db = new Database("User");
 		$result = $db->query(
-			["id", "pwd"], 
+			["id", "password", "isVerified"],
 			["email" => $emailUserLogin]
 		);
 
-		if (count($result)){
-			if (password_verify($pwdUserLogin, $result[0]["pwd"])){
-				$_SESSION["userId"] = $result[0]["id"];
-				return true;
-			}
-		}
+		if (count($result) && password_verify($pwdUserLogin, $result[0]["password"])){
+		    if($result[0]["isVerified"] == "1") {
+                    $_SESSION["userId"] = $result[0]["id"];
+                    $_SESSION['alert']['success'][] = 'Vous êtes désormais connecté';
+                    return true;
+            } else {
+                $_SESSION['alert']['danger'][] = 'Veuillez valider votre compte avec votre adresse mail';
+            }
+		} else {
+            $_SESSION['alert']['danger'][] = 'Les informations de connexions sont incorrects';
+        }
 		return false;
 	}
 }

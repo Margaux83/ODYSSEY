@@ -39,7 +39,7 @@ class View
 
     public static function getActualPageTitle() {
 		$actualPageInfo = MenuBuilder::getActualPageInfo();
-		echo $actualPageInfo['menuData']['label'] ?? '';
+		echo $actualPageInfo['label'] ?? '';
     }
 
 	public function setTemplate($template){
@@ -58,13 +58,15 @@ class View
 		}
 	}
 
-   /* public function setErrorView($view){
-        if(file_exists("Views/Error/".$view."_view.php")){
-            $this->errorview = "Views/Error/".$view."_view.php";
-        }else{
-            die("La vue n'existe pas");
+    public function addModal($modal, $config = [])
+    {
+        $pathModal = "Views/modals/" . $modal . ".mod.php";
+        if (file_exists($pathModal)) {
+            include $pathModal;
+        } else {
+            die("Le modal n'existe pas :" . $pathModal);
         }
-    }*/
+    }
 
 	public function assign($key, $value){
 		$this->data[$key] = $value;

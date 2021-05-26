@@ -1,9 +1,35 @@
-<h2>Veuillez vous inscrire</h2>
 
-<?php if(!empty($formErrors)):?>
-	<?php foreach($formErrors as $error):?>
-		<li><?= $error ;?>
-	<?php endforeach;?>
-<?php endif;?>
-
-<?php  App\Core\Form::showForm($form); ?>
+<section>
+    <h1>Inscription</h1>
+</section>
+<section>
+    <form method="POST">
+        <div class="formElement">
+            <label for="name" class="requiredLabel">Nom</label>
+            <input name="lastname" id="name" type="text" placeholder="Votre nom" required>
+        </div>
+        <div class="formElement">
+            <label for="firstname" class="requiredLabel">Prénom</label>
+            <input name="firstname" id="firstname" type="text" placeholder="Votre prénom" required>
+        </div>
+        <div class="formElement">
+            <label for="login-email" class="requiredLabel">Adresse Mail</label>
+            <input name="email" id="login-email" type="text" placeholder="your.email@exemple.com" required>
+        </div>
+        <div class="formElement">
+            <label for="login-pwd" class="requiredLabel">Mot de passe</label>
+            <input name="password" id="config-pwd" type="password" required>
+        </div>
+        <div class="formElement">
+            <label for="login-pwd" class="requiredLabel">Confirmer mot de passe</label>
+            <input name="password-confirm" id="config-pwd" type="password" required>
+        </div>
+        <div class="formElement">
+            <label for="firstname" class="requiredLabel">Téléphone</label>
+            <input name="phone" id="firstname" type="text" placeholder="Votre numéro de téléphone" required>
+        </div>
+        <div class="formSubmitElement">
+            <button id="login_submit" type="submit" class="primary">S'INSCRIRE</button>
+        </div>
+    </form>
+</section>

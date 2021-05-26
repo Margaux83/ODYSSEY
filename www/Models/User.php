@@ -9,11 +9,13 @@ class User extends Database
     protected $firstname;
     protected $lastname;
     protected $email;
-    protected $pwd;
-    protected $country;
+    protected $password;
+    protected $phone;
     protected $status;
     protected $role;
     protected $isDeleted;
+    protected $token;
+    protected $isVerified;
 
     /**
      * User constructor.
@@ -28,27 +30,36 @@ class User extends Database
     public function setId($id){
         $this->id = $id;
         //Il va chercher en BDD toutes les informations de l'utilisateur
+        $data = array_diff_key(
+            get_object_vars($this),
+            get_class_vars(get_parent_class())
+        );
+        $columns = array_keys($data);
 
-        $statement = $this->pdo->prepare("SELECT id, firstname, lastname, email, pwd, country FROM ".$this->table." WHERE id=:id");
+        $statement = $this->pdo->prepare("SELECT " . implode(',', $columns) . " FROM ".$this->table." WHERE id=:id");
         $statement->execute(array(":id" => $this->getId()));
         $obj = $statement->fetchObject(__CLASS__);
-        //$array = (array)$obj;
 
+        $this->setUserFromObj($obj);
+    }
 
-        var_dump($obj);
+    private function setUserFromObj($obj){
+        $data = array_diff_key(
+            get_object_vars($this),
+            get_class_vars(get_parent_class())
+        );
+        $columns = array_keys($data);
 
-
-
-
-        //et il va alimenter l'objet avec toutes ces données
-        // $objects = [];
-        /* while ($obj = $statement->fetchObject(__CLASS__)) {
-            //var_dump($obj);
-             $array = (array)$obj;
-             var_dump($array);
-         }*/
-        //var_dump(array_diff_key($array,$myfields));
-
+        foreach ($columns as $key => $value) {
+            $getAction = 'get' . ucfirst(trim($value));
+            $objReturnedValue = $obj->$getAction();
+            if (!empty($objReturnedValue)){
+                $setAction = 'set' . ucfirst(trim($value));
+                if ($setAction !== 'setId'){
+                    $this->$setAction($objReturnedValue);
+                }
+            }
+        }
     }
 
     /**
@@ -101,15 +112,37 @@ class User extends Database
     }
 
     /**
-     * @param $pwd
+     * @return $password
      */
-    public function setPwd($pwd){
-        $this->pwd = $pwd;
+    public function setPassword($password){
+        $this->password = $password;
     }
 
-    public function getPwd()
+    public function verifyPassword($password, $passwordConfirm){
+        if($password === $passwordConfirm) {
+            return true;
+        }
+    }
+
+    public function getPassword()
     {
-        return $this->pwd;
+        return $this->password;
+    }
+
+    /**
+     * @param mixed $phone
+     */
+    public function setPhone($phone)
+    {
+        $this->phone = $phone;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getPhone()
+    {
+        return $this->phone;
     }
 
     /**
@@ -170,118 +203,148 @@ class User extends Database
     }
 
     /**
+     * @param $role
+     */
+    public function setToken($token){
+        $this->token = $token;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getToken()
+    {
+        return $this->token;
+    }
+
+    /**
+     * @param $role
+     */
+    public function setIsVerified($isVerified){
+        $this->isVerified = $isVerified;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getIsVerified()
+    {
+        return $this->isVerified;
+    }
+
+    public function buildFormProfile()
+    {
+        return [
+            "config" => [
+				"method" => "POST",
+				"Action" => "",
+				"Submit" => "Modifier",
+				"class" => "form_register"
+			],
+            "input" => [
+                "firstname"=>[
+                    "type"=>"text",
+                    "class"=>"form_input",
+                    "label"=>"Prénom",
+                    "lengthMax"=>"120",
+                    "lengthMin"=>"2",
+                    "required"=>true,
+                    "error"=>"Votre prénom doit faire entre 2 et 120 caractères",
+                    "placeholder"=>"Votre prénom",
+                    "defaultValue" => $this->getFirstname()
+                ],
+                "lastname"=>[
+                    "type"=>"text",
+                    "label"=>"Nom",
+                    "lengthMax"=>"255",
+                    "lengthMin"=>"2",
+                    "required"=>true,
+                    "error"=>"Votre nom doit faire entre 2 et 255 caractères",
+                    "placeholder"=>"Votre nom",
+                    "defaultValue" => $this->getLastname()
+                ],
+                "email"=>[
+                    "type"=>"email",
+                    "label"=>"Email",
+                    "lengthMax"=>"320",
+                    "lengthMin"=>"8",
+                    "required"=>true,
+                    "error"=>"Votre email doit faire entre 8 et 320 caractères",
+                    "placeholder"=>"Votre email",
+                    "defaultValue" => $this->getEmail()
+                ]
+            ]
+        ];
+    }
+
+    /**
      * @return array
      */
-	public function buildFormRegister(){
-		return [
+    public function buildFormRegister(){
+        return [
+            "config"=>[
+                "method"=>"POST",
+                "Action"=>"",
+                "reset" => "Annuler",
+                "Submit"=>"Enregistrer",
+                "class"=>"formElement"
+            ],
+            "input"=>[
+                "lastname"=>[
+                    "type"=>"text",
+                    "label"=>"Nom",
+                    "lengthMax"=>"255",
+                    "lengthMin"=>"2",
+                    "required"=>true,
+                    "error"=>"Votre nom doit faire entre 2 et 255 caractères",
+                    "placeholder"=>"Votre nom"
+                ],
+                "firstname"=>[
+                    "type"=>"text",
+                    "class"=>"form_input",
+                    "label"=>"Prénom",
+                    "lengthMax"=>"120",
+                    "lengthMin"=>"2",
+                    "required"=>true,
+                    "error"=>"Votre prénom doit faire entre 2 et 120 caractères",
+                    "placeholder"=>"Votre prénom",
+                ],
+                "email"=>[
+                    "type"=>"email",
+                    "label"=>"Adresse Mail",
+                    "lengthMax"=>"320",
+                    "lengthMin"=>"8",
+                    "required"=>true,
+                    "error"=>"Votre email doit faire entre 8 et 320 caractères",
+                    "placeholder"=>"Votre email"
+                ],
+                "password"=>[
+                    "type"=>"password",
+                    "label"=>"Mot de passe",
+                    "lengthMin"=>"8",
+                    "required"=>true,
+                    "error"=>"Votre mot de passe doit faire plus de 8 caractères",
+                    "placeholder"=>"Votre mot de passe"
+                ],
+                /*"pwdConfirm"=>[
+                    "type"=>"password",
+                    "label"=>"Confirmation de mot de passe",
+                    "confirm"=>"pwd",
+                    "required"=>true,
+                    "error"=>"Votre mot de passe de confirmation est incorrect",
+                    "placeholder"=>"Confirmation"
+                ],*/
+                "phone"=>[
+                    "type"=>"text",
+                    "label"=>"Numéro de téléphone",
+                    "lengthMin"=>"10",
+                    "required"=>true,
+                    "error"=>"Votre numéro de téléphone doit contenir 10 chiffres",
+                    "placeholder"=>"Votre numéro de téléphone"
+                ],
+            ]
 
-			"config"=>[
-				"method"=>"POST",
-				"Action"=>"",
-				"Submit"=>"S'inscrire",
-				"class"=>"form_register"
-			],
-			"input"=>[
-				"firstname"=>[
-								"type"=>"text",
-								"class"=>"form_input",
-								"label"=>"Prénom",
-								"lengthMax"=>"120",
-								"lengthMin"=>"2",
-								"required"=>true,
-								"error"=>"Votre prénom doit faire entre 2 et 120 caractères",
-								"placeholder"=>"Votre prénom"
-								],
-				"lastname"=>[
-								"type"=>"text",
-								"lengthMax"=>"255",
-								"lengthMin"=>"2",
-								"required"=>true,
-								"error"=>"Votre nom doit faire entre 2 et 255 caractères",
-								"placeholder"=>"Votre nom"
-								],
-				"email"=>[
-								"type"=>"email",
-								"lengthMax"=>"320",
-								"lengthMin"=>"8",
-								"required"=>true,
-								"error"=>"Votre email doit faire entre 8 et 320 caractères",
-								"placeholder"=>"Votre email"
-								],
-				"pwd"=>[
-								"type"=>"password",
-								"lengthMin"=>"8",
-								"required"=>true,
-								"error"=>"Votre mot de passe doit faire plus de 8 caractères",
-								"placeholder"=>"Votre mot de passe"
-								],
-				"pwdConfirm"=>[
-								"type"=>"password",
-								"confirm"=>"pwd",
-								"required"=>true,
-								"error"=>"Votre mot de passe de confirmation est incorrect",
-								"placeholder"=>"Confirmation"
-								],
-				"selectForm"=>[
-								"type"=>"select",
-								"label"=>"Pays",
-								"required"=>true,
-								"error"=>"Veuillez sélectionner un élément",
-								"placeholder"=>"Choisir un pays",
-								"options"=>[
-									"fr"=>[
-										"label" => "France",
-										],
-									"uk"=>[
-										"label" => "Angleterre",
-										],
-									"usa"=>[
-										"label" => "Etats-Unis"
-										]
-									],
-				
-								],
-				"birthday"=>[
-					"type"=>"date",
-					"label"=>"Date de naissance",
-					"confirm"=>"pwd",
-					"required"=>true,
-					"dateMax"=>"".date('Y-m-d')."",
-					"dateMin"=>"1920-01-01",
-					"error"=>"La date de naissance ne peut pas être supérieure à la date d'aujourd'hui",
-					"placeholder"=>"Confirmation"
-				],
-				"genre"=>[
-					"type"=>"radio",
-					"label"=>"Genre",
-					"required"=>false,
-					"placeholder"=>"Choisir un genre",
-					"options" => [
-						"homme" => [
-							"label" => "Homme"
-						],
-						"femme" => [
-							"label" => "Femme"
-						]
-					]
-					],
-				"conditions"=>[
-						"type"=>"checkbox",
-						"label"=>"Conditions",
-						"required"=>false,
-						"placeholder"=>"Choisir un genre",
-						"options" => [
-							"newsletter" => [
-								"label" => "Je m'abonne à la newsletter"
-							],
-							"acceptConditions" => [
-								"label" => "J'accepte les conditions d'utilisations"
-							]
-						]
-						],
-			]
+        ];
+    }
 
-		];
-	}
 }
-

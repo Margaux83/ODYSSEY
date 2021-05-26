@@ -2,7 +2,6 @@
 
 namespace App;
 
-use App\Core\Security;
 use App\Core\View;
 use App\Models\User;
 use App\Core\Form;
@@ -166,15 +165,8 @@ class Base{
 
 	//Must be connected
 	public function dashboardAction(){
-		$security = Security::getInstance();
-		if(!$security->isConnected()){
-           // header('Location: /login');
-    }
-
 		//Affiche moi la vue dashboard;
 		$view = new View("dashboard", "back");
-		
-		
 	}
 
 
