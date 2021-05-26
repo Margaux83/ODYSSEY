@@ -54,7 +54,9 @@
     </header>
 
 	<main>
-		<!-- intégrer le vue -->
+        <?php $this->addModal("alert"); ?>
+
+        <!-- intégrer le vue -->
 		<?php include $this->view ?>
 	</main>
 

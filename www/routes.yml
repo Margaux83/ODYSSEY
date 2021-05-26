@@ -150,6 +150,28 @@
     label: Inscription
     icon: icon_web
 
+/forgotpassword:
+  controller: Security
+  action: forgotPassword
+  freeAccess: true
+  menuData:
+    visible: false
+    min-statut: false
+    listId: forgotPassword
+    label: ForgotPassword
+    icon: icon_web
+
+/forgotpasswordconfirm:
+  controller: Security
+  action: forgotPasswordConfirm
+  freeAccess: true
+  menuData:
+    visible: false
+    min-statut: false
+    listId: forgotPasswordConfirm
+    label: ForgotPasswordConfirm
+    icon: icon_web
+
 /logout:
   controller: Security
   action: logout

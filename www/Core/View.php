@@ -16,6 +16,7 @@ class View
 	public function __construct($view="default", $template="front"){
 		$this->setTemplate($template);
 		$this->setView($view);
+		//$this->setErrorView($view);
 	}
 
 	public static function getAssets(string $nameFile){
@@ -56,6 +57,16 @@ class View
 			die("La vue n'existe pas");
 		}
 	}
+
+    public function addModal($modal, $config = [])
+    {
+        $pathModal = "Views/modals/" . $modal . ".mod.php";
+        if (file_exists($pathModal)) {
+            include $pathModal;
+        } else {
+            die("Le modal n'existe pas :" . $pathModal);
+        }
+    }
 
 	public function assign($key, $value){
 		$this->data[$key] = $value;
