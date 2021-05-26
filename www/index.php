@@ -5,11 +5,10 @@ namespace App;
 use App\Core\Routing; 
 use App\Core\ConstantManager;
 use App\Core\MenuBuilder;
+use App\Core\View;
 use App\Core\Security;
 
 // Class PHPMailer
-
-
 require "Autoloader.php";
 Autoloader::register();
 
@@ -47,8 +46,10 @@ if( file_exists("./Controllers/".$c.".php")){
             }
     
 		}else{
-			die("L'action ".$a." n'existe pas");
-		}
+            header('Status: 404 Not found', true, 404);
+            $view = new View("Error/404", "error");
+        }
+
 
     }else{
         die("La classe ".$c." n'existe pas");
