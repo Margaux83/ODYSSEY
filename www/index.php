@@ -37,6 +37,7 @@ if( file_exists("./Controllers/".$c.".php")){
 			//$a = loginAction // defaultAction
 			$cObject->$a();
 		}else{
+            header('Status: 404 Not found', true, 404);
             $view = new View("Error/404", "error");
         }
 
