@@ -123,7 +123,6 @@ class Database
                                             )");
             $query->execute($data);
 
-            $success = "<div class=\"success\">L'article a bien été ajouté</div>";
         }else{
             foreach ($data as $key => $value) {
                 if (!is_null($value)) {
@@ -192,4 +191,5 @@ class Database
             $this->$setAction($value);
         }
     }
+    
 }

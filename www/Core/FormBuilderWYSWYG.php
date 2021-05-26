@@ -48,8 +48,8 @@ class FormBuilderWYSWYG
                             ".((!empty($dataInput["required"]))?"required='required'":"")."
                               placeholder='".($dataInput["placeholder"] ?? "")."'
                             ".((!empty($dataInput["required"]))?"required='required'":"")." 
-                            ".((!empty($dataInput["defaultValue"]))?"value='" . $dataInput["defaultValue"] . "'":"")."
-                            ></textarea>";
+                          
+                            >  ".((!empty($dataInput["defaultValue"]))?"" . $dataInput["defaultValue"] . "'":"")."</textarea>";
             $html .= "<br>";
             $html .= "<br>";
 

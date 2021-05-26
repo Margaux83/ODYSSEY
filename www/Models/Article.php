@@ -43,7 +43,6 @@ class Article extends Database
         //$result = $statement->fetchAll();
 
        $obj = $statement->fetchObject(__CLASS__);
-
        $this->setArticleFromObj($obj);
     }
 
@@ -226,8 +225,11 @@ class Article extends Database
         return $this->id_user;
     }
 
+
     public function buildFormArticle()
     {
+        //echo "<pre>";
+       // var_dump($this);
         return [
 
             "config"=>[
@@ -253,6 +255,7 @@ class Article extends Database
                         "class"=>"input",
                         "error"=>"Le titre de l'article doit faire entre 2 et 255 caractères",
                         "placeholder"=>"Votre titre",
+
                         "defaultValue"=>$this->getTitle()
                     ],
                     "content"=>[

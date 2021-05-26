@@ -26,6 +26,23 @@ class Article
              header('Location: /login');
        }
 
+        $article = new Arti();
+
+        if (!empty($_POST)) {
+            if (!empty($_POST['submit_delete_article'])) {
+                //Suppression d'un article par son id
+                $article->delete($_POST['id_delete_article']);
+                $_SESSION['alert']['success'][] = 'Suppression effectuée avec succès !';
+               // header('location: /articles');
+            }
+            if(!empty($_POST['submit_delete_article_of_user'])){
+                //Suppression d'un article de l'utilisateur connecté par son id
+                $article->delete($_POST['id_delete_article_of_user']);
+                $_SESSION['alert']['success'][] = 'Suppression effectuée avec succès !';
+              //  header('location: /articles');
+            }
+        }
+
         $articles = new Arti();
          //Fonction pour récupérer la liste de tous les articles
         $articles->getAllArticles();
@@ -39,27 +56,14 @@ class Article
         $view->assign("infoArticles", $articles->getAllArticles());
 
 
-        $article = new Arti();
+
         $form = $article->buildFormDeleteArticle();
         $view->assign("form", $form);
         $formDeleteArticleOfUser = $article->buildFormDeleteArticleOfUser();
         $view->assign("formDeleteArticleOfUser", $formDeleteArticleOfUser);
 
         //Fonctinnalité pour supprimer un article
-        if (!empty($_POST)) {
-            if (!empty($_POST['submit_delete_article'])) {
-                //Suppression d'un article par son id
-                    $article->delete($_POST['id_delete_article']);
-                    $_SESSION['alert']['success'][] = 'Suppression effectuée avec succès !';
-                    header('refresh: 5, location: /articles');
-            }
-            if(!empty($_POST['submit_delete_article_of_user'])){
-                //Suppression d'un article de l'utilisateur connecté par son id
-                    $article->delete($_POST['id_delete_article_of_user']);
-                    $_SESSION['alert']['success'][] = 'Suppression effectuée avec succès !';
-                    header('refresh: 5, location: /articles');
-            }
-        }
+
     }
 
 
@@ -161,18 +165,24 @@ class Article
         $view = new View("Article/edit_articles", "back");
         $view->assign("infoArticles", $article->getAllArticles());
 
+
+
+        $article->setId($_POST["id_article"]);
+        //var_dump($article);
+        //var_dump($_POST["id_article"]);
+        $view->assign("selectedArticle", $article);
+
+        if(!empty($_POST["edit_article"])) {
+            if(!empty($_POST)) {
+                $article->setId($_POST["id_article"]);
+            }
+        }
+
         $form = $article->buildFormArticle();
         $view->assign("form", $form);
 
-        $article->setId($_POST["id_article"]);
-        $view->assign("selectedArticle", $article);
 
 
-      if(!empty($_POST["edit_article"])) {
-          if(!empty($_POST)) {
-                 $article->setId($_POST["id_article"]);
-           }
-      }
 
         //On vérifie si des données sont bien envoyées
         if(!empty($_POST['insert_article'])) {
