@@ -52,6 +52,11 @@ class Database
         return $query->fetchAll();
     }
 
+    public function get_foreignKeys()
+    {
+        return [];
+    }
+
     public function save()
     {
         $data = array_diff_key(
@@ -61,6 +66,12 @@ class Database
             get_class_vars(get_class())
 
         );
+
+        $data = array_filter($data, function($value, $key) {
+            if (!in_array($key, $this->get_foreignKeys())) {
+                return [$key => $value];
+            }
+        }, ARRAY_FILTER_USE_BOTH);
 
         $columns = array_keys($data);
         $values = array_values($data);
@@ -98,51 +109,9 @@ class Database
         }
     }
 
-    //Ajout d'un article dans la base de données
-    public function saveArticle()
+    //On sélectionne l'id de la dernière entrée
+    public function getLastFromTable()
     {
-
-        $data = array_diff_key(
-
-            get_object_vars($this),
-
-            get_class_vars(get_class())
-
-        );
-        unset($data["category"]);
-
-        $columns = array_keys($data);
-        $values = array_values($data);
-        //INSERT
-        if(is_null($this->getId())){
-            $columns = array_keys($data);
-            $query = $this->pdo->prepare("INSERT INTO ".$this->table." (
-                                            ".implode(",", $columns)."
-                                            ) VALUES (
-                                            :".implode(",:", $columns)."
-                                            )");
-            $query->execute($data);
-
-        }else{
-            foreach ($data as $key => $value) {
-                if (!is_null($value)) {
-                    $columnForUpdate[] = $key . "=:" . $key;
-                }
-            }
-
-            $sql = "UPDATE " . $this->table . " SET " . implode(",", $columnForUpdate) . " WHERE id=" . $this->getId();
-            $query = $this->pdo->prepare($sql);
-
-            foreach ($data as $key => $value) {
-                if (!is_null($value)) {
-                    $query->bindValue(":$key", $value);
-                }
-            }
-            $query->execute();
-
-        }
-
-        //On sélectionne l'id du dernier article
         $selectLastId="SELECT id FROM " . $this->table ." ORDER BY id DESC LIMIT 1 ";
         $querySelect = $this->pdo->prepare($selectLastId);
         $querySelect->execute();

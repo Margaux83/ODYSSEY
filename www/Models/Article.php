@@ -225,11 +225,13 @@ class Article extends Database
         return $this->id_user;
     }
 
+    public function get_foreignKeys()
+    {
+        return ['category'];
+    }
 
     public function buildFormArticle()
     {
-        //echo "<pre>";
-       // var_dump($this);
         return [
 
             "config"=>[
@@ -278,7 +280,9 @@ class Article extends Database
                         "id"=>"content",
                         "required"=>false,
                         "class"=>"textareaComment d-flex",
-                        "error"=>"La description de l'article doit faire entre 2 et 255 caractères"
+                        "error"=>"La description de l'article doit faire entre 2 et 255 caractères",
+                        "placeholder"=>"Votre contenu",
+                        "defaultValue"=>$this->getDescription()
                     ],
                     "category"=>[
                         "type"=>"select",

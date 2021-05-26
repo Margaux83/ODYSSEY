@@ -72,7 +72,6 @@
        <div class="success">L'article a bien été modifié</div>
 
        <?php } ?>
-       <?php var_dump($selectedArticle->getID());?>
            <?php  App\Core\FormBuilderWYSWYG::showFormArticle($form); ?>
    </section>
 

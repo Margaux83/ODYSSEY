@@ -112,8 +112,8 @@ class Article
                     $article->setIsdeleted(0);
                     $article->setDescription($_POST["comment"]);
                     $article->setId_user($_SESSION["userId"]);
-                    $result = $article->saveArticle();
-
+                    $article->save();
+                    $result = $article->getLastFromTable();
                     $article->saveArticleCategory($_POST['category'], $result[0]["id"]);
 
                     $_SESSION['alert']['success'][] = 'L\'article a bien été enregistré !';
@@ -208,7 +208,7 @@ class Article
 
                     //Modification de l'article sélectionné
                     $article->updateWithData($_POST);
-                    $article->saveArticle();
+                    $article->save();
                     $_SESSION['alert']['success'][] = 'L\'article a bien été modifié !';
 
 
