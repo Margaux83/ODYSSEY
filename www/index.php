@@ -8,6 +8,7 @@ use App\Core\MenuBuilder;
 use App\Core\View;
 use App\Core\Security;
 use App\Core\FrontPage;
+use App\Core\Error;
 
 // Class PHPMailer
 require "Autoloader.php";
@@ -45,8 +46,7 @@ if( file_exists("./Controllers/".$c.".php")){
             }
     
 		}else{
-            header('Status: 404 Not found', true, 404);
-            $view = new View("Error/404", "error");
+            Error::errorPage(404, 'La page n\'existe pas');
         }
 
     }else{
