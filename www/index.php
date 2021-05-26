@@ -6,6 +6,7 @@ use App\Core\Routing;
 use App\Core\ConstantManager;
 use App\Core\MenuBuilder;
 use App\Core\Security;
+use App\Core\FrontPage;
 
 // Class PHPMailer
 
@@ -28,9 +29,7 @@ $a = $route->getAction();
 $cWithNamespace = $route->getControllerWithNamespace();
 
 if( file_exists("./Controllers/".$c.".php")){
-
     include "./Controllers/".$c.".php";
-
 
     if(class_exists($cWithNamespace)){
         //$c = App\Security // User
@@ -54,5 +53,5 @@ if( file_exists("./Controllers/".$c.".php")){
         die("La classe ".$c." n'existe pas");
     }
 }else {
-    die("Le fichier " . $c . " n'existe pas");
+    FrontPage::findContentToShow($uri);
 }

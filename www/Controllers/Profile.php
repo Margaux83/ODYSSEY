@@ -28,9 +28,9 @@ class Profile
 			}else{
 				$view->assign("formErrors", $errors);
 			}
-
 		}
         
+        $user->setId($_SESSION['userId']);
         $view->assign("connectedUser", $user);
 		$view->assign("form", $user->buildFormProfile());
 
