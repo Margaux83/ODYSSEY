@@ -77,49 +77,6 @@
 
    <br><br>
 
-
-
-
-   <section class="col-12" style="grid-column: 1 / 6; grid-row: 3;">
-       <p id="modalButtonEditArticle" class="actionVerticalSection"><img src=<?php App\Core\View::getAssets("icons/plus-solid.svg")?> alt="" height="15" width="15">Ajouter une description</p>
-
-   </section>
-   <section class="col-12" style="grid-column: 7 / 13; grid-row: 3;">
-
-       <p id="modalButtonEditCategoryArticle" class="actionVerticalSection"><img src=<?php App\Core\View::getAssets("icons/plus-solid.svg")?> alt="" height="15" width="15">Créer une nouvelle catégorie</p>
-   </section>
-   <div id="ModalDescEditArticle" class="col-12 modal" >
-       <!-- Modal content -->
-       <div class="modal-comment d-flex-wrap d-flex">
-           <div class="headerForModalDesc d-flex">
-               <h1 class="titleModal d-flex">Ajout d'une description</h1>
-               <span class="closeComment d-flex">&times;</span>
-           </div>
-
-           <form class="d-flex d-flex-wrap">
-               <textarea class="textareaComment d-flex" name="comment"></textarea>
-               <button type="submit" class="buttonComponent d-flex" id="saveModalButton">Enregistrer</button>
-           </form>
-       </div>
-   </div>
-
-   <div id="ModalCategoryEditArticle" class="col-12 modal" >
-       <!-- Modal content -->
-       <div class="modal-comment d-flex-wrap d-flex">
-           <div class="headerForModalDesc d-flex">
-               <h1 class="titleModal d-flex">Ajout d'une catégorie</h1>
-               <span class="closeComment d-flex">&times;</span>
-           </div>
-
-           <form class="d-flex d-flex-wrap formModalOneInput">
-               <input type="text" name="title" class="inputOneModal d-flex">
-               <button type="submit" class="buttonComponent d-flex" id="saveModalButton">Enregistrer</button>
-           </form>
-       </div>
-   </div>
-
-
-
    <div id="myModal" class="col-12 modal">
 
        <!-- Modal content -->

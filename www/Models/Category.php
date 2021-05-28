@@ -55,10 +55,6 @@ class Category extends Database
                 "Submit"=>"Enregistrer",
                 "class"=>"d-flex d-flex-wrap formModalOneInput",
             ],
-            "button"=>[
-                "class"=>"buttonComponent d-flex",
-                "name"=>"insert_category"
-            ],
             "input"=>[
                 "addcategory"=>[
                     "type"=>"text",
@@ -67,12 +63,15 @@ class Category extends Database
                     "required"=>true,
                     "lengthMax"=>"255",
                     "lengthMin"=>"2",
-                    "error"=>"Le titre de l'article doit faire entre 2 et 255 caractères"
-
-
+                    "error"=>"Le nom de la catégorie doit faire entre 2 et 255 caractères"
                 ]
 
+            ],
+            "button"=>[
+                "class"=>"buttonComponent d-flex",
+                "name"=>"insert_category"
             ]
+
 
         ];
     }

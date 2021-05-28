@@ -230,6 +230,7 @@ class Article extends Database
         return ['category'];
     }
 
+
     public function buildFormArticle()
     {
         return [
@@ -241,10 +242,7 @@ class Article extends Database
                 "class"=>"",
 
             ],
-            "button"=>[
-                "class"=>"buttonComponent d-flex floatRight",
-                "name"=>"insert_article"
-            ],
+
             "input"=>[
 
                     "title"=>[
@@ -265,10 +263,11 @@ class Article extends Database
                         "label"=>"",
                         "lengthMax"=>"255",
                         "lengthMin"=>"2",
+                        "error"=>"Le contenu de l'article doit faire entre 2 et 255 caractères",
                         "id"=>"content",
                         "required"=>true,
                         "class"=>"trumbowygTextarea",
-                        "error"=>"Le contenu de l'article doit faire entre 2 et 255 caractères",
+
                          "placeholder"=>"Votre contenu",
                         "defaultValue"=>$this->getContent()
                     ],
@@ -277,10 +276,10 @@ class Article extends Database
                         "label"=>"Desciption",
                         "lengthMax"=>"255",
                         "lengthMin"=>"2",
+                        "error"=>"La description de l'article doit faire entre 2 et 255 caractères",
                         "id"=>"content",
                         "required"=>false,
                         "class"=>"textareaComment d-flex",
-                        "error"=>"La description de l'article doit faire entre 2 et 255 caractères",
                         "placeholder"=>"Votre contenu",
                         "defaultValue"=>$this->getDescription()
                     ],
@@ -346,7 +345,11 @@ class Article extends Database
                         ]
                     ],
 
-                ]
+                ],
+            "button"=>[
+                "class"=>"buttonComponent d-flex floatRight",
+                "name"=>"insert_article"
+            ]
 
         ];
     }

@@ -120,7 +120,7 @@ class Article
                 } else {
                     //S'il y a des erreurs, on prépare leur affichage
                    // $view->assign("formErrors", $errors);
-                    $_SESSION['alert']['danger'][] = "'.$errors.'";
+                    $_SESSION['alert']['danger'][] = $errors[0];
                 }
 
 
@@ -139,8 +139,7 @@ class Article
                 }
                 else{
                     //S'il y a des erreurs, on prépare leur affichage
-                   // $view->assign("formErrors", $errors);
-                    $_SESSION['alert']['danger'][] = "'.$errors.'";
+                    $_SESSION['alert']['danger'][] = $errors[0];
                 }
 
             }
@@ -165,17 +164,8 @@ class Article
         $view = new View("Article/edit_articles", "back");
         $view->assign("infoArticles", $article->getAllArticles());
 
-
-
-        $article->setId($_POST["id_article"]);
-        //var_dump($article);
-        //var_dump($_POST["id_article"]);
-        $view->assign("selectedArticle", $article);
-
-        if(!empty($_POST["edit_article"])) {
-            if(!empty($_POST)) {
-                $article->setId($_POST["id_article"]);
-            }
+        if(!empty($_POST)) {
+            $article->setId($_POST["id_article"]);
         }
 
         $form = $article->buildFormArticle();
@@ -214,7 +204,6 @@ class Article
 
                 } else {
                     //S'il y a des erreurs, on prépare leur affichage
-                    //$view->assign("formErrors", $errors);
                     $_SESSION['alert']['danger'][] = "'.$errors.'";
                 }
                 $view->assign('article', $article);

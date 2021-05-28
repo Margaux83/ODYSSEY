@@ -4,12 +4,29 @@
 namespace App\Core;
 
 
-class FormBuilderWYSWYG
+class FormBuilderWYSWYG extends Database
 {
     public static function validator($data, $config){
         $errors = [];
+        foreach ($data as $key => $value) {
+            switch ($key) {
+                case "insert_article":
+                    unset($data["insert_article"]);
+                    break;
+                case "insert_category":
+                    unset($data["insert_category"]);
+                    break;
+            }
+        }
+        /*echo "<pre>";
+        echo "<pre>";
+        var_dump($config["input"]);
+        var_dump($data);
+        die();*/
 
         if( count($data) == count($config["input"])) {
+
+
 
             foreach ($config["input"] as $name => $configInput) {
                 if (!empty($configInput["lengthMin"])
@@ -27,7 +44,6 @@ class FormBuilderWYSWYG
                 }
             }
         }
-
         return $errors; //tableau des erreurs
     }
 
