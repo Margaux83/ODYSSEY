@@ -1,31 +1,5 @@
 <style>
-.manage-menus {
-    margin-top: 23px;
-    padding: 10px;
-    overflow: hidden;
-    background: #fff;
-}
 
-.page-title-action {
-    margin-left: 0;
-}
-
-.page-title-action{
-    margin-left: 4px;
-    padding: 4px 8px;
-    position: relative;
-    top: -3px;
-    text-decoration: none;
-    border: 1px solid #2271b1;
-    border-radius: 2px;
-    text-shadow: none;
-    font-weight: 600;
-    font-size: 13px;
-    line-height: normal;
-    color: #2271b1;
-    background: #f6f7f7;
-    cursor: pointer;
-}
 
 
 
@@ -69,13 +43,13 @@
             
             <p style="margin-top:30px;" class="" id="">Donnez à votre menu un nom, puis cliquez sur « Créer le menu ».</p>
 
-            <div style="border-top : 1px solid #f0f0f1; margin-top: 2em; " class="menu-settings" >
+            <div class="menu-settings" >
                 <h3>Réglages du menu</h3>
-                    <legend style="margin-top:1em;" class="menu-settings-group-name howto">Ajoutez automatiquement  des pages</legend>
+                <!--    <legend style="margin-top:1em;" class="menu-settings-group-name howto">Ajoutez automatiquement  des pages</legend>
                     <div class="menu-settings-input checkbox-input">
                         <input type="checkbox" name="auto-add-pages" id="auto-add-pages" value="1" /> <label for="auto-add-pages">Ajouter automatiquement les pages de premier niveau à ce menu</label>
-                    </div>
-                    <legend class="">Afficher l’emplacement</legend>
+                    </div> -->
+                    <legend style="margin-top:1em;" class="">Afficher l’emplacement</legend>
                         <div class="">
                             <input type="checkbox" name="menu-locations[primary]" id="locations-primary" value="0" />
                             <label for="locations-primary">Menu principal</label>

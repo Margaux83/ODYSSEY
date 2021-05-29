@@ -17,9 +17,10 @@ class MenuManagement
     {
 
         $security = Security::getInstance();
-        /* if(!$security->isConnected()){
-           die("Error not authorized");
-       }*/
+        //Vérifie si l'utilisateur est connecté, sinon on le redirige sur la page de login
+         if(!$security->isConnected()){
+             header('Location: /login');
+       }
 
 
 
@@ -41,10 +42,10 @@ class MenuManagement
         $menu = new Menu();
         
         //Affiche la vue pour ajouter un article
-       // $view = new View("menuManagement, "back");
+        $view = new View("menuManagement", "back");
 
         //Création du formBuilder des articles
-        $form = $article->buildFormArticle();
+        $form = $menu->buildFormMenu();
         $view->assign("form", $form);
 
         //On vérifie si des données sont bien envoyées
@@ -56,13 +57,11 @@ class MenuManagement
                 if (empty($errors)) {
                     //S'il n'y a pas d'erreurs, on envoie les données dans la requête pour ajouter l'article
                     $menu->setName(htmlspecialchars(addslashes($_POST['name'])));
-                    $menu->setCreationdate($_POST['creationdate']);
-                    $menu->setEditdate($_POST['editdate']);
-                    $menu->setOrder($_POST['order']);
-                    $menu->setRoute($_POST['route']);
+                    $menu->setOrderMenu(1);
+                    $menu->setIsDeleted(0);
 
 
-                    $result = $menu->saveMenu();
+                    $menu->save();
                     
                 } else {
                     //S'il y a des erreurs, on prépare leur affichage

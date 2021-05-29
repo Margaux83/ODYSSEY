@@ -33,7 +33,6 @@ class MenuManagement extends Database
             get_object_vars($this),
             get_class_vars(get_parent_class())
         );
-        unset($data["category"]);
         $columns = array_keys($data);
         $statement = $this->pdo->prepare("SELECT " . implode(',', $columns) . " FROM ".$this->table." WHERE id=:id");
         $statement->execute(array(":id" => $this->getId()));
@@ -41,7 +40,6 @@ class MenuManagement extends Database
 
        $obj = $statement->fetchObject(__CLASS__);
 
-       $this->setArticleFromObj($obj);
     }
 
     /**
@@ -58,6 +56,39 @@ class MenuManagement extends Database
     public function getName()
     {
         return $this->name;
+    }
+
+
+    /**
+     * @param $isvisible
+     */
+    public function setOrderMenu($orderMenu)
+    {
+        $this->orderMenu = $orderMenu;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getOrderMenu()
+    {
+        return $this->orderMenu;
+    }
+
+    **
+     * @param $isvisible
+     */
+    public function setIsDeleted($isDeleted)
+    {
+        $this->isDeleted = $isDeleted;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getIsDeleted()
+    {
+        return $this->isDeleted;
     }
 
     /**
@@ -79,66 +110,19 @@ class MenuManagement extends Database
     /**
      * @param $status
      */
-    public function setEditdate($editdate)
+    public function setUpdateDate($updateDate)
     {
-        $this->editdate = $editdate;
+        $this->updateDate = $updateDate;
     }
 
     /**
      * @return mixed
      */
-    public function getEditdate()
+    public function getUpdateDate()
     {
-        return $this->editdate;
+        return $this->updateDate;
     }
 
-    /**
-     * @param $isvisible
-     */
-    public function setOrder($order)
-    {
-        $this->order = $order;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getOrder()
-    {
-        return $this->order;
-    }
-
-    /**
-     * @param mixed $category
-     */
-    public function setRoute($route)
-    {
-        $this->route = $route;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getRoute()
-    {
-        return $this->route;
-    }
-
-    /**
-     * @param $isdraft
-     */
-    public function setOdy_menus_parent_id($ody_menus_parent_id)
-    {
-        $this->ody_menus_parent_id = $ody_menus_parent_id;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getOdy_menus_parent_id()
-    {
-        return $this->ody_menus_parent_id;
-    }
 
     
     public function buildFormArticle()
@@ -148,26 +132,38 @@ class MenuManagement extends Database
             "config"=>[
                 "method"=>"POST",
                 "Action"=>"",
-                "Submit"=>"Publier",
+                "Submit"=>"Créer",
                 "class"=>"",
 
             ],
-            "button"=>[
-                "class"=>"buttonComponent d-flex floatRight",
-                "name"=>"insert_menu"
-            ],
+            
             "input"=>[
 
                     "name"=>[
 
                         "type"=>"text",
-                        "label"=>"Veuillez choisir un titre pour votre article",
+                        "label"=>"Veuillez choisir un titre pour votre menu",
                         "lengthMax"=>"255",
                         "lengthMin"=>"2",
                         "required"=>true,
                         "class"=>"input",
                         "error"=>"Le nom du menu doit faire entre 2 et 255 caractères"
                     ],
+
+                    "orderMenu"=>[
+
+                        "type"=>"checkbox",
+                        "label"=>"",
+                        "required"=>true,
+                        "class"=>"input",
+                        "error"=>""
+                    ],
+                ],
+
+            "button"=>[
+                "class"=>"buttonComponent d-flex floatRight",
+                "name"=>"insert_menu"
+            ],
                     
 
                 ]
