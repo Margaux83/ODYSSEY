@@ -3,28 +3,48 @@
 
 namespace App\Models;
 
+use App\Core\Database;
 
-class Menus
+class Menus extends Database
 {
+
     protected $id;
     protected $name;
-    protected $order;
-    protected $isdeleted;
+    protected $orderMenu;
+    protected $isDeleted;
+   
 
-    /**
-     * @return mixed
-     */
-    public function getId()
+    public function __construct(){
+        parent::__construct();
+    }
+
+    public function getID()
     {
         return $this->id;
     }
 
-    /**
-     * @param mixed $id
-     */
-    public function setId($id)
-    {
+    public function setId($id){
         $this->id = $id;
+
+        $data = array_diff_key(
+            get_object_vars($this),
+            get_class_vars(get_parent_class())
+        );
+        $columns = array_keys($data);
+        $statement = $this->pdo->prepare("SELECT " . implode(',', $columns) . " FROM ".$this->table." WHERE id=:id");
+        $statement->execute(array(":id" => $this->getId()));
+        //$result = $statement->fetchAll();
+
+       $obj = $statement->fetchObject(__CLASS__);
+
+    }
+
+    /**
+     * @param $title
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
     }
 
     /**
@@ -35,43 +55,77 @@ class Menus
         return $this->name;
     }
 
+
     /**
-     * @param mixed $name
+     * @param $isvisible
      */
-    public function setName($name)
+    public function setOrderMenu($orderMenu)
     {
-        $this->name = $name;
+        $this->orderMenu = $orderMenu;
     }
 
     /**
      * @return mixed
      */
-    public function getOrder()
+    public function getOrderMenu()
     {
-        return $this->order;
+        return $this->orderMenu;
     }
 
     /**
-     * @param mixed $order
+     * @param $isvisible
      */
-    public function setOrder($order)
+    public function setIsDeleted($isDeleted)
     {
-        $this->order = $order;
-    }
-
-    /**
-     * @param mixed $isdeleted
-     */
-    public function setIsdeleted($isdeleted)
-    {
-        $this->isdeleted = $isdeleted;
+        $this->isDeleted = $isDeleted;
     }
 
     /**
      * @return mixed
      */
-    public function getIsdeleted()
+    public function getIsDeleted()
     {
-        return $this->isdeleted;
+        return $this->isDeleted;
+    }
+
+    
+    
+    public function buildFormMenu()
+    {
+        return [
+
+            "config"=>[
+                "method"=>"POST",
+                "Action"=>"",
+                "Submit"=>"Créer",
+                "class"=>"",
+
+            ],
+            
+            "input"=>[
+
+                    "name"=>[
+
+                        "type"=>"text",
+                        "label"=>"Veuillez choisir un titre pour votre menu",
+                        "lengthMax"=>"255",
+                        "lengthMin"=>"2",
+                        "required"=>true,
+                        "class"=>"input",
+                        "error"=>"Le nom du menu doit faire entre 2 et 255 caractères"
+                    ],
+
+                  /*  "orderMenu"=>[
+
+                        "type"=>"checkbox",
+                        "label"=>"",
+                        "required"=>true,
+                        "class"=>"input",
+                        "error"=>""
+                    ],*/
+                ]
+    
+
+        ];
     }
 }
