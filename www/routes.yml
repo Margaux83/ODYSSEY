@@ -1,14 +1,3 @@
-/:
-  controller: Base
-  action: Default
-  label: Accueil
-  menuData:
-    visible: false
-    min-statut: true
-    listId: basics
-    icon: icon_home
-
-
 /dashboard:
   controller: Base
   action: dashboard
@@ -159,6 +148,28 @@
     min-statut: false
     listId: inscription
     label: Inscription
+    icon: icon_web
+
+/forgotpassword:
+  controller: Security
+  action: forgotPassword
+  freeAccess: true
+  menuData:
+    visible: false
+    min-statut: false
+    listId: forgotPassword
+    label: ForgotPassword
+    icon: icon_web
+
+/forgotpasswordconfirm:
+  controller: Security
+  action: forgotPasswordConfirm
+  freeAccess: true
+  menuData:
+    visible: false
+    min-statut: false
+    listId: forgotPasswordConfirm
+    label: ForgotPasswordConfirm
     icon: icon_web
 
 /logout:

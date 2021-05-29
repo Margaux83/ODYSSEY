@@ -12,7 +12,9 @@ class Profile
     public function defaultAction(){
         $security = Security::getInstance();
 		if(!$security->isConnected()){
+            $_SESSION['alert']['danger'][] = 'Veuillez vous connecter afin d\'accéder à cette page';
             header('Location: /login');
+            exit;
         }
 
 		$view = new View("profile", "back");
@@ -28,9 +30,9 @@ class Profile
 			}else{
 				$view->assign("formErrors", $errors);
 			}
-
 		}
         
+        $user->setId($_SESSION['userId']);
         $view->assign("connectedUser", $user);
 		$view->assign("form", $user->buildFormProfile());
 
