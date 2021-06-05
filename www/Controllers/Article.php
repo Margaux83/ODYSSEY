@@ -217,7 +217,7 @@ class Article
 
                 } else {
                     //S'il y a des erreurs, on prépare leur affichage
-                    $_SESSION['alert']['danger'][] = "'.$errors[0].'";
+                    $_SESSION['alert']['danger'][] = $errors[0];
                 }
                 if (!empty($_POST)) {
                     if(!empty($_POST['id'])) {
