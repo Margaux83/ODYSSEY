@@ -61,7 +61,7 @@
             <div class="listItem-cpt listActions">
                 <img src=<?php App\Core\View::getAssets("icons/eye-solid.svg")?> alt="" height="20" width="20">
                 <form action="editarticle" method="post"><button class="editarticleButton" name="edit_article" type="submit"><img src=<?php App\Core\View::getAssets("icons/pen-solid.svg")?> alt="" height="20" width="20"><input
-                                type="hidden" name="id_article" value="<?= $article["id"] ?>"></button></form>
+                                type="hidden" name="id" value="<?= $article["id"] ?>"></button></form>
                 <img class="openModalConfirmDeleteArticle" data-target="ModalConfirmDeleteArticle" data-id="<?= $article["id"] ?>"  src=<?php App\Core\View::getAssets("icons/trash-solid.svg")?> alt="" height="20" width="20">
             </div>
         </li>
@@ -125,7 +125,8 @@
             </div>
             <div class="listItem-cpt listActions">
                 <img src=<?php App\Core\View::getAssets("icons/eye-solid.svg")?> alt="" height="20" width="20">
-                <img src=<?php App\Core\View::getAssets("icons/pen-solid.svg")?> alt="" height="20" width="20">
+                <form action="editarticle" method="post"><button class="editarticleButton" name="edit_article" type="submit"><img src=<?php App\Core\View::getAssets("icons/pen-solid.svg")?> alt="" height="20" width="20"><input
+                                name="id" type="hidden" value="<?= $article["id"] ?>"></button></form>
                 <img class="openModalConfirmDeleteArticleUser" data-target="ModalConfirmDeleteArticleUser"   data-id="<?= $articleByUser["id"] ?>" src=<?php App\Core\View::getAssets("icons/trash-solid.svg")?> alt="" height="20" width="20">
             </div>
         </li>

@@ -75,4 +75,23 @@ class Category extends Database
 
         ];
     }
+
+    //Fonction qui permet de build les options du select de Catégorie de l'article
+    public function buildAllCategoriesFormSelect($selectedCategoryId = null) {
+        $categories = $this->query(['id', 'label']);
+        $returnedArray = [
+            '' => [
+                "label" => "Choisir une catégorie"
+            ]
+        ];
+
+        foreach ($categories as $key => $category) {
+            $returnedArray[$key] = [
+                "label" => $category['label'],
+                "selected" => $category['id'] === $selectedCategoryId
+            ];
+        }
+
+        return $returnedArray;
+    }
 }

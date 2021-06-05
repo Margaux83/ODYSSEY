@@ -3,13 +3,9 @@
 
 namespace App;
 
-use App\Core\Database;
 use App\Core\FormBuilderWYSWYG;
-use App\Core\Messages;
 use App\Core\Security;
 use App\Core\View;
-use App\Core\ArticleRepository;
-
 use App\Models\Article as Arti;
 use App\Models\Category;
 
@@ -26,6 +22,7 @@ class Article
              header('Location: /login');
        }
 
+         //Instanciation de la classe article
         $article = new Arti();
 
         if (!empty($_POST)) {
@@ -62,8 +59,6 @@ class Article
         $formDeleteArticleOfUser = $article->buildFormDeleteArticleOfUser();
         $view->assign("formDeleteArticleOfUser", $formDeleteArticleOfUser);
 
-        //Fonctinnalité pour supprimer un article
-
     }
 
 
@@ -94,6 +89,14 @@ class Article
 
         //On vérifie si des données sont bien envoyées
         if (!empty($_POST['insert_article'])) {
+            $dataArticle = $_POST;
+            foreach ($dataArticle as $key => $value) {
+                switch ($key) {
+                    case "insert_article":
+                        unset($dataArticle["insert_article"]);
+                        break;
+                }
+            }
             if (!empty($_POST)) {
 
                 $errors = FormBuilderWYSWYG::validator($_POST, $form);
@@ -110,7 +113,7 @@ class Article
                         $article->setIsdraft(0);
                     }
                     $article->setIsdeleted(0);
-                    $article->setDescription($_POST["comment"]);
+                    $article->setDescription($_POST["description"]);
                     $article->setId_user($_SESSION["userId"]);
                     $article->save();
                     $result = $article->getLastFromTable();
@@ -119,7 +122,6 @@ class Article
                     $_SESSION['alert']['success'][] = 'L\'article a bien été enregistré !';
                 } else {
                     //S'il y a des erreurs, on prépare leur affichage
-                   // $view->assign("formErrors", $errors);
                     $_SESSION['alert']['danger'][] = $errors[0];
                 }
 
@@ -128,6 +130,14 @@ class Article
         }
         //On vérifie si des données sont bien envoyées
         elseif(!empty($_POST['insert_category'])){
+            $dataArticle = $_POST;
+            foreach ($dataArticle as $key => $value) {
+                switch ($key) {
+                    case "insert_category":
+                        unset($dataArticle["insert_category"]);
+                        break;
+                }
+            }
             if (!empty($_POST)) {
 
                 $errors = FormBuilderWYSWYG::validator($_POST, $formCategory);
@@ -155,7 +165,9 @@ class Article
            header('Location: /login');
        }
 
+         //Instanciation de la classe Article
         $article = new Arti();
+
 
         //Fonction pour récupérer la liste de tous les articles
         $article->getAllArticles();
@@ -164,56 +176,57 @@ class Article
         $view = new View("Article/edit_articles", "back");
         $view->assign("infoArticles", $article->getAllArticles());
 
-        if(!empty($_POST)) {
-            $article->setId($_POST["id_article"]);
-        }
+            if (!empty($_POST)) {
 
+                if($_POST['id'] != "") {
+                    $article->setId($_POST["id"]);
+                }
+            }
+
+        //Création du formBuilder des articles
         $form = $article->buildFormArticle();
         $view->assign("form", $form);
 
 
-
-
         //On vérifie si des données sont bien envoyées
         if(!empty($_POST['insert_article'])) {
-            if (!empty($_POST)) {
-
-
-                $errors = FormBuilderWYSWYG::validator($_POST, $form);
+            $dataArticle = $_POST;
+            foreach ($dataArticle as $key => $value) {
+                switch ($key) {
+                    case "insert_article":
+                        unset($dataArticle["insert_article"]);
+                        break;
+                }
+            }
+            if (!empty($dataArticle)) {
+                $errors = FormBuilderWYSWYG::validator($dataArticle, $form);
 
                 if (empty($errors)) {
-                    /*$article->setId($_POST["id_article"]);
-                    $article->setTitle(htmlspecialchars(addslashes($_POST['title'])));
-                    $article->setContent(htmlspecialchars(addslashes($_POST['content'])));
-                    $article->setStatus($_POST['status']);
-                    $article->setIsvisible($_POST['visibility']);
-                    if ($_POST['status'] == "Brouillon") {
-                        $article->setIsdraft(1);
-                    } else {
-                        $article->setIsdraft(0);
-                    }
-                    $article->setIsdeleted(0);
-                    $article->setId_user($_SESSION["userId"]);
-                    //$article->saveArticle();*/
 
-                    //Modification de l'article sélectionné
-                    $article->updateWithData($_POST);
-                    $article->save();
-                    $_SESSION['alert']['success'][] = 'L\'article a bien été modifié !';
+                    //On vérifie si un article a bien été sélectionné avant de faire la modification
+                    if(strlen($dataArticle['id']) == 0) {
+                        $_SESSION['alert']['danger'][] = 'Veuillez sélectionner un article';
+                    }
+                    else{
+                        //Modification de l'article sélectionné
+                        $article->updateWithData($dataArticle);
+                        $article->save();
+                        $_SESSION['alert']['success'][] = 'L\'article a bien été modifié !';
+                    }
 
 
                 } else {
                     //S'il y a des erreurs, on prépare leur affichage
-                    $_SESSION['alert']['danger'][] = "'.$errors.'";
+                    $_SESSION['alert']['danger'][] = "'.$errors[0].'";
+                }
+                if (!empty($_POST)) {
+                    if(!empty($_POST['id'])) {
+                        $article->setId($_POST["id"]);
+                    }
                 }
                 $view->assign('article', $article);
 
-
             }
         }
-
-        }
-
-
-
+    }
 }

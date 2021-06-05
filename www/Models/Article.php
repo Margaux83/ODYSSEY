@@ -3,8 +3,8 @@
 
 namespace App\Models;
 
-use App\Core\ArticleRepository;
 use App\Core\Database;
+use App\Models\Category;
 
 class Article extends Database
 {
@@ -44,6 +44,8 @@ class Article extends Database
 
        $obj = $statement->fetchObject(__CLASS__);
        $this->setArticleFromObj($obj);
+
+        $this->searchCategory();
     }
 
     private function setArticleFromObj($obj){
@@ -230,9 +232,78 @@ class Article extends Database
         return ['category'];
     }
 
+    //Fonction qui va récupérer la catégorie de l'article sélectionné
+    public function searchCategory() {
+        $categoryArticle = new Category_Article();
+        $resultCategory = $categoryArticle->query(['id_category'], ['id_article' => $this->getId()])[0];
+        $this->setCategory($resultCategory['id_category']);
+    }
+
+
+    //Fonction qui permet de build les options du select de Statut de l'article
+    public function buildAllStatusFormSelect() {
+        $status = [
+            '' => [
+                "label" => "Choisir un status"
+            ],
+            "1"=>[
+                "label" => "Brouillon",
+            ],
+            "2"=>[
+                "label" => "Créé",
+            ],
+            "3"=>[
+                "label" => "En attente de validation"
+            ],
+            "4"=>[
+                "label" => "Validé et posté"
+            ]
+        ];
+
+        $returnedArray = [];
+
+        foreach ($status as $key => $singleStatus) {
+            $returnedArray[$key] = [
+                'label' => $singleStatus['label'],
+                'selected' => $key === $this->getStatus()
+            ];
+        }
+
+        return $returnedArray;
+    }
+
+    //Fonction qui permet de build les options du select de Visibilté de l'article
+    public function buildAllVisibilityFormSelect() {
+        $status = [
+            '' => [
+                "label" => "Choisir une visibilité"
+            ],
+            "1"=>[
+                "label" => "Protégé",
+            ],
+            "2"=>[
+                "label" => "Public",
+            ],
+            "3"=>[
+                "label" => "Privé"
+            ]
+        ];
+
+        $returnedArray = [];
+
+        foreach ($status as $key => $singleStatus) {
+            $returnedArray[$key] = [
+                'label' => $singleStatus['label'],
+                'selected' => $key === $this->getIsvisible()
+            ];
+        }
+
+        return $returnedArray;
+    }
 
     public function buildFormArticle()
     {
+        $category = new Category();
         return [
 
             "config"=>[
@@ -245,19 +316,24 @@ class Article extends Database
 
             "input"=>[
 
-                    "title"=>[
-
-                        "type"=>"text",
-                        "label"=>"Veuillez choisir un titre pour votre article",
-                        "lengthMax"=>"255",
-                        "lengthMin"=>"2",
+                    "id"=>[
+                        "type"=>"hidden",
                         "required"=>true,
-                        "class"=>"input",
-                        "error"=>"Le titre de l'article doit faire entre 2 et 255 caractères",
-                        "placeholder"=>"Votre titre",
-
-                        "defaultValue"=>$this->getTitle()
+                        "defaultValue"=>$this->getID()
                     ],
+                "title"=>[
+
+                    "type"=>"text",
+                    "label"=>"Veuillez choisir un titre pour votre article",
+                    "lengthMax"=>"255",
+                    "lengthMin"=>"2",
+                    "required"=>true,
+                    "class"=>"input",
+                    "error"=>"Le titre de l'article doit faire entre 2 et 255 caractères",
+                    "placeholder"=>"Votre titre",
+
+                    "defaultValue"=>$this->getTitle()
+                ],
                     "content"=>[
                         "type"=>"textarea",
                         "label"=>"",
@@ -271,7 +347,7 @@ class Article extends Database
                          "placeholder"=>"Votre contenu",
                         "defaultValue"=>$this->getContent()
                     ],
-                    "comment"=>[
+                    "description"=>[
                         "type"=>"textarea",
                         "label"=>"Desciption",
                         "lengthMax"=>"255",
@@ -289,20 +365,8 @@ class Article extends Database
                         "required"=>true,
                         "error"=>"Veuillez sélectionner un élément",
                         "placeholder"=>"Choisir une catégorie",
-                        "options"=>[
-                            "1"=>[
-                                "label" => "Voyage",
-                            ],
-                            "2"=>[
-                                "label" => "Nature",
-                            ],
-                            "3"=>[
-                                "label" => "Culture"
-                            ],
-                            "4"=>[
-                                "label" => "Pays"
-                            ]
-                        ],
+                        "options"=>
+                            $category->buildAllCategoriesFormSelect($this->category)
 
                     ],
                     "status"=>[
@@ -311,20 +375,7 @@ class Article extends Database
                         "required"=>true,
                         "error"=>"Veuillez sélectionner un élément",
                         "placeholder"=>"Choisir un statut",
-                        "options"=>[
-                            "1"=>[
-                                "label" => "Validé et posté",
-                            ],
-                            "2"=>[
-                                "label" => "En attente de validation",
-                            ],
-                            "3"=>[
-                                "label" => "Brouillon"
-                            ],
-                            "4"=>[
-                                "label" => "Créé"
-                            ]
-                        ]
+                        "options"=>$this->buildAllStatusFormSelect()
                     ],
                     "isvisible"=>[
                         "type"=>"select",
@@ -332,17 +383,7 @@ class Article extends Database
                         "required"=>true,
                         "error"=>"Veuillez sélectionner un élément",
                         "placeholder"=>"Choisir une visibilité",
-                        "options"=>[
-                            "1"=>[
-                                "label" => "Protégé",
-                            ],
-                            "2"=>[
-                                "label" => "Public",
-                            ],
-                            "3"=>[
-                                "label" => "Privé"
-                            ]
-                        ]
+                        "options"=>$this->buildAllVisibilityFormSelect()
                     ],
 
                 ],

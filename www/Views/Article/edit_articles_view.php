@@ -52,7 +52,7 @@
                     </div>
                     <div class="listItem-cpt listActions">
                         <form action="editarticle" method="post"><button class="editarticleButton" name="edit_article" type="submit"><img src=<?php App\Core\View::getAssets("icons/pen-solid.svg")?> alt="" height="20" width="20"><input
-                                      name="id_article" type="hidden" value="<?= $article["id"] ?>"></button></form>
+                                      name="id" type="hidden" value="<?= $article["id"] ?>"></button></form>
                     </div>
                 </li>
             <?php } ?>
@@ -64,14 +64,6 @@
 
 
    <section class="col-12" style="grid-column: 1 / 13; grid-row: 2;">
-       <?php if(!empty($formErrors)){?>
-       <?php foreach($formErrors as $error):?>
-               <div class="error"><?= $error ;?></div>
-           <?php endforeach;?>
-           <?php } else { ?>
-       <div class="success">L'article a bien été modifié</div>
-
-       <?php } ?>
            <?php  App\Core\FormBuilderWYSWYG::showFormArticle($form); ?>
    </section>
 
