@@ -97,27 +97,27 @@ class Article
                         break;
                 }
             }
-            if (!empty($_POST)) {
+            if (!empty($dataArticle)) {
 
-                $errors = FormBuilderWYSWYG::validator($_POST, $form);
+                $errors = FormBuilderWYSWYG::validator($dataArticle, $form);
                 //On vérifie s'il y a des erreurs
                 if (empty($errors)) {
                     //S'il n'y a pas d'erreurs, on envoie les données dans la requête pour ajouter l'article
-                    $article->setTitle(htmlspecialchars(addslashes($_POST['title'])));
-                    $article->setContent(addslashes($_POST['content']));
-                    $article->setStatus($_POST['status']);
-                    $article->setIsvisible($_POST['isvisible']);
-                    if ($_POST['status'] == "Brouillon") {
+                    $article->setTitle(htmlspecialchars(addslashes($dataArticle['title'])));
+                    $article->setContent(addslashes($dataArticle['content']));
+                    $article->setStatus($dataArticle['status']);
+                    $article->setIsvisible($dataArticle['isvisible']);
+                    if ($dataArticle['status'] == "Brouillon") {
                         $article->setIsdraft(1);
                     } else {
                         $article->setIsdraft(0);
                     }
                     $article->setIsdeleted(0);
-                    $article->setDescription($_POST["description"]);
+                    $article->setDescription($dataArticle["description"]);
                     $article->setId_user($_SESSION["userId"]);
                     $article->save();
                     $result = $article->getLastFromTable();
-                    $article->saveArticleCategory($_POST['category'], $result[0]["id"]);
+                    $article->saveArticleCategory($dataArticle['category'], $result[0]["id"]);
 
                     $_SESSION['alert']['success'][] = 'L\'article a bien été enregistré !';
                 } else {
@@ -138,12 +138,12 @@ class Article
                         break;
                 }
             }
-            if (!empty($_POST)) {
+            if (!empty($dataArticle)) {
 
-                $errors = FormBuilderWYSWYG::validator($_POST, $formCategory);
+                $errors = FormBuilderWYSWYG::validator($dataArticle, $formCategory);
                 if (empty($errors)) {
                     //S'il n'y a pas d'erreurs, on envoie les données dans la requête pour ajouter la catégorie
-                    $category->setLabel($_POST["addcategory"]);
+                    $category->setLabel($dataArticle["addcategory"]);
                     $category->save();
                     $_SESSION['alert']['success'][] = 'La catégorie a bien été enregistrée !';
                 }
