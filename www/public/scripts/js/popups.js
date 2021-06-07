@@ -1,4 +1,16 @@
-// Get the modal
+
+var ModalConfirmDeleteArticleUser = document.getElementById("ModalConfirmDeleteArticleUser");
+
+if(document.getElementById("ModalConfirmDeleteArticleUser") != null) {
+// When the user clicks on the button, open the modal
+    $(".openModalConfirmDeleteArticleUser").on('click', function () {
+        ModalConfirmDeleteArticleUser.style.display = "block";
+    });
+    $(".closeModalDelete").on('click', function () {
+        ModalConfirmDeleteArticleUser.style.display = "none";
+    });
+}
+
 var ModalConfirmDeleteArticle = document.getElementById("ModalConfirmDeleteArticle");
 
 if(document.getElementById("ModalConfirmDeleteArticle") != null) {
@@ -11,24 +23,13 @@ if(document.getElementById("ModalConfirmDeleteArticle") != null) {
     });
 }
 
-var ModalConfirmDeleteComment = document.getElementById("ModalConfirmDeleteComment");
-
-if(document.getElementById("ModalConfirmDeleteComment") != null) {
-// When the user clicks on the button, open the modal
-    $(".openModalConfirmDeleteComment").on('click', function () {
-        ModalConfirmDeleteComment.style.display = "block";
-    });
-    $(".closeModalDelete").on('click', function () {
-        ModalConfirmDeleteComment.style.display = "none";
-    });
-}
 
 window.onclick = function(event) {
     if (event.target == ModalConfirmDeleteArticle) {
         ModalConfirmDeleteArticle.style.display = "none";
     }
-    if (event.target == ModalConfirmDeleteComment) {
-        ModalConfirmDeleteComment.style.display = "none";
+    if (event.target == ModalConfirmDeleteArticleUser) {
+        ModalConfirmDeleteArticleUser.style.display = "none";
     }
 }
 
@@ -38,7 +39,7 @@ $(".openModalConfirmDeleteArticle").on('click',function () {
     }, 10000);
 });
 
-$(".openModalConfirmDeleteComment").on('click',function () {
+$(".openModalConfirmDeleteArticleUsert").on('click',function () {
     setTimeout(function () {
         $(".check-icon").show();
     }, 10000);

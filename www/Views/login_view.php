@@ -13,7 +13,7 @@
             <input name="login-pwd" id="config-pwd" type="password" required>
         </div>
         <div class="formElement ">
-            <p>Mot de passe oublié ?</p>
+            <p><a href="/forgotpassword" class="forget-password">Mot de passe oublié ?</a></p>
         </div>
 
         <div class="formSubmitElement">

@@ -115,8 +115,87 @@ class Security{
         header('Location: /login');
     }
 
-    public function listofusersAction(){
+    public function forgotPasswordAction(){
+        $coreSecurity = coreSecurity::getInstance();
+        if ($coreSecurity->getConnectedUser()){
+            header('Status: 400 Connected', true, 400);
+            header('Location: /dashboard');
+            return;
+        }
+        $mailer = new Mailer();
+        $bodymail = new BodyMail();
+        $user = new User();
+        $token = rand(100000, 999999);
 
+        if(empty($_POST)){
+            $view = new View("forgotPasswordSend", "back_management");
+        } else {
+            $view = new View("forgotPasswordSend", "back_management");
+
+            $db = new Database("User");
+            $result = $db->query(
+                ["id", "isVerified", "firstname", "lastname"],
+                ["email" => $_POST['email']]
+            );
+            if(count($result)) {
+                if ($result[0]["isVerified"] == "1") {
+                    $user->setId($result[0]["id"]);
+                    $user->setToken($token);
+                    $user->save();
+
+                    $object = "Mot de passe oublie - ODYSSEY";
+                    $mailer->sendMail($result[0]["firstname"], $result[0]["lastname"], $_POST['email'], $object, $bodymail->buildBodyForgotPassword($_POST['email'], $token));
+                    $_SESSION['alert']['success'][] = 'Un mail contenant le token vient de vous être envoyé';
+                    header('location: /forgotpasswordconfirm');
+                    session_write_close();
+                } else {
+                    $_SESSION['alert']['danger'][] = 'Votre compte doit être activé';
+                }
+            } else {
+                $_SESSION['alert']['danger'][] = 'Aucun compte reconnu';
+            }
+
+
+        }
+    }
+
+    public function forgotPasswordConfirmAction(){
+        $coreSecurity = coreSecurity::getInstance();
+        if ($coreSecurity->getConnectedUser()){
+            header('Status: 400 Connected', true, 400);
+            header('Location: /dashboard');
+            return;
+        }
+        $view = new View("forgotPasswordConfirm", "back_management");
+
+        if(!empty($_POST)) {
+            $user = new User();
+
+            $db = new Database("User");
+            $result = $db->query(
+                ["id"],
+                ["token" => $_POST['token']]
+            );
+            if(count($result)) {
+                $user->setId($result[0]["id"]);
+                if(!$user->verifyPassword(htmlspecialchars(addslashes($_POST['password'])), htmlspecialchars(addslashes($_POST['password-confirm'])))) {
+                    $_SESSION['alert']['danger'][] = 'Les deux mots de passe ne correspondent pas';
+                    header('location: /forgotpasswordconfirm');
+                    session_write_close();
+                } else {
+                    $user->setPassword(password_hash(htmlspecialchars(addslashes($_POST['password'])), PASSWORD_BCRYPT));
+                    $user->setToken("");
+                    $user->save();
+                    $_SESSION['alert']['success'][] = 'Votre mot de passe a bien été modifié';
+                    header('location: /login');
+                    session_write_close();
+                }
+            } else {
+                $_SESSION['alert']['danger'][] = 'Token incorrect';
+            }
+        }
+    }
+    public function listofusersAction(){
         $coreSecurity = coreSecurity::getInstance();
         if(!$coreSecurity->isConnected()){
             die("Error not authorized");

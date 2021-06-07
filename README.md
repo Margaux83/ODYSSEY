@@ -23,3 +23,4 @@ Soon
 * **Maxime Carluer** - *Travail Initial* - [maximecarl](https://github.com/maximecarl)
 * **Loudovic Rex-Harrison** - *Travail Initial* - [loudovic12](https://github.com/loudovic12)
 * **Louis Moulin** - *Travail Initial* - [MoulinLouis](https://github.com/MoulinLouis)
+* **Chakil Mouhamad** - *Travail Initial* - [chakil28](https://github.com/chakil28)

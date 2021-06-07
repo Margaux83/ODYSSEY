@@ -11,9 +11,6 @@ if(document.getElementById("ModalDescEditArticle") != null) {
     });
 }
 
-
-
-// Get the modal
 var modalDescAddArticle = document.getElementById("ModalDescAddArticle");
 
 if(document.getElementById("ModalDescAddArticle") != null) {
@@ -67,7 +64,6 @@ if(document.getElementById("myModal") != null) {
 }
 
 window.addEventListener('click',function(event) {
-    console.log("ok");
     if (event.target === modalDescEditArticle) {
         $(modalDescEditArticle).css('display','none');
     }

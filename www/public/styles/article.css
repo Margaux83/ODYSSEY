@@ -205,7 +205,7 @@ h1.searchButtonSection:hover{
 }
 
 .textareaComment{
-    width: 100%;
+    width: 20%;
     height: 50%;
     border-radius: 5px;
     border: 1px solid #888;
@@ -290,7 +290,7 @@ button #saveModalButton{
 
 
 .inputOneModal{
-    height: 10%;
+    height: 50%;
     margin-bottom: 1%;
     width: 100%;
 }
@@ -531,4 +531,9 @@ div .listDate{
         right: 8px;
         top: 38px;
     }
+}
+
+.editarticleButton{
+    border-style: none;
+    background: transparent;
 }
