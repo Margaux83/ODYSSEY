@@ -41,28 +41,33 @@
             <p class="flex-weight-1">Dernière connexion</p>
             <p class="flex-weight-1">Action</p>
         </li>
-        <?php for ($i=0;$i<7;$i++){?>
+        <?php
+        if(!empty($infoUser)){
+
+        foreach ($infoUser as $user){
+
+            ?>
             <li class="listItem">
                 <div class="listItem-cpt">
-                    <p>Martin</p>
+                    <p><?= $user["firstname"] ?></p>
                 </div>
                 <div class="listItem-cpt">
-                    <p>Jean</p>
+                    <p><?= $user["lastname"] ?></p>
                 </div>
                 <div class="listItem-cpt">
-                    <p>martin.jean@gmail.com</p>
+                    <p><?= $user["email"] ?></p>
                 </div>
                 <div class="listItem-cpt">
-                    <p>Connecté</p>
+                    <p><?= $user["status"] ?></p>
                 </div>
                 <div class="listItem-cpt">
-                    <p>Inscrit</p>
+                    <p><?= $user["role"] ?></p>
                 </div>
                 <div class="listItem-cpt">
-                    <p>12/02/2021</p>
+                    <p><?= $user["creationDate"] ?></p>
                 </div>
                 <div class="listItem-cpt">
-                    <p>15/02/2021</p>
+                    <p><?= $user["lastConnexionDate"] ?></p>
                 </div>
                 <div class="listItem-cpt listActions">
                     <img src=<?php App\Core\View::getAssets("icons/pen-solid.svg")?> alt="" height="20" width="20">
@@ -71,6 +76,7 @@
 
                 </div>
             </li>
+        <?php } ?>
         <?php } ?>
     </ul>
 </section>

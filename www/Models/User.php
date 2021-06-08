@@ -394,14 +394,14 @@ class User extends Database
                     "error"=>"Votre mot de passe doit faire plus de 8 caractères",
                     "placeholder"=>"Votre mot de passe"
                 ],
-                /*"pwdConfirm"=>[
+                "password-confirm"=>[
                     "type"=>"password",
                     "label"=>"Confirmation de mot de passe",
                     "confirm"=>"pwd",
                     "required"=>true,
                     "error"=>"Votre mot de passe de confirmation est incorrect",
                     "placeholder"=>"Confirmation"
-                ],*/
+                ],
                 "phone"=>[
                     "type"=>"text",
                     "label"=>"Numéro de téléphone",
