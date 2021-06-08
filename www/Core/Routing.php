@@ -6,8 +6,8 @@ namespace App\Core;
 class Routing{
 
     public $routesPath = "routes.yml";
-    public $controller="Base";
-    public $action="default";
+    public $controller="";
+    public $action="defaultAction";
     public $routes = [];
     public $slugs = [];
 

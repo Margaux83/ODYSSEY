@@ -4,7 +4,9 @@
 namespace App\Models;
 
 
-class CategoryArticle
+use App\Core\Database;
+
+class Category_Article extends Database
 {
     protected $id;
     protected $id_category;

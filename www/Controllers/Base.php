@@ -2,10 +2,10 @@
 
 namespace App;
 
-use App\Core\Security;
 use App\Core\View;
 use App\Models\User;
 use App\Core\Form;
+use App\Core\Security;
 
 
 class Base{
@@ -20,7 +20,7 @@ class Base{
 				$user->setFirstname("Toto");
 				$user->setLastname("Titi");
 				$user->setEmail("y.skrzypczyk@gmail.com");
-				$user->setPwd("Test1234");
+				$user->setPassword("Test1234");
 				$user->setCountry("fr");
 				//$user->save();
 
@@ -151,7 +151,7 @@ class Base{
 				$user->setFirstname("Toto");
 				$user->setLastname("Titi");
 				$user->setEmail("y.skrzypczyk@gmail.com");
-				$user->setPwd("Test1234");
+				$user->setPassword("Test1234");
 				$user->setCountry("fr");
 				//$user->save();
 
@@ -168,13 +168,10 @@ class Base{
 	public function dashboardAction(){
 		$security = Security::getInstance();
 		if(!$security->isConnected()){
-           // header('Location: /login');
+            header('Location: /login');
     }
-
 		//Affiche moi la vue dashboard;
 		$view = new View("dashboard", "back");
-		
-		
 	}
 
 
