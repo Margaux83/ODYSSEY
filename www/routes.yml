@@ -66,6 +66,7 @@
 /pages:
   controller: Page
   action: default
+  label: Pages
   menuData:
     visible: true
     min-statut: true
