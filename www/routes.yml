@@ -73,6 +73,19 @@
     listId: basics
     label: Pages
     icon: icon_page
+    children: [
+        /add-page
+    ]
+
+/add-page:
+  controller: Page
+  action: addpage
+  label: Ajouter une page
+  menuData:
+    visible: false
+    min-statut: true
+    listId: basics
+    icon: icon_page
 
 /comments:
   controller: Comment

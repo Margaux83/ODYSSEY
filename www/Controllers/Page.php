@@ -8,6 +8,9 @@ use App\Core\Form;
 
 class Page{
     public function defaultAction(){
-        $view = new View("pages", "back");
+        $view = new View("Page/pages", "back");
+    }
+    public function addPageAction(){
+        $view = new View("Page/add_page", "back");
     }
 }

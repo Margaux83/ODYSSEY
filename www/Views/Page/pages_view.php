@@ -17,7 +17,7 @@
         </tr>
         </thead>
         <tbody>
-        <tr>
+        <tr class="text-center">
             <td>
                 <p><img src=<?php App\Core\View::getAssets("icons/plus-solid.svg")?> alt="" height="15" width="15">&nbsp;&nbsp;  15/05/2021</p>
                 <p><img src=<?php App\Core\View::getAssets("icons/pen-solid.svg")?> alt="" height="15" width="15">&nbsp;&nbsp;  15/05/2021</p>
@@ -28,10 +28,16 @@
             </td>
             <td>Loudo M.</td>
             <td>En cours de création</td>
-            <td>
-                <img src=<?php App\Core\View::getAssets("icons/eye-solid.svg")?> alt="" height="20" width="20">
-                <img src=<?php App\Core\View::getAssets("icons/pen-solid.svg")?> alt="" height="20" width="20">
-                <img class="openModalConfirmDeleteComment" data-target="ModalConfirmDeleteComment" src=<?php App\Core\View::getAssets("icons/trash-solid.svg")?> alt="" height="20" width="20">
+            <td class="action-btn">
+                <a href="#">
+                    <img src=<?php App\Core\View::getAssets("icons/eye-solid.svg")?> alt="" height="20" width="20">
+                </a>
+                <a href="#">
+                    <img src=<?php App\Core\View::getAssets("icons/pen-solid.svg")?> alt="" height="20" width="20">
+                </a>
+                <a href="#">
+                    <img class="openModalConfirmDeleteComment" data-target="ModalConfirmDeleteComment" src=<?php App\Core\View::getAssets("icons/trash-solid.svg")?> alt="" height="20" width="20">
+                </a>
             </td>
         </tr>
         </tbody>

@@ -514,5 +514,13 @@ table.dataTable tfoot th.ui-state-default:first-child {
 .dataTables_wrapper .dataTables_paginate {
   color: inherit;
 }
-
-
+.text-center {
+  text-align: center;
+}
+.action-btn {
+  justify-content: space-evenly;
+}
+.a {
+  color: inherit; /* blue colors for links too */
+  text-decoration: inherit; /* no underline */
+}
