@@ -6,115 +6,227 @@ namespace App;
 use App\Core\FormBuilderWYSWYG;
 use App\Core\Security;
 use App\Core\View;
-use App\Core\ArticleRepository;
-
 use App\Models\Article as Arti;
+use App\Models\Category;
 
 class Article
 {
+
 
     public function defaultAction()
     {
 
         $security = Security::getInstance();
-        /* if(!$security->isConnected()){
-           die("Error not authorized");
-       }*/
+        //Vérifie si l'utilisateur est connecté, sinon on le redirige sur la page de login
+         if(!$security->isConnected()){
+             header('Location: /login');
+       }
+
+         //Instanciation de la classe article
+        $article = new Arti();
+
+        if (!empty($_POST)) {
+            if (!empty($_POST['submit_delete_article'])) {
+                //Suppression d'un article par son id
+                $article->delete($_POST['id_delete_article']);
+                $_SESSION['alert']['success'][] = 'Suppression effectuée avec succès !';
+               // header('location: /articles');
+            }
+            if(!empty($_POST['submit_delete_article_of_user'])){
+                //Suppression d'un article de l'utilisateur connecté par son id
+                $article->delete($_POST['id_delete_article_of_user']);
+                $_SESSION['alert']['success'][] = 'Suppression effectuée avec succès !';
+              //  header('location: /articles');
+            }
+        }
+
+        $articles = new Arti();
+         //Fonction pour récupérer la liste de tous les articles
+        $articles->getAllArticles();
+
+        //Affiche moi la vue des articles;
+        $view = new View("Article/articles", "back");
+
+        //Affiche la liste de tous les articles
+        $view->assign("infoArticlesByUser", $articles->getArticleByUser($_SESSION["userId"]));
+        //Affiche la liste des articles qui ont été créés par l'utilisateur connecté
+        $view->assign("infoArticles", $articles->getAllArticles());
 
 
 
-        //Affiche moi la vue dashboard;
-        $view = new View("articles", "back");
+        $form = $article->buildFormDeleteArticle();
+        $view->assign("form", $form);
+        $formDeleteArticleOfUser = $article->buildFormDeleteArticleOfUser();
+        $view->assign("formDeleteArticleOfUser", $formDeleteArticleOfUser);
 
     }
+
+
 
     public function addarticleAction()
     {
 
-        $security = Security::getInstance();
-        /* if(!$security->isConnected()){
-           die("Error not authorized");
-       }*/
-        $article = new Arti();
-        $view = new View("addArticles", "back");
 
+        $security = Security::getInstance();
+        //Vérifie si l'utilisateur est connecté, sinon on le redirige sur la page de login
+        if (!$security->isConnected()) {
+            header('Location: /login');
+        }
+
+        $article = new Arti();
+        $category = new Category();
+
+        //Affiche la vue pour ajouter un article
+        $view = new View("Article/add_articles", "back");
+
+        //Création du formBuilder des articles
         $form = $article->buildFormArticle();
         $view->assign("form", $form);
 
+        //Création du formBuilder des catégories
+        $formCategory = $category->buildFormCategory();
+        $view->assign("formCategory", $formCategory);
 
-
-        /*if(!empty($_POST)){
-            $view->assign("form", $form);
-
-            $errors = FormBuilderWYSWYG::validator($_POST, $form);
-
-            if(empty($errors)){
-
-                   $article->setTitle(htmlspecialchars(addslashes($_POST['title'])));
-                   $article->setContent(htmlspecialchars(addslashes($_POST['content'])));
-                   $article->setStatus($_POST['status']);
-                   $article->setIsvisible($_POST['visibility']);
-                   if($_POST['status'] == "Brouillon"){
-                       $article->setIsdraft(1);
-                   }
-                   else{
-                       $article->setIsdraft(0);
-                   }
-                   $article->setIsdeleted(0);
-                   $article->setId_category($_POST['category']);
-                   $article->setId_user(1);
-                   $article->saveArticle();
-
-            }else{
-                $view->assign("formErrors", $errors);
+        //On vérifie si des données sont bien envoyées
+        if (!empty($_POST['insert_article'])) {
+            $dataArticle = $_POST;
+            foreach ($dataArticle as $key => $value) {
+                switch ($key) {
+                    case "insert_article":
+                        unset($dataArticle["insert_article"]);
+                        break;
+                }
             }
+            if (!empty($dataArticle)) {
 
-        }*/
-    }
+                $errors = FormBuilderWYSWYG::validator($dataArticle, $form);
+                //On vérifie s'il y a des erreurs
+                if (empty($errors)) {
+                    //S'il n'y a pas d'erreurs, on envoie les données dans la requête pour ajouter l'article
+                    $article->setTitle(htmlspecialchars(addslashes($dataArticle['title'])));
+                    $article->setContent(addslashes($dataArticle['content']));
+                    $article->setStatus($dataArticle['status']);
+                    $article->setIsvisible($dataArticle['isvisible']);
+                    if ($dataArticle['status'] == "Brouillon") {
+                        $article->setIsdraft(1);
+                    } else {
+                        $article->setIsdraft(0);
+                    }
+                    $article->setIsdeleted(0);
+                    $article->setDescription($dataArticle["description"]);
+                    $article->setId_user($_SESSION["userId"]);
+                    $article->save();
+                    $result = $article->getLastFromTable();
+                    $article->saveArticleCategory($dataArticle['category'], $result[0]["id"]);
 
-    public function editArticleAction()
-    {
-        $security = Security::getInstance();
-        /* if(!$security->isConnected()){
-           die("Error not authorized");
-       }*/
-
-        $article = new Arti();
-        $view = new View("editArticles", "back");
-
-        $form = $article->buildFormArticle();
-        $view->assign("form", $form);
+                    $_SESSION['alert']['success'][] = 'L\'article a bien été enregistré !';
+                } else {
+                    //S'il y a des erreurs, on prépare leur affichage
+                    $_SESSION['alert']['danger'][] = $errors[0];
+                }
 
 
+            }
+        }
+        //On vérifie si des données sont bien envoyées
+        elseif(!empty($_POST['insert_category'])){
+            $dataArticle = $_POST;
+            foreach ($dataArticle as $key => $value) {
+                switch ($key) {
+                    case "insert_category":
+                        unset($dataArticle["insert_category"]);
+                        break;
+                }
+            }
+            if (!empty($dataArticle)) {
 
-       /* if(!empty($_POST)){
-            $view->assign("form", $form);
-
-            $errors = FormBuilderWYSWYG::validator($_POST, $form);
-
-            if(empty($errors)){
-
-                $article->setTitle(htmlspecialchars(addslashes($_POST['title'])));
-                $article->setContent(htmlspecialchars(addslashes($_POST['content'])));
-                $article->setStatus($_POST['status']);
-                $article->setVisibility($_POST['visibility']);
-                if($_POST['status'] == "Brouillon"){
-                    $article->setIsdraft(1);
+                $errors = FormBuilderWYSWYG::validator($dataArticle, $formCategory);
+                if (empty($errors)) {
+                    //S'il n'y a pas d'erreurs, on envoie les données dans la requête pour ajouter la catégorie
+                    $category->setLabel($dataArticle["addcategory"]);
+                    $category->save();
+                    $_SESSION['alert']['success'][] = 'La catégorie a bien été enregistrée !';
                 }
                 else{
-                    $article->setIsdraft(0);
+                    //S'il y a des erreurs, on prépare leur affichage
+                    $_SESSION['alert']['danger'][] = $errors[0];
                 }
-                $article->setIsdeleted(0);
-                $article->setId_category($_POST['category']);
-                $article->setId_user(1);
-                $article->saveArticle();
 
-            }else{
-                $view->assign("formErrors", $errors);
             }
-
-        }*/
+        }
 
     }
 
+    public static function editarticleAction()
+    {
+        $security = Security::getInstance();
+        //Vérifie si l'utilisateur est connecté, sinon on le redirige sur la page de login
+         if(!$security->isConnected()){
+           header('Location: /login');
+       }
+
+         //Instanciation de la classe Article
+        $article = new Arti();
+
+
+        //Fonction pour récupérer la liste de tous les articles
+        $article->getAllArticles();
+
+        //Affiche la vue pour modifier un article
+        $view = new View("Article/edit_articles", "back");
+        $view->assign("infoArticles", $article->getAllArticles());
+
+            if (!empty($_POST)) {
+
+                if($_POST['id'] != "") {
+                    $article->setId($_POST["id"]);
+                }
+            }
+
+        //Création du formBuilder des articles
+        $form = $article->buildFormArticle();
+        $view->assign("form", $form);
+
+
+        //On vérifie si des données sont bien envoyées
+        if(!empty($_POST['insert_article'])) {
+            $dataArticle = $_POST;
+            foreach ($dataArticle as $key => $value) {
+                switch ($key) {
+                    case "insert_article":
+                        unset($dataArticle["insert_article"]);
+                        break;
+                }
+            }
+            if (!empty($dataArticle)) {
+                $errors = FormBuilderWYSWYG::validator($dataArticle, $form);
+
+                if (empty($errors)) {
+
+                    //On vérifie si un article a bien été sélectionné avant de faire la modification
+                    if(strlen($dataArticle['id']) == 0) {
+                        $_SESSION['alert']['danger'][] = 'Veuillez sélectionner un article';
+                    }
+                    else{
+                        //Modification de l'article sélectionné
+                        $article->updateWithData($dataArticle);
+                        $article->save();
+                        $_SESSION['alert']['success'][] = 'L\'article a bien été modifié !';
+                    }
+
+
+                } else {
+                    //S'il y a des erreurs, on prépare leur affichage
+                    $_SESSION['alert']['danger'][] = $errors[0];
+                }
+                if (!empty($_POST)) {
+                    if(!empty($_POST['id'])) {
+                        $article->setId($_POST["id"]);
+                    }
+                }
+                $view->assign('article', $article);
+
+            }
+        }
+    }
 }

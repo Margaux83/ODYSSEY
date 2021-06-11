@@ -1,4 +1,6 @@
-<form action="ajouter-article">
+
+
+<form action="addarticle">
     <button type="submit" class="buttonComponent d-flex"><img src=<?php App\Core\View::getAssets("icons/plus-solid.svg")?> height="15" width="15">Ajouter article</button>
 </form>
 
@@ -7,7 +9,7 @@
         <h1 class="titleSection d-flex"><img src=<?php App\Core\View::getAssets("icons/icon_page.png")?> alt="">Liste des articles</h1>
         <h1 id="modalButton" class="searchButtonSection d-flex">Rechercher<img class="colorSearchButton" src=<?php App\Core\View::getAssets("icons/search-solid.svg")?> alt="" ></h1>
     </div>
-    <ul class="listItemBasic limit-height-900">
+    <ul class="listItemBasic limit-height-450">
         <li class="legend">
             <p class="flex-weight-1">Dates</p>
             <p class="flex-weight-1">Titres et descriptions</p>
@@ -15,29 +17,55 @@
             <p class="flex-weight-1">Status</p>
             <p class="flex-weight-1">Actions</p>
         </li>
-        <?php for ($i=0;$i<6;$i++){?>
+        <?php
+        if(!empty($infoArticles)){
+
+            foreach ($infoArticles as $article){
+
+            ?>
         <li class="listItem">
             <div class="listItem-cpt">
-                <p><img src=<?php App\Core\View::getAssets("icons/plus-solid.svg")?> alt="" height="15" width="15">&nbsp;&nbsp;  12/12/2021</p>
-                <p><img src=<?php App\Core\View::getAssets("icons/pen-solid.svg")?> alt="" height="15" width="15">&nbsp;&nbsp;  12/12/2021</p>
-                <p><img src=<?php App\Core\View::getAssets("icons/check-solid.svg")?> alt="" height="15" width="15">&nbsp;&nbsp; 12/12/2021</p>
+                <p><img src=<?php App\Core\View::getAssets("icons/plus-solid.svg")?> alt="" height="15" width="15">&nbsp;&nbsp;  <?= $article["creationDate"] ?></p>
+                <p><img src=<?php App\Core\View::getAssets("icons/pen-solid.svg")?> alt="" height="15" width="15">&nbsp;&nbsp;  <?php
+                    if($article["updateDate"] != NULL){
+                        echo $article["updateDate"];
+                    }
+                    else{
+                        echo "Cet article n'a pas été modifié";
+                    }?></p>
             </div>
             <div>
-                <p class="listItem-cpt"><b>Titre de l'article</b> - Ceci est la description de l’article, elle permet à un utilisateur de savoir rapidement si le contenu
-                    est intéressant ou non, il faut donc être concis et précis dans la réalisation de cette partie...</p>
+                <p class="listItem-cpt"><b><?= $article["title"] ?></b><?= $article["description"] ?></p>
             </div>
             <div>
-                <p class="listItem-cpt"><b>Prénom NOM</b><br>Rôle Editeur</p>
+                <p class="listItem-cpt"><b><?= $article["firstname"]." ".$article["lastname"] ?></b><br><?= "Rôle ". $article["role"] ?></p>
             </div>
             <div>
-                <p class="listItem-cpt">En attente de validation</p>
+                <p class="listItem-cpt"><?php //Mettre le statut de l'article
+                    switch ($article["status"]) {
+                        case 1:
+                            echo "Validé et posté";
+                            break;
+                        case 2:
+                            echo "En attente de validation";
+                            break;
+                        case 3:
+                            echo "Brouillon";
+                            break;
+                        case 4:
+                            echo "Créé";
+                            break;
+                    }
+                    ?></p>
             </div>
             <div class="listItem-cpt listActions">
                 <img src=<?php App\Core\View::getAssets("icons/eye-solid.svg")?> alt="" height="20" width="20">
-                <img src=<?php App\Core\View::getAssets("icons/pen-solid.svg")?> alt="" height="20" width="20">
-                <img class="openModalConfirmDeleteArticle" src=<?php App\Core\View::getAssets("icons/trash-solid.svg")?> alt="" height="20" width="20">
+                <form action="editarticle" method="post"><button class="editarticleButton" name="edit_article" type="submit"><img src=<?php App\Core\View::getAssets("icons/pen-solid.svg")?> alt="" height="20" width="20"><input
+                                type="hidden" name="id" value="<?= $article["id"] ?>"></button></form>
+                <img class="openModalConfirmDeleteArticle" data-target="ModalConfirmDeleteArticle" data-id="<?= $article["id"] ?>"  src=<?php App\Core\View::getAssets("icons/trash-solid.svg")?> alt="" height="20" width="20">
             </div>
         </li>
+        <?php } ?>
         <?php } ?>
     </ul>
 </section>
@@ -46,7 +74,7 @@
     <div class="sectionHeader d-flex">
         <h1 class="titleSection d-flex">Mes articles</h1>
     </div>
-    <ul class="listItemBasic limit-height-900">
+    <ul class="listItemBasic limit-height-450">
         <li class="legend">
             <p class="flex-weight-1">Dates</p>
             <p class="flex-weight-1">Titres et descriptions</p>
@@ -54,32 +82,56 @@
             <p class="flex-weight-1">Status</p>
             <p class="flex-weight-1">Actions</p>
         </li>
-        <?php for ($i=0;$i<4;$i++){?>
+        <?php
+        if(!empty($infoArticlesByUser)){
+
+        foreach ($infoArticlesByUser as $articleByUser){
+
+            ?>
         <li class="listItem">
             <div class="listItem-cpt">
-                <p><img src=<?php App\Core\View::getAssets("icons/plus-solid.svg")?> alt="" height="15" width="15">&nbsp;&nbsp;  12/12/2021</p>
-                <p><img src=<?php App\Core\View::getAssets("icons/pen-solid.svg")?> alt="" height="15" width="15">&nbsp;&nbsp;  12/12/2021</p>
-                <p><img src=<?php App\Core\View::getAssets("icons/check-solid.svg")?> alt="" height="15" width="15">&nbsp;&nbsp; 12/12/2021</p>
+                <p><img src=<?php App\Core\View::getAssets("icons/plus-solid.svg")?> alt="" height="15" width="15">&nbsp;&nbsp;  <?= $articleByUser["creationDate"] ?></p>
+                <p><img src=<?php App\Core\View::getAssets("icons/pen-solid.svg")?> alt="" height="15" width="15">&nbsp;&nbsp;  <?php
+                    if($articleByUser["updateDate"] != NULL){
+                        echo $articleByUser["updateDate"];
+                    }
+                    else{
+                        echo "Cet article n'a pas été modifié";
+                    }?></p>
             </div>
             <div>
-                <p class="listItem-cpt"><b>Titre de l'article</b></p>
+                <p class="listItem-cpt"><b><?= $articleByUser["title"] ?></b></p>
             </div>
             <div>
-                <p class="listItem-cpt">En attente de validation</p>
+                <p class="listItem-cpt"><b><?= $articleByUser["firstname"]." ".$articleByUser["lastname"] ?></b><br><?= "Rôle ". $articleByUser["role"] ?></p>
             </div>
-            <div class="statsBasic">
-                <div class="statisticsBasic listItem-cpt">
-                    <h2 class="numberStat numberStat-positive">28</h2>
-                    <p>Cette semaine</p>
-                </div>
+            <div>
+                <p class="listItem-cpt"><?php //Mettre le statut de l'article
+                    switch ($articleByUser["status"]) {
+                        case 1:
+                            echo "Validé et posté";
+                            break;
+                        case 2:
+                            echo "En attente de validation";
+                            break;
+                        case 3:
+                            echo "Brouillon";
+                            break;
+                        case 4:
+                            echo "Créé";
+                            break;
+                    }
+                    ?></p>
             </div>
             <div class="listItem-cpt listActions">
                 <img src=<?php App\Core\View::getAssets("icons/eye-solid.svg")?> alt="" height="20" width="20">
-                <img src=<?php App\Core\View::getAssets("icons/pen-solid.svg")?> alt="" height="20" width="20">
-                <img class="openModalConfirmDeleteArticle" src=<?php App\Core\View::getAssets("icons/trash-solid.svg")?> alt="" height="20" width="20">
+                <form action="editarticle" method="post"><button class="editarticleButton" name="edit_article" type="submit"><img src=<?php App\Core\View::getAssets("icons/pen-solid.svg")?> alt="" height="20" width="20"><input
+                                name="id" type="hidden" value="<?= $article["id"] ?>"></button></form>
+                <img class="openModalConfirmDeleteArticleUser" data-target="ModalConfirmDeleteArticleUser"   data-id="<?= $articleByUser["id"] ?>" src=<?php App\Core\View::getAssets("icons/trash-solid.svg")?> alt="" height="20" width="20">
             </div>
         </li>
-        <?php } ?>
+        <?php }
+        } ?>
     </ul>
 </section>
 
@@ -173,13 +225,34 @@
 
             <div class="footerDeleteArticleModal d-flex d-flex-wrap">
 
-                &emsp;
-                <button class="buttonComponent">Oui, je supprime</button>
-                &emsp;
+                <?php  App\Core\FormBuilderWYSWYG::showFormArticle($form); ?>
                 <button class="buttonComponent-alert closeModalDelete">Annuler</button>
             </div>
         </div>
 </div>
+
+<div id="ModalConfirmDeleteArticleUser" class="col-12 modal">
+    <div class="modal-deleteArticle d-flex-wrap d-flex">
+        <div class="success-checkmark d-flex">
+            <div class="check-icon d-flex">
+                <img src=<?php App\Core\View::getAssets("icons/exclamation-solid.svg")?> alt="" height="50" width="50">
+            </div>
+        </div>
+        <div class="deleteConfirmation d-flex d-flex-wrap">
+            <p>Etes-vous sûr(e) de vouloir supprimer cet article ?</p>
+        </div>
+        <br>
+
+        <div class="footerDeleteArticleModal d-flex d-flex-wrap">
+
+            <?php  App\Core\FormBuilderWYSWYG::showFormArticle($formDeleteArticleOfUser); ?>
+            <button class="buttonComponent-alert closeModalDelete">Annuler</button>
+        </div>
+    </div>
+</div>
+
+
+<script src=<?php App\Core\View::getAssets("article.js")?>></script>
 <script src=<?php App\Core\View::getAssets("charts.js")?>></script>
 <script src=<?php App\Core\View::getAssets("modal.js")?>></script>
 <script src=<?php App\Core\View::getAssets("popups.js")?>></script>

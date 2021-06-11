@@ -1,53 +1,54 @@
-/:
-  controller: Base
-  action: Default
-  menuData:
-    visible: false
-    min-statut: true
-    listId: basics
-    label: Accueil
-    icon: icon_home
-
-
 /dashboard:
   controller: Base
   action: dashboard
+  label: Tableau de bord
   menuData:
     visible: true
     min-statut: true
     listId: basics
-    label: Tableau de bord
     icon: icon_home
 
 
 /articles:
   controller: Article
   action: default
+  label: Articles
   menuData:
     visible: true
     min-statut: true
     listId: basics
-    label: Articles
     icon: icon_page
+    children: [
+      /add-article,
+      /update-article
+    ]
 
-/ajouter-article:
+/addarticle:
   controller: Article
   action: addarticle
-  menuData:
-    visible: true
-    min-statut: true
-    listId: basics
-    label: Ajouter un article
-    icon: icon_page
 
-/modifier-article:
+/editarticle:
   controller: Article
   action: editArticle
+
+/add-article:
+  controller: Article
+  action: addarticle
+  label: Ajouter un article
   menuData:
-    visible: true
+    visible: false
     min-statut: true
     listId: basics
-    label: Modifier un article
+    icon: icon_page
+
+/update-article:
+  controller: Article
+  action: editArticle
+  label: Modifier un article
+  menuData:
+    visible: false
+    min-statut: true
+    listId: basics
     icon: icon_page
 
 
@@ -55,61 +56,75 @@
 /users:
   controller: User
   action: default
+  label: Utilisateurs
   menuData:
     visible: true
     min-statut: true
     listId: basics
-    label: Utilisateurs
     icon: icon_user
 
 /pages:
   controller: Page
   action: default
+  label: Pages
   menuData:
     visible: true
     min-statut: true
     listId: basics
     label: Pages
     icon: icon_page
+    children: [
+        /add-page
+    ]
+
+/add-page:
+  controller: Page
+  action: addpage
+  label: Ajouter une page
+  menuData:
+    visible: false
+    min-statut: true
+    listId: basics
+    icon: icon_page
 
 /comments:
   controller: Comment
   action: default
+  label: Commentaires
   menuData:
     visible: true
     min-statut: true
     listId: basics
-    label: Commentaires
     icon: icon_comment
 
 /template:
   controller: Template
   action: default
+  label: Templates
   menuData:
     visible: true
     min-statut: true
     listId: management
-    label: Templates
     icon: icon_page
 
 /menu-management:
   controller: MenuManagement
   action: default
+  label: Gestion du menu
   menuData:
     visible: true
     min-statut: true
     listId: management
-    label: Gestion du menu
     icon: icon_menu
 
 /newsletter:
   controller: Newsletter
   action: default
+  label: Newsletter
   menuData:
     visible: true
     min-statut: true
     listId: management
-    label: Newsletter
     icon: icon_newsletter
 
 /s-inscrire:
@@ -121,29 +136,85 @@
   action: form
   
 
-/login:
-  controller: Security
-  action: login
+/profile:
+  controller: Profile
+  action: default
+  label: Profil
   menuData:
     visible: false
     min-statut: false
     listId: connexion
-    label: Connexion
+    icon: icon_user
+
+/login:
+  controller: Security
+  action: login
+  label: Connexion
+  freeAccess: true
+  menuData:
+    visible: false
+    min-statut: false
+    listId: connexion
     icon: icon_web
 
 /se-connecter:
   controller: Security
   action: login
+  freeAccess: true
 
+/register:
+  controller: Security
+  action: register
+  freeAccess: true
+  menuData:
+    visible: false
+    min-statut: false
+    listId: inscription
+    label: Inscription
+    icon: icon_web
+
+/verification:
+  controller: Security
+  action: verification
+  freeAccess: true
+  menuData:
+    visible: false
+    min-statut: false
+    listId: inscription
+    label: Inscription
+    icon: icon_web
+
+/forgotpassword:
+  controller: Security
+  action: forgotPassword
+  freeAccess: true
+  menuData:
+    visible: false
+    min-statut: false
+    listId: forgotPassword
+    label: ForgotPassword
+    icon: icon_web
+
+/forgotpasswordconfirm:
+  controller: Security
+  action: forgotPasswordConfirm
+  freeAccess: true
+  menuData:
+    visible: false
+    min-statut: false
+    listId: forgotPasswordConfirm
+    label: ForgotPasswordConfirm
+    icon: icon_web
 
 /logout:
   controller: Security
   action: logout
+  label: Déconnexion
+  freeAccess: true
   menuData:
     visible: false
     min-statut: false
     listId: connexion
-    label: Déconnexion
     icon: icon_web
 
 
@@ -154,29 +225,30 @@
 /web-access:
   controller: WebAccess
   action: default
+  label: Accès au site
   menuData:
     visible: true
     min-statut: true
     listId: settings
-    label: Accès au site
     icon: icon_web
 
 /settings:
   controller: Settings
   action: default
+  label: Paramètres
   menuData:
     visible: true
     min-statut: true
     listId: settings
-    label: Paramètres
     icon: icon_settings
 
 /installer:
   controller: Installer
   action: setup
+  label: Installation
+  freeAccess: true
   menuData:
     visible: false
     min-statut: true
     listId: installer
-    label: Installation
     icon: icon_settings

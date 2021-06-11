@@ -3,13 +3,13 @@
 
 namespace App\Models;
 
-use App\Core\ArticleRepository;
 use App\Core\Database;
+use App\Models\Category;
 
-class Article extends ArticleRepository
+class Article extends Database
 {
 
-    private $id;
+    protected $id;
     protected $title;
     protected $content;
     protected $status;
@@ -24,9 +24,52 @@ class Article extends ArticleRepository
         parent::__construct();
     }
 
+    public function getID()
+    {
+        return $this->id;
+    }
+
+    public function setId($id){
+        $this->id = $id;
+
+        $data = array_diff_key(
+            get_object_vars($this),
+            get_class_vars(get_parent_class())
+        );
+        unset($data["category"]);
+        $columns = array_keys($data);
+        $statement = $this->pdo->prepare("SELECT " . implode(',', $columns) . " FROM ".$this->table." WHERE id=:id");
+        $statement->execute(array(":id" => $this->getId()));
+        //$result = $statement->fetchAll();
+
+       $obj = $statement->fetchObject(__CLASS__);
+       $this->setArticleFromObj($obj);
+
+        $this->searchCategory();
+    }
+
+    private function setArticleFromObj($obj){
+        $data = array_diff_key(
+            get_object_vars($this),
+            get_class_vars(get_parent_class())
+        );
+        $columns = array_keys($data);
+
+        foreach ($columns as $key => $value) {
+            $getAction = 'get' . ucfirst(trim($value));
+            $objReturnedValue = $obj->$getAction();
+            if (!empty($objReturnedValue)){
+                $setAction = 'set' . ucfirst(trim($value));
+                if ($setAction !== 'setId'){
+                    $this->$setAction($objReturnedValue);
+                }
+            }
+        }
+    }
+
     /**
      * @param $id
-     */
+     * *
     public function setID($id)
     {
         $this->id = $id;
@@ -34,11 +77,11 @@ class Article extends ArticleRepository
 
     /**
      * @return mixed
-     */
+
     public function getID()
     {
         return $this->id;
-    }
+    }*/
 
     /**
      * @param $title
@@ -184,8 +227,83 @@ class Article extends ArticleRepository
         return $this->id_user;
     }
 
+    public function get_foreignKeys()
+    {
+        return ['category'];
+    }
+
+    //Fonction qui va récupérer la catégorie de l'article sélectionné
+    public function searchCategory() {
+        $categoryArticle = new Category_Article();
+        $resultCategory = $categoryArticle->query(['id_category'], ['id_article' => $this->getId()])[0];
+        $this->setCategory($resultCategory['id_category']);
+    }
+
+
+    //Fonction qui permet de build les options du select de Statut de l'article
+    public function buildAllStatusFormSelect() {
+        $status = [
+            '' => [
+                "label" => "Choisir un status"
+            ],
+            "1"=>[
+                "label" => "Brouillon",
+            ],
+            "2"=>[
+                "label" => "Créé",
+            ],
+            "3"=>[
+                "label" => "En attente de validation"
+            ],
+            "4"=>[
+                "label" => "Validé et posté"
+            ]
+        ];
+
+        $returnedArray = [];
+
+        foreach ($status as $key => $singleStatus) {
+            $returnedArray[$key] = [
+                'label' => $singleStatus['label'],
+                'selected' => $key === $this->getStatus()
+            ];
+        }
+
+        return $returnedArray;
+    }
+
+    //Fonction qui permet de build les options du select de Visibilté de l'article
+    public function buildAllVisibilityFormSelect() {
+        $status = [
+            '' => [
+                "label" => "Choisir une visibilité"
+            ],
+            "1"=>[
+                "label" => "Protégé",
+            ],
+            "2"=>[
+                "label" => "Public",
+            ],
+            "3"=>[
+                "label" => "Privé"
+            ]
+        ];
+
+        $returnedArray = [];
+
+        foreach ($status as $key => $singleStatus) {
+            $returnedArray[$key] = [
+                'label' => $singleStatus['label'],
+                'selected' => $key === $this->getIsvisible()
+            ];
+        }
+
+        return $returnedArray;
+    }
+
     public function buildFormArticle()
     {
+        $category = new Category();
         return [
 
             "config"=>[
@@ -193,45 +311,62 @@ class Article extends ArticleRepository
                 "Action"=>"",
                 "Submit"=>"Publier",
                 "class"=>"",
+
             ],
-                "input"=>[
-                    "title"=>[
-                        "type"=>"text",
-                        "label"=>"Veuillez choisir un titre pour votre article",
-                        "lengthMax"=>"255",
-                        "lengthMin"=>"2",
+
+            "input"=>[
+
+                    "id"=>[
+                        "type"=>"hidden",
                         "required"=>true,
-                        "class"=>"input",
-                        "error"=>"Le titre de l'article doit faire entre 2 et 255 caractères",
+                        "defaultValue"=>$this->getID()
                     ],
+                "title"=>[
+
+                    "type"=>"text",
+                    "label"=>"Veuillez choisir un titre pour votre article",
+                    "lengthMax"=>"255",
+                    "lengthMin"=>"2",
+                    "required"=>true,
+                    "class"=>"input",
+                    "error"=>"Le titre de l'article doit faire entre 2 et 255 caractères",
+                    "placeholder"=>"Votre titre",
+
+                    "defaultValue"=>$this->getTitle()
+                ],
                     "content"=>[
                         "type"=>"textarea",
-                        "class"=>"trumbowygTextarea",
-                        "id"=>"content",
                         "label"=>"",
+                        "lengthMax"=>"255",
+                        "lengthMin"=>"2",
+                        "error"=>"Le contenu de l'article doit faire entre 2 et 255 caractères",
+                        "id"=>"content",
                         "required"=>true,
-                    ],
+                        "class"=>"trumbowygTextarea",
 
+                         "placeholder"=>"Votre contenu",
+                        "defaultValue"=>$this->getContent()
+                    ],
+                    "description"=>[
+                        "type"=>"textarea",
+                        "label"=>"Desciption",
+                        "lengthMax"=>"255",
+                        "lengthMin"=>"2",
+                        "error"=>"La description de l'article doit faire entre 2 et 255 caractères",
+                        "id"=>"content",
+                        "required"=>false,
+                        "class"=>"textareaComment d-flex",
+                        "placeholder"=>"Votre contenu",
+                        "defaultValue"=>$this->getDescription()
+                    ],
                     "category"=>[
                         "type"=>"select",
                         "label"=>"Catégorie",
                         "required"=>true,
                         "error"=>"Veuillez sélectionner un élément",
                         "placeholder"=>"Choisir une catégorie",
-                        "options"=>[
-                            "1"=>[
-                                "label" => "Voyage",
-                            ],
-                            "2"=>[
-                                "label" => "Nature",
-                            ],
-                            "3"=>[
-                                "label" => "Culture"
-                            ],
-                            "4"=>[
-                                "label" => "Pays"
-                            ]
-                        ],
+                        "options"=>
+                            $category->buildAllCategoriesFormSelect($this->category)
 
                     ],
                     "status"=>[
@@ -240,20 +375,7 @@ class Article extends ArticleRepository
                         "required"=>true,
                         "error"=>"Veuillez sélectionner un élément",
                         "placeholder"=>"Choisir un statut",
-                        "options"=>[
-                            "1"=>[
-                                "label" => "Validé et posté",
-                            ],
-                            "2"=>[
-                                "label" => "En attente de validation",
-                            ],
-                            "3"=>[
-                                "label" => "Brouillon"
-                            ],
-                            "4"=>[
-                                "label" => "Créé"
-                            ]
-                        ]
+                        "options"=>$this->buildAllStatusFormSelect()
                     ],
                     "isvisible"=>[
                         "type"=>"select",
@@ -261,21 +383,66 @@ class Article extends ArticleRepository
                         "required"=>true,
                         "error"=>"Veuillez sélectionner un élément",
                         "placeholder"=>"Choisir une visibilité",
-                        "options"=>[
-                            "1"=>[
-                                "label" => "Protégé",
-                            ],
-                            "2"=>[
-                                "label" => "Public",
-                            ],
-                            "3"=>[
-                                "label" => "Privé"
-                            ]
-                        ]
-                    ]
+                        "options"=>$this->buildAllVisibilityFormSelect()
+                    ],
 
-                ]
+                ],
+            "button"=>[
+                "class"=>"buttonComponent d-flex floatRight",
+                "name"=>"insert_article"
+            ]
 
         ];
     }
+
+    public function buildFormDeleteArticle()
+    {
+        return [
+
+            "config"=>[
+                "method"=>"POST",
+                "Action"=>"",
+                "Submit"=>"Oui, je supprime",
+                "class"=>"",
+
+            ],
+            "button"=>[
+                "class"=>"buttonComponent",
+                "name"=>"submit_delete_article",
+                "id"=>"deleteArticleFromIndexArticle"
+            ],
+            "input"=>[
+                "id_delete_article"=>[
+                    "type"=>"hidden",
+                ]
+            ]
+
+        ];
+    }
+
+    public function buildFormDeleteArticleOfUser()
+    {
+        return [
+
+            "config"=>[
+                "method"=>"POST",
+                "Action"=>"",
+                "Submit"=>"Oui, je supprime",
+                "class"=>"",
+
+            ],
+            "button"=>[
+                "class"=>"buttonComponent",
+                "name"=>"submit_delete_article_of_user",
+                "id"=>"deleteArticleFromIndexArticle"
+            ],
+            "input"=>[
+                "id_delete_article_of_user"=>[
+                    "type"=>"hidden",
+                ]
+            ]
+
+        ];
+    }
+
 }

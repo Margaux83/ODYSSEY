@@ -4,41 +4,31 @@
 namespace App\Core;
 
 
-class FormBuilderWYSWYG
+class FormBuilderWYSWYG extends Database
 {
+
+
     public static function validator($data, $config){
         $errors = [];
 
-        if( !empty($configInput["lengthMin"])
-            && is_numeric($configInput["lengthMin"])
-            && strlen($data[$name])<$configInput["lengthMin"] ){
+        if( count($data) == count($config["input"])) {
 
-            $errors[] = $configInput["error"];
+            foreach ($config["input"] as $name => $configInput) {
+                if (!empty($configInput["lengthMin"])
+                    && is_numeric($configInput["lengthMin"])
+                    && strlen($data[$name]) < $configInput["lengthMin"]) {
+                    $errors[] = $configInput["error"];
 
-        }
-
-        if( !empty($configInput["lengthMax"])
-            && is_numeric($configInput["lengthMax"])
-            && strlen($data[$name])>$configInput["lengthMax"] ){
-            $errors[] = $configInput["error"];
-
-        }
-
-        if ($configInput["type"] === 'date'){
-            if( !empty($configInput["dateMin"])){
-                if (date($configInput["dateMin"]) > $data[$name] ){
-                    array_push($errors, "La date minimale est ". $configInput["dateMin"]);
                 }
-            }
-            if( !empty($configInput["dateMax"])){
-                if (date($configInput["dateMax"] < $data[$name] )){
-                    array_push($errors, "La date minimale est ". $configInput["dateMax"]);
+
+                if (!empty($configInput["lengthMax"])
+                    && is_numeric($configInput["lengthMax"])
+                    && strlen($data[$name]) > $configInput["lengthMax"]) {
+                    $errors[] = $configInput["error"];
+
                 }
             }
         }
-
-        $errors[] = $configInput["error"];
-
         return $errors; //tableau des erreurs
     }
 
@@ -57,9 +47,13 @@ class FormBuilderWYSWYG
                              class='".($dataInput["class"]??"")."' 
                             name='".$name."'
                             ".((!empty($dataInput["required"]))?"required='required'":"")."
-                            ></textarea>";
+                              placeholder='".($dataInput["placeholder"] ?? "")."'
+                            ".((!empty($dataInput["required"]))?"required='required'":"")." 
+                          
+                            >  ".((!empty($dataInput["defaultValue"]))?"" . $dataInput["defaultValue"] . "":"")."</textarea>";
             $html .= "<br>";
             $html .= "<br>";
+
         }
             elseif ($dataInput["type"] === "select"){
 
@@ -70,8 +64,15 @@ class FormBuilderWYSWYG
                             >";
 
                 foreach ($dataInput["options"] as $value => $optionValue) {
+                    $selected = false;
+                    $searchSelected = array_key_exists('selected', $optionValue);
+                    if ($searchSelected) {
+                        $selected = $optionValue['selected'];
+                    }
+
                     $html .= "<option
                             value='".$value."'
+                            ". ($selected ? " selected" : ""). "
                             >".$optionValue['label']."
                         </option>";
                 }
@@ -80,7 +81,9 @@ class FormBuilderWYSWYG
             }
             elseif ($dataInput["type"] === "radio" || $dataInput["type"] === "checkbox"){
                 foreach ($dataInput["options"] as $value => $optionValue) {
-                    $html .= "<input type='".$dataInput["type"]."' id='".$value."' name='".$name."'>
+                    $html .= "<input type='".$dataInput["type"]."' id='".$value."' name='".$name."'  placeholder='".($dataInput["placeholder"] ?? "")."'
+                    ".((!empty($dataInput["required"]))?"required='required'":"")."
+                    ".((!empty($dataInput["defaultValue"]))?"value='" . $dataInput["defaultValue"] . "'":"").">
                             <label for='".$value."'>".$optionValue["label"]."</label>";
                 }
             }
@@ -93,7 +96,8 @@ class FormBuilderWYSWYG
                             name='".$name."'
                             type='".($dataInput["type"] ?? "text")."'
                             placeholder='".($dataInput["placeholder"] ?? "")."'
-                            ".((!empty($dataInput["required"]))?"required='required'":"")."
+                            ".((!empty($dataInput["required"]))?"required='required'":"")." 
+                            ".((!empty($dataInput["defaultValue"]))?"value='" . $dataInput["defaultValue"] . "'":"")."
                             >";
             }
 
@@ -102,7 +106,7 @@ class FormBuilderWYSWYG
         $html .= "<br>";
         $html .= "<br>";
 
-        $html .= "<button type='submit' value='".( self::cleanWord($form["config"]["Submit"]) ?? "Valider" )."' class='buttonComponent d-flex floatRight'>Publier</button></form>";
+        $html .= "<button type='submit' name='".( self::cleanWord($form["button"]["name"]) ?? "" )."' value='".( self::cleanWord($form["config"]["Submit"]) ?? "Valider" )."' class='".( self::cleanWord($form["button"]["class"]) ?? "" )."'>".( self::cleanWord($form["config"]["Submit"]) ?? "Valider" )."</button></form>";
 
 
         echo $html;

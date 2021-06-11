@@ -5,7 +5,12 @@ namespace App;
 use App\Core\Routing; 
 use App\Core\ConstantManager;
 use App\Core\MenuBuilder;
+use App\Core\View;
+use App\Core\Security;
+use App\Core\FrontPage;
+use App\Core\Error;
 
+// Class PHPMailer
 require "Autoloader.php";
 Autoloader::register();
 
@@ -24,9 +29,7 @@ $a = $route->getAction();
 $cWithNamespace = $route->getControllerWithNamespace();
 
 if( file_exists("./Controllers/".$c.".php")){
-
     include "./Controllers/".$c.".php";
-
 
     if(class_exists($cWithNamespace)){
         //$c = App\Security // User
@@ -34,14 +37,21 @@ if( file_exists("./Controllers/".$c.".php")){
 
 		if(method_exists($cObject, $a)){
 			//$a = loginAction // defaultAction
-			$cObject->$a();
+            $security = Security::getInstance();
+            if(!$security->isConnected()
+                && MenuBuilder::needToBeConnected()){
+               header('Location: /login');
+            }else {
+			    $cObject->$a();
+            }
+    
 		}else{
-			die("L'action ".$a." n'existe pas");
-		}
+            Error::errorPage(404, 'La page n\'existe pas');
+        }
 
     }else{
         die("La classe ".$c." n'existe pas");
     }
 }else {
-    die("Le fichier " . $c . " n'existe pas");
+    FrontPage::findContentToShow($uri);
 }
