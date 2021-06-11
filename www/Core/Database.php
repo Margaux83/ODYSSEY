@@ -31,7 +31,7 @@ class Database
         return array_keys(get_class_vars(__CLASS__));
     }
 
-    public function query($requestedParams = [], $filter = [])
+    public function query($requestedParams = [], $filter = [], $filterString = '')
     {
         $columnFilter = [];
         foreach ($filter as $key => $value) {
@@ -40,7 +40,9 @@ class Database
             }
         }
 
-        $sql = "SELECT " . implode(",", $requestedParams) . " FROM " . $this->table . ($filter ? " WHERE " . implode(" AND ", $columnFilter) : '');
+        $sql = "SELECT " . implode(",", $requestedParams) . " FROM " . $this->table 
+            . (count($filter) ? " WHERE " . implode(" AND ", $columnFilter) : '')
+            . ($filterString ? (count($filter) ? " AND " : ' WHERE ') . $filterString : '');
         $query = $this->pdo->prepare($sql);
         foreach ($filter as $key => $value) {
             if (!is_null($value)) {
