@@ -102,4 +102,65 @@ class Form
     public static function cleanWord($word){
         return str_replace("'", "&apos;", $word);
     }
+
+    //Fonction qui permet de build les options du select de Visibilté de l'article
+    public function buildAllVisibilityFormSelect($object) {
+        $status = [
+            '' => [
+                "label" => "Choisir une visibilité"
+            ],
+            "1"=>[
+                "label" => "Protégé",
+            ],
+            "2"=>[
+                "label" => "Public",
+            ],
+            "3"=>[
+                "label" => "Privé"
+            ]
+        ];
+
+        $returnedArray = [];
+
+        foreach ($status as $key => $singleStatus) {
+            $returnedArray[$key] = [
+                'label' => $singleStatus['label'],
+                'selected' => $key === $object->getIsvisible()
+            ];
+        }
+
+        return $returnedArray;
+    }
+
+    //Fonction qui permet de build les options du select de Statut de l'article
+    public function buildAllStatusFormSelect($object) {
+        $status = [
+            '' => [
+                "label" => "Choisir un status"
+            ],
+            "1"=>[
+                "label" => "Brouillon",
+            ],
+            "2"=>[
+                "label" => "Créé",
+            ],
+            "3"=>[
+                "label" => "En attente de validation"
+            ],
+            "4"=>[
+                "label" => "Validé et posté"
+            ]
+        ];
+
+        $returnedArray = [];
+
+        foreach ($status as $key => $singleStatus) {
+            $returnedArray[$key] = [
+                'label' => $singleStatus['label'],
+                'selected' => $key === $object->getStatus()
+            ];
+        }
+
+        return $returnedArray;
+    }
 }
