@@ -3,8 +3,10 @@
 
 namespace App\Models;
 
+use App\Core\Database;
 
-class Comment
+
+class Comment extends Database
 {
     protected $id=null;
     protected $content;

@@ -985,6 +985,15 @@ ul.listItemBasic li.listItem .listItem-cpt {
   font-weight: 700;
 }
 
+.statisticsBasicContainer .statisticsBasic .numberStat-neutral {
+  color: black;
+}
+
+.statisticsBasicContainer .statisticsBasic .numberStat-neutral::after {
+  content: " \=";
+  font-weight: 700;
+}
+
 .quickAccessContainer {
   list-style: none;
   display: flex;
