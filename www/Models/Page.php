@@ -13,6 +13,7 @@ class Page extends Database
     protected $isvisible;
     protected $status;
     protected $isdeleted;
+    protected $updateDate;
     protected $id_user;
     protected $uri;
 
@@ -31,21 +32,37 @@ class Page extends Database
 
     public function setId($id){
         $this->id = $id;
-
+        //Il va chercher en BDD toutes les informations de l'utilisateur
         $data = array_diff_key(
             get_object_vars($this),
             get_class_vars(get_parent_class())
         );
-        unset($data["category"]);
         $columns = array_keys($data);
+
         $statement = $this->pdo->prepare("SELECT " . implode(',', $columns) . " FROM ".$this->table." WHERE id=:id");
         $statement->execute(array(":id" => $this->getId()));
-        //$result = $statement->fetchAll();
-
         $obj = $statement->fetchObject(__CLASS__);
-        $this->setArticleFromObj($obj);
 
-        $this->searchCategory();
+        $this->setUserFromObj($obj);
+    }
+
+    private function setUserFromObj($obj){
+        $data = array_diff_key(
+            get_object_vars($this),
+            get_class_vars(get_parent_class())
+        );
+        $columns = array_keys($data);
+
+        foreach ($columns as $key => $value) {
+            $getAction = 'get' . ucfirst(trim($value));
+            $objReturnedValue = $obj->$getAction();
+            if (!empty($objReturnedValue)){
+                $setAction = 'set' . ucfirst(trim($value));
+                if ($setAction !== 'setId'){
+                    $this->$setAction($objReturnedValue);
+                }
+            }
+        }
     }
 
     /**
@@ -145,6 +162,22 @@ class Page extends Database
     }
 
     /**
+     * @param $updateDate
+     */
+    public function setUpdateDate($updateDate)
+    {
+        $this->updateDate = $updateDate;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getUpdateDate()
+    {
+        return $this->updateDate;
+    }
+
+    /**
      * @param $id_user
      */
     public function setId_user($id_user)
@@ -181,12 +214,16 @@ class Page extends Database
         return [
             "config"=>[
                 "method"=>"POST",
-                "Action"=>"",
+                "Action"=>"pages",
                 "Submit"=>"Publier",
                 "class"=>"",
             ],
 
             "input"=>[
+                "id_page"=>[
+                    "type"=>"hidden",
+                    "defaultValue"=>$this->getId()
+                ],
                 "title"=>[
                     "type"=>"text",
                     "label"=>"Veuillez choisir un titre pour votre page",
@@ -196,7 +233,7 @@ class Page extends Database
                     "class"=>"input",
                     "error"=>"Le titre de la page doit faire entre 2 et 255 caractères",
                     "placeholder"=>"Votre titre",
-                    "defaultValue"=>""
+                    "defaultValue"=>$this->getTitle()
                 ],
                 "content"=>[
                     "type"=>"textarea",
@@ -209,7 +246,7 @@ class Page extends Database
                     "class"=>"trumbowygTextarea",
 
                     "placeholder"=>"Votre contenu",
-                    "defaultValue"=>""
+                    "defaultValue"=>$this->getContent()
                 ],
                 "description"=>[
                     "type"=>"text",
@@ -221,7 +258,7 @@ class Page extends Database
                     "required"=>false,
                     "class"=>"textareaComment d-flex",
                     "placeholder"=>"Votre contenu",
-                    "defaultValue"=>""
+                    "defaultValue"=>$this->getDescription()
                 ],
                 "uri"=>[
                     "type"=>"text",
@@ -232,7 +269,7 @@ class Page extends Database
                     "class"=>"input",
                     "error"=>"Votre uri doit faire entre 2 et 255 caractères",
                     "placeholder"=>"Uri",
-                    "defaultValue"=>""
+                    "defaultValue"=>ltrim($this->getUri(), '/')
                 ],
                 "status"=>[
                     "type"=>"select",
@@ -257,5 +294,16 @@ class Page extends Database
                 "name"=>"insert_page"
             ]
         ];
+    }
+
+    public function getAllPages()
+    {
+        $db = new Database("Page");
+        return $result = $db->query(
+            ["ody_Page.id" ,"ody_Page.title", "ody_Page.description", "ody_User.firstname", "ody_User.lastname", "ody_Page.status", "ody_Page.uri", "ody_Page.creationDate", "ody_Page.updateDate"],
+            ["ody_Page.isDeleted" => "0"],
+            "",
+            " INNER JOIN ody_User ON ody_Page.id_User = ody_User.ID"
+        );
     }
 }

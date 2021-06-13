@@ -74,18 +74,24 @@
     label: Pages
     icon: icon_page
     children: [
-        /add-page
+        /add-page,
+        /deleted-page
     ]
 
 /add-page:
   controller: Page
   action: addpage
   label: Ajouter une page
-  menuData:
-    visible: false
-    min-statut: true
-    listId: basics
-    icon: icon_page
+
+/deleted-page:
+  controller: Page
+  action: listdeletedpage
+  label: Corbeille
+
+/edit-page:
+  controller: Page
+  action: editPage
+  label: Modifier une page
 
 /comments:
   controller: Comment
