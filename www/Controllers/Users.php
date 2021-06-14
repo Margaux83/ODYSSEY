@@ -40,7 +40,7 @@ class Users{
         $token = bin2hex(openssl_random_pseudo_bytes(32));
 
         //Création du formBuilder des utilisateurs
-        $form = $user->buildFormRegisterU();
+        $form = $user->buildFormRegisterBack();
         $view->assign("form", $form);
 
         if(!empty($_POST)){
