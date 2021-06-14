@@ -60,6 +60,8 @@
     listId: basics
     icon: icon_page
 
+
+
 /users:
   controller: Users
   action: default
@@ -93,6 +95,36 @@
     min-statut: true
     listId: basics
     icon: icon_user
+
+/pages:
+  controller: Page
+  action: default
+  label: Pages
+  menuData:
+    visible: true
+    min-statut: true
+    listId: basics
+    label: Pages
+    icon: icon_page
+    children: [
+        /add-page,
+        /deleted-page
+    ]
+
+/add-page:
+  controller: Page
+  action: addpage
+  label: Ajouter une page
+
+/deleted-page:
+  controller: Page
+  action: listdeletedpage
+  label: Corbeille
+
+/edit-page:
+  controller: Page
+  action: editPage
+  label: Modifier une page
 
 /comments:
   controller: Comment
