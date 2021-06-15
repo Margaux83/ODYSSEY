@@ -37,7 +37,7 @@ class Users{
 
         //Affiche la vue pour ajouter un utilisateur
         $view = new View("User/addUsers", "back");
-        $token = bin2hex(openssl_random_pseudo_bytes(32));
+        $token = rand(100000, 999999);
 
         //Création du formBuilder des utilisateurs
         $form = $user->buildFormRegisterBack();
@@ -47,17 +47,10 @@ class Users{
             $view->assign("form", $form);
 
             $errors = FormBuilder::validator($_POST, $form);
-            if(empty($errors)){
+            if(empty($errors)) {
                 $user->setFirstname(htmlspecialchars(addslashes($_POST['firstname'])));
                 $user->setLastname(htmlspecialchars(addslashes($_POST['lastname'])));
                 $user->setEmail(htmlspecialchars(addslashes($_POST['email'])));
-                if(!$user->verifyPassword(htmlspecialchars(addslashes($_POST['password'])), htmlspecialchars(addslashes($_POST['password-confirm'])))) {
-                    $_SESSION['alert']['danger'][] = 'Les deux mots de passe ne correspondent pas';
-                    header('location: /register');
-                    session_write_close();
-                } else {
-                    $user->setPassword(password_hash(htmlspecialchars(addslashes($_POST['password'])), PASSWORD_BCRYPT));
-                }
                 $user->setPhone(htmlspecialchars(addslashes($_POST['phone'])));
                 $user->setRole(1);
                 $user->setIsDeleted(0);
@@ -65,16 +58,19 @@ class Users{
                 $user->setIsVerified(0);
                 $user->save();
                 $object = "Email confirmation - ODYSSEY";;
-                $mailer->sendMail($_POST['firstname'], $_POST['lastname'], $_POST['email'], $object, $bodymail->buildBodyMailConfirmation($_POST['email'], $token));
+                $mailer->sendMail($_POST['firstname'], $_POST['lastname'], $_POST['email'], $object, $bodymail->buildBodyMailConfirmationBack($_POST['email'], $token));
                 $_SESSION['alert']['success'][] = 'Un mail de validation vous a été envoyé';
                 header('location: /login');
                 session_write_close();
-            }else{
+
+            }
+            else{
                 $_SESSION['alert']['danger'][] = 'Les éléments du formulaire ne sont pas valides';
                 $view->assign("formErrors", $errors);
             }
 
         }
+
 
     }
 
@@ -88,7 +84,7 @@ class Users{
         );
         $view->assign('infoUser', $selectUser);
 
-        $form = $user->buildFormUpdate();
+        $form = $user->buildFormUpdateBack();
         $view->assign("form", $form);
     }
 

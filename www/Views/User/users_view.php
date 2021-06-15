@@ -1,3 +1,9 @@
+<link rel="stylesheet" type="text/css" href=<?php App\Core\View::getAssets("datatables.css")?>>
+<style>
+    table tbody td {
+        min-width: 100px;
+    }
+</style>
 
 <section class="col-6" style="grid-column: 1 / 3; grid-row: 1 ;">
     <h1 class="titleSection"><img src=<?php App\Core\View::getAssets("icons/icon_user.png")?> alt="">Utilisateurs</h1>
@@ -26,59 +32,59 @@
     </div>
 </section>
 
-
 <section class="col-12" style="grid-column: 3 / 13; grid-row: 1">
-    <h1 class="titleSection"><img src=<?php App\Core\View::getAssets("icons/icon_comment.png")?> alt="">Liste des utilisateurs</h1>
-    <h1 id="modalButton" class="searchButtonSection d-flex">Rechercher<img class="colorSearchButton" src=<?php App\Core\View::getAssets("icons/search-solid.svg")?> alt="" ></h1>
-    <ul class="listItemBasic limit-height-900">
-        <li class="legend">
-            <p class="flex-weight-1">Nom</p>
-            <p class="flex-weight-1">Prénom</p>
-            <p class="flex-weight-1">Email</p>
-            <p class="flex-weight-1">Status</p>
-            <p class="flex-weight-1">Rôle</p>
-            <p class="flex-weight-1">Date d'inscription</p>
-            <p class="flex-weight-1">Dernière connexion</p>
-            <p class="flex-weight-1">Action</p>
-        </li>
+    <table id="table_all_users" class="table thead-dark">
+        <thead>
+        <tr>
+            <th>Dates</th>
+            <th>Nom et Prénom</th>
+            <th>Email</th>
+            <th>Status</th>
+            <th>Rôle</th>
+            <th>Date d'inscription</th>
+            <th>Dernière connexion</th>
+            <th>Action</th>
+
+        </tr>
+        </thead>
+        <tbody>
         <?php
         if(!empty($infoUser)){
 
         foreach ($infoUser as $user){
 
             ?>
-            <li class="listItem">
-                <div class="listItem-cpt">
-                    <p><?= $user["firstname"] ?></p>
-                </div>
-                <div class="listItem-cpt">
-                    <p><?= $user["lastname"] ?></p>
-                </div>
-                <div class="listItem-cpt">
-                    <p><?= $user["email"] ?></p>
-                </div>
-                <div class="listItem-cpt">
-                    <p><?= $user["status"] ?></p>
-                </div>
-                <div class="listItem-cpt">
-                    <p><?= $user["role"] ?></p>
-                </div>
-                <div class="listItem-cpt">
-                    <p><?= $user["creationDate"] ?></p>
-                </div>
-                <div class="listItem-cpt">
-                    <p><?= $user["lastConnexionDate"] ?></p>
-                </div>
-                <div class="listItem-cpt listActions">
-                    <img src=<?php App\Core\View::getAssets("icons/pen-solid.svg")?> alt="" height="20" width="20">
-                    <img class="deleteArticle" src=<?php App\Core\View::getAssets("icons/trash-solid.svg")?> alt="" height="20" width="20">
-                    <img src=<?php App\Core\View::getAssets("icons/eye-solid.svg")?> alt="" height="20" width="20">
+            <tr class="text-center">
+                <td>
+                    <p><img src=<?php App\Core\View::getAssets("icons/plus-solid.svg")?> alt="" height="15" width="15">&nbsp;&nbsp;  <?= date("d/m/Y H:i", strtotime($user["creationDate"])) ?></p>
+                    <p><img src=<?php App\Core\View::getAssets("icons/pen-solid.svg")?> alt="" height="15" width="15">&nbsp;&nbsp;  <?= (empty($user["updateDate"])) ? 'Pas modifié' : date("d/m/Y H:i", strtotime($user["updateDate"])) ?></p>
+                </td>
+                <td>
+                    <p class="listItem-cpt"><b><?= $user["firstname"] ?></b><br><?= $user["lastname"] ?></p>
+                </td>
+                <td>
+                    <p class="listItem-cpt"><b><?= $user["email"] ?></b></p>
+                </td>
+                <td><?= $user["status"]?></td>
+                <td><?= $user["role"]?></td>
+                <td><?= $user["creationDate"]?></td>
+                <td><?= $user["lastConnexionDate"]?></td>
+                <td class="action-btn">
+                    <div class="listItem-cpt listActions">
+                        <a href="#" id="editPage" onclick="editUser(this)" data-id="<?= $user["id"] ?>">
+                            <img src=<?php App\Core\View::getAssets("icons/pen-solid.svg")?> alt="" height="20" width="20">
+                        </a>
+                        <a href="#" id="deletePage" onclick="deleteUsers(this)" data-id="<?= $user["id"] ?>">
+                            <img src=<?php App\Core\View::getAssets("icons/trash-solid.svg")?> alt="" height="20" width="20">
+                        </a>
+                    </div>
+                </td>
+            </tr>
+        <?php } ?>
+        <?php } ?>
 
-                </div>
-            </li>
-        <?php } ?>
-        <?php } ?>
-    </ul>
+        </tbody>
+    </table>
 </section>
 
 
@@ -91,3 +97,7 @@
     <h1 class="titleSection"><img src=<?php App\Core\View::getAssets("icons/icon_stat.png")?> alt="">Evolution des inscriptions</h1>
     <canvas id="line-chart" width="775" height="400"></canvas>
 </section>
+
+<script src=<?php App\Core\View::getAssets("datatables.js")?>></script>
+<script src=<?php App\Core\View::getAssets("jquery.redirect.js")?>></script>
+<script src=<?php App\Core\View::getAssets("users.js")?>></script>

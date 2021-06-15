@@ -347,7 +347,59 @@ class User extends Database
         ];
     }
 
-    public function buildFormUpdate(){
+    public function buildFormRegisterBack(){
+        return [
+            "config"=>[
+                "method"=>"POST",
+                "Action"=>"",
+                "reset" => "Annuler",
+                "Submit"=>"Enregistrer",
+                "class"=>"form-group"
+            ],
+            "input"=>[
+                "lastname"=>[
+                    "type"=>"text",
+                    "label"=>"Nom",
+                    "lengthMax"=>"255",
+                    "lengthMin"=>"2",
+                    "required"=>true,
+                    "error"=>"Votre nom doit faire entre 2 et 255 caractères",
+                    "placeholder"=>"Votre nom"
+                ],
+                "firstname"=>[
+                    "type"=>"text",
+                    "class"=>"form_input",
+                    "label"=>"Prénom",
+                    "lengthMax"=>"120",
+                    "lengthMin"=>"2",
+                    "required"=>true,
+                    "error"=>"Votre prénom doit faire entre 2 et 120 caractères",
+                    "placeholder"=>"Votre prénom",
+                    "defaultValue" => $this->getFirstname()
+                ],
+                "email"=>[
+                    "type"=>"email",
+                    "label"=>"Adresse Mail",
+                    "lengthMax"=>"320",
+                    "lengthMin"=>"8",
+                    "required"=>true,
+                    "error"=>"Votre email doit faire entre 8 et 320 caractères",
+                    "placeholder"=>"Votre email"
+                ],
+                "phone"=>[
+                    "type"=>"text",
+                    "label"=>"Numéro de téléphone",
+                    "lengthMin"=>"10",
+                    "required"=>true,
+                    "error"=>"Votre numéro de téléphone doit contenir 10 chiffres",
+                    "placeholder"=>"Votre numéro de téléphone"
+                ],
+            ]
+
+        ];
+    }
+
+    public function buildFormUpdateBack(){
         return [
             "config"=>[
                 "method"=>"POST",
@@ -424,74 +476,6 @@ class User extends Database
                         ],
                     ],
 
-                ],
-            ]
-
-        ];
-    }
-
-    public function buildFormRegisterBack(){
-        return [
-            "config"=>[
-                "method"=>"POST",
-                "Action"=>"",
-                "reset" => "Annuler",
-                "Submit"=>"Enregistrer",
-                "class"=>"form-group"
-            ],
-            "input"=>[
-                "lastname"=>[
-                    "type"=>"text",
-                    "label"=>"Nom",
-                    "lengthMax"=>"255",
-                    "lengthMin"=>"2",
-                    "required"=>true,
-                    "error"=>"Votre nom doit faire entre 2 et 255 caractères",
-                    "placeholder"=>"Votre nom"
-                ],
-                "firstname"=>[
-                    "type"=>"text",
-                    "class"=>"form_input",
-                    "label"=>"Prénom",
-                    "lengthMax"=>"120",
-                    "lengthMin"=>"2",
-                    "required"=>true,
-                    "error"=>"Votre prénom doit faire entre 2 et 120 caractères",
-                    "placeholder"=>"Votre prénom",
-                    "defaultValue" => $this->getFirstname()
-                ],
-                "email"=>[
-                    "type"=>"email",
-                    "label"=>"Adresse Mail",
-                    "lengthMax"=>"320",
-                    "lengthMin"=>"8",
-                    "required"=>true,
-                    "error"=>"Votre email doit faire entre 8 et 320 caractères",
-                    "placeholder"=>"Votre email"
-                ],
-                "password"=>[
-                    "type"=>"password",
-                    "label"=>"Mot de passe",
-                    "lengthMin"=>"8",
-                    "required"=>true,
-                    "error"=>"Votre mot de passe doit faire plus de 8 caractères",
-                    "placeholder"=>"Votre mot de passe"
-                ],
-                "password-confirm"=>[
-                    "type"=>"password",
-                    "label"=>"Confirmation de mot de passe",
-                    "confirm"=>"pwd",
-                    "required"=>true,
-                    "error"=>"Votre mot de passe de confirmation est incorrect",
-                    "placeholder"=>"Confirmation"
-                ],
-                "phone"=>[
-                    "type"=>"text",
-                    "label"=>"Numéro de téléphone",
-                    "lengthMin"=>"10",
-                    "required"=>true,
-                    "error"=>"Votre numéro de téléphone doit contenir 10 chiffres",
-                    "placeholder"=>"Votre numéro de téléphone"
                 ],
             ]
 

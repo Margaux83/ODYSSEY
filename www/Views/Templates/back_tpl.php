@@ -59,6 +59,4 @@
     </main>
 </body>
 
-<script src=<?php App\Core\View::getAssets("users.js")?>></script>
-
 </html>
