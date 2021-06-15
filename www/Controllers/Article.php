@@ -106,12 +106,14 @@ class Article
                     $article->setDescription($dataArticle["description"]);
                     $article->setId_user($_SESSION["userId"]);
                     $article->setUri($dataArticle['uri']);
+                    $article->setMedia($_FILES['media']['name']);
 
-                   // $article->save();
-                   // $result = $article->getLastFromTable();
-                   //$article->saveArticleCategory($dataArticle['category'], $result[0]["id"]);
+                   $article->save();
+                   $result = $article->getLastFromTable();
+                   $article->saveArticleCategory($dataArticle['category'], $result[0]["id"]);
 
-                  // $_SESSION['alert']['success'][] = 'L\'article a bien été enregistré !';
+
+                   $_SESSION['alert']['success'][] = 'L\'article a bien été enregistré !';
                    if(isset($_FILES['media']['name'])){
                       //  foreach ($_FILES['media']['error'] as $key => $error) {
 
@@ -119,9 +121,9 @@ class Article
                                 // basename() peut empêcher les attaques de système de fichiers;
                                 // la validation/assainissement supplémentaire du nom de fichier peut être approprié
                                 $name = basename($_FILES['media']['name']);
-                                echo $_SERVER["DOCUMENT_ROOT"]."/public/uploads/".$name;
+
                        try {
-                           move_uploaded_file($tmp_name, $_SERVER["DOCUMENT_ROOT"]."/public/uploads/".$name);
+                           move_uploaded_file($tmp_name, "/public/upload/".$name);
 
                        }
                        catch (\Exception $e){
@@ -183,17 +185,13 @@ class Article
         $article = new Arti();
 
 
-        //Fonction pour récupérer la liste de tous les articles
-        $article->getAllArticles();
-
         //Affiche la vue pour modifier un article
         $view = new View("Article/edit_articles", "back");
-        $view->assign("infoArticles", $article->getAllArticles());
 
             if (!empty($_POST)) {
 
-                if($_POST['id_article'] != "") {
-                    $article->setId($_POST["id_article"]);
+                if($_POST['id'] != "") {
+                    $article->setId($_POST["id"]);
                 }
             }
 
@@ -234,8 +232,8 @@ class Article
                     $_SESSION['alert']['danger'][] = $errors[0];
                 }
                 if (!empty($_POST)) {
-                    if(!empty($_POST['id_article'])) {
-                        $article->setId($_POST["id_article"]);
+                    if(!empty($_POST['id'])) {
+                        $article->setId($_POST["id"]);
                     }
                 }
                 $view->assign('article', $article);

@@ -14,8 +14,8 @@ $(document).ready(function() {
     });
 });
 function editArticle(e) {
-    let id = $(e).attr("data-id");
-    $.redirect('edit-article', {'id_article': id});
+    let id= $(e).attr("data-id");
+    $.redirect('edit-article', {'id': id});
 }
 function deleteArticle(e) {
     let id = $(e).attr("data-id");

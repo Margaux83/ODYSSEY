@@ -1,74 +1,3 @@
-<link rel="stylesheet" type="text/css" href=<?php App\Core\View::getAssets("datatables.css")?>>
-<style>
-    table tbody td {
-        min-width: 100px;
-    }
-</style>
-
-
-<section class="col-12" style="grid-column: 1/ 13; grid-row: 1;">
-    <table id="table_all_articles_update" class="table thead-dark">
-        <thead>
-        <tr>
-            <th>Dates</th>
-            <th>Titre et description</th>
-            <th>Créateur</th>
-            <th>Statut</th>
-            <th>Action</th>
-
-        </tr>
-        </thead>
-        <tbody>
-        <?php
-        if(!empty($infoArticles)){
-
-            foreach ($infoArticles as $article){
-
-                ?>
-                <tr class="text-center">
-                    <td>
-                        <p><img src=<?php App\Core\View::getAssets("icons/plus-solid.svg")?> alt="" height="15" width="15">&nbsp;&nbsp;  <?= date("d/m/Y H:i", strtotime($article["creationDate"])) ?></p>
-                        <p><img src=<?php App\Core\View::getAssets("icons/pen-solid.svg")?> alt="" height="15" width="15">&nbsp;&nbsp;  <?= (empty($article["updateDate"])) ? 'Pas modifié' : date("d/m/Y H:i", strtotime($article["updateDate"])) ?></p>
-                    </td>
-                    <td>
-                        <p class="listItem-cpt"><b><?= $article["title"] ?></b><br><?= $article["description"] ?></p>
-                    </td>
-                    <td><?= $article["firstname"]." ".$article["lastname"] ?></td>
-                    <td>
-                        <?php //Mettre le statut de l'article
-                        switch ($article["status"]) {
-                            case 1:
-                                echo "Brouillon";
-                                break;
-                            case 2:
-                                echo "Créé";
-                                break;
-                            case 3:
-                                echo "En attente de validation";
-                                break;
-                            case 4:
-                                echo "Validé et posté";
-                                break;
-                        }
-                        ?>
-                    </td>
-                    <td class="action-btn">
-                        <div class="listItem-cpt listActions">
-                            <a href="#" id="editArticle" onclick="editArticle(this)" data-id="<?= $article["id"] ?>">
-                                <img src=<?php App\Core\View::getAssets("icons/pen-solid.svg")?> alt="" height="20" width="20">
-                            </a>
-                        </div>
-                    </td>
-
-                </tr>
-            <?php } ?>
-        <?php } ?>
-
-        </tbody>
-    </table>
-</section>
-
-
 
 
    <section class="col-12" style="grid-column: 1 / 13; grid-row: 2;">
@@ -177,6 +106,4 @@
 
    <script src=<?php App\Core\View::getAssets("modal.js")?>></script>
    <script src=<?php App\Core\View::getAssets("popups.js")?>></script>
-<script src=<?php App\Core\View::getAssets("datatables.js")?>></script>
-<script src=<?php App\Core\View::getAssets("jquery.redirect.js")?>></script>
 <script src=<?php App\Core\View::getAssets("article.js")?>></script>

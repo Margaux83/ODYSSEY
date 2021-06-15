@@ -248,18 +248,18 @@ class Article extends Database
     /**
      * @return mixed
      */
-   /* public function getMedia()
+   public function getMedia()
     {
         return $this->media;
-    }*/
+    }
 
     /**
      * @param mixed $media
      */
-    /*public function setMedia($media)
+    public function setMedia($media)
     {
         $this->media = $media;
-    }*/
+    }
 
     public function get_foreignKeys()
     {
@@ -381,11 +381,6 @@ class Article extends Database
                     "placeholder"=>"Votre titre",
 
                     "defaultValue"=>$this->getUri()
-                ],
-                "MAX_FILE_SIZE"=>[
-                    "type"=>"hidden",
-                    "required"=>false,
-                    "defaultValue"=>"30000"
                 ],
                 "media"=>[
                     "type"=>"file",
