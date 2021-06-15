@@ -13,16 +13,16 @@
             <input name="firstname" id="firstname" type="text" placeholder="Votre prénom" required>
         </div>
         <div class="formElement">
-            <label for="login-email" class="requiredLabel">Adresse Mail</label>
-            <input name="email" id="login-email" type="text" placeholder="your.email@exemple.com" required>
+            <label for="email" class="requiredLabel">Adresse Mail</label>
+            <input name="email" id="email" type="email" placeholder="your.email@exemple.com" required>
         </div>
         <div class="formElement">
-            <label for="login-pwd" class="requiredLabel">Mot de passe</label>
-            <input name="password" id="config-pwd" type="password" required>
+            <label for="password" class="requiredLabel">Mot de passe</label>
+            <input name="password" id="password" type="password" required>
         </div>
         <div class="formElement">
-            <label for="login-pwd" class="requiredLabel">Confirmer mot de passe</label>
-            <input name="password-confirm" id="config-pwd" type="password" required>
+            <label for="password-confirm" class="requiredLabel">Confirmer mot de passe</label>
+            <input name="password-confirm" id="password-confirm" type="password" required>
         </div>
         <div class="formElement">
             <label for="firstname" class="requiredLabel">Téléphone</label>
