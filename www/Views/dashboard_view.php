@@ -1,30 +1,9 @@
 <section id="dashboard-section-statistics" class="col-6" style="grid-column: 1 / 7; grid-row: 1;">
     <h1 class="titleSection"><img src=<?php App\Core\View::getAssets("icons/icon_stat.png")?> alt="">Statistiques</h1>
     <div class="d-flex-wrap statisticsBasicContainer" id="dashboard-section-statisticsContainer">
-        <article class="statisticsBasic">
-            <h1>Consultations</h1>
-            <div>
-                <h2 class="numberStat numberStat-negative">426</h2>
-                <p>Depuis 16 heures</p>
-                <p>Moyenne : 430</p>
-            </div>
-        </article>
-        <article class="statisticsBasic">
-            <h1>Réservations</h1>
-            <div>
-                <h2 class="numberStat numberStat-positive">28</h2>
-                <p>Depuis 16 heures</p>
-                <p>Moyenne : 26</p>
-            </div>
-        </article class="statisticsBasic">
-        <article class="statisticsBasic">
-            <h1>Ventes</h1>
-            <div>
-                <h2 class="numberStat numberStat-positive">427</h2>
-                <p>Depuis 16 heures</p>
-                <p>Moyenne : 361</p>
-            </div>
-        </article>
+        <?php foreach ($statistics as $key => $statistic) {
+            echo $statistic;
+        } ?>
     </div>
 </section>
 

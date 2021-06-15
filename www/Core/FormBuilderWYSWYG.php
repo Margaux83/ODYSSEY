@@ -32,8 +32,10 @@ class FormBuilderWYSWYG extends Database
         return $errors; //tableau des erreurs
     }
 
-    public static function showFormArticle($form){
+
+    public static function showForm($form){
         $html = "<form enctype='".($form["config"]["enctype"]??"")."' class='".($form["config"]["class"]??"")."' method='".( self::cleanWord($form["config"]["method"]) ?? "GET" )."' action='".( $form["config"]["action"] ?? "" )."'>";
+
 
         foreach ($form["input"] as $name => $dataInput) {
             $html .= "&emsp;&emsp;";

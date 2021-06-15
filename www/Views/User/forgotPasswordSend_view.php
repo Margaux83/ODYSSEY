@@ -9,7 +9,8 @@
         </div>
 
         <div class="formSubmitElement">
-            <button id="login_submit" type="submit" class="primary">ENVOYER</button>
+            <button id="forget_submit" type="submit" class="secondary" onclick="window.location='login'">RETOUR</button>
+            <button id="forget_submit" type="submit" class="primary">ENVOYER</button>
         </div>
     </form>
 </section>

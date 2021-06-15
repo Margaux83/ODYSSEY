@@ -26,20 +26,10 @@ class Article
         $article = new Arti();
 
         if (!empty($_POST)) {
-            if (!empty($_POST['submit_delete_article'])) {
-                //Suppression d'un article par son id
-                $article->delete($_POST['id_delete_article']);
-                $_SESSION['alert']['success'][] = 'Suppression effectuée avec succès !';
-               // header('location: /articles');
-            }
-            if(!empty($_POST['submit_delete_article_of_user'])){
-                //Suppression d'un article de l'utilisateur connecté par son id
-                $article->delete($_POST['id_delete_article_of_user']);
-                $_SESSION['alert']['success'][] = 'Suppression effectuée avec succès !';
-              //  header('location: /articles');
+            if (!empty($_POST['deleteArticle'])) {
+                $article->delete($_POST['id_article']);
             }
         }
-
         $articles = new Arti();
          //Fonction pour récupérer la liste de tous les articles
         $articles->getAllArticles();
@@ -202,8 +192,8 @@ class Article
 
             if (!empty($_POST)) {
 
-                if($_POST['id'] != "") {
-                    $article->setId($_POST["id"]);
+                if($_POST['id_article'] != "") {
+                    $article->setId($_POST["id_article"]);
                 }
             }
 
@@ -241,11 +231,11 @@ class Article
 
                 } else {
                     //S'il y a des erreurs, on prépare leur affichage
-                    $_SESSION['alert']['danger'][] = "'.$errors[0].'";
+                    $_SESSION['alert']['danger'][] = $errors[0];
                 }
                 if (!empty($_POST)) {
-                    if(!empty($_POST['id'])) {
-                        $article->setId($_POST["id"]);
+                    if(!empty($_POST['id_article'])) {
+                        $article->setId($_POST["id_article"]);
                     }
                 }
                 $view->assign('article', $article);

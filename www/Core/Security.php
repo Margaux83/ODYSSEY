@@ -29,7 +29,6 @@ class Security
 
 	public function getConnectedUser(){
 		if ($this->isConnected()){
-			var_dump("already connected");
             $_SESSION['alert']['danger'][] = 'Vous êtes déjà connecté';
             return true;
 		}

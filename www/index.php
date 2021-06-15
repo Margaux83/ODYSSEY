@@ -16,6 +16,7 @@ Autoloader::register();
 
 new ConstantManager();
 
+date_default_timezone_set('Europe/Paris');
 
 $uriExploded = explode("?", $_SERVER["REQUEST_URI"]);
 $uri = $uriExploded[0];

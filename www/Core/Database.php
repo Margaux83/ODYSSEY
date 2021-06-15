@@ -31,20 +31,24 @@ class Database
         return array_keys(get_class_vars(__CLASS__));
     }
 
-    public function query($requestedParams = [], $filter = [])
+    public function query($requestedParams = [], $filter = [], $filterString = '', $moreString = '')
     {
         $columnFilter = [];
         foreach ($filter as $key => $value) {
             if (!is_null($value)) {
-                $columnFilter[] = $key . "=:" . $key;
+                $columnFilter[] = $key . "=:" . substr($key, strpos($key, '.') + 1);
             }
         }
 
-        $sql = "SELECT " . implode(",", $requestedParams) . " FROM " . $this->table . ($filter ? " WHERE " . implode(" AND ", $columnFilter) : '');
+        $sql = "SELECT " . implode(",", $requestedParams) . " FROM " . $this->table
+            . ($moreString ? $moreString : '')
+            . (count($filter) ? " WHERE " . implode(" AND ", $columnFilter) : '')
+            . ($filterString ? (count($filter) ? " AND " : ' WHERE ') . $filterString : '');
+
         $query = $this->pdo->prepare($sql);
         foreach ($filter as $key => $value) {
             if (!is_null($value)) {
-                $query->bindValue(":$key", $value);
+                $query->bindValue(":".substr($key, strpos($key, '.') + 1), $value);
             }
         }
         $query->execute();
@@ -85,7 +89,6 @@ class Database
                                             ) VALUES (
                                             :" . implode(",:", $columns) . "
                                             )");
-
             $query->execute($data);
 
 
@@ -127,13 +130,11 @@ class Database
 
     public function getAllArticles()
     {
-
         $sql = "SELECT ody_Article.id, ody_Article.title, ody_Article.content, ody_Article.description, ody_Article.status, ody_Article.isVisible, ody_Article.isDraft,
                     ody_Article.isDeleted, ody_Article.creationDate, ody_Article.updateDate, ody_Article.id_User, ody_User.firstname, ody_User.lastname, ody_User.role  FROM " . $this->table . " INNER JOIN ody_User ON ". $this->table.".id_User = ody_User.ID WHERE ody_Article.isDeleted!=1";
         $query = $this->pdo->prepare($sql);
         $query->execute();
         return $query->fetchAll();
-
     }
 
     public function getArticleByUser($id)

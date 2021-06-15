@@ -100,7 +100,18 @@ class User extends Database
     }
 
     public function setEmail($email){
-        $this->email = $email;
+        $db = new Database("User");
+        $result = $db->query(
+            ["id"],
+            ["email" => $email]
+        );
+        if(!$result) {
+            $this->email = $email;
+        } else {
+            $_SESSION['alert']['danger'][] = 'L\'adresse email existe déjà';
+            header('location: /register');
+            session_write_close();
+        }
     }
 
     /**
@@ -119,7 +130,15 @@ class User extends Database
     }
 
     public function verifyPassword($password, $passwordConfirm){
-        if($password === $passwordConfirm) {
+        if($password !== $passwordConfirm) {
+            $_SESSION['alert']['danger'][] = 'Les deux mots de passe ne correspondent pas';
+            header('location: /register');
+            session_write_close();
+        }elseif(count($password) < 8) {
+            $_SESSION['alert']['danger'][] = 'Votre mot de passe doit faire plus de 8 caractères';
+            header('location: /register');
+            session_write_close();
+        } else {
             return true;
         }
     }

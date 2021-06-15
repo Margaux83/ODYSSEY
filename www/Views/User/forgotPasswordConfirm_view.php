@@ -5,7 +5,7 @@
     <form method="POST">
         <div class="formElement">
             <label for="token" class="requiredLabel">Token</label>
-            <input name="token" id="token" type="text" placeholder="" value="<?php echo isset($_GET['token']) ? $_GET['token'] : "" ?>" required>
+            <input name="token" id="token" type="text" placeholder="" value="<?= isset($_GET['token']) ? $_GET['token'] : "" ?>" required>
         </div>
 
         <div class="formElement">
@@ -18,7 +18,8 @@
         </div>
 
         <div class="formSubmitElement">
-            <button id="login_submit" type="submit" class="primary">ENVOYER</button>
+            <button id="forget_submit" type="submit" class="secondary" onclick="window.location='forgotpassword'">RETOUR</button>
+            <button id="forget_submit" type="submit" class="primary">ENVOYER</button>
         </div>
     </form>
 </section>
