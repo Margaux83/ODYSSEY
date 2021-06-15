@@ -33,7 +33,7 @@ class Security{
         $mailer = new Mailer();
         $bodymail = new BodyMail();
         $user = new User();
-        $view = new View("register", "back_management");
+        $view = new View("User/register", "back_management");
         $token = bin2hex(openssl_random_pseudo_bytes(32));
 
         $form = $user->buildFormRegister();
@@ -106,7 +106,7 @@ class Security{
             header('Location: /dashboard');
             return;
         }
-        $view = new View("login", "back_management");
+        $view = new View("User/login", "back_management");
     }
 
     public function logoutAction(){
@@ -128,9 +128,9 @@ class Security{
         $token = rand(100000, 999999);
 
         if(empty($_POST)){
-            $view = new View("forgotPasswordSend", "back_management");
+            $view = new View("User/forgotPasswordSend", "back_management");
         } else {
-            $view = new View("forgotPasswordSend", "back_management");
+            $view = new View("User/forgotPasswordSend", "back_management");
 
             $db = new Database("User");
             $result = $db->query(
@@ -166,7 +166,7 @@ class Security{
             header('Location: /dashboard');
             return;
         }
-        $view = new View("forgotPasswordConfirm", "back_management");
+        $view = new View("User/forgotPasswordConfirm", "back_management");
 
         if(!empty($_POST)) {
             $user = new User();
