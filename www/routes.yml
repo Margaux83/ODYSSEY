@@ -32,35 +32,15 @@
       /update-article
     ]
 
-/addarticle:
-  controller: Article
-  action: addarticle
-
-/editarticle:
-  controller: Article
-  action: editArticle
-
 /add-article:
   controller: Article
   action: addarticle
   label: Ajouter un article
-  menuData:
-    visible: false
-    min-statut: true
-    listId: basics
-    icon: icon_page
 
 /update-article:
   controller: Article
   action: editArticle
   label: Modifier un article
-  menuData:
-    visible: false
-    min-statut: true
-    listId: basics
-    icon: icon_page
-
-
 
 /users:
   controller: Users
@@ -116,15 +96,14 @@
   action: addpage
   label: Ajouter une page
 
+/edit-page:
+  controller: Page
+  action: editPage
+
 /deleted-page:
   controller: Page
   action: listdeletedpage
   label: Corbeille
-
-/edit-page:
-  controller: Page
-  action: editPage
-  label: Modifier une page
 
 /comments:
   controller: Comment
@@ -166,94 +145,45 @@
     listId: management
     icon: icon_newsletter
 
-/exam-form:
-  controller: Base
-  action: form
-
 /profile:
   controller: Profile
   action: default
   label: Profil
-  menuData:
-    visible: false
-    min-statut: false
-    listId: connexion
-    icon: icon_user
 
 /login:
   controller: Security
   action: login
   label: Connexion
   freeAccess: true
-  menuData:
-    visible: false
-    min-statut: false
-    listId: connexion
-    icon: icon_web
-
-/se-connecter:
-  controller: Security
-  action: login
-  freeAccess: true
 
 /register:
   controller: Security
   action: register
+  label: S'inscrire
   freeAccess: true
-  menuData:
-    visible: false
-    min-statut: false
-    listId: inscription
-    label: Inscription
-    icon: icon_web
 
 /verification:
   controller: Security
   action: verification
   freeAccess: true
-  menuData:
-    visible: false
-    min-statut: false
-    listId: inscription
-    label: Inscription
-    icon: icon_web
 
 /forgotpassword:
   controller: Security
   action: forgotPassword
+  label: Mot de passe oublié
   freeAccess: true
-  menuData:
-    visible: false
-    min-statut: false
-    listId: forgotPassword
-    label: ForgotPassword
-    icon: icon_web
 
 /forgotpasswordconfirm:
   controller: Security
   action: forgotPasswordConfirm
+  label: Mot de passe oublié
   freeAccess: true
-  menuData:
-    visible: false
-    min-statut: false
-    listId: forgotPasswordConfirm
-    label: ForgotPasswordConfirm
-    icon: icon_web
 
 /logout:
   controller: Security
   action: logout
   label: Déconnexion
   freeAccess: true
-  menuData:
-    visible: false
-    min-statut: false
-    listId: connexion
-    icon: icon_web
-
-/liste-des-utilisateurs:
-  controller: Security
-  action: listofusers
 
 /web-access:
   controller: WebAccess
