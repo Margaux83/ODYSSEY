@@ -19,6 +19,8 @@ class Article extends Database
     protected $description;
     protected $isdeleted;
     protected $id_user;
+    protected $uri;
+   // protected $media;
 
     public function __construct(){
         parent::__construct();
@@ -227,6 +229,38 @@ class Article extends Database
         return $this->id_user;
     }
 
+    /**
+     * @return mixed
+     */
+    public function getUri()
+    {
+        return $this->uri;
+    }
+
+    /**
+     * @param mixed $uri
+     */
+    public function setUri($uri)
+    {
+        $this->uri = $uri;
+    }
+
+    /**
+     * @return mixed
+     */
+   /* public function getMedia()
+    {
+        return $this->media;
+    }*/
+
+    /**
+     * @param mixed $media
+     */
+    /*public function setMedia($media)
+    {
+        $this->media = $media;
+    }*/
+
     public function get_foreignKeys()
     {
         return ['category'];
@@ -311,6 +345,7 @@ class Article extends Database
                 "Action"=>"",
                 "Submit"=>"Publier",
                 "class"=>"",
+                "enctype"=>"multipart/form-data"
 
             ],
 
@@ -333,6 +368,31 @@ class Article extends Database
                     "placeholder"=>"Votre titre",
 
                     "defaultValue"=>$this->getTitle()
+                ],
+                "uri"=>[
+
+                    "type"=>"text",
+                    "label"=>"Veuillez choisir une uri pour votre article",
+                    "lengthMax"=>"255",
+                    "lengthMin"=>"2",
+                    "required"=>true,
+                    "class"=>"input",
+                    "error"=>"L'uri l'article doit faire entre 2 et 255 caractères",
+                    "placeholder"=>"Votre titre",
+
+                    "defaultValue"=>$this->getUri()
+                ],
+                "MAX_FILE_SIZE"=>[
+                    "type"=>"hidden",
+                    "required"=>false,
+                    "defaultValue"=>"30000"
+                ],
+                "media"=>[
+                    "type"=>"file",
+                    "required"=>false,
+                    "class"=>"input",
+                    "placeholder"=>"Importer votre image",
+                    "defaultValue"=>""
                 ],
                     "content"=>[
                         "type"=>"textarea",

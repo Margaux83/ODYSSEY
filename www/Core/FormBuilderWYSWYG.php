@@ -33,7 +33,7 @@ class FormBuilderWYSWYG extends Database
     }
 
     public static function showFormArticle($form){
-        $html = "<form class='".($form["config"]["class"]??"")."' method='".( self::cleanWord($form["config"]["method"]) ?? "GET" )."' action='".( $form["config"]["action"] ?? "" )."'>";
+        $html = "<form enctype='".($form["config"]["enctype"]??"")."' class='".($form["config"]["class"]??"")."' method='".( self::cleanWord($form["config"]["method"]) ?? "GET" )."' action='".( $form["config"]["action"] ?? "" )."'>";
 
         foreach ($form["input"] as $name => $dataInput) {
             $html .= "&emsp;&emsp;";

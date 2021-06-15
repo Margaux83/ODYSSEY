@@ -115,11 +115,35 @@ class Article
                     $article->setIsdeleted(0);
                     $article->setDescription($dataArticle["description"]);
                     $article->setId_user($_SESSION["userId"]);
-                    $article->save();
-                    $result = $article->getLastFromTable();
-                    $article->saveArticleCategory($dataArticle['category'], $result[0]["id"]);
+                    $article->setUri($dataArticle['uri']);
 
-                    $_SESSION['alert']['success'][] = 'L\'article a bien été enregistré !';
+                   // $article->save();
+                   // $result = $article->getLastFromTable();
+                   //$article->saveArticleCategory($dataArticle['category'], $result[0]["id"]);
+
+                  // $_SESSION['alert']['success'][] = 'L\'article a bien été enregistré !';
+                   if(isset($_FILES['media']['name'])){
+                      //  foreach ($_FILES['media']['error'] as $key => $error) {
+
+                                $tmp_name = $_FILES['media']['tmp_name'];
+                                // basename() peut empêcher les attaques de système de fichiers;
+                                // la validation/assainissement supplémentaire du nom de fichier peut être approprié
+                                $name = basename($_FILES['media']['name']);
+                                echo $_SERVER["DOCUMENT_ROOT"]."/public/uploads/".$name;
+                       try {
+                           move_uploaded_file($tmp_name, $_SERVER["DOCUMENT_ROOT"]."/public/uploads/".$name);
+
+                       }
+                       catch (\Exception $e){
+                         echo  $e->getMessage();
+                       }
+
+                            }
+                            else{
+                                echo "ok";
+                            }
+                       // }
+
                 } else {
                     //S'il y a des erreurs, on prépare leur affichage
                     $_SESSION['alert']['danger'][] = $errors[0];

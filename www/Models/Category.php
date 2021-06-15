@@ -86,12 +86,12 @@ class Category extends Database
         ];
 
         foreach ($categories as $key => $category) {
-            $returnedArray[$key] = [
+            $returnedArray[$key+1] = [
                 "label" => $category['label'],
                 "selected" => $category['id'] === $selectedCategoryId
             ];
-        }
 
+        }
         return $returnedArray;
     }
 }
