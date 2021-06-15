@@ -223,7 +223,7 @@ body main section form .formSubmitElement {
   display: flex;
   width: 100%;
   margin-top: 20px;
-  justify-content: flex-end;
+  justify-content: space-between;
 }
 
 body main section form .formSubmitElement button {
@@ -248,6 +248,21 @@ body main section form .formSubmitElement button.primary:hover {
 }
 
 body main section form .formSubmitElement button.primary:focus {
+  outline: 0;
+}
+
+body main section form .formSubmitElement button.secondary {
+  color: white;
+  background-color: #155263;
+}
+
+body main section form .formSubmitElement button.secondary:hover {
+  outline: 0;
+  color: #155263;
+  background-color: #99e1e5;
+}
+
+body main section form .formSubmitElement button.secondary:focus {
   outline: 0;
 }
 

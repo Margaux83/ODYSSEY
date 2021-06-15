@@ -29,6 +29,7 @@
             <input name="phone" id="firstname" type="text" placeholder="Votre numéro de téléphone" required>
         </div>
         <div class="formSubmitElement">
+            <button id="login_submit" type="submit" class="secondary" onclick="window.location='login'">SE CONNECTER</button>
             <button id="login_submit" type="submit" class="primary">S'INSCRIRE</button>
         </div>
     </form>
