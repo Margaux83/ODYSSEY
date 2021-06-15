@@ -134,6 +134,12 @@ class User extends Database
             $_SESSION['alert']['danger'][] = 'Les deux mots de passe ne correspondent pas';
             header('location: /register');
             session_write_close();
+        }elseif(count($password) < 8) {
+            $_SESSION['alert']['danger'][] = 'Votre mot de passe doit faire plus de 8 caractères';
+            header('location: /register');
+            session_write_close();
+        } else {
+            return true;
         }
     }
 
