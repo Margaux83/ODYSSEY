@@ -46,11 +46,7 @@ class Security{
                 $user->setFirstname(htmlspecialchars(addslashes($_POST['firstname'])));
                 $user->setLastname(htmlspecialchars(addslashes($_POST['lastname'])));
                 $user->setEmail(htmlspecialchars(addslashes($_POST['email'])));
-                if(!$user->verifyPassword(htmlspecialchars(addslashes($_POST['password'])), htmlspecialchars(addslashes($_POST['password-confirm'])))) {
-                    $_SESSION['alert']['danger'][] = 'Les deux mots de passe ne correspondent pas';
-                    header('location: /register');
-                    session_write_close();
-                } else {
+                if($user->verifyPassword(htmlspecialchars(addslashes($_POST['password'])), htmlspecialchars(addslashes($_POST['password-confirm'])))) {
                     $user->setPassword(password_hash(htmlspecialchars(addslashes($_POST['password'])), PASSWORD_BCRYPT));
                 }
                 $user->setPhone(htmlspecialchars(addslashes($_POST['phone'])));
