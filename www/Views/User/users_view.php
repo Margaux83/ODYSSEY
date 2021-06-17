@@ -71,10 +71,10 @@
                 <td><?= $user["lastConnexionDate"]?></td>
                 <td class="action-btn">
                     <div class="listItem-cpt listActions">
-                        <a href="#" id="editPage" onclick="editUser(this)" data-id="<?= $user["id"] ?>">
+                        <a href="#" id="editUser" onclick="editUser(this)" data-id="<?= $user["id"] ?>">
                             <img src=<?php App\Core\View::getAssets("icons/pen-solid.svg")?> alt="" height="20" width="20">
                         </a>
-                        <a href="#" id="deletePage" onclick="deleteUsers(this)" data-id="<?= $user["id"] ?>">
+                        <a href="#" id="deleteUser" onclick="deleteUser(this)" data-id="<?= $user["id"] ?>">
                             <img src=<?php App\Core\View::getAssets("icons/trash-solid.svg")?> alt="" height="20" width="20">
                         </a>
                     </div>

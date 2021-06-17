@@ -27,21 +27,22 @@ class User extends Database
     /**
      * @param $id
      */
+
     public function setId($id){
-        $this->id = $id;
-        //Il va chercher en BDD toutes les informations de l'utilisateur
-        $data = array_diff_key(
-            get_object_vars($this),
-            get_class_vars(get_parent_class())
-        );
-        $columns = array_keys($data);
+    $this->id = $id;
+    //Il va chercher en BDD toutes les informations de l'utilisateur
+    $data = array_diff_key(
+        get_object_vars($this),
+        get_class_vars(get_parent_class())
+    );
+    $columns = array_keys($data);
 
-        $statement = $this->pdo->prepare("SELECT " . implode(',', $columns) . " FROM ".$this->table." WHERE id=:id");
-        $statement->execute(array(":id" => $this->getId()));
-        $obj = $statement->fetchObject(__CLASS__);
+    $statement = $this->pdo->prepare("SELECT " . implode(',', $columns) . " FROM ".$this->table." WHERE id=:id");
+    $statement->execute(array(":id" => $this->getId()));
+    $obj = $statement->fetchObject(__CLASS__);
 
-        $this->setUserFromObj($obj);
-    }
+    $this->setUserFromObj($obj);
+}
 
     private function setUserFromObj($obj){
         $data = array_diff_key(
@@ -100,18 +101,8 @@ class User extends Database
     }
 
     public function setEmail($email){
-        $db = new Database("User");
-        $result = $db->query(
-            ["id"],
-            ["email" => $email]
-        );
-        if(!$result) {
-            $this->email = $email;
-        } else {
-            $_SESSION['alert']['danger'][] = 'L\'adresse email existe déjà';
-            header('location: /register');
-            session_write_close();
-        }
+
+        $this->email = $email;
     }
 
     /**
@@ -134,7 +125,7 @@ class User extends Database
             $_SESSION['alert']['danger'][] = 'Les deux mots de passe ne correspondent pas';
             header('location: /register');
             session_write_close();
-        }elseif(count($password) < 8) {
+        }elseif(strlen($password) < 8) {
             $_SESSION['alert']['danger'][] = 'Votre mot de passe doit faire plus de 8 caractères';
             header('location: /register');
             session_write_close();
@@ -394,7 +385,6 @@ class User extends Database
                     "required"=>true,
                     "error"=>"Votre prénom doit faire entre 2 et 120 caractères",
                     "placeholder"=>"Votre prénom",
-                    "defaultValue" => $this->getFirstname()
                 ],
                 "email"=>[
                     "type"=>"email",
@@ -426,8 +416,13 @@ class User extends Database
                 "reset" => "Annuler",
                 "Submit"=>"Enregistrer",
                 "class"=>"form-group"
+
             ],
             "input"=>[
+                "id_user"=>[
+                    "type"=>"hidden",
+                    "defaultValue"=>$this->getId()
+                ],
                 "lastname"=>[
                     "type"=>"text",
                     "label"=>"Nom",
@@ -435,7 +430,9 @@ class User extends Database
                     "lengthMin"=>"2",
                     "required"=>true,
                     "error"=>"Votre nom doit faire entre 2 et 255 caractères",
-                    "placeholder"=>"Votre nom"
+                    "placeholder"=>"Votre nom",
+                    "defaultValue" => $this->getLastname()
+
                 ],
                 "firstname"=>[
                     "type"=>"text",
@@ -444,7 +441,8 @@ class User extends Database
                     "lengthMin"=>"2",
                     "required"=>true,
                     "error"=>"Votre prénom doit faire entre 2 et 120 caractères",
-                    "placeholder"=>"Votre prénom"
+                    "placeholder"=>"Votre prénom",
+                    "defaultValue" => $this->getFirstname()
                 ],
                 "email"=>[
                     "type"=>"email",
@@ -453,23 +451,8 @@ class User extends Database
                     "lengthMin"=>"8",
                     "required"=>true,
                     "error"=>"Votre email doit faire entre 8 et 320 caractères",
-                    "placeholder"=>"Votre email"
-                ],
-                "pwd"=>[
-                    "type"=>"password",
-                    "label"=>"Mot de passe",
-                    "lengthMin"=>"8",
-                    "required"=>true,
-                    "error"=>"Votre mot de passe doit faire plus de 8 caractères",
-                    "placeholder"=>"Votre mot de passe"
-                ],
-                "pwdConfirm"=>[
-                    "type"=>"password",
-                    "label"=>"Confirmation de mot de passe",
-                    "confirm"=>"pwd",
-                    "required"=>true,
-                    "error"=>"Votre mot de passe de confirmation est incorrect",
-                    "placeholder"=>"Confirmation"
+                    "placeholder"=>"Votre email",
+                    "defaultValue" => $this->getEmail()
                 ],
                 "phone"=>[
                     "type"=>"text",
@@ -478,23 +461,8 @@ class User extends Database
                     "lengthMin"=>"10",
                     "required"=>true,
                     "error"=>"Votre numéro de téléphone doit contenir 10 chiffres",
-                    "placeholder"=>"Votre numéro de téléphone"
-                ],
-                "selectForm"=>[
-                    "type"=>"select",
-                    "label"=>"Rôle",
-                    "required"=>true,
-                    "error"=>"Veuillez sélectionner un élément",
-                    "placeholder"=>"Choisir un rôle",
-                    "options"=>[
-                        "registered"=>[
-                            "label" => "Inscrit",
-                        ],
-                        "create"=>[
-                            "label" => "Crée",
-                        ],
-                    ],
-
+                    "placeholder"=>"Votre numéro de téléphone",
+                    "defaultValue" => $this->getPhone()
                 ],
             ]
 

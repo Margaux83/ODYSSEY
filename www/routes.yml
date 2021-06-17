@@ -53,7 +53,6 @@
     icon: icon_user
     children: [
        /add-users,
-       /edit-users
   ]
 
 /add-users:
@@ -66,7 +65,7 @@
     listId: basics
     icon: icon_user
 
-/edit-users:
+/edit-user:
   controller: Users
   action: editUsers
   label: Modifier un utilisateur
@@ -177,6 +176,12 @@
   controller: Security
   action: forgotPasswordConfirm
   label: Mot de passe oublié
+  freeAccess: true
+
+/newpasswordconfirm:
+  controller: Users
+  action: newPasswordConfirm
+  label: Créer votre nouveau mot de passe
   freeAccess: true
 
 /logout:

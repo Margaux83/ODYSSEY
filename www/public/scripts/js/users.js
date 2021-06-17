@@ -64,12 +64,12 @@ $(document).ready(function() {
     });
 });
 
-function editUsers(e) {
+function editUser(e) {
     let id = $(e).attr("data-id");
-    $.redirect('edit-page', {'id_page': id});
+    $.redirect('edit-user', {'id_user': id});
 }
 
-function deleteUsers(e) {
+function deleteUser(e) {
     let id = $(e).attr("data-id");
 
     swal.fire({
@@ -84,10 +84,10 @@ function deleteUsers(e) {
         if (result.isConfirmed) {
             swal.fire(
                 'Supprimé!',
-                'Votre page a bien été supprimé.',
+                'L\' utilisateur a bien été supprimé.',
                 'success'
             ).then(function() {
-                $.post( "pages", { id_page: id, deletePage: "true" })
+                $.post( "users", { id_user: id, deleteUser: "true" })
                     .done(function( data ) {
                         location.reload();
                     });
@@ -97,7 +97,7 @@ function deleteUsers(e) {
         ) {
             swal.fire(
                 'Annulé',
-                'Votre page n\'a pas été supprimé',
+                'L\'utilisateur n\'a pas été supprimé',
                 'error'
             )
         }
