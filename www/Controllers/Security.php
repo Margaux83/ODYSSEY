@@ -16,7 +16,6 @@ use App\Models\BodyMail;
 
 class Security{
 
-
     public function defaultAction(){
         echo "controller security action default";
     }
@@ -190,14 +189,6 @@ class Security{
                 $_SESSION['alert']['danger'][] = 'Token incorrect';
             }
         }
-    }
-    public function listofusersAction(){
-        $coreSecurity = coreSecurity::getInstance();
-        if(!$coreSecurity->isConnected()){
-            die("Error not authorized");
-        }
-
-        echo "Là je liste tous les utilisateurs";
     }
 
 }
