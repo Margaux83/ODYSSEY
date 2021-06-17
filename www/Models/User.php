@@ -101,8 +101,19 @@ class User extends Database
     }
 
     public function setEmail($email){
-
-        $this->email = $email;
+        
+        $db = new Database("User");
+        $result = $db->query(
+            ["id"],
+            ["email" => $email]
+        );
+        if(!$result) {
+            $this->email = $email;
+        } else {
+            $_SESSION['alert']['danger'][] = 'L\'adresse email existe déjà';
+            header('location: /register');
+            session_write_close();
+        }
     }
 
     /**
@@ -412,7 +423,7 @@ class User extends Database
         return [
             "config"=>[
                 "method"=>"POST",
-                "Action"=>"",
+                "Action"=>"users",
                 "reset" => "Annuler",
                 "Submit"=>"Enregistrer",
                 "class"=>"form-group"
