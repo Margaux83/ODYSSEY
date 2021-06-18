@@ -65,7 +65,6 @@ class Error
         '526' => '526: Invalid SSL Certificate',
         '527' => '527: Railgun Error',
     ];
-    
 
     public static function errorPage($responseCode, $messageSent = ""){
         $responseMessage = $messageSent !== "" ? $messageSent : self::$_responseCodes[strval($responseCode)];

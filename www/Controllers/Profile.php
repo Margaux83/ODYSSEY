@@ -27,9 +27,11 @@ class Profile
 			if(empty($errors)){
                 $user->updateWithData($_POST);
                 $user->save();
-			}else{
+                $_SESSION['alert']['success'][] = 'Modification du profil effectué avec succès !';
+            }else{
 				$view->assign("formErrors", $errors);
-			}
+                $_SESSION['alert']['danger'][] = 'Erreur dans la modification du profil !';
+            }
 		}
         
         $user->setId($_SESSION['userId']);
