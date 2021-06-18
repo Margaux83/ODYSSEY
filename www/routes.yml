@@ -81,6 +81,25 @@
     listId: basics
     icon: icon_comment
 
+/medias:
+  controller: Media
+  action: default
+  label: Medias
+  menuData:
+    visible: true
+    min-statut: true
+    listId: basics
+    icon: icon_menu
+    children: [
+      /medias,
+      /add-media
+    ]
+
+/add-media:
+  controller: Media
+  action: addMedia
+  label: Ajouter média
+
 /template:
   controller: Template
   action: default
