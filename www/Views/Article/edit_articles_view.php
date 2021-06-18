@@ -64,7 +64,7 @@
 
 
    <section class="col-12" style="grid-column: 1 / 13; grid-row: 2;">
-           <?php  App\Core\FormBuilderWYSWYG::showForm($form); ?>
+           <?php  App\Core\Form::showForm($form); ?>
    </section>
 
    <br><br>

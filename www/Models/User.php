@@ -27,22 +27,21 @@ class User extends Database
     /**
      * @param $id
      */
-
     public function setId($id){
-    $this->id = $id;
-    //Il va chercher en BDD toutes les informations de l'utilisateur
-    $data = array_diff_key(
-        get_object_vars($this),
-        get_class_vars(get_parent_class())
-    );
-    $columns = array_keys($data);
+        $this->id = $id;
+        //Il va chercher en BDD toutes les informations de l'utilisateur
+        $data = array_diff_key(
+            get_object_vars($this),
+            get_class_vars(get_parent_class())
+        );
+        $columns = array_keys($data);
 
-    $statement = $this->pdo->prepare("SELECT " . implode(',', $columns) . " FROM ".$this->table." WHERE id=:id");
-    $statement->execute(array(":id" => $this->getId()));
-    $obj = $statement->fetchObject(__CLASS__);
+        $statement = $this->pdo->prepare("SELECT " . implode(',', $columns) . " FROM ".$this->table." WHERE id=:id");
+        $statement->execute(array(":id" => $this->getId()));
+        $obj = $statement->fetchObject(__CLASS__);
 
-    $this->setUserFromObj($obj);
-}
+        $this->setUserFromObj($obj);
+    }
 
     private function setUserFromObj($obj){
         $data = array_diff_key(
@@ -101,19 +100,7 @@ class User extends Database
     }
 
     public function setEmail($email){
-        
-        $db = new Database("User");
-        $result = $db->query(
-            ["id"],
-            ["email" => $email]
-        );
-        if(!$result) {
-            $this->email = $email;
-        } else {
-            $_SESSION['alert']['danger'][] = 'L\'adresse email existe déjà';
-            header('location: /register');
-            session_write_close();
-        }
+        $this->email = $email;
     }
 
     /**
@@ -129,20 +116,6 @@ class User extends Database
      */
     public function setPassword($password){
         $this->password = $password;
-    }
-
-    public function verifyPassword($password, $passwordConfirm){
-        if($password !== $passwordConfirm) {
-            $_SESSION['alert']['danger'][] = 'Les deux mots de passe ne correspondent pas';
-            header('location: /register');
-            session_write_close();
-        }elseif(strlen($password) < 8) {
-            $_SESSION['alert']['danger'][] = 'Votre mot de passe doit faire plus de 8 caractères';
-            header('location: /register');
-            session_write_close();
-        } else {
-            return true;
-        }
     }
 
     public function getPassword()
@@ -253,6 +226,38 @@ class User extends Database
         return $this->isVerified;
     }
 
+    public function verifyPassword($password, $passwordConfirm){
+        if($password !== $passwordConfirm) {
+            $_SESSION['alert']['danger'][] = 'Les deux mots de passe ne correspondent pas';
+            header('location: /register');
+            session_write_close();
+            return false;
+        }elseif(strlen($password) < 8) {
+            $_SESSION['alert']['danger'][] = 'Votre mot de passe doit faire plus de 8 caractères';
+            header('location: /register');
+            session_write_close();
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    public function verifyEmail($email){
+        $db = new Database("User");
+        $result = $db->query(
+            ["id"],
+            ["email" => $email]
+        );
+        if(!$result) {
+            return true;
+        } else {
+            $_SESSION['alert']['danger'][] = 'L\'adresse email existe déjà';
+            header('location: /register');
+            session_write_close();
+            return false;
+        }
+    }
+
     public function buildFormProfile()
     {
         return [
@@ -294,6 +299,10 @@ class User extends Database
                     "placeholder"=>"Votre email",
                     "defaultValue" => $this->getEmail()
                 ]
+            ],
+            "button"=>[
+                "class"=>"buttonComponent d-flex floatRight",
+                "name"=>""
             ]
         ];
     }
@@ -413,9 +422,12 @@ class User extends Database
                     "required"=>true,
                     "error"=>"Votre numéro de téléphone doit contenir 10 chiffres",
                     "placeholder"=>"Votre numéro de téléphone"
-                ],
+                ]
+            ],
+            "button"=>[
+                "class"=>"buttonComponent d-flex floatRight",
+                "name"=>""
             ]
-
         ];
     }
 

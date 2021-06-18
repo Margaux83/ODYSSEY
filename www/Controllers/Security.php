@@ -8,7 +8,6 @@ use App\Core\View;
 use App\Core\Form;
 use App\Core\ConstantManager;
 use App\Models\User;
-use App\Core\FormBuilder;
 use App\Core\Mailer;
 use App\Models\BodyMail;
 
@@ -40,25 +39,27 @@ class Security{
         if(!empty($_POST)){
             $view->assign("form", $form);
 
-            $errors = FormBuilder::validator($_POST, $form);
+            $errors = Form::validator($_POST, $form);
             if(empty($errors)){
-                $user->setFirstname(htmlspecialchars(addslashes($_POST['firstname'])));
-                $user->setLastname(htmlspecialchars(addslashes($_POST['lastname'])));
-                $user->setEmail(htmlspecialchars(addslashes($_POST['email'])));
                 if($user->verifyPassword(htmlspecialchars(addslashes($_POST['password'])), htmlspecialchars(addslashes($_POST['password-confirm'])))) {
-                    $user->setPassword(password_hash(htmlspecialchars(addslashes($_POST['password'])), PASSWORD_BCRYPT));
+                    if($user->verifyEmail(htmlspecialchars(addslashes($_POST['email'])))) {
+                        $user->setFirstname(htmlspecialchars(addslashes($_POST['firstname'])));
+                        $user->setLastname(htmlspecialchars(addslashes($_POST['lastname'])));
+                        $user->setEmail(htmlspecialchars(addslashes($_POST['email'])));
+                        $user->setPassword(password_hash(htmlspecialchars(addslashes($_POST['password'])), PASSWORD_BCRYPT));
+                        $user->setPhone(htmlspecialchars(addslashes($_POST['phone'])));
+                        $user->setRole(1);
+                        $user->setIsDeleted(0);
+                        $user->setToken($token);
+                        $user->setIsVerified(0);
+                        $user->save();
+                        $object = "Email confirmation - ODYSSEY";;
+                        $mailer->sendMail($_POST['firstname'], $_POST['lastname'], $_POST['email'], $object, $bodymail->buildBodyMailConfirmation($_POST['email'], $token));
+                        $_SESSION['alert']['success'][] = 'Un mail de validation vous a été envoyé';
+                        header('location: /login');
+                        session_write_close();
+                    }
                 }
-                $user->setPhone(htmlspecialchars(addslashes($_POST['phone'])));
-                $user->setRole(1);
-                $user->setIsDeleted(0);
-                $user->setToken($token);
-                $user->setIsVerified(0);
-                $user->save();
-                $object = "Email confirmation - ODYSSEY";;
-                $mailer->sendMail($_POST['firstname'], $_POST['lastname'], $_POST['email'], $object, $bodymail->buildBodyMailConfirmation($_POST['email'], $token));
-                $_SESSION['alert']['success'][] = 'Un mail de validation vous a été envoyé';
-                header('location: /login');
-                session_write_close();
             }else{
                 $_SESSION['alert']['danger'][] = 'Les éléments du formulaire ne sont pas valides';
                 $view->assign("formErrors", $errors);
@@ -70,7 +71,6 @@ class Security{
 
     public function verificationAction() {
         if (!empty($_GET)) {
-
             if (isset($_GET['email']) && !empty($_GET['email']) && isset($_GET['token']) && !empty($_GET['token'])) {
                 $user = new User();
 
@@ -147,7 +147,8 @@ class Security{
                     $_SESSION['alert']['danger'][] = 'Votre compte doit être activé';
                 }
             } else {
-                $_SESSION['alert']['danger'][] = 'Aucun compte reconnu';
+                // Erreur mais on laisse un message de succès
+                $_SESSION['alert']['success'][] = 'Un mail contenant le token vient de vous être envoyé';
             }
 
 

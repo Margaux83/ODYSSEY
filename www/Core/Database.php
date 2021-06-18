@@ -4,7 +4,6 @@ namespace App\Core;
 
 class Database
 {
-
     protected $pdo;
     protected $table;
 
@@ -127,7 +126,6 @@ class Database
         $sql->execute();
     }
 
-
     public function getAllArticles()
     {
         $sql = "SELECT ody_Article.id, ody_Article.title, ody_Article.content, ody_Article.description, ody_Article.status, ody_Article.isVisible, ody_Article.isDraft,
@@ -161,5 +159,4 @@ class Database
             $this->$setAction($value);
         }
     }
-    
 }

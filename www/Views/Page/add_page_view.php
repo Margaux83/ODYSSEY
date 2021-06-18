@@ -14,7 +14,7 @@
     <?php } else { //?>
 
     <?php } ?>
-    <?php  App\Core\FormBuilderWYSWYG::showForm($form); ?>
+    <?php  App\Core\Form::showForm($form); ?>
 
 </section>
 

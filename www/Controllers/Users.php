@@ -3,7 +3,7 @@
 namespace App;
 
 use App\Core\Database;
-use App\Core\FormBuilder;
+use App\Core\Form;
 use App\Core\Security;
 use App\Core\Security as coreSecurity;
 use App\Core\View;
@@ -26,7 +26,8 @@ class Users{
         }
 
         $selectUser = $user->query(
-            ["id", "firstname", "lastname", "email", "status", "role", "creationDate", "lastConnexionDate"]
+            ["id", "firstname", "lastname", "email", "status", "role", "creationDate", "lastConnexionDate"],
+            ["isDeleted" => "0"]
         );
         $view->assign('infoUser', $selectUser);
     }
@@ -54,7 +55,7 @@ class Users{
         if(!empty($_POST)){
             $view->assign("form", $form);
 
-            $errors = FormBuilder::validator($_POST, $form);
+            $errors = Form::validator($_POST, $form);
             if(empty($errors)) {
                 $user->setFirstname(htmlspecialchars(addslashes($_POST['firstname'])));
                 $user->setLastname(htmlspecialchars(addslashes($_POST['lastname'])));
@@ -110,7 +111,7 @@ class Users{
                     $user->setToken("");
                     $user->setIsVerified(1);
                     $user->save();
-                    $_SESSION['alert']['success'][] = 'Votre mot de passe a bien été modifié';
+                    $_SESSION['alert']['success'][] = 'Votre mot de passe a bien été creé';
                     header('location: /login');
                     session_write_close();
                 }
