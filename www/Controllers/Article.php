@@ -106,14 +106,14 @@ class Article
                     $article->setDescription($dataArticle["description"]);
                     $article->setId_user($_SESSION["userId"]);
                     $article->setUri("/".$dataArticle['uri']);
-                    $article->setMedia($_FILES['media']['name']);
+                    //$article->setMedia($_FILES['media']['name']);
 
                    $article->save();
                    $result = $article->getLastFromTable();
                    $article->saveArticleCategory($dataArticle['category'], $result[0]["id"]);
 
 
-                   $_SESSION['alert']['success'][] = 'L\'article a bien été enregistré !';
+                   /*$_SESSION['alert']['success'][] = 'L\'article a bien été enregistré !';
                    if(isset($_FILES['media']['name'])){
                       //  foreach ($_FILES['media']['error'] as $key => $error) {
 
@@ -133,7 +133,7 @@ class Article
                             }
                             else{
                                 echo "ok";
-                            }
+                            }*/
                        // }
 
                 } else {

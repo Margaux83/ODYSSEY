@@ -382,13 +382,13 @@ class Article extends Database
 
                     "defaultValue"=>ltrim($this->getUri(), '/')
                 ],
-                "media"=>[
+               /* "media"=>[
                     "type"=>"file",
                     "required"=>false,
                     "class"=>"input",
                     "placeholder"=>"Importer votre image",
                     "defaultValue"=>""
-                ],
+                ],*/
                     "content"=>[
                         "type"=>"textarea",
                         "label"=>"",
