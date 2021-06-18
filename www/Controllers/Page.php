@@ -2,10 +2,9 @@
 
 namespace App;
 
-use App\Core\FormBuilderWYSWYG;
+use App\Core\Form;
 use App\Core\View;
 use App\Models\User;
-use App\Core\Form;
 use App\Models\Page as ModelPage;
 use App\Core\Helpers;
 
@@ -32,7 +31,7 @@ class Page{
         $view->assign("form", $form);
 
         if(!empty($_POST)) {
-            $errors = FormBuilderWYSWYG::validator($_POST, $form);
+            $errors = Form::validator($_POST, $form);
             if (empty($errors)) {
                 // Champs du formulaire
                 $page->setTitle(htmlspecialchars(addslashes($_POST['title'])));
@@ -68,7 +67,7 @@ class Page{
         $view->assign("form", $form);
 
         if(!empty($_POST) && !empty($_POST['title'])) {
-            $errors = FormBuilderWYSWYG::validator($_POST, $form);
+            $errors = Form::validator($_POST, $form);
             if (empty($errors)) {
                 // Champs du formulaire
                 $page->setTitle(htmlspecialchars(addslashes($_POST['title'])));

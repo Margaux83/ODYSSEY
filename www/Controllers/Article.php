@@ -3,7 +3,7 @@
 
 namespace App;
 
-use App\Core\FormBuilderWYSWYG;
+use App\Core\Form;
 use App\Core\Security;
 use App\Core\View;
 use App\Models\Article as Arti;
@@ -89,7 +89,7 @@ class Article
             }
             if (!empty($dataArticle)) {
 
-                $errors = FormBuilderWYSWYG::validator($dataArticle, $form);
+                $errors = Form::validator($dataArticle, $form);
                 //On vérifie s'il y a des erreurs
                 if (empty($errors)) {
                     //S'il n'y a pas d'erreurs, on envoie les données dans la requête pour ajouter l'article
@@ -113,8 +113,8 @@ class Article
                    $article->saveArticleCategory($dataArticle['category'], $result[0]["id"]);
 
 
-                   /*$_SESSION['alert']['success'][] = 'L\'article a bien été enregistré !';
-                   if(isset($_FILES['media']['name'])){
+                   $_SESSION['alert']['success'][] = 'L\'article a bien été enregistré !';
+                 /*  if(isset($_FILES['media']['name'])){
                       //  foreach ($_FILES['media']['error'] as $key => $error) {
 
                                 $tmp_name = $_FILES['media']['tmp_name'];
@@ -156,7 +156,7 @@ class Article
             }
             if (!empty($dataArticle)) {
 
-                $errors = FormBuilderWYSWYG::validator($dataArticle, $formCategory);
+                $errors = Form::validator($dataArticle, $formCategory);
                 if (empty($errors)) {
                     //S'il n'y a pas d'erreurs, on envoie les données dans la requête pour ajouter la catégorie
                     $category->setLabel($dataArticle["addcategory"]);
@@ -211,7 +211,7 @@ class Article
                 }
             }
             if (!empty($dataArticle)) {
-                $errors = FormBuilderWYSWYG::validator($dataArticle, $form);
+                $errors = Form::validator($dataArticle, $form);
 
                 if (empty($errors)) {
 

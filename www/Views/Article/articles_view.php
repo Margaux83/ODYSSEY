@@ -236,7 +236,7 @@
 
             <div class="footerDeleteArticleModal d-flex d-flex-wrap">
 
-                <?php  App\Core\FormBuilderWYSWYG::showForm($form); ?>
+                <?php  App\Core\Form::showForm($form); ?>
                 <button class="buttonComponent-alert closeModalDelete">Annuler</button>
             </div>
         </div>
@@ -256,7 +256,7 @@
 
         <div class="footerDeleteArticleModal d-flex d-flex-wrap">
 
-            <?php  App\Core\FormBuilderWYSWYG::showForm($formDeleteArticleOfUser); ?>
+            <?php  App\Core\Form::showForm($formDeleteArticleOfUser); ?>
             <button class="buttonComponent-alert closeModalDelete">Annuler</button>
         </div>
     </div>
