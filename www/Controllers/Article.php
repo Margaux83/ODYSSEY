@@ -105,7 +105,7 @@ class Article
                     $article->setIsdeleted(0);
                     $article->setDescription($dataArticle["description"]);
                     $article->setId_user($_SESSION["userId"]);
-                    $article->setUri($dataArticle['uri']);
+                    $article->setUri("/".$dataArticle['uri']);
                     $article->setMedia($_FILES['media']['name']);
 
                    $article->save();
@@ -221,7 +221,18 @@ class Article
                     }
                     else{
                         //Modification de l'article sélectionné
-                        $article->updateWithData($dataArticle);
+                        // Champs du formulaire
+                        $article->setTitle(htmlspecialchars(addslashes($dataArticle['title'])));
+                        $article->setContent(addslashes($dataArticle['content']));
+                        $article->setDescription($dataArticle['description']);
+                        $article->setUri("/".$dataArticle['uri']);
+                        $article->setStatus($dataArticle['status']);
+                        $article->setIsvisible($dataArticle['isvisible']);
+                        $article->setId_user($_SESSION["userId"]);
+
+                        // Champs par défaut
+                        $article->setIsdeleted(0);
+
                         $article->save();
                         $_SESSION['alert']['success'][] = 'L\'article a bien été modifié !';
                     }

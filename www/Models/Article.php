@@ -380,7 +380,7 @@ class Article extends Database
                     "error"=>"L'uri l'article doit faire entre 2 et 255 caractères",
                     "placeholder"=>"Votre titre",
 
-                    "defaultValue"=>$this->getUri()
+                    "defaultValue"=>ltrim($this->getUri(), '/')
                 ],
                 "media"=>[
                     "type"=>"file",
