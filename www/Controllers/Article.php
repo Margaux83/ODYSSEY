@@ -221,7 +221,6 @@ class Article
                     }
                     else{
                         //Modification de l'article sélectionné
-                        // Champs du formulaire
                         $article->setTitle(htmlspecialchars(addslashes($dataArticle['title'])));
                         $article->setContent(addslashes($dataArticle['content']));
                         $article->setDescription($dataArticle['description']);

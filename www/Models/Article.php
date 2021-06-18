@@ -378,7 +378,7 @@ class Article extends Database
                     "required"=>true,
                     "class"=>"input",
                     "error"=>"L'uri l'article doit faire entre 2 et 255 caractères",
-                    "placeholder"=>"Votre titre",
+                    "placeholder"=>"Votre uri",
 
                     "defaultValue"=>ltrim($this->getUri(), '/')
                 ],
