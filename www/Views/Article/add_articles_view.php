@@ -41,3 +41,12 @@
 
 <script src=<?php App\Core\View::getAssets("modal.js")?>></script>
 <script src=<?php App\Core\View::getAssets("popups.js")?>></script>
+<script>
+    $("#title").keyup(function(){
+        update();
+    });
+    function update() {
+        let value = $('#title').val().replace(/[^a-z0-9\w\d]+/g, "-");
+        $("#uri").val(value.toLowerCase());
+    }
+</script>

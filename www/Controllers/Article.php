@@ -114,6 +114,8 @@ class Article
 
 
                    $_SESSION['alert']['success'][] = 'L\'article a bien été enregistré !';
+                    header('location: /articles');
+                    session_write_close();
                  /*  if(isset($_FILES['media']['name'])){
                       //  foreach ($_FILES['media']['error'] as $key => $error) {
 
