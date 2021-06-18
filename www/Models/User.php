@@ -70,6 +70,22 @@ class User extends Database
     }
 
     /**
+     * @param $id_user
+     */
+    public function setId_user($id_user)
+    {
+        $this->id_user = $id_user;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getId_user()
+    {
+        return $this->id_user;
+    }
+
+    /**
      * @param $firstname
      */
     public function setFirstname($firstname){
@@ -487,8 +503,11 @@ class User extends Database
                     "placeholder"=>"Votre numéro de téléphone",
                     "defaultValue" => $this->getPhone()
                 ],
+            ],
+            "button"=>[
+                "class"=>"buttonComponent d-flex floatRight",
+                "name"=>""
             ]
-
         ];
     }
 

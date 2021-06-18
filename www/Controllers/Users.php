@@ -51,24 +51,26 @@ class Users{
 
         if(!empty($_POST)){
             $view->assign("form", $form);
-
             $errors = Form::validator($_POST, $form);
-            if(empty($errors)) {
-                $user->setFirstname(htmlspecialchars(addslashes($_POST['firstname'])));
-                $user->setLastname(htmlspecialchars(addslashes($_POST['lastname'])));
-                $user->setEmail(htmlspecialchars(addslashes($_POST['email'])));
-                $user->setPhone(htmlspecialchars(addslashes($_POST['phone'])));
-                $user->setRole(1);
-                $user->setIsDeleted(0);
-                $user->setToken($token);
-                $user->setIsVerified(0);
-                $user->save();
-                $object = "Email confirmation - ODYSSEY";;
-                $mailer->sendMail($_POST['firstname'], $_POST['lastname'], $_POST['email'], $object, $bodymail->buildBodyMailConfirmationBack($_POST['email'], $token));
-                $_SESSION['alert']['success'][] = 'Un mail de validation a été envoyé à l\'utilisateur';
-                header('location: /users');
-                session_write_close();
 
+            if(empty($errors)) {
+                if ($user->verifyEmail(htmlspecialchars(addslashes($_POST['email'])))) {
+                    $user->setFirstname(htmlspecialchars(addslashes($_POST['firstname'])));
+                    $user->setLastname(htmlspecialchars(addslashes($_POST['lastname'])));
+                    $user->setEmail(htmlspecialchars(addslashes($_POST['email'])));
+                    $user->setPhone(htmlspecialchars(addslashes($_POST['phone'])));
+                    $user->setRole(1);
+                    $user->setIsDeleted(0);
+                    $user->setToken($token);
+                    $user->setIsVerified(0);
+                    $user->save();
+                    $object = "Email confirmation - ODYSSEY";;
+                    $mailer->sendMail($_POST['firstname'], $_POST['lastname'], $_POST['email'], $object, $bodymail->buildBodyMailConfirmationBack($_POST['email'], $token));
+                    $_SESSION['alert']['success'][] = 'Un mail de validation a été envoyé à l\'utilisateur';
+                    header('location: /users');
+                    session_write_close();
+
+                }
             }
             else{
                 $_SESSION['alert']['danger'][] = 'Les éléments du formulaire ne sont pas valides';
@@ -108,7 +110,7 @@ class Users{
                     $user->setToken("");
                     $user->setIsVerified(1);
                     $user->save();
-                    $_SESSION['alert']['success'][] = 'Votre mot de passe a bien été creé';
+                    $_SESSION['alert']['success'][] = 'Votre mot de passe a bien été creé. Connectez-vous à votre compte';
                     header('location: /login');
                     session_write_close();
                 }
@@ -128,15 +130,41 @@ class Users{
 
         $user = new User();
         $view = new View("User/edit_users", "back");
-        if (!empty($_POST)) {
-
-            if($_POST['id_user'] != "") {
-                $user->setId($_POST["id_user"]);
-            }
-        }
+        $user->setId($_POST["id_user"]);
 
         $form = $user->buildFormUpdateBack();
         $view->assign("form", $form);
+
+        if(!empty($_POST) && !empty($_POST['email'])){
+            $errors = Form::validator($_POST, $form);
+
+            if(empty($errors)) {
+                var_dump($_POST);
+                if ($user->verifyEmail(htmlspecialchars(addslashes($_POST['email'])))) {
+                    $user->setFirstname(htmlspecialchars(addslashes($_POST['firstname'])));
+                    $user->setLastname(htmlspecialchars(addslashes($_POST['lastname'])));
+                    $user->setEmail(htmlspecialchars(addslashes($_POST['email'])));
+                    $user->setPhone(htmlspecialchars(addslashes($_POST['phone'])));
+                    $user->setUpdateDate(date ('Y-m-d H:i:s'));
+
+                    // Champs par défaut
+                    $user->setRole(1);
+                    $user->setIsDeleted(0);
+                    $user->setIsVerified(1);
+                    $user->save();
+
+                    $_SESSION['alert']['success'][] = 'Votre modification a bien été prise en compte';
+                    header('location: /users');
+                    session_write_close();
+
+                }
+            }
+            else{
+                $_SESSION['alert']['danger'][] = $errors[0];
+                $view->assign("formErrors", $errors);
+            }
+
+        }
     }
 
 
