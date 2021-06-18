@@ -108,4 +108,15 @@ class Comment extends Database
     {
         return $this->id_comment;
     }
+
+    public function getAllComments()
+    {
+        $db = new Database("Comment");
+        return $result = $db->query(
+            ["ody_Comment.id" ,"ody_Comment.content","ody_User.firstname", "ody_User.lastname", "ody_Article.title", "ody_Comment.creationDate", "ody_Comment.updateDate", "ody_Comment.id_Article", "ody_Comment.id_Comment","ody_Comment.id_User","ody_Comment.isVerified"],
+            ["ody_Comment.isDeleted" => "0"],
+            "",
+            " INNER JOIN ody_User ON ody_Comment.id_User = ody_User.ID INNER JOIN ody_Article ON ody_Comment.id_Article = ody_Article.ID"
+        );
+    }
 }
