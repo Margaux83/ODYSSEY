@@ -492,4 +492,13 @@ class User extends Database
         ];
     }
 
+    public function getAllUsers()
+    {
+        $db = new Database("User");
+        return $result = $db->query(
+            ["id", "firstname", "lastname", "email", "status", "role", "creationDate", "lastConnexionDate"],
+            ["isDeleted" => "0"]
+        );
+    }
+
 }

@@ -15,21 +15,18 @@ use App\Models\BodyMail;
 class Users{
 
     public function defaultAction(){
-        $view = new View("User/users", "back");
 
         $user = new User();
+        $allUsers = $user->getAllUsers();
+
+        $view = new View("User/users", "back");
+        $view->assign('allUsers', $allUsers);
 
         if (!empty($_POST)) {
             if (!empty($_POST['deleteUser'])) {
                 $user->delete($_POST['id_user']);
             }
         }
-
-        $selectUser = $user->query(
-            ["id", "firstname", "lastname", "email", "status", "role", "creationDate", "lastConnexionDate"],
-            ["isDeleted" => "0"]
-        );
-        $view->assign('infoUser', $selectUser);
     }
 
     public function addUsersAction()

@@ -49,9 +49,9 @@
         </thead>
         <tbody>
         <?php
-        if(!empty($infoUser)){
+        if(!empty($allUsers)){
 
-        foreach ($infoUser as $user){
+        foreach ($allUsers as $user){
 
             ?>
             <tr class="text-center">
