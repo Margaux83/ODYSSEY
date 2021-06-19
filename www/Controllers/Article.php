@@ -210,7 +210,7 @@ class Article
                     }
                     else {
                         //On vérifie si l'uri existe dans la base de données pour un autre article
-                        if (empty($article->getUriArticle($_POST["id"],"/" . $dataArticle['uri']))) {
+                        if (empty($article->getUriForVerification($_POST["id"],"/" . $dataArticle['uri']))) {
                             //Modification de l'article sélectionné
                             $article->setTitle(htmlspecialchars(addslashes($dataArticle['title'])));
                             $article->setContent(addslashes($dataArticle['content']));

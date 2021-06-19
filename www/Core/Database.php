@@ -168,7 +168,7 @@ class Database
     }
 
     //Retourne l'uri d'un article si elle existe déjà dans la base de données
-    public function getUriArticle($id,$uri)
+    public function getUriForVerification($id,$uri)
     {
         $sql = "SELECT uri FROM " . $this->table . " WHERE isDeleted!=1 AND uri='".$uri."' AND id!=".$id;
 
