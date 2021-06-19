@@ -166,4 +166,16 @@ class Database
             $this->$setAction($value);
         }
     }
+
+    //Retourne l'uri d'un article si elle existe déjà dans la base de données
+    public function getUriArticle($id,$uri)
+    {
+        $sql = "SELECT uri FROM " . $this->table . " WHERE isDeleted!=1 AND uri='".$uri."' AND id!=".$id;
+
+
+        $query = $this->pdo->prepare($sql);
+        $query->execute();
+        return $query->fetchAll();
+    }
+
 }

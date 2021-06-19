@@ -208,22 +208,32 @@ class Article
                     if(strlen($dataArticle['id']) == 0) {
                         $_SESSION['alert']['danger'][] = 'Veuillez sélectionner un article';
                     }
-                    else{
-                        //Modification de l'article sélectionné
-                        $article->setTitle(htmlspecialchars(addslashes($dataArticle['title'])));
-                        $article->setContent(addslashes($dataArticle['content']));
-                        $article->setDescription($dataArticle['description']);
-                        $article->setUri("/".$dataArticle['uri']);
-                        $article->setStatus($dataArticle['status']);
-                        $article->setIsvisible($dataArticle['isvisible']);
-                        $article->setId_user($_SESSION["userId"]);
+                    else {
+                        //On vérifie si l'uri existe dans la base de données pour un autre article
+                        if (empty($article->getUriArticle($_POST["id"],"/" . $dataArticle['uri']))) {
+                            //Modification de l'article sélectionné
+                            $article->setTitle(htmlspecialchars(addslashes($dataArticle['title'])));
+                            $article->setContent(addslashes($dataArticle['content']));
+                            $article->setDescription($dataArticle['description']);
+                            $article->setUri("/" . $dataArticle['uri']);
+                            $article->setStatus($dataArticle['status']);
+                            $article->setIsvisible($dataArticle['isvisible']);
+                            $article->setId_user($_SESSION["userId"]);
 
-                        // Champs par défaut
-                        $article->setIsdeleted(0);
+                            // Champs par défaut
+                            $article->setIsdeleted(0);
 
-                        $article->save();
-                        $_SESSION['alert']['success'][] = 'L\'article a bien été modifié !';
+                            $article->save();
+                            $_SESSION['alert']['success'][] = 'L\'article a bien été modifié !';
+                            header('location: /articles');
+                            session_write_close();
+                        }else{
+                            $_SESSION['alert']['danger'][] = 'Cette uri existe déjà';
+                            header('location: /articles');
+                            session_write_close();
+                        }
                     }
+
 
 
                 } else {
