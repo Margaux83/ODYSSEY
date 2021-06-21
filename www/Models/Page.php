@@ -241,10 +241,8 @@ class Page extends Database
                     "lengthMax"=>"255",
                     "lengthMin"=>"2",
                     "error"=>"Le contenu de la page doit faire entre 2 et 255 caractères",
-                    "id"=>"content",
+                    "id"=>"full-featured-non-premium",
                     "required"=>true,
-                    "class"=>"trumbowygTextarea",
-
                     "placeholder"=>"Votre contenu",
                     "defaultValue"=>$this->getContent()
                 ],
