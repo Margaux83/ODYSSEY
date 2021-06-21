@@ -5,7 +5,7 @@
     }
 </style>
 
-<form action="addarticle">
+<form action="add-article">
     <button type="submit" class="buttonComponent d-flex"><img src=<?php App\Core\View::getAssets("icons/plus-solid.svg")?> height="15" width="15">Ajouter article</button>
 </form>
 
