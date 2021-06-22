@@ -33,11 +33,34 @@
   label: Modifier un article
 
 /users:
-  controller: User
+  controller: Users
   action: default
   label: Utilisateurs
   menuData:
     visible: true
+    min-statut: true
+    listId: basics
+    icon: icon_user
+    children: [
+       /add-users,
+  ]
+
+/add-users:
+  controller: Users
+  action: addUsers
+  label: Ajouter un utilisateur
+  menuData:
+    visible: false
+    min-statut: true
+    listId: basics
+    icon: icon_user
+
+/edit-user:
+  controller: Users
+  action: editUsers
+  label: Modifier un utilisateur
+  menuData:
+    visible: false
     min-statut: true
     listId: basics
     icon: icon_user
@@ -143,6 +166,12 @@
   controller: Security
   action: forgotPasswordConfirm
   label: Mot de passe oublié
+  freeAccess: true
+
+/newpasswordconfirm:
+  controller: Users
+  action: newPasswordConfirm
+  label: Créer votre nouveau mot de passe
   freeAccess: true
 
 /logout:

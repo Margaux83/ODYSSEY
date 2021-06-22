@@ -13,7 +13,7 @@
     <?php } else { //?>
 
     <?php } ?>
-        <?php  App\Core\FormBuilderWYSWYG::showForm($form); ?>
+        <?php  App\Core\Form::showForm($form); ?>
 </section>
 
 
@@ -26,7 +26,7 @@
             <h1 class="titleModal d-flex">Ajout d'une catégorie</h1>
             <span class="closeComment d-flex">&times;</span>
         </div>
-        <?php  App\Core\FormBuilderWYSWYG::showForm($formCategory); ?>
+        <?php  App\Core\Form::showForm($formCategory); ?>
     </div>
 </div>
 

@@ -5,7 +5,6 @@
   	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<title>Odyssey - <?php App\Core\View::getActualPageTitle() ?></title>
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-
     <link rel="stylesheet" type="text/css" href=<?php App\Core\View::getAssets("main.css")?>>
 
     <link rel="stylesheet" type="text/css" href=<?php App\Core\View::getAssets("alert.css")?>>
@@ -59,4 +58,5 @@
         </div>
     </main>
 </body>
+
 </html>

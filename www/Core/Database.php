@@ -4,7 +4,6 @@ namespace App\Core;
 
 class Database
 {
-
     protected $pdo;
     protected $table;
 
@@ -108,7 +107,7 @@ class Database
                 }
 
             }
-            $query->execute();
+           $query->execute();
         }
     }
 
@@ -126,7 +125,6 @@ class Database
         $sql = $this->pdo->prepare("INSERT INTO ody_Category_Article (id_Category,id_Article) VALUES (".$category.",".$id_Article." )");
         $sql->execute();
     }
-
 
     public function getAllArticles()
     {
@@ -168,5 +166,4 @@ class Database
             $this->$setAction($value);
         }
     }
-    
 }
