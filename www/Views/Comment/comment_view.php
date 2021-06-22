@@ -1,4 +1,5 @@
 <link rel="stylesheet" type="text/css" href=<?php App\Core\View::getAssets("datatables.css")?>>
+<link rel="stylesheet" type="text/css" href=<?php App\Core\View::getAssets("comment.css")?>>
 <style>
     table tbody td {
         min-width: 100px;
@@ -9,11 +10,11 @@
     <table id="table_all_comments" class="table thead-dark">
         <thead>
         <tr>
-            <th>Dates</th>
+            <th>Date et état</th>
             <th>Commentaire</th>
             <th>Créateur</th>
             <th>Titre de l'article</th>
-            <th>Action</th>
+            <th>Actions</th>
 
         </tr>
         </thead>
@@ -24,7 +25,14 @@
             <tr class="text-center">
                 <td>
                     <p><img src=<?php App\Core\View::getAssets("icons/plus-solid.svg")?> alt="" height="15" width="15">&nbsp;&nbsp;  <?= date("d/m/Y H:i", strtotime($comment["creationDate"])) ?></p>
-                    <p><img src=<?php App\Core\View::getAssets("icons/pen-solid.svg")?> alt="" height="15" width="15">&nbsp;&nbsp;  <?= (empty($comment["updateDate"])) ? 'Pas modifié' : date("d/m/Y H:i", strtotime($comment["updateDate"])) ?></p>
+                    <?php if($comment["isVerified"] == 0) { ?>
+                        <p>En attente de vérification</p>
+
+                   <?php }
+                        else{
+                            ?>
+                          <p>Le commentaire a été vérifié</p>
+                    <?php    } ?>
                 </td>
                 <td>
                     <p class="listItem-cpt"><b><?= $comment["content"] ?></p>
@@ -36,18 +44,27 @@
                     <div class="listItem-cpt listActions">
                         <?php if($comment["isVerified"] == 0) {
                             //Si l'article n'est pas vérifié, on affiche un bouton pour le vérifié et un bouton pour le supprimer?>
-                        <a href="#" id="verifyComment" onclick="verifyComment(this)" data-id="<?= $comment["id"] ?>">
-                            <img src=<?php App\Core\View::getAssets("icons/check-solid.svg")?> alt="" height="20" width="20">
+                        <a href="#"  id="verifyComment" onclick="verifyComment(this)" data-id="<?= $comment["id"] ?>">
+                            <div class="linkVerifyAction">
+                                <p>Approuver</p>&ensp;
+                                <img src=<?php App\Core\View::getAssets("icons/check-solid.svg")?> alt="" height="20" width="20">
+                            </div>
                         </a>
-                        <a href="#" id="deleteComment" onclick="deleteComment(this)" data-id="<?= $comment["id"] ?>">
-                            <img src=<?php App\Core\View::getAssets("icons/times-solid.svg")?> alt="" height="20" width="20">
+
+                        <a href="#" class="linkDeleteAction" id="deleteComment" onclick="deleteComment(this)" data-id="<?= $comment["id"] ?>">
+                            <div class="linkDeleteAction">
+                                <p>Désapprouver</p>&ensp;
+                                <img  src=<?php App\Core\View::getAssets("icons/trash-solid.svg")?> alt="" height="20" width="20">
+                            </div>
                         </a>
+
+
                         <?php }
                         else{
                             //Si l'article est vérifié, on affiche un bouton pour le supprimer si l'utilisateur a besoin de supprimer après sa vérification
                             ?>
-                            <p style="color: #39b400">Le commentaire a été vérifié !</p>
-                            <a href="#" id="deleteComment" onclick="deleteComment(this)" data-id="<?= $comment["id"] ?>">
+                            <a href="#" class="linkDeleteAction" id="deleteComment" onclick="deleteComment(this)" data-id="<?= $comment["id"] ?>">
+                                <p>Désapprouver</p>&ensp;
                                 <img src=<?php App\Core\View::getAssets("icons/trash-solid.svg")?> alt="" height="20" width="20">
                             </a>
                         <?php }?>
