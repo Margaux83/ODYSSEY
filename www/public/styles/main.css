@@ -1034,7 +1034,7 @@ ul.listItemBasic li.listItem .listItem-cpt {
   opacity: 0.5;
   position: absolute;
   -o-object-fit: cover;
-     object-fit: cover;
+  object-fit: cover;
   filter: brightness(0) invert(100%);
 }
 

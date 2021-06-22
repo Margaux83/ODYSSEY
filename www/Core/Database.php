@@ -107,7 +107,7 @@ class Database
                 }
 
             }
-            $query->execute();
+           $query->execute();
         }
     }
 

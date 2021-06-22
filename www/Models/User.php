@@ -70,6 +70,22 @@ class User extends Database
     }
 
     /**
+     * @param $id_user
+     */
+    public function setId_user($id_user)
+    {
+        $this->id_user = $id_user;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getId_user()
+    {
+        return $this->id_user;
+    }
+
+    /**
      * @param $firstname
      */
     public function setFirstname($firstname){
@@ -262,11 +278,11 @@ class User extends Database
     {
         return [
             "config" => [
-				"method" => "POST",
-				"Action" => "",
-				"Submit" => "Modifier",
-				"class" => "form_register"
-			],
+                "method" => "POST",
+                "Action" => "",
+                "Submit" => "Modifier",
+                "class" => "form_register"
+            ],
             "input" => [
                 "firstname"=>[
                     "type"=>"text",
@@ -375,6 +391,133 @@ class User extends Database
             ]
 
         ];
+    }
+
+    public function buildFormRegisterBack(){
+        return [
+            "config"=>[
+                "method"=>"POST",
+                "Action"=>"",
+                "reset" => "Annuler",
+                "Submit"=>"Enregistrer",
+                "class"=>"form-group"
+            ],
+            "input"=>[
+                "lastname"=>[
+                    "type"=>"text",
+                    "label"=>"Nom",
+                    "lengthMax"=>"255",
+                    "lengthMin"=>"2",
+                    "required"=>true,
+                    "error"=>"Votre nom doit faire entre 2 et 255 caractères",
+                    "placeholder"=>"Votre nom"
+                ],
+                "firstname"=>[
+                    "type"=>"text",
+                    "class"=>"form_input",
+                    "label"=>"Prénom",
+                    "lengthMax"=>"120",
+                    "lengthMin"=>"2",
+                    "required"=>true,
+                    "error"=>"Votre prénom doit faire entre 2 et 120 caractères",
+                    "placeholder"=>"Votre prénom",
+                ],
+                "email"=>[
+                    "type"=>"email",
+                    "label"=>"Adresse Mail",
+                    "lengthMax"=>"320",
+                    "lengthMin"=>"8",
+                    "required"=>true,
+                    "error"=>"Votre email doit faire entre 8 et 320 caractères",
+                    "placeholder"=>"Votre email"
+                ],
+                "phone"=>[
+                    "type"=>"text",
+                    "label"=>"Numéro de téléphone",
+                    "lengthMin"=>"10",
+                    "required"=>true,
+                    "error"=>"Votre numéro de téléphone doit contenir 10 chiffres",
+                    "placeholder"=>"Votre numéro de téléphone"
+                ]
+            ],
+            "button"=>[
+                "class"=>"buttonComponent d-flex floatRight",
+                "name"=>""
+            ]
+        ];
+    }
+
+    public function buildFormUpdateBack(){
+        return [
+            "config"=>[
+                "method"=>"POST",
+                "Action"=>"users",
+                "reset" => "Annuler",
+                "Submit"=>"Enregistrer",
+                "class"=>"form-group"
+
+            ],
+            "input"=>[
+                "id_user"=>[
+                    "type"=>"hidden",
+                    "defaultValue"=>$this->getId()
+                ],
+                "lastname"=>[
+                    "type"=>"text",
+                    "label"=>"Nom",
+                    "lengthMax"=>"255",
+                    "lengthMin"=>"2",
+                    "required"=>true,
+                    "error"=>"Votre nom doit faire entre 2 et 255 caractères",
+                    "placeholder"=>"Votre nom",
+                    "defaultValue" => $this->getLastname()
+
+                ],
+                "firstname"=>[
+                    "type"=>"text",
+                    "label"=>"Prénom",
+                    "lengthMax"=>"120",
+                    "lengthMin"=>"2",
+                    "required"=>true,
+                    "error"=>"Votre prénom doit faire entre 2 et 120 caractères",
+                    "placeholder"=>"Votre prénom",
+                    "defaultValue" => $this->getFirstname()
+                ],
+                "email"=>[
+                    "type"=>"email",
+                    "label"=>"Adresse Mail",
+                    "lengthMax"=>"320",
+                    "lengthMin"=>"8",
+                    "required"=>true,
+                    "error"=>"Votre email doit faire entre 8 et 320 caractères",
+                    "placeholder"=>"Votre email",
+                    "defaultValue" => $this->getEmail()
+                ],
+                "phone"=>[
+                    "type"=>"text",
+                    "label"=>"Numéro de téléphone",
+                    "lengthMax"=>"10",
+                    "lengthMin"=>"10",
+                    "required"=>true,
+                    "error"=>"Votre numéro de téléphone doit contenir 10 chiffres",
+                    "placeholder"=>"Votre numéro de téléphone",
+                    "defaultValue" => $this->getPhone()
+                ],
+            ],
+            "button"=>[
+                "class"=>"buttonComponent d-flex floatRight",
+                "name"=>""
+            ]
+        ];
+    }
+
+    public function getAllUsers()
+    {
+        $db = new Database("User");
+        return $result = $db->query(
+            ["id", "firstname", "lastname", "email", "status", "role", "creationDate", "lastConnexionDate"],
+            ["isDeleted" => "0"]
+        );
     }
 
 }

@@ -5,27 +5,26 @@ namespace App\Core;
 class Form
 {
     public static function validator($data, $config){
-
         $errors = [];
 
-        if( count($data) == count($config["input"])){
+        if( count($data) == count($config["input"])) {
 
             foreach ($config["input"] as $name => $configInput) {
-
-                if( !empty($configInput["lengthMin"])
+                if (!empty($configInput["lengthMin"])
                     && is_numeric($configInput["lengthMin"])
-                    && strlen($data[$name])<$configInput["lengthMin"] ){
-
+                    && strlen($data[$name]) < $configInput["lengthMin"]) {
                     $errors[] = $configInput["error"];
 
                 }
 
+                if (!empty($configInput["lengthMax"])
+                    && is_numeric($configInput["lengthMax"])
+                    && strlen($data[$name]) > $configInput["lengthMax"]) {
+                    $errors[] = $configInput["error"];
+
+                }
             }
-
-        }else{
-            $errors[] = "Tentative de Hack (Faille XSS)";
         }
-
         return $errors; //tableau des erreurs
     }
 
