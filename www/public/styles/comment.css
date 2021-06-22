@@ -1,0 +1,27 @@
+a,
+a:link,
+a:visited,
+a:hover,
+a:active{
+    text-decoration: none;
+
+}
+
+.linkVerifyAction{
+    display: flex;
+}
+
+.linkDeleteAction{
+    display: flex;
+}
+
+.linkVerifyAction p{
+    color: #39b400;
+}
+
+
+
+.linkDeleteAction p{
+    color: darkred;
+}
+
