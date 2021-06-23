@@ -5,6 +5,7 @@ namespace App;
 use App\Core\View;
 use App\Core\Security;
 use App\Core\Statistic;
+use App\Core\ListQuery;
 
 
 class Base{
@@ -18,21 +19,21 @@ class Base{
 
 		$statisticsPages = Statistic::getSimpleStatistics(
 			[
-				'Page' => [
+				[
 					'label' => 'Page visibles',
 					'element' => 'Page',
 					'filter' => [
 						'isVisible' => 1
 					]
 				],
-				'Article' => [
+				[
 					'label' => 'Articles visibles',
 					'element' => 'Article',
 					'filter' => [
 						'isVisible' => 1
 					]
 				],
-				'Comment' => [
+				[
 					'label' => 'Commentaires postés',
 					'element' => 'Comment',
 					'filter' => []
@@ -40,9 +41,31 @@ class Base{
 			]
 		);
 
+		$listComments = ListQuery::getSimpleList(
+			[
+				'element' => 'Comment',
+				'columns' => [
+					'id_User' => [
+						'label' => 'Utilisateurs',
+						'size' => 2,
+						'combo' => [
+							'element' => 'User',
+							'columns' => ['firstname', 'lastname'],
+							'filterKey' => 'id'
+						]
+					],
+					'content' => [
+						'label' => 'Commentaires',
+						'size' => 3
+					],
+				]
+			]
+		);
+
 		//Affiche moi la vue dashboard;
 		$view = new View("dashboard", "back");
 		$view->assign("statistics", $statisticsPages);
+		$view->assign("comments", $listComments);
 	}
 
 }
