@@ -194,66 +194,16 @@
 <section class="col-12" style="grid-column: 9 / 13; grid-row: 2 / 4;">
     <h1 class="titleSection"><img src=<?php App\Core\View::getAssets("icons/icon_comment.png")?> alt="">Commentaires</h1>
     <ul class="listItemComplete limit-height-375"  style="min-height: 80%;">
-        <li class="legend">
-            <p class="flex-weight-1">Utilisateurs</p>
-            <p class="flex-weight-1">Titres</p>
-            <p></p>
-        </li>
+        <?php foreach ($comments as $key => $comment) {
+                echo $comment;
+            }?>
+        <!--
         <li class="listItem">
             <p class="flex-weight-1">Contact</p>
             <p class="flex-weight-1 status-color-important">Affichage</p>
             <p></p>
         </li>
-        <li class="listItem">
-            <p class="flex-weight-1">Hôtel de Marseille</p>
-            <p class="flex-weight-1 status-color-normal">Réservation</p>
-            <p></p>
-        </li>
-        <li class="listItem">
-            <p class="flex-weight-1">Accueil</p>
-            <p class="flex-weight-1 status-color-moyen">Affichage</p>
-            <p></p>
-        </li>
-        <li class="listItem">
-            <p class="flex-weight-1">Configuration URL</p>
-            <p class="flex-weight-1 status-color-important">Configuration</p>
-            <p></p>
-        </li>
-        <li class="listItem">
-            <p class="flex-weight-1">Contact</p>
-            <p class="flex-weight-1 status-color-important">Affichage</p>
-            <p></p>
-        </li>
-        <li class="listItem">
-            <p class="flex-weight-1">Hôtel de Marseille</p>
-            <p class="flex-weight-1 status-color-normal">Réservation</p>
-            <p></p>
-        </li>
-        <li class="listItem">
-            <p class="flex-weight-1">Accueil</p>
-            <p class="flex-weight-1 status-color-moyen">Affichage</p>
-            <p></p>
-        </li>
-        <li class="listItem">
-            <p class="flex-weight-1">Configuration URL</p>
-            <p class="flex-weight-1 status-color-important">Configuration</p>
-            <p></p>
-        </li>
-        <li class="listItem">
-            <p class="flex-weight-1">Contact</p>
-            <p class="flex-weight-1 status-color-important">Affichage</p>
-            <p></p>
-        </li>
-        <li class="listItem">
-            <p class="flex-weight-1">Hôtel de Marseille</p>
-            <p class="flex-weight-1 status-color-normal">Réservation</p>
-            <p></p>
-        </li>
-        <li class="listItem">
-            <p class="flex-weight-1">Hôtel de Marseille</p>
-            <p class="flex-weight-1 status-color-normal">Réservation</p>
-            <p></p>
-        </li>
+        -->
     </ul>
     <div class="d-flex callToActionContainer">
         <button class="callToAction-withIcon">
