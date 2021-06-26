@@ -328,7 +328,6 @@ class Article extends Database
                     "lengthMax"=>"255",
                     "lengthMin"=>"2",
                     "required"=>true,
-                    "class"=>"input",
                     "error"=>"Le titre de l'article doit faire entre 2 et 255 caractères",
                     "placeholder"=>"Votre titre",
 
@@ -343,13 +342,12 @@ class Article extends Database
                         "id"=>"content",
                         "required"=>true,
                         "class"=>"trumbowygTextarea",
-
-                         "placeholder"=>"Votre contenu",
+                        "placeholder"=>"Votre contenu",
                         "defaultValue"=>$this->getContent()
                     ],
                     "description"=>[
                         "type"=>"textarea",
-                        "label"=>"Desciption",
+                        "label"=>"Description",
                         "lengthMax"=>"255",
                         "lengthMin"=>"2",
                         "error"=>"La description de l'article doit faire entre 2 et 255 caractères",
