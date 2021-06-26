@@ -113,7 +113,7 @@
     icon: icon_page
 
 /menu-management:
-  controller: MenuManagement
+  controller: Menu
   action: default
   label: Gestion du menu
   menuData:

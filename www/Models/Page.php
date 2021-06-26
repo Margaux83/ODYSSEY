@@ -230,7 +230,6 @@ class Page extends Database
                     "lengthMax"=>"255",
                     "lengthMin"=>"2",
                     "required"=>true,
-                    "class"=>"input",
                     "error"=>"Le titre de la page doit faire entre 2 et 255 caractères",
                     "placeholder"=>"Votre titre",
                     "defaultValue"=>$this->getTitle()
@@ -248,6 +247,16 @@ class Page extends Database
                     "placeholder"=>"Votre contenu",
                     "defaultValue"=>$this->getContent()
                 ],
+                "uri"=>[
+                    "type"=>"text",
+                    "label"=>"Veuillez choisir une uri pour votre page",
+                    "lengthMax"=>"255",
+                    "lengthMin"=>"2",
+                    "required"=>true,
+                    "error"=>"Votre uri doit faire entre 2 et 255 caractères",
+                    "placeholder"=>"Uri",
+                    "defaultValue"=>ltrim($this->getUri(), '/')
+                ],
                 "description"=>[
                     "type"=>"text",
                     "label"=>"Description",
@@ -259,17 +268,6 @@ class Page extends Database
                     "class"=>"textareaComment d-flex",
                     "placeholder"=>"Votre contenu",
                     "defaultValue"=>$this->getDescription()
-                ],
-                "uri"=>[
-                    "type"=>"text",
-                    "label"=>"Veuillez choisir une uri pour votre page",
-                    "lengthMax"=>"255",
-                    "lengthMin"=>"2",
-                    "required"=>true,
-                    "class"=>"input",
-                    "error"=>"Votre uri doit faire entre 2 et 255 caractères",
-                    "placeholder"=>"Uri",
-                    "defaultValue"=>ltrim($this->getUri(), '/')
                 ],
                 "status"=>[
                     "type"=>"select",
