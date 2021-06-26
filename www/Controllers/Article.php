@@ -207,34 +207,38 @@ class Article
                         $_SESSION['alert']['danger'][] = 'Veuillez sélectionner un article';
                     }
                     else {
-                        //On vérifie si l'uri existe dans la base de données pour un autre article
-                        if (empty($article->getUriForVerification($_POST["id"],"/" . $dataArticle['uri']))) {
+
+
                             //Modification de l'article sélectionné
                             $article->setTitle(htmlspecialchars(addslashes($dataArticle['title'])));
                             $article->setContent(addslashes($dataArticle['content']));
                             $article->setDescription($dataArticle['description']);
-                            $article->setUri("/" . $dataArticle['uri']);
+
                             $article->setStatus($dataArticle['status']);
                             $article->setIsvisible($dataArticle['isvisible']);
                             $article->setId_user($_SESSION["userId"]);
 
                             // Champs par défaut
                             $article->setIsdeleted(0);
+                        //On vérifie si l'uri existe dans la base de données pour un autre article
+                        $uriverification = empty($article->getUriForVerification($_POST["id"],"/" . $dataArticle['uri']));
 
+                            if ($uriverification) {
+                                $article->setUri("/" . $dataArticle['uri']);
+                            }
+                            else{
+                                $_SESSION['alert']['danger'][] = 'Cette uri existe déjà';
+                            }
                             $article->save();
                             $_SESSION['alert']['success'][] = 'L\'article a bien été modifié !';
-                            header('location: /articles');
-                            session_write_close();
-                        }else{
-                            $_SESSION['alert']['danger'][] = 'Cette uri existe déjà';
-                            header('location: /articles');
-                            session_write_close();
+                            if($uriverification){
+                                header('location: /articles');
+                                session_write_close();
+                            }
+
                         }
                     }
-
-
-
-                } else {
+                else {
                     //S'il y a des erreurs, on prépare leur affichage
                     $_SESSION['alert']['danger'][] = $errors[0];
                 }
@@ -243,6 +247,9 @@ class Article
                         $article->setId($_POST["id"]);
                     }
                 }
+                //Création du formBuilder des articles
+                $form = $article->buildFormArticle();
+                $view->assign("form", $form);
                 $view->assign('article', $article);
 
             }
