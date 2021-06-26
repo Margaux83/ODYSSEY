@@ -46,8 +46,6 @@ class Article
 
         $form = $article->buildFormDeleteArticle();
         $view->assign("form", $form);
-        $formDeleteArticleOfUser = $article->buildFormDeleteArticleOfUser();
-        $view->assign("formDeleteArticleOfUser", $formDeleteArticleOfUser);
 
     }
 
