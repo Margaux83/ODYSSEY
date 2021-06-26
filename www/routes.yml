@@ -29,6 +29,7 @@
 /edit-article:
   controller: Article
   action: editArticle
+  label: Modifier un article
 
 /users:
   controller: Users
