@@ -14,6 +14,7 @@ class User extends Database
     protected $status;
     protected $role;
     protected $isDeleted;
+    protected $updateDate;
     protected $token;
     protected $isVerified;
 
@@ -210,6 +211,22 @@ class User extends Database
     public function getIsDeleted()
     {
         return $this->isDeleted;
+    }
+
+    /**
+     * @param $updateDate
+     */
+    public function setUpdateDate($updateDate)
+    {
+        $this->updateDate = $updateDate;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getUpdateDate()
+    {
+        return $this->updateDate;
     }
 
     /**
@@ -489,6 +506,7 @@ class User extends Database
                     "lengthMax"=>"320",
                     "lengthMin"=>"8",
                     "required"=>true,
+                    "disabled"=>true,
                     "error"=>"Votre email doit faire entre 8 et 320 caractères",
                     "placeholder"=>"Votre email",
                     "defaultValue" => $this->getEmail()
