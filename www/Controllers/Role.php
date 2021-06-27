@@ -11,11 +11,17 @@ use App\Core\Database;
 
 class Role {
     public function defaultAction() {
-        $roles = new ModelRole;
-        $allRoles = $roles->getAllRoles();
+        $role = new ModelRole;
+        $allRoles = $role->getAllRoles();
 
         $view = new View("Role/roles", "back");
         $view->assign("allRoles", $allRoles);
+
+        if (!empty($_POST)) {
+            if (!empty($_POST['deleteRole'])) {
+                $role->delete($_POST['id_role']);
+            }
+        }
     }
     public function addRoleAction() {
         $role = new ModelRole;
@@ -25,10 +31,14 @@ class Role {
             $role->setName($_POST['name']);
             $role->setValue(json_encode($_POST['values']));
             $role->save();
+            $_SESSION['alert']['success'][] = "Le rôle a bien été ajouté !";
+            header('location: /roles');
+            session_write_close();
         }
 
         $view = new View("Role/add_role", "back");
         $view->assign("rolesList", $role->rolesList());
+        $view->assign("roleClass", $role);
 
     }
 
@@ -49,7 +59,8 @@ class Role {
 
         $view = new View("Role/add_role", "back");
         $view->assign("rolesList", $role->rolesList());
-        $view->assign("role", $result[0]);
+        $view->assign("roleClass", $role);
+        $view->assign("roleResult", $result[0]);
 
     }
 }

@@ -103,7 +103,7 @@
     listId: basics
     icon: icon_comment
 
-/role:
+/roles:
   controller: Role
   action: default
   label: Roles

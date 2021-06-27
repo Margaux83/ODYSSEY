@@ -12,7 +12,7 @@
     <form id="role-form" class="roles_edit" method="post" action="">
 
         <label>Titre du rôle</label>
-        <input type="text" class="form-control" name="name" value="<?= (!empty($_GET['role']) ? $role['name'] : '')?>" required>
+        <input type="text" class="form-control" name="name" value="<?= (!empty($_GET['role']) ? $roleResult['name'] : '')?>" required>
 
         <?php foreach($rolesList as $role => $role_data) { ?>
             <?php if(isset($role_data['title'])) { ?>
@@ -21,7 +21,7 @@
 
             <?php foreach($role_data['values'] as $perm => $perm_data) { ?>
                 <div class="form-group">
-                    <input type="checkbox" id="<?= $perm ?>" name="values[<?= $perm ?>]" value="1">
+                    <input type="checkbox" id="<?= $perm ?>" name="values[<?= $perm ?>]" value="1" <?= (isset($_GET['role'])) ? ($roleClass->getPerms($perm, $_GET['role'])) ? 'checked' : ''  : ''?>>
                     <label for="<?= $perm ?>"><?= $perm_data['desc'] ?></label>
                 </div>
             <?php } ?>

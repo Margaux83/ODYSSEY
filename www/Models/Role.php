@@ -95,8 +95,19 @@ class Role extends Database
     {
         $db = new Database("Role");
         return $result = $db->query(
-            ["id" ,"name"]
+            ["id" ,"name"],
+            ["isDeleted" => "0"]
         );
+    }
+
+    public function getPerms($value, $id) {
+        $db = new Database("Role");
+        $result = $db->query(
+            ["value"],
+            ["id" => $id]
+        );
+        $perms = json_decode($result[0]['value'], true);
+        return $perms[$value] ?? false;
     }
 
     public function rolesList()

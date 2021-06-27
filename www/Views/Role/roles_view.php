@@ -24,7 +24,7 @@
                         <a href="edit-role?role=<?= $role['id'] ?>" id="editPage" onclick="editPage(this)" data-id="">
                             <img src=<?php App\Core\View::getAssets("icons/pen-solid.svg")?> alt="" height="20" width="20">
                         </a>
-                        <a href="#" id="deletePage" onclick="deletePage(this)" data-id="">
+                        <a href="#" id="deleteRole" onclick="deleteRole(this)" data-id="<?= $role["id"] ?>">
                             <img src=<?php App\Core\View::getAssets("icons/trash-solid.svg")?> alt="" height="20" width="20">
                         </a>
                     </div>
