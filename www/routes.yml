@@ -103,6 +103,28 @@
     listId: basics
     icon: icon_comment
 
+/roles:
+  controller: Role
+  action: default
+  label: Roles
+  menuData:
+    visible: true
+    min-statut: true
+    listId: basics
+    icon: icon_menu
+    children: [
+      /add-role
+    ]
+
+/add-role:
+  controller: Role
+  action: addrole
+  label: Ajouter un role
+
+/edit-role:
+  controller: Role
+  action: editrole
+
 /template:
   controller: Template
   action: default

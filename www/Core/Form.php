@@ -56,6 +56,7 @@ class Form
                             ".((!empty($dataInput["required"]))?"required='required'":"")."
                               placeholder='".($dataInput["placeholder"] ?? "")."'
                             ".((!empty($dataInput["required"]))?"required='required'":"")." 
+                            ".((!empty($dataInput["disabled"]))?"disabled='disabled'":"")." 
                           
                             >  ".((!empty($dataInput["defaultValue"]))?"" . $dataInput["defaultValue"] . "":"")."</textarea>";
                 $html .= "<br>";
@@ -104,6 +105,7 @@ class Form
                             type='".($dataInput["type"] ?? "text")."'
                             placeholder='".($dataInput["placeholder"] ?? "")."'
                             ".((!empty($dataInput["required"]))?"required='required'":"")." 
+                            ".((!empty($dataInput["disabled"]))?"disabled='disabled'":"")." 
                             ".((!empty($dataInput["defaultValue"]))?"value='" . $dataInput["defaultValue"] . "'":"")."
                             >";
             }

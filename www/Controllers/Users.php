@@ -135,15 +135,12 @@ class Users{
         $form = $user->buildFormUpdateBack();
         $view->assign("form", $form);
 
-        if(!empty($_POST) && !empty($_POST['email'])){
+        if(!empty($_POST) && !empty($_POST['lastname'])){
             $errors = Form::validator($_POST, $form);
 
             if(empty($errors)) {
-                var_dump($_POST);
-                if ($user->verifyEmail(htmlspecialchars(addslashes($_POST['email'])))) {
                     $user->setFirstname(htmlspecialchars(addslashes($_POST['firstname'])));
                     $user->setLastname(htmlspecialchars(addslashes($_POST['lastname'])));
-                    $user->setEmail(htmlspecialchars(addslashes($_POST['email'])));
                     $user->setPhone(htmlspecialchars(addslashes($_POST['phone'])));
                     $user->setUpdateDate(date ('Y-m-d H:i:s'));
 
@@ -156,9 +153,7 @@ class Users{
                     $_SESSION['alert']['success'][] = 'Votre modification a bien été prise en compte';
                     header('location: /users');
                     session_write_close();
-
                 }
-            }
             else{
                 $_SESSION['alert']['danger'][] = $errors[0];
                 $view->assign("formErrors", $errors);
