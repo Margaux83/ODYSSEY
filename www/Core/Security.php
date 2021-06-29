@@ -4,11 +4,14 @@ namespace App\Core;
 
 use App\Core\CurrentUser;
 use App\Core\Database;
+use App\Models\Role;
+use App\Models\User;
 
 class Security
 {
 	private static $_instance = null;
     private static $_userConnectedId = null;
+    private static $_actualUri;
 
 	private function __construct($_userConnectedId) {
         self::$_userConnectedId = $_userConnectedId;
@@ -21,6 +24,23 @@ class Security
         }
 
         return self::$_instance;
+    }
+
+    public static function isAuthorized($uri) {
+        self::$_actualUri = $uri;
+        $user = new User();
+        $role = new Role();
+        $db = new Database("Role");
+        $result = $db->query(
+            ["value"],
+            ["id" => $user->getRole()]
+        );
+        $perms = json_decode($result[0]['value'], true);
+        if (array_key_exists($uri, $perms) || array_key_exists("all_perms", $perms) || $uri == "/dashboard") {
+            // TODO Redirection à faire autre part que /dashboard
+            return true;
+        }
+        return false;
     }
 
 	public function isConnected(){

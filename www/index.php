@@ -13,7 +13,6 @@ use App\Core\Error;
 // Class PHPMailer
 require "Autoloader.php";
 Autoloader::register();
-
 new ConstantManager();
 
 date_default_timezone_set('Europe/Paris');
@@ -29,6 +28,7 @@ $a = $route->getAction();
 
 $cWithNamespace = $route->getControllerWithNamespace();
 
+
 if( file_exists("./Controllers/".$c.".php")){
     include "./Controllers/".$c.".php";
 
@@ -43,7 +43,13 @@ if( file_exists("./Controllers/".$c.".php")){
                 && MenuBuilder::needToBeConnected()){
                header('Location: /login');
             }else {
-			    $cObject->$a();
+                if(!Security::isAuthorized($uri)) {
+                    $_SESSION['alert']['danger'][] = 'Vous n\'avez pas le rôle requis';
+                    header('location: /dashboard');
+                    session_write_close();
+                } else {
+                    $cObject->$a();
+                }
             }
     
 		}else{
@@ -56,3 +62,5 @@ if( file_exists("./Controllers/".$c.".php")){
 }else {
     FrontPage::findContentToShow($uri);
 }
+
+Security::isAuthorized($uri);
