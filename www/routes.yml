@@ -124,6 +124,7 @@
 /edit-role:
   controller: Role
   action: editrole
+  label: Modifier un role
 
 /template:
   controller: Template
