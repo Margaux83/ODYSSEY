@@ -45,6 +45,7 @@ class Role {
     public function editRoleAction() {
         $role = new ModelRole;
         $actualRole = $_GET['role'];
+        $role->setId($actualRole);
         $db = new Database("Role");
         $result = $db->query(
             ["name", "value"],
@@ -55,6 +56,9 @@ class Role {
             $role->setName($_POST['name']);
             $role->setValue(json_encode($_POST['values']));
             $role->save();
+            $_SESSION['alert']['success'][] = "Le rôle a bien été modifié !";
+            header('location: /roles');
+            session_write_close();
         }
 
         $view = new View("Role/add_role", "back");
