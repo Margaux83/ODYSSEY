@@ -21,12 +21,6 @@ class Users{
 
         $view = new View("User/users", "back");
         $view->assign('allUsers', $allUsers);
-
-        if (!empty($_POST)) {
-            if (!empty($_POST['deleteUser'])) {
-                $user->delete($_POST['id_user']);
-            }
-        }
     }
 
     public function addUsersAction()
@@ -162,5 +156,14 @@ class Users{
         }
     }
 
+    public function deleteUserAction() {
+        $user = new User();
+
+        if (!empty($_POST)) {
+            if (!empty($_POST['deleteUser'])) {
+                $user->delete($_POST['id_user']);
+            }
+        }
+    }
 
 }

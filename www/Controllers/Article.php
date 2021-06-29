@@ -253,4 +253,14 @@ class Article
             }
         }
     }
+
+    public function deleteArticleAction() {
+        $article = new Arti();
+
+        if (!empty($_POST)) {
+            if (!empty($_POST['deleteArticle'])) {
+                $article->delete($_POST['id_article']);
+            }
+        }
+    }
 }

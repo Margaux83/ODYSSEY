@@ -32,10 +32,10 @@ function deleteArticle(e) {
         if (result.isConfirmed) {
             swal.fire(
                 'Supprimé!',
-                'Votre page a bien été supprimé.',
+                'Votre article a bien été supprimé.',
                 'success'
             ).then(function() {
-            $.post( "articles", { id_article: id, deleteArticle: "true" })
+            $.post( "delete-article", { id_article: id, deleteArticle: "true" })
                     .done(function( data ) {
                         location.reload();
                     });
@@ -45,7 +45,7 @@ function deleteArticle(e) {
         ) {
             swal.fire(
                 'Annulé',
-                'Votre page n\'a pas été supprimé',
+                'Votre article n\'a pas été supprimé',
                 'error'
             )
         }
