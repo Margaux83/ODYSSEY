@@ -31,6 +31,10 @@
   action: editArticle
   label: Modifier un article
 
+/delete-article:
+  controller: Article
+  action: deleteArticle
+
 /users:
   controller: Users
   action: default
@@ -64,6 +68,10 @@
     listId: basics
     icon: icon_user
 
+/delete-user:
+  controller: User
+  action: deleteUser
+
 /pages:
   controller: Page
   action: default
@@ -87,6 +95,10 @@
 /edit-page:
   controller: Page
   action: editPage
+
+/delete-page:
+  controller: Page
+  action: deletePage
 
 /deleted-page:
   controller: Page
