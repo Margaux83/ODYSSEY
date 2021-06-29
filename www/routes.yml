@@ -138,6 +138,10 @@
   action: editrole
   label: Modifier un role
 
+/delete-role:
+  controller: Role
+  action: editrole
+
 /template:
   controller: Template
   action: default
