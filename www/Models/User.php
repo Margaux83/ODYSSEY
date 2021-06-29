@@ -21,8 +21,11 @@ class User extends Database
     /**
      * User constructor.
      */
-    public function __construct(){
+    public function __construct($id = null){
         parent::__construct();
+        if(!empty($id)) {
+            $this->setId($id);
+        }
     }
 
     /**
@@ -30,6 +33,7 @@ class User extends Database
      */
     public function setId($id){
         $this->id = $id;
+
         //Il va chercher en BDD toutes les informations de l'utilisateur
         $data = array_diff_key(
             get_object_vars($this),

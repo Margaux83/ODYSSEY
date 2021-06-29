@@ -18,8 +18,7 @@ class Profile
         }
 
 		$view = new View("profile", "back");
-        $user = new User();
-        $user->setId($_SESSION['userId']);
+        $user = new User($_SESSION['userId']);
 
         if(!empty($_POST)){
 			$errors = Form::validator($_POST, $user->buildFormProfile());
@@ -34,7 +33,6 @@ class Profile
             }
 		}
         
-        $user->setId($_SESSION['userId']);
         $view->assign("connectedUser", $user);
 		$view->assign("form", $user->buildFormProfile());
 
