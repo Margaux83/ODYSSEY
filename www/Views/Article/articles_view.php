@@ -57,7 +57,7 @@
             </td>
             <td class="action-btn">
                 <div class="listItem-cpt listActions">
-                    <a href="<?= $article["uri"] ?>" target="_blank" id="showPage">
+                    <a href="<?= $article["uri"] ?>" target="_blank" id="showArticle">
                         <img src=<?php App\Core\View::getAssets("icons/eye-solid.svg")?> alt="" height="20" width="20">
                     </a>
                     <a href="#" id="editArticle" onclick="editArticle(this)" data-id="<?= $article["id"] ?>">

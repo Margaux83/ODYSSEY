@@ -2,6 +2,7 @@
 
 
 namespace App\Core;
+use App\Models\Article;
 use App\Core\View;
 use App\Core\Error;
 use App\Models\Page;
@@ -39,7 +40,22 @@ class FrontPage extends Database
         if ($uri === '/'){
             $view = new View("front_home", "front");
         }elseif (strpos($uri, 'article')) {
-            echo $uri;
+            $article = new Article();
+            $resultArticle = $article->query(
+                ['title', 'content'],
+                [
+                    'uri' => $uri,
+                    'isVisible' => 1
+                ]
+            );
+            if ($resultArticle) {
+
+                $view = new View("front_page", "front");
+                $view->assign("title", $resultArticle[0]['title']);
+                $view->assign("content", $resultArticle[0]['content']);
+            }else {
+                Error::errorPage(404, 'L\'article n\'existe pas');
+            }
         }else {
             $page = new Page();
             $resultPage = $page->query(

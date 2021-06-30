@@ -313,10 +313,10 @@ class Article extends Database
                 "label" => "Choisir une visibilité"
             ],
             "1"=>[
-                "label" => "Protégé",
+                "label" => "Public",
             ],
             "2"=>[
-                "label" => "Public",
+                "label" => "Protégé",
             ],
             "3"=>[
                 "label" => "Privé"
@@ -378,7 +378,7 @@ class Article extends Database
                     "class"=>"input",
                     "error"=>"L'uri l'article doit faire entre 2 et 255 caractères",
                     "placeholder"=>"Votre uri",
-                    "defaultValue"=>ltrim($this->getUri(), '/')
+                    "defaultValue"=>substr($this->getUri(), 9)
                 ],
                     "content"=>[
                         "type"=>"textarea",

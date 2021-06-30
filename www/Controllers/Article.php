@@ -105,7 +105,7 @@ class Article
                         $article->setIsdeleted(0);
                         $article->setDescription($dataArticle["description"]);
                         $article->setId_user($_SESSION["userId"]);
-                        $article->setUri("/".$dataArticle['uri']);
+                        $article->setUri("/article_".$dataArticle['uri']);
 
                         $article->save();
                         $result = $article->getLastFromTable();
@@ -222,7 +222,7 @@ class Article
                         $uriverification = empty($article->getUriForVerification($_POST["id"],"/" . $dataArticle['uri']));
 
                             if ($uriverification) {
-                                $article->setUri("/" . $dataArticle['uri']);
+                                $article->setUri("/article_" . $dataArticle['uri']);
                             }
                             else{
                                 $_SESSION['alert']['danger'][] = 'Cette uri existe déjà';
