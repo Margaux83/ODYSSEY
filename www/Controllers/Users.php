@@ -59,7 +59,7 @@ class Users{
                     $user->setLastname(htmlspecialchars(addslashes($_POST['lastname'])));
                     $user->setEmail(htmlspecialchars(addslashes($_POST['email'])));
                     $user->setPhone(htmlspecialchars(addslashes($_POST['phone'])));
-                    $user->setRole(1);
+                    $user->setRole(htmlspecialchars(addslashes($_POST['role'])));
                     $user->setIsDeleted(0);
                     $user->setToken($token);
                     $user->setIsVerified(0);
@@ -131,6 +131,7 @@ class Users{
         $user = new User();
         $view = new View("User/edit_users", "back");
         $user->setId($_POST["id_user"]);
+        var_dump($_POST["id_user"]);
 
         $form = $user->buildFormUpdateBack();
         $view->assign("form", $form);
