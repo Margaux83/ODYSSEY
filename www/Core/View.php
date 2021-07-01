@@ -22,15 +22,16 @@ class View
 	public static function getAssets(string $nameFile){
 		$explodedNameFile = explode(".", trim($nameFile));
 		$nameFileType = array_pop($explodedNameFile);
+		
 		switch ($nameFileType){
 			case "css" :
-				echo 'public/styles/'.$nameFile;
+				echo SITEURL . '/public/styles/'.$nameFile;
 				return;
 			case ($nameFileType == "png" || $nameFileType == "jpg" || $nameFileType == "svg") :
-				echo 'public/images/'.$nameFile;
+				echo SITEURL . '/public/images/'.$nameFile;
 				return;
 			case ($nameFileType == "js") :
-				echo 'public/scripts/js/'.$nameFile;
+				echo SITEURL . '/public/scripts/js/'.$nameFile;
 				return;
 			default :
 				return;
