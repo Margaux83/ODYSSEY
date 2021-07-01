@@ -92,7 +92,7 @@ class Article
 
 
 
-                    if(empty($article->query(['id'],["uri"=>"/".$dataArticle['uri']]))){
+                    if(empty($article->query(['id'],["uri"=>"/article_".$dataArticle['uri']]))){
                         $article->setTitle(htmlspecialchars(addslashes($dataArticle['title'])));
                         $article->setContent(addslashes($dataArticle['content']));
                         $article->setStatus($dataArticle['status']);
@@ -219,7 +219,7 @@ class Article
                             // Champs par défaut
                             $article->setIsdeleted(0);
                         //On vérifie si l'uri existe dans la base de données pour un autre article
-                        $uriverification = empty($article->getUriForVerification($_POST["id"],"/" . $dataArticle['uri']));
+                        $uriverification = empty($article->getUriForVerification($_POST["id"],"/article_" . $dataArticle['uri']));
 
                             if ($uriverification) {
                                 $article->setUri("/article_" . $dataArticle['uri']);
