@@ -3,6 +3,7 @@
 
 namespace App;
 
+use App\Core\Database;
 use App\Core\Form;
 use App\Core\Security;
 use App\Core\View;
@@ -263,5 +264,49 @@ class Article
         }
 
         $view = new View("Categories/categories", "back");
+        $category = new Category();
+        $listCategories = $category->query(['id','label', 'creationDate', 'updateDate'],['isDeleted'=>0]);
+        $view->assign("listCategories", $listCategories);
+
+        //Création du formBuilder des catégories
+        $formCategory = $category->buildFormCategory();
+        $view->assign("formCategory", $formCategory);
+
+    if(!empty($_POST['insert_category'])){
+    $dataArticle = $_POST;
+        foreach ($dataArticle as $key => $value) {
+            switch ($key) {
+                case "insert_category":
+                    unset($dataArticle["insert_category"]);
+                    break;
+            }
+        }
+        if (!empty($dataArticle)) {
+
+
+            $errors = Form::validator($dataArticle, $formCategory);
+            if (empty($errors)) {
+                if(!empty($category->query(['id'],['label'=>$dataArticle['label']]))){
+                    $_SESSION['alert']['danger'][] = 'La catégorie existe déjà';
+                    }
+                    else{
+                        //S'il n'y a pas d'erreurs, on envoie les données dans la requête pour ajouter la catégorie
+                        $category->setLabel($dataArticle["label"]);
+                        $category->setIsdeleted(0);
+                        $category->save();
+                        $_SESSION['alert']['success'][] = 'La catégorie a bien été enregistrée !';
+                        header('location: /categories');
+                        session_write_close();
+                    }
+
+            }
+            else{
+                //S'il y a des erreurs, on prépare leur affichage
+                $_SESSION['alert']['danger'][] = $errors[0];
+            }
+
+        }
+    }
+
     }
 }

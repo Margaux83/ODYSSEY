@@ -177,4 +177,13 @@ class Database
         return $query->fetchAll();
     }
 
+    public function getValueForVerification($id,$uri,$column)
+    {
+        $sql = "SELECT ".$column." FROM " . $this->table . " WHERE isDeleted!=1 AND uri='".$uri."' AND id!=".$id;
+
+        $query = $this->pdo->prepare($sql);
+        $query->execute();
+        return $query->fetchAll();
+    }
+
 }

@@ -11,6 +11,7 @@ class Category extends Database
 
     protected $id=null;
     protected $label;
+    protected $isdeleted;
 
 
     /**
@@ -45,6 +46,22 @@ class Category extends Database
         return $this->label;
     }
 
+    /**
+     * @param mixed $isdeleted
+     */
+    public function setIsdeleted($isdeleted)
+    {
+        $this->isdeleted = $isdeleted;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getIsdeleted()
+    {
+        return $this->isdeleted;
+    }
+
     public function buildFormCategory()
     {
         return [
@@ -56,14 +73,20 @@ class Category extends Database
                 "class"=>"d-flex d-flex-wrap formModalOneInput",
             ],
             "input"=>[
-                "addcategory"=>[
+                "id"=>[
+                    "type"=>"hidden",
+                    "required"=>true,
+                    "defaultValue"=>$this->getID()
+                ],
+                "label"=>[
                     "type"=>"text",
                     "label"=>"Catégorie",
-                    "class"=>"inputOneModal d-flex",
                     "required"=>true,
                     "lengthMax"=>"255",
                     "lengthMin"=>"2",
-                    "error"=>"Le nom de la catégorie doit faire entre 2 et 255 caractères"
+                    "placeholder"=>"Votre catégorie",
+                    "error"=>"Le nom de la catégorie doit faire entre 2 et 255 caractères",
+                    "defaultValue"=>$this->getLabel()
                 ]
 
             ],
