@@ -18,7 +18,8 @@
     listId: basics
     icon: icon_page
     children: [
-      /add-article
+      /add-article,
+      /categories
     ]
 
 /add-article:
@@ -30,6 +31,11 @@
   controller: Article
   action: editArticle
   label: Modifier un article
+
+/categories:
+  controller: Article
+  action: categories
+  label: Catégories
 
 /users:
   controller: Users

@@ -253,4 +253,15 @@ class Article
             }
         }
     }
+
+    public function categoriesAction()
+    {
+        $security = Security::getInstance();
+        //Vérifie si l'utilisateur est connecté, sinon on le redirige sur la page de login
+        if(!$security->isConnected()){
+            header('Location: /login');
+        }
+
+        $view = new View("Categories/categories", "back");
+    }
 }
