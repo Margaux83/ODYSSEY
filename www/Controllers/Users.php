@@ -59,7 +59,7 @@ class Users{
                     $user->setLastname(htmlspecialchars(addslashes($_POST['lastname'])));
                     $user->setEmail(htmlspecialchars(addslashes($_POST['email'])));
                     $user->setPhone(htmlspecialchars(addslashes($_POST['phone'])));
-                    $user->setRole(1);
+                    $user->setRole(htmlspecialchars(addslashes($_POST['role'])));
                     $user->setIsDeleted(0);
                     $user->setToken($token);
                     $user->setIsVerified(0);
@@ -143,9 +143,9 @@ class Users{
                     $user->setLastname(htmlspecialchars(addslashes($_POST['lastname'])));
                     $user->setPhone(htmlspecialchars(addslashes($_POST['phone'])));
                     $user->setUpdateDate(date ('Y-m-d H:i:s'));
+                    $user->setRole($_POST['role']);
 
                     // Champs par défaut
-                    $user->setRole(1);
                     $user->setIsDeleted(0);
                     $user->setIsVerified(1);
                     $user->save();

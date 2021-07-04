@@ -65,7 +65,9 @@ $(document).ready(function() {
 });
 
 function editUser(e) {
+
     let id = $(e).attr("data-id");
+    console.log(id);
     $.redirect('edit-user', {'id_user': id});
 }
 

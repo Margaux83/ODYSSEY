@@ -66,7 +66,7 @@
                     <p class="listItem-cpt"><b><?= $user["email"] ?></b></p>
                 </td>
                 <td><?= $user["status"]?></td>
-                <td><?= $user["role"]?></td>
+                <td><?= $user["name"]?></td>
                 <td><?= $user["creationDate"]?></td>
                 <td><?= $user["lastConnexionDate"]?></td>
                 <td class="action-btn">

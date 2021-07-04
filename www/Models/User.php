@@ -2,6 +2,7 @@
 namespace App\Models;
 
 use App\Core\Database;
+use App\Models\Role;
 
 class User extends Database
 {
@@ -411,6 +412,8 @@ class User extends Database
     }
 
     public function buildFormRegisterBack(){
+        $role = new Role();
+
         return [
             "config"=>[
                 "method"=>"POST",
@@ -455,6 +458,14 @@ class User extends Database
                     "required"=>true,
                     "error"=>"Votre numéro de téléphone doit contenir 10 chiffres",
                     "placeholder"=>"Votre numéro de téléphone"
+                ],
+                "role"=>[
+                    "type"=>"select",
+                    "label"=>"Rôle",
+                    "required"=>true,
+                    "error"=>"Veuillez sélectionner un élément",
+                    "placeholder"=>"Choisir un rôle",
+                    "options"=> $role->buildAllRolesFormSelect($this->role)
                 ]
             ],
             "button"=>[
@@ -465,6 +476,8 @@ class User extends Database
     }
 
     public function buildFormUpdateBack(){
+        $role = new Role();
+
         return [
             "config"=>[
                 "method"=>"POST",
@@ -521,6 +534,16 @@ class User extends Database
                     "placeholder"=>"Votre numéro de téléphone",
                     "defaultValue" => $this->getPhone()
                 ],
+                "role"=>[
+                    "type"=>"select",
+                    "label"=>"Rôle",
+                    "required"=>true,
+                    "error"=>"Veuillez sélectionner un élément",
+                    "placeholder"=>"Choisir un rôle",
+                    "options"=>
+                        $role->buildAllRolesFormSelect($this->role)
+
+                ],
             ],
             "button"=>[
                 "class"=>"buttonComponent d-flex floatRight",
@@ -533,8 +556,10 @@ class User extends Database
     {
         $db = new Database("User");
         return $result = $db->query(
-            ["id", "firstname", "lastname", "email", "status", "role", "creationDate", "lastConnexionDate"],
-            ["isDeleted" => "0"]
+            ["ody_User.id", "ody_User.firstname", "ody_User.lastname", "ody_User.email", "ody_User.status", "ody_User.role", "ody_User.creationDate", "ody_User.lastConnexionDate", "ody_Role.name"],
+            ["ody_User.isDeleted" => "0"],
+            "",
+            " INNER JOIN ody_Role ON ody_Role.id = ody_User.role"
         );
     }
 
