@@ -131,7 +131,6 @@ class Users{
         $user = new User();
         $view = new View("User/edit_users", "back");
         $user->setId($_POST["id_user"]);
-        var_dump($_POST["id_user"]);
 
         $form = $user->buildFormUpdateBack();
         $view->assign("form", $form);
@@ -144,9 +143,9 @@ class Users{
                     $user->setLastname(htmlspecialchars(addslashes($_POST['lastname'])));
                     $user->setPhone(htmlspecialchars(addslashes($_POST['phone'])));
                     $user->setUpdateDate(date ('Y-m-d H:i:s'));
+                    $user->setRole($_POST['role']);
 
                     // Champs par défaut
-                    $user->setRole(1);
                     $user->setIsDeleted(0);
                     $user->setIsVerified(1);
                     $user->save();

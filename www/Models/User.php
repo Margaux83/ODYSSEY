@@ -556,7 +556,7 @@ class User extends Database
     {
         $db = new Database("User");
         return $result = $db->query(
-            ["ody_User.id", "ody_User.firstname", "ody_User.lastname", "ody_User.email", "ody_User.status", "ody_User.role", "ody_User.creationDate", "ody_User.lastConnexionDate", "ody_Role.id", "ody_Role.name"],
+            ["ody_User.id", "ody_User.firstname", "ody_User.lastname", "ody_User.email", "ody_User.status", "ody_User.role", "ody_User.creationDate", "ody_User.lastConnexionDate", "ody_Role.name"],
             ["ody_User.isDeleted" => "0"],
             "",
             " INNER JOIN ody_Role ON ody_Role.id = ody_User.role"
