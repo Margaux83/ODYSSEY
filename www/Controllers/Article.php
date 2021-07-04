@@ -92,7 +92,7 @@ class Article
 
 
 
-                    if(empty($article->query(['id'],["uri"=>"/".$dataArticle['uri']]))){
+                    if(empty($article->query(['id'],["uri"=>"/article/".$dataArticle['uri']]))){
                         $article->setTitle(htmlspecialchars(addslashes($dataArticle['title'])));
                         $article->setContent(addslashes($dataArticle['content']));
                         $article->setStatus($dataArticle['status']);
@@ -105,7 +105,7 @@ class Article
                         $article->setIsdeleted(0);
                         $article->setDescription($dataArticle["description"]);
                         $article->setId_user($_SESSION["userId"]);
-                        $article->setUri("/".$dataArticle['uri']);
+                        $article->setUri("/article/".$dataArticle['uri']);
 
                         $article->save();
                         $result = $article->getLastFromTable();
@@ -219,10 +219,10 @@ class Article
                             // Champs par défaut
                             $article->setIsdeleted(0);
                         //On vérifie si l'uri existe dans la base de données pour un autre article
-                        $uriverification = empty($article->getUriForVerification($_POST["id"],"/" . $dataArticle['uri']));
+                        $uriverification = empty($article->getUriForVerification($_POST["id"],'/article/' . $dataArticle['uri']));
 
                             if ($uriverification) {
-                                $article->setUri("/" . $dataArticle['uri']);
+                                $article->setUri('/article/' . $dataArticle['uri']);
                             }
                             else{
                                 $_SESSION['alert']['danger'][] = 'Cette uri existe déjà';
