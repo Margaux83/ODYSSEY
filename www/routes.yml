@@ -37,6 +37,11 @@
   action: categories
   label: Catégories
 
+/edit-category:
+  controller: Article
+  action: editcategory
+  label: Modifier une catégorie
+
 /users:
   controller: Users
   action: default

@@ -34,10 +34,10 @@
             </td>
             <td class="action-btn">
                 <div class="listItem-cpt listActions">
-                    <a href="#" id="editArticle" onclick="editArticle(this)" data-id="<?= $category["id"] ?>">
+                    <a href="#" id="editCategory" onclick="editCategory(this)" data-id="<?= $category["id"] ?>">
                         <img src=<?php App\Core\View::getAssets("icons/pen-solid.svg")?> alt="" height="20" width="20">
                     </a>
-                    <a href="#" id="deleteArticle" onclick="deleteArticle(this)" data-id="<?= $category["id"] ?>">
+                    <a href="#" id="deleteCategory" onclick="deleteCategory(this)" data-id="<?= $category["id"] ?>">
                         <img src=<?php App\Core\View::getAssets("icons/trash-solid.svg")?> alt="" height="20" width="20">
                     </a>
                 </div>

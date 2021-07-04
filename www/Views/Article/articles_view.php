@@ -17,8 +17,8 @@
             <th>Titre et description</th>
             <th>Créateur</th>
             <th>Statut</th>
+            <th>Catégorie</th>
             <th>Action</th>
-
         </tr>
         </thead>
         <tbody>
@@ -55,6 +55,15 @@
                 }
                 ?>
             </td>
+            <td>
+                <p class="listItem-cpt"><b><?php
+                    if ($article["isDeleted"] == 0){
+                        echo $article["label"];
+                    }else{
+                        echo "Pas de catégorie";
+                    }
+                    ?></p>
+            </td>
             <td class="action-btn">
                 <div class="listItem-cpt listActions">
                     <a href="<?= $article["uri"] ?>" target="_blank" id="showArticle">
@@ -85,6 +94,7 @@
             <th>Titre et description</th>
             <th>Créateur</th>
             <th>Statut</th>
+            <th>Catégorie</th>
             <th>Action</th>
 
         </tr>
@@ -123,9 +133,18 @@
                         }
                         ?>
                     </td>
+                    <td>
+                        <p class="listItem-cpt"><b><?php
+                            if ($articleByUser["isDeleted"] == 0){
+                                echo $articleByUser["label"];
+                            }else{
+                                echo "Pas de catégorie";
+                            }
+                            ?></p>
+                    </td>
                     <td class="action-btn">
                         <div class="listItem-cpt listActions">
-                            <a href="<?= $articleByUser["uri"] ?>" target="_blank" id="showPage">
+                            <a href="<?= $articleByUser["uri"] ?>" target="_blank" id="showArticle">
                                 <img src=<?php App\Core\View::getAssets("icons/eye-solid.svg")?> alt="" height="20" width="20">
                             </a>
                             <a href="#" id="editArticle" onclick="editArticle(this)" data-id="<?= $articleByUser["id"] ?>">

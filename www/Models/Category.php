@@ -14,20 +14,45 @@ class Category extends Database
     protected $isdeleted;
 
 
-    /**
-     * @param $id
-     */
-    public function setId($id)
-    {
-        $this->id = $id;
-    }
-
-    /**
-     * @return null
-     */
-    public function getId()
+    public function getID()
     {
         return $this->id;
+    }
+
+    public function setId($id){
+        $this->id = $id;
+
+        $data = array_diff_key(
+            get_object_vars($this),
+            get_class_vars(get_parent_class())
+        );
+        $columns = array_keys($data);
+        $statement = $this->pdo->prepare("SELECT " . implode(',', $columns) . " FROM ".$this->table." WHERE id=:id");
+        $statement->execute(array(":id" => $this->getId()));
+
+        $obj = $statement->fetchObject(__CLASS__);
+        $this->setCategoryFromObj($obj);
+
+
+    }
+
+    private function setCategoryFromObj($obj){
+        $data = array_diff_key(
+            get_object_vars($this),
+            get_class_vars(get_parent_class())
+        );
+        $columns = array_keys($data);
+
+        foreach ($columns as $key => $value) {
+            $getAction = 'get' . ucfirst(trim($value));
+            $objReturnedValue = $obj->$getAction();
+            if (!empty($objReturnedValue)){
+                $setAction = 'set' . ucfirst(trim($value));
+                if ($setAction !== 'setId'){
+                    $this->$setAction($objReturnedValue);
+                }
+            }
+        }
     }
 
     /**
@@ -101,7 +126,7 @@ class Category extends Database
 
     //Fonction qui permet de build les options du select de Catégorie de l'article
     public function buildAllCategoriesFormSelect($selectedCategoryId = null) {
-        $categories = $this->query(['id', 'label']);
+        $categories = $this->query(['id', 'label'],['isDeleted'=>0]);
         $returnedArray = [
             '' => [
                 "label" => "Choisir une catégorie"
@@ -109,7 +134,7 @@ class Category extends Database
         ];
 
         foreach ($categories as $key => $category) {
-            $returnedArray[$key+1] = [
+            $returnedArray[$category['id']] = [
                 "label" => $category['label'],
                 "selected" => $category['id'] === $selectedCategoryId
             ];
