@@ -224,4 +224,23 @@ class Role extends Database
             ]
         ];
     }
+
+    //Fonction qui permet de build les options du select du Role de l'user
+    public function buildAllRolesFormSelect($selectedRoleId = null) {
+        $roles = $this->query(['id', 'name']);
+        $returnedArray = [
+            '' => [
+                "label" => "Choisir un rôle"
+            ]
+        ];
+
+        foreach ($roles as $key => $role) {
+            $returnedArray[$key+1] = [
+                "label" => $role['name'],
+                "selected" => $role['id'] === $selectedRoleId
+            ];
+
+        }
+        return $returnedArray;
+    }
 }
