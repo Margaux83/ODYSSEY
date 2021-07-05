@@ -1,4 +1,9 @@
-/dashboard:
+### FRONT ###
+# sitemap.xml
+### ### ###
+
+### BACK ADMIN ###
+/admin/dashboard:
   controller: Base
   action: dashboard
   label: Tableau de bord
@@ -8,7 +13,7 @@
     listId: basics
     icon: icon_home
 
-/articles:
+/admin/articles:
   controller: Article
   action: default
   label: Articles
@@ -18,31 +23,31 @@
     listId: basics
     icon: icon_page
     children: [
-      /add-article,
-      /categories
+      /admin/add-article,
+      /admin/categories
     ]
 
-/add-article:
+/admin/add-article:
   controller: Article
   action: addarticle
   label: Ajouter un article
 
-/edit-article:
+/admin/edit-article:
   controller: Article
   action: editArticle
   label: Modifier un article
 
-/categories:
+/admin/categories:
   controller: Article
   action: categories
   label: Catégories
 
-/edit-category:
+/admin/edit-category:
   controller: Article
   action: editcategory
   label: Modifier une catégorie
 
-/users:
+/admin/users:
   controller: Users
   action: default
   label: Utilisateurs
@@ -52,10 +57,10 @@
     listId: basics
     icon: icon_user
     children: [
-       /add-users,
+        /admin/add-users,
   ]
 
-/add-users:
+/admin/add-users:
   controller: Users
   action: addUsers
   label: Ajouter un utilisateur
@@ -65,7 +70,7 @@
     listId: basics
     icon: icon_user
 
-/edit-user:
+/admin/edit-user:
   controller: Users
   action: editUsers
   label: Modifier un utilisateur
@@ -75,7 +80,7 @@
     listId: basics
     icon: icon_user
 
-/pages:
+/admin/pages:
   controller: Page
   action: default
   label: Pages
@@ -86,25 +91,25 @@
     label: Pages
     icon: icon_page
     children: [
-        /add-page,
-        /deleted-page
+        /admin/add-page,
+        /admin/deleted-page
     ]
 
-/add-page:
+/admin/add-page:
   controller: Page
   action: addpage
   label: Ajouter une page
 
-/edit-page:
+/admin/edit-page:
   controller: Page
   action: editPage
 
-/deleted-page:
+/admin/deleted-page:
   controller: Page
   action: listdeletedpage
   label: Corbeille
 
-/comments:
+/admin/comments:
   controller: Comment
   action: default
   label: Commentaires
@@ -114,7 +119,7 @@
     listId: basics
     icon: icon_comment
 
-/roles:
+/admin/roles:
   controller: Role
   action: default
   label: Roles
@@ -124,19 +129,19 @@
     listId: basics
     icon: icon_menu
     children: [
-      /add-role
+      /admin/add-role
     ]
 
-/add-role:
+/admin/add-role:
   controller: Role
   action: addrole
   label: Ajouter un role
 
-/edit-role:
+/admin/edit-role:
   controller: Role
   action: editrole
 
-/template:
+/admin/template:
   controller: Template
   action: default
   label: Templates
@@ -146,7 +151,7 @@
     listId: management
     icon: icon_page
 
-/menu-management:
+/admin/menu-management:
   controller: Menu
   action: default
   label: Gestion du menu
@@ -156,7 +161,7 @@
     listId: management
     icon: icon_menu
 
-/newsletter:
+/admin/newsletter:
   controller: Newsletter
   action: default
   label: Newsletter
@@ -166,11 +171,33 @@
     listId: management
     icon: icon_newsletter
 
-/profile:
+/:
+  controller: WebAccess
+  action: default
+  label: Accès au site
+  menuData:
+    visible: true
+    min-statut: true
+    listId: settings
+    icon: icon_web
+
+/settings:
+  controller: Settings
+  action: default
+  label: Paramètres
+  menuData:
+    visible: true
+    min-statut: true
+    listId: settings
+    icon: icon_settings
+
+/admin/profile:
   controller: Profile
   action: default
   label: Profil
+### ### ###
 
+### SECURITY ###
 /login:
   controller: Security
   action: login
@@ -181,6 +208,12 @@
   controller: Security
   action: register
   label: S'inscrire
+  freeAccess: true
+
+/logout:
+  controller: Security
+  action: logout
+  label: Déconnexion
   freeAccess: true
 
 /verification:
@@ -205,34 +238,10 @@
   action: newPasswordConfirm
   label: Créer votre nouveau mot de passe
   freeAccess: true
+### ### ###
 
-/logout:
-  controller: Security
-  action: logout
-  label: Déconnexion
-  freeAccess: true
-
-/web-access:
-  controller: WebAccess
-  action: default
-  label: Accès au site
-  menuData:
-    visible: true
-    min-statut: true
-    listId: settings
-    icon: icon_web
-
-/settings:
-  controller: Settings
-  action: default
-  label: Paramètres
-  menuData:
-    visible: true
-    min-statut: true
-    listId: settings
-    icon: icon_settings
-
-/installer:
+# INSTALLER #
+/admin/installer:
   controller: Installer
   action: setup
   label: Installation
@@ -242,3 +251,4 @@
     min-statut: true
     listId: installer
     icon: icon_settings
+### ### ###

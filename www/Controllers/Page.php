@@ -47,7 +47,7 @@ class Page{
                 $page->save();
 
                 $_SESSION['alert']['success'][] = "Votre page a bien été ajouté !";
-                header('location: /pages');
+                header('location: /admin/pages');
                 session_write_close();
             }
         }
@@ -55,7 +55,7 @@ class Page{
     public function editPageAction() {
         if(empty($_POST)) {
             $_SESSION['alert']['danger'][] = 'Vous ne pouvez pas aller sur ce lien';
-            header('location: /pages');
+            header('location: /admin/pages');
             session_write_close();
         }
         $page = new ModelPage();
@@ -85,7 +85,7 @@ class Page{
                 $page->save();
 
                 $_SESSION['alert']['success'][] = 'Votre modification a bien été prise en compte';
-                header('location: /pages');
+                header('location: /admin/pages');
                 session_write_close();
             }
         }

@@ -115,11 +115,11 @@ class Article
 
 
                         $_SESSION['alert']['success'][] = 'L\'article a bien été enregistré !';
-                        header('location: /articles');
+                        header('location: /admin/articles');
                         session_write_close();
                     }else{
                         $_SESSION['alert']['danger'][] = 'Cette uri existe déjà';
-                        header('location: /add-article');
+                        header('location: /admin/add-article');
                         session_write_close();
                     }
                 } else {
@@ -206,7 +206,7 @@ class Article
                             $article->updateCategoryOfArticle($dataArticle['id'],$dataArticle['category']);
                             $_SESSION['alert']['success'][] = 'L\'article a bien été modifié !';
                             if($uriverification){
-                                header('location: /articles');
+                                header('location: /admin/articles');
                                 session_write_close();
                             }
 
@@ -283,7 +283,7 @@ class Article
                                 $category->setIsdeleted(0);
                                 $category->save();
                                 $_SESSION['alert']['success'][] = 'La catégorie a bien été modifiée !';
-                                header('location: /categories');
+                                header('location: /admin/categories');
                                 session_write_close();
                             }
 
@@ -346,7 +346,7 @@ class Article
                             $category->setIsdeleted(0);
                             $category->save();
                             $_SESSION['alert']['success'][] = 'La catégorie a bien été enregistrée !';
-                            header('location: /categories');
+                            header('location: /admin/categories');
                             session_write_close();
                         }
                         else{
