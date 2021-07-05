@@ -41,11 +41,6 @@ class Article
         //Affiche la liste des articles qui ont été créés par l'utilisateur connecté
         $view->assign("infoArticles", $articles->getAllArticles());
 
-
-
-        $form = $article->buildFormDeleteArticle();
-        $view->assign("form", $form);
-
     }
 
 
@@ -69,10 +64,6 @@ class Article
         //Création du formBuilder des articles
         $form = $article->buildFormArticle();
         $view->assign("form", $form);
-
-        //Création du formBuilder des catégories
-        $formCategory = $category->buildFormCategory();
-        $view->assign("formCategory", $formCategory);
 
         //On vérifie si des données sont bien envoyées
         if (!empty($_POST['insert_article'])) {
@@ -106,7 +97,7 @@ class Article
                         $article->setIsdeleted(0);
                         $article->setDescription($dataArticle["description"]);
                         $article->setId_user($_SESSION["userId"]);
-                        $article->setUri("/article/".$dataArticle['uri']);
+                        $article->setUri(htmlspecialchars(addslashes(str_replace(' ', '_', "/article/".$dataArticle['uri']))));
 
                         $article->save();
                         $result = $article->getLastFromTable();
@@ -197,7 +188,7 @@ class Article
                         $uriverification = empty($article->getUriForVerification($_POST["id"],'/article/' . $dataArticle['uri']));
 
                             if ($uriverification) {
-                                $article->setUri('/article/' . $dataArticle['uri']);
+                                $article->setUri(htmlspecialchars(addslashes(str_replace(' ', '_', "/article/".$dataArticle['uri']))));
                             }
                             else{
                                 $_SESSION['alert']['danger'][] = 'Cette uri existe déjà';
