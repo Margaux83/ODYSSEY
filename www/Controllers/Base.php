@@ -2,13 +2,19 @@
 
 namespace App;
 
+use App\Core\Router;
 use App\Core\View;
 use App\Core\Security;
 use App\Core\Statistic;
 use App\Core\ListQuery;
+use App\Core\Routing;
 
 
 class Base{
+
+    public function defaultAction() {
+        header('location: /admin/dashboard');
+    }
 
 	//Must be connected
 	public function dashboardAction(){
@@ -68,4 +74,29 @@ class Base{
 		$view->assign("comments", $listComments);
 	}
 
+    public function sitemapAction() {
+        header('Content-Type: text/xml; charset=UTF-8');
+        $routes = Routing::getListOfRoutes();
+        $routes_exclude = [
+            "/sitemap.xml",
+            "/verification",
+            "/forgotpasswordconfirm",
+            "/newpasswordconfirm",
+            "/logout"
+        ];
+        echo '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">';
+        foreach ($routes as $key => $route) {
+            if(!in_array($key, $routes_exclude) && !strpos($key, 'admin')) {
+                $loc = Routing::getBaseUrl()."$key";
+                $lastmod = date('c',time());
+                //$priority = "1.0"; Impossible de déterminer une priorité pertinente sans crawler
+                echo '
+                <url>
+                    <loc>'.$loc.'</loc>
+                    <lastmod>'.$lastmod.'</lastmod>
+                </url>';
+            }
+        }
+        echo '</urlset>';
+	}
 }
