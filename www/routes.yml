@@ -1,8 +1,15 @@
 ### FRONT ###
-# sitemap.xml
+/sitemap.xml:
+  controller: Base
+  action: sitemap
+  label: Sitemap
 ### ### ###
 
 ### BACK ADMIN ###
+/admin:
+  controller: Base
+  action: default
+
 /admin/dashboard:
   controller: Base
   action: dashboard
@@ -181,7 +188,7 @@
     listId: settings
     icon: icon_web
 
-/settings:
+/admin/settings:
   controller: Settings
   action: default
   label: Paramètres
