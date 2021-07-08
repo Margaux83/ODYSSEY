@@ -24,7 +24,7 @@ class Security{
         $coreSecurity = coreSecurity::getInstance();
         if ($coreSecurity->getConnectedUser()){
             header('Status: 400 Connected', true, 400);
-            header('Location: /dashboard');
+            header('Location: /admin/dashboard');
             return;
         }
 
@@ -98,7 +98,7 @@ class Security{
 
         if ($coreSecurity->getConnectedUser()){
             header('Status: 400 Connected', true, 400);
-            header('Location: /dashboard');
+            header('Location: /admin/dashboard');
             return;
         }
         $view = new View("User/login", "back_management");
@@ -114,7 +114,7 @@ class Security{
         $coreSecurity = coreSecurity::getInstance();
         if ($coreSecurity->getConnectedUser()){
             header('Status: 400 Connected', true, 400);
-            header('Location: /dashboard');
+            header('Location: /admin/dashboard');
             return;
         }
         $mailer = new Mailer();
@@ -159,7 +159,7 @@ class Security{
         $coreSecurity = coreSecurity::getInstance();
         if ($coreSecurity->getConnectedUser()){
             header('Status: 400 Connected', true, 400);
-            header('Location: /dashboard');
+            header('Location: /admin/dashboard');
             return;
         }
         $view = new View("User/forgotPasswordConfirm", "back_management");

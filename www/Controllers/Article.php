@@ -3,6 +3,7 @@
 
 namespace App;
 
+use App\Core\Database;
 use App\Core\Form;
 use App\Core\Security;
 use App\Core\View;
@@ -114,11 +115,11 @@ class Article
 
 
                         $_SESSION['alert']['success'][] = 'L\'article a bien été enregistré !';
-                        header('location: /articles');
+                        header('location: /admin/articles');
                         session_write_close();
                     }else{
                         $_SESSION['alert']['danger'][] = 'Cette uri existe déjà';
-                        header('location: /add-article');
+                        header('location: /admin/add-article');
                         session_write_close();
                     }
                 } else {
@@ -126,32 +127,6 @@ class Article
                     $_SESSION['alert']['danger'][] = $errors[0];
                 }
 
-
-            }
-        }
-        //On vérifie si des données sont bien envoyées
-        elseif(!empty($_POST['insert_category'])){
-            $dataArticle = $_POST;
-            foreach ($dataArticle as $key => $value) {
-                switch ($key) {
-                    case "insert_category":
-                        unset($dataArticle["insert_category"]);
-                        break;
-                }
-            }
-            if (!empty($dataArticle)) {
-
-                $errors = Form::validator($dataArticle, $formCategory);
-                if (empty($errors)) {
-                    //S'il n'y a pas d'erreurs, on envoie les données dans la requête pour ajouter la catégorie
-                    $category->setLabel($dataArticle["addcategory"]);
-                    $category->save();
-                    $_SESSION['alert']['success'][] = 'La catégorie a bien été enregistrée !';
-                }
-                else{
-                    //S'il y a des erreurs, on prépare leur affichage
-                    $_SESSION['alert']['danger'][] = $errors[0];
-                }
 
             }
         }
@@ -173,8 +148,8 @@ class Article
         //Affiche la vue pour modifier un article
         $view = new View("Article/edit_articles", "back");
 
+        //On va récupérer les informations de l'article en envoyant l'id dans le setId
             if (!empty($_POST)) {
-
                 if($_POST['id'] != "") {
                     $article->setId($_POST["id"]);
                 }
@@ -228,9 +203,10 @@ class Article
                                 $_SESSION['alert']['danger'][] = 'Cette uri existe déjà';
                             }
                             $article->save();
+                            $article->updateCategoryOfArticle($dataArticle['id'],$dataArticle['category']);
                             $_SESSION['alert']['success'][] = 'L\'article a bien été modifié !';
                             if($uriverification){
-                                header('location: /articles');
+                                header('location: /admin/articles');
                                 session_write_close();
                             }
 
@@ -254,13 +230,4 @@ class Article
         }
     }
 
-    public function deleteArticleAction() {
-        $article = new Arti();
-
-        if (!empty($_POST)) {
-            if (!empty($_POST['deleteArticle'])) {
-                $article->delete($_POST['id_article']);
-            }
-        }
-    }
 }
