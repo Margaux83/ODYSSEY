@@ -6,6 +6,7 @@ use App\Models\Article;
 use App\Core\View;
 use App\Core\Error;
 use App\Models\Page;
+use App\Models\Menu;
 
 class FrontPage extends Database
 {
@@ -16,22 +17,42 @@ class FrontPage extends Database
         return self::$_themeSelected.'front.css';
     }
 
-    public static function getFrontMenu() {
+    public static function getFrontMenu($nameMenu = '') {
+        $menu = new Menu();
         $page = new Page();
-        $resultPage = $page->query(
-            ['title', 'uri'],
-            [
-                'isVisible' => 1
-            ]
-        );
+        $article = new Article();
 
+        $menuData = $menu->query(['contentMenu'], ['name' => $nameMenu])[0];
+
+        //Adding the home page
         $html = '<ul>'
             . '<li class="'.(self::$_actualUri === '/' ? 'selected' : '').'"><a href="/">Accueil</a></li>';
-        foreach ($resultPage as $key => $value) {
-            $html .= '<li class="'.($value['uri'] === self::$_actualUri ? 'selected' : '').'"><a href="'.$value['uri'].'">'.$value['title'].'</a></li>';
+
+        if (!empty($menuData)) {
+            $contentMenu = json_decode($menuData['contentMenu'], true);
+            foreach ($contentMenu as $key => $value) {
+                switch ($value['object']) {
+                    case 'Page':
+                        $pageData = $page->query(['uri', 'title'], ['id' => $value['id']]);
+                        if (!empty($pageData)) {
+                            $html .= '<li class="'.($pageData[0]['uri'] === self::$_actualUri ? 'selected' : '').'"><a href="'. $pageData[0]['uri'].'">'. $pageData[0]['title'] .'</a></li>';
+                        }
+                        break;
+                    case 'Article':
+                        $articleData = $article->query(['uri', 'title'], ['id' => $value['id']]);
+                        if (!empty($articleData)) {
+                            $html .= '<li class="'.($articleData[0]['uri'] === self::$_actualUri ? 'selected' : '').'"><a href="'. $articleData[0]['uri'].'">'. $articleData[0]['title'] .'</a></li>';
+                        }
+                        break;
+                    default:
+                        break;
+                }
+            }
         }
+        //Adding the contact page
         $html .= '<li class="'.(self::$_actualUri === '/contact' ? 'selected' : '').'"><a href="/contact">Contact</a></li>'
             .'</ul>';
+        
         return $html;
     }
 
