@@ -36,7 +36,7 @@ class Security
             ["id" => $user->getRole()]
         );
         $perms = json_decode($result[0]['value'], true);
-        if (array_key_exists($uri, $perms) || array_key_exists("all_perms", $perms) || $uri == "/dashboard") {
+        if (array_key_exists($uri, $perms) || array_key_exists("all_perms", $perms) || $uri == "/admin/dashboard") {
             // TODO Redirection à faire autre part que /dashboard
             return true;
         }

@@ -43,11 +43,13 @@ if( file_exists("./Controllers/".$c.".php")){
                 && MenuBuilder::needToBeConnected()){
                header('Location: /login');
             }else {
+
                 if(!Security::isAuthorized($uri)) {
                     $_SESSION['alert']['danger'][] = 'Vous n\'avez pas le rôle requis';
-                    header('location: /dashboard');
+                    header('location: /admin/dashboard');
                     session_write_close();
                 } else {
+
                     $cObject->$a();
                 }
             }
@@ -63,4 +65,4 @@ if( file_exists("./Controllers/".$c.".php")){
     FrontPage::findContentToShow($uri);
 }
 
-Security::isAuthorized($uri);
+//Security::isAuthorized($uri);

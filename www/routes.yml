@@ -44,6 +44,16 @@
   action: editArticle
   label: Modifier un article
 
+/admin/categories:
+  controller: Article
+  action: categories
+  label: Catégories
+
+/edit-category:
+  controller: Article
+  action: editcategory
+  label: Modifier une catégorie
+
 /users:
   controller: Users
   action: default
@@ -101,7 +111,7 @@
   controller: Page
   action: editPage
 
-/deleted-page:
+/admin/deleted-page:
   controller: Page
   action: listdeletedpage
   label: Corbeille
@@ -139,7 +149,7 @@
   action: editrole
   label: Modifier un role
 
-/template:
+/admin/template:
   controller: Template
   action: default
   label: Templates
