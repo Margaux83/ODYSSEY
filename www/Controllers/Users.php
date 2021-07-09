@@ -61,7 +61,7 @@ class Users{
                     $object = "Email confirmation - ODYSSEY";;
                     $mailer->sendMail($_POST['firstname'], $_POST['lastname'], $_POST['email'], $object, $bodymail->buildBodyMailConfirmationBack($_POST['email'], $token));
                     $_SESSION['alert']['success'][] = 'Un mail de validation a été envoyé à l\'utilisateur';
-                    header('location: /users');
+                    header('location: admin/users');
                     session_write_close();
 
                 }
@@ -80,7 +80,7 @@ class Users{
         $coreSecurity = coreSecurity::getInstance();
         if ($coreSecurity->getConnectedUser()){
             header('Status: 400 Connected', true, 400);
-            header('Location: /dashboard');
+            header('Location: /admin/dashboard');
             return;
         }
         $view = new View("User/newPasswordConfirm", "back_management");
@@ -145,7 +145,7 @@ class Users{
                     $user->save();
 
                     $_SESSION['alert']['success'][] = 'Votre modification a bien été prise en compte';
-                    header('location: /users');
+                    header('location: admin/users');
                     session_write_close();
                 }
             else{

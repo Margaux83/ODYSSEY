@@ -129,7 +129,8 @@ class Database
     public function getAllArticles()
     {
         $sql = "SELECT ody_Article.uri, ody_Article.id, ody_Article.title, ody_Article.content, ody_Article.description, ody_Article.status, ody_Article.isVisible, ody_Article.isDraft,
-                    ody_Article.isDeleted, ody_Article.creationDate, ody_Article.updateDate, ody_Article.id_User, ody_User.firstname, ody_User.lastname, ody_User.role  FROM " . $this->table . " INNER JOIN ody_User ON ". $this->table.".id_User = ody_User.ID WHERE ody_Article.isDeleted!=1";
+                    ody_Article.isDeleted, ody_Article.creationDate, ody_Article.updateDate, ody_Article.id_User, ody_User.firstname, ody_User.lastname, ody_User.role, ody_Category.label, ody_Category.isDeleted  FROM " . $this->table . " INNER JOIN ody_User ON ". $this->table.".id_User = ody_User.ID INNER JOiN ody_Category_Article ON ". $this->table.".ID 
+                    = ody_Category_Article.id_Article INNER JOIN ody_Category ON ody_Category_Article.id_Category = ody_Category.ID WHERE ody_Article.isDeleted!=1";
         $query = $this->pdo->prepare($sql);
         $query->execute();
         return $query->fetchAll();
@@ -137,8 +138,9 @@ class Database
 
     public function getArticleByUser($id)
     {
-        $sql ="SELECT ody_Article.id, ody_Article.title, ody_Article.content, ody_Article.description, ody_Article.status, ody_Article.isVisible, ody_Article.isDraft,
-                    ody_Article.isDeleted, ody_Article.creationDate, ody_Article.updateDate, ody_Article.id_User, ody_User.firstname, ody_User.lastname, ody_User.role  FROM " . $this->table . " INNER JOIN ody_User ON ". $this->table.".id_User = ody_User.ID WHERE ody_Article.isDeleted=0 AND id_User=".$id;
+        $sql ="SELECT ody_Article.uri, ody_Article.id, ody_Article.title, ody_Article.content, ody_Article.description, ody_Article.status, ody_Article.isVisible, ody_Article.isDraft,
+                    ody_Article.isDeleted, ody_Article.creationDate, ody_Article.updateDate, ody_Article.id_User, ody_User.firstname, ody_User.lastname, ody_User.role, ody_Category.label, ody_Category.isDeleted  FROM " . $this->table . " INNER JOIN ody_User ON ". $this->table.".id_User = ody_User.ID INNER JOiN ody_Category_Article ON ". $this->table.".ID 
+                    = ody_Category_Article.id_Article INNER JOIN ody_Category ON ody_Category_Article.id_Category = ody_Category.ID WHERE ody_Article.isDeleted!=1 AND id_User=".$id;
         $query = $this->pdo->prepare($sql);
         $query->execute();
 
@@ -175,6 +177,24 @@ class Database
         $query = $this->pdo->prepare($sql);
         $query->execute();
         return $query->fetchAll();
+    }
+
+    //Retourne le label d'une catégorie si elle existe déjà dans la base de données
+    public function getCategoryForVerification($id,$label)
+    {
+        $sql = "SELECT label FROM ody_Category WHERE isDeleted!=1 AND label='".$label."' AND id!=".$id;
+
+        $query = $this->pdo->prepare($sql);
+        $query->execute();
+        return $query->fetchAll();
+    }
+
+    //Mise à jour de la catégorie d'un article
+    public function updateCategoryOfArticle($id, $id_category)
+    {
+        $query = $this->pdo->prepare("UPDATE ody_Category_Article SET id_Category=".$id_category." WHERE id_Article=" . $id);
+        $query->execute();
+
     }
 
 }

@@ -42,7 +42,6 @@ class Article extends Database
         $columns = array_keys($data);
         $statement = $this->pdo->prepare("SELECT " . implode(',', $columns) . " FROM ".$this->table." WHERE id=:id");
         $statement->execute(array(":id" => $this->getId()));
-        //$result = $statement->fetchAll();
 
        $obj = $statement->fetchObject(__CLASS__);
        $this->setArticleFromObj($obj);
