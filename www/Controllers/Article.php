@@ -21,14 +21,6 @@ class Article
              header('Location: /login');
        }
 
-         //Instanciation de la classe article
-        $article = new Arti();
-
-        if (!empty($_POST)) {
-            if (!empty($_POST['deleteArticle'])) {
-                $article->delete($_POST['id_article']);
-            }
-        }
         $articles = new Arti();
          //Fonction pour récupérer la liste de tous les articles
         $articles->getAllArticles();
