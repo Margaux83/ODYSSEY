@@ -1,22 +1,34 @@
+/**
+ * Affiche le datatable pour la liste de tous les articles
+ */
 $(document).ready(function() {
     $('#table_all_articles').DataTable({
 
     });
 });
+
+/**
+ * Affiche le datatable pour la liste des articles de l'utilisateur connecté
+ */
 $(document).ready(function() {
     $('#table_all_articles_user').DataTable({
 
     });
 });
-$(document).ready(function() {
-    $('#table_all_articles_update').DataTable({
 
-    });
-});
+/**
+ * Fonction pour modifier l'article en fonction de son id, redirige sur la page edit-article
+ * @param e
+ */
 function editArticle(e) {
     let id= $(e).attr("data-id");
     $.redirect('edit-article', {'id': id});
 }
+
+/**
+ * Fonction pour supprimer un article en fonction de son id, envoie l'id dans l'action "articles" du controller Article
+ * @param e
+ */
 function deleteArticle(e) {
     let id = $(e).attr("data-id");
 
@@ -35,7 +47,7 @@ function deleteArticle(e) {
                 'Votre article a bien été supprimé.',
                 'success'
             ).then(function() {
-            $.post( "delete-article", { id_article: id, deleteArticle: "true" })
+            $.post( "articles", { id_article: id, deleteArticle: "true" })
                     .done(function( data ) {
                         location.reload();
                     });

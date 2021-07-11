@@ -1,14 +1,25 @@
+/**
+ * Affiche le datatable pour la liste de toutes les catégories
+ */
 $(document).ready(function() {
     $('#table_all_categories').DataTable({
 
     });
 });
 
+/**
+ * Fonction pour modifier la catégorie en fonction de son id, redirige sur la page edit-category
+ * @param e
+ */
 function editCategory(e) {
     let id= $(e).attr("data-id");
     $.redirect('edit-category', {'id': id});
 }
 
+/**
+ * Fonction pour supprimer une catégorie en fonction de son id, envoie l'id dans l'action "categories" du controller Article
+ * @param e
+ */
 function deleteCategory(e) {
     let id = $(e).attr("data-id");
 

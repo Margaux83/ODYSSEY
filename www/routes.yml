@@ -49,7 +49,7 @@
   action: categories
   label: Catégories
 
-/edit-category:
+/admin/edit-category:
   controller: Article
   action: editcategory
   label: Modifier une catégorie
