@@ -131,13 +131,16 @@ class Role extends Database
             "users" => [
                 "title" => "Gestion des utilisateurs",
                 "values" => [
-                    "user_add" => [
+                    "/users" => [
+                        "desc" => "Voir les utilisateurs"
+                    ],
+                    "/add-users" => [
                         "desc" => "Ajouter un utilisateur"
                     ],
-                    "user_edit" => [
+                    "/edit-user" => [
                         "desc" => "Modifier un utilisateur"
                     ],
-                    "user_del" => [
+                    "/delete-user" => [
                         "desc" => "Supprimer un utilisateur"
                     ]
 
@@ -146,16 +149,16 @@ class Role extends Database
             'pages' => [
                 'title' => 'Gestion des pages',
                 'values' => [
-                    "page_view" => [
+                    "/pages" => [
                         "desc" => "Voir les pages"
                     ],
-                    "page_add" => [
+                    "/add-page" => [
                         'desc' => 'Ajouter une page'
                     ],
-                    "page_edit" => [
+                    "/edit-page" => [
                         'desc' => 'Modifier une page'
                     ],
-                    "page_del" => [
+                    "/delete-page" => [
                         'desc' => 'Supprimer une page'
                     ]
                 ]
@@ -163,16 +166,16 @@ class Role extends Database
             'articles' => [
                 'title' => 'Gestion des articles',
                 'values' => [
-                    "article_view" => [
+                    "/articles" => [
                         "desc" => "Voir les articles"
                     ],
-                    "article_add" => [
+                    "/add-article" => [
                         'desc' => 'Ajouter une article'
                     ],
-                    "article_edit" => [
+                    "/edit-article" => [
                         'desc' => 'Modifier une article'
                     ],
-                    "article_del" => [
+                    "/delete-article" => [
                         'desc' => 'Supprimer une article'
                     ]
                 ]
@@ -180,7 +183,7 @@ class Role extends Database
             'comment' => [
                 'title' => 'Gestion des commentaire',
                 'values' => [
-                    "comment_perm" => [
+                    "/comments" => [
                         'desc' => 'Accepter/Refuser des commentaires '
                     ],
                 ]
@@ -188,16 +191,16 @@ class Role extends Database
             "roles" => [
                 "title" => "Gestion des roles",
                 "values" => [
-                    "role_view" => [
-                        "desc" => "Voir les rôle"
+                    "/roles" => [
+                        "desc" => "Voir les rôles"
                     ],
-                    "role_add" => [
+                    "/add-role" => [
                         "desc" => "Ajouter un rôle"
                     ],
-                    "role_edit" => [
+                    "/edit-role" => [
                         "desc" => "Modifier un rôle"
                     ],
-                    "role_del" => [
+                    "/delete-role" => [
                         "desc" => "Supprimer un rôle"
                     ]
                 ]
@@ -205,16 +208,16 @@ class Role extends Database
             "menus" => [
                 "title" => "Gestion des menus",
                 "values" => [
-                    "menu_view" => [
+                    "/menus" => [
                         "desc" => "Voir les menus"
                     ],
-                    "menu_add" => [
+                    "/menu-add" => [
                         "desc" => "Ajouter un menu"
                     ],
-                    "menu_edit" => [
+                    "/menu-edit" => [
                         "desc" => "Modifier un menu"
                     ],
-                    "menu_del" => [
+                    "/menu-delete" => [
                         "desc" => "Supprimer un menu"
                     ]
                 ]

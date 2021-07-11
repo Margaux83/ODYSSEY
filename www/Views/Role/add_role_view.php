@@ -29,7 +29,7 @@
         <?php } ?>
 
         <button class="btn" type="submit">Enregistrer le role</button>
-
     </form>
+    <button onclick="window.location='/roles'">Retour</button>
 
 </section>

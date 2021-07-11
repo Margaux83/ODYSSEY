@@ -24,6 +24,9 @@ class User extends Database
      */
     public function __construct(){
         parent::__construct();
+        if(empty($this->id)) {
+            $this->setId($_SESSION['userId']);
+        }
     }
 
     /**
@@ -31,6 +34,7 @@ class User extends Database
      */
     public function setId($id){
         $this->id = $id;
+
         //Il va chercher en BDD toutes les informations de l'utilisateur
         $data = array_diff_key(
             get_object_vars($this),

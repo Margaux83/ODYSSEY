@@ -9,24 +9,22 @@ use App\Models\Role as ModelRole;
 use App\Core\Helpers;
 use App\Core\Database;
 
-class Role {
-    public function defaultAction() {
+class Role
+{
+    public function defaultAction()
+    {
         $role = new ModelRole;
         $allRoles = $role->getAllRoles();
 
         $view = new View("Role/roles", "back");
         $view->assign("allRoles", $allRoles);
-
-        if (!empty($_POST)) {
-            if (!empty($_POST['deleteRole'])) {
-                $role->delete($_POST['id_role']);
-            }
-        }
     }
-    public function addRoleAction() {
+
+    public function addRoleAction()
+    {
         $role = new ModelRole;
 
-        if(!empty($_POST['values']) && !empty($_POST['name'])) {
+        if (!empty($_POST['values']) && !empty($_POST['name'])) {
             //var_dump($_POST);
             $role->setName($_POST['name']);
             $role->setValue(json_encode($_POST['values']));
@@ -42,25 +40,39 @@ class Role {
 
     }
 
-    public function editRoleAction() {
+    public function editRoleAction()
+    {
         $role = new ModelRole;
         $actualRole = $_GET['role'];
+        $role->setId($actualRole);
         $db = new Database("Role");
         $result = $db->query(
             ["name", "value"],
             ["id" => $actualRole]
         );
-        if(!empty($_POST['values']) && !empty($_POST['name'])) {
+        if (!empty($_POST['values']) && !empty($_POST['name'])) {
             //var_dump($_POST);
             $role->setName($_POST['name']);
             $role->setValue(json_encode($_POST['values']));
             $role->save();
+            $_SESSION['alert']['success'][] = "Le rôle a bien été modifié !";
+            header('location: /roles');
+            session_write_close();
         }
 
         $view = new View("Role/add_role", "back");
         $view->assign("rolesList", $role->rolesList());
         $view->assign("roleClass", $role);
         $view->assign("roleResult", $result[0]);
+    }
 
+    public function deleteRoleAction() {
+        $role = new ModelRole;
+
+        if (!empty($_POST)) {
+            if (!empty($_POST['deleteRole'])) {
+                $role->delete($_POST['id_role']);
+            }
+        }
     }
 }

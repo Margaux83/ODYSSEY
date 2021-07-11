@@ -80,7 +80,7 @@ function deletePage(e) {
                 'Votre page a bien été supprimé.',
                 'success'
             ).then(function() {
-                $.post( "pages", { id_page: id, deletePage: "true" })
+                $.post( "delete-page", { id_page: id, deletePage: "true" })
                     .done(function( data ) {
                         location.reload();
                     });

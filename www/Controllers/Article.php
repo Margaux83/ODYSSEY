@@ -250,42 +250,42 @@ class Article
         }
 
         //On vérifie si des données sont bien envoyées
-            if(!empty($_POST['insert_category'])){
+        if(!empty($_POST['insert_category'])){
             $dataArticle = $_POST;
-                foreach ($dataArticle as $key => $value) {
-                    switch ($key) {
-                        case "insert_category":
-                            unset($dataArticle["insert_category"]);
-                            break;
-                    }
-                }
-                if (!empty($dataArticle)) {
-
-
-                    $errors = Form::validator($dataArticle, $formCategory);
-                    if (empty($errors)) {
-                        //On vérifie si la catégorie existe déjà dans la base de donnée
-                        if(!empty($category->query(['id'],['label'=>$dataArticle['label']]))){
-                            $_SESSION['alert']['danger'][] = 'La catégorie existe déjà';
-                            }
-                            else{
-                                //S'il n'y a pas d'erreurs, on envoie les données dans la requête pour ajouter la catégorie
-                                $category->setLabel(htmlspecialchars(addslashes($dataArticle["label"])));
-                                $category->setIsdeleted(0);
-                                $category->save();
-                                $_SESSION['alert']['success'][] = 'La catégorie a bien été modifiée !';
-                                header('location: /admin/categories');
-                                session_write_close();
-                            }
-
-                    }
-                    else{
-                        //S'il y a des erreurs, on prépare leur affichage
-                        $_SESSION['alert']['danger'][] = $errors[0];
-                    }
-
+            foreach ($dataArticle as $key => $value) {
+                switch ($key) {
+                    case "insert_category":
+                        unset($dataArticle["insert_category"]);
+                        break;
                 }
             }
+            if (!empty($dataArticle)) {
+
+
+                $errors = Form::validator($dataArticle, $formCategory);
+                if (empty($errors)) {
+                    //On vérifie si la catégorie existe déjà dans la base de donnée
+                    if(!empty($category->query(['id'],['label'=>$dataArticle['label']]))){
+                        $_SESSION['alert']['danger'][] = 'La catégorie existe déjà';
+                    }
+                    else{
+                        //S'il n'y a pas d'erreurs, on envoie les données dans la requête pour ajouter la catégorie
+                        $category->setLabel(htmlspecialchars(addslashes($dataArticle["label"])));
+                        $category->setIsdeleted(0);
+                        $category->save();
+                        $_SESSION['alert']['success'][] = 'La catégorie a bien été modifiée !';
+                        header('location: /admin/categories');
+                        session_write_close();
+                    }
+
+                }
+                else{
+                    //S'il y a des erreurs, on prépare leur affichage
+                    $_SESSION['alert']['danger'][] = $errors[0];
+                }
+
+            }
+        }
 
     }
 
@@ -329,20 +329,20 @@ class Article
                 $errors = Form::validator($dataArticle, $formCategory);
                 if (empty($errors)) {
                     //On vérifie si la catégorie existe déjà dans la base de donnée
-                        $uriverification = empty($category->getCategoryForVerification($_POST["id"],$dataArticle['label']));
+                    $uriverification = empty($category->getCategoryForVerification($_POST["id"],$dataArticle['label']));
 
-                        if ($uriverification) {
-                            //S'il n'y a pas d'erreurs, on envoie les données dans la requête pour modifier la catégorie
-                            $category->setLabel(htmlspecialchars(addslashes($dataArticle["label"])));
-                            $category->setIsdeleted(0);
-                            $category->save();
-                            $_SESSION['alert']['success'][] = 'La catégorie a bien été enregistrée !';
-                            header('location: /admin/categories');
-                            session_write_close();
-                        }
-                        else{
-                            $_SESSION['alert']['danger'][] = 'Cette catégorie existe déjà';
-                        }
+                    if ($uriverification) {
+                        //S'il n'y a pas d'erreurs, on envoie les données dans la requête pour modifier la catégorie
+                        $category->setLabel(htmlspecialchars(addslashes($dataArticle["label"])));
+                        $category->setIsdeleted(0);
+                        $category->save();
+                        $_SESSION['alert']['success'][] = 'La catégorie a bien été enregistrée !';
+                        header('location: /admin/categories');
+                        session_write_close();
+                    }
+                    else{
+                        $_SESSION['alert']['danger'][] = 'Cette catégorie existe déjà';
+                    }
                 }
                 else{
                     //S'il y a des erreurs, on prépare leur affichage
@@ -352,4 +352,5 @@ class Article
             }
         }
     }
+
 }

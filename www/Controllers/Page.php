@@ -9,19 +9,15 @@ use App\Models\Page as ModelPage;
 use App\Core\Helpers;
 
 class Page{
+
     public function defaultAction(){
         $pages = new ModelPage;
         $allPages = $pages->getAllPages();
 
         $view = new View("Page/pages", "back");
         $view->assign("allPages", $allPages);
-
-        if (!empty($_POST)) {
-            if (!empty($_POST['deletePage'])) {
-                $pages->delete($_POST['id_page']);
-            }
-        }
     }
+
     public function addPageAction(){
         $page = new ModelPage();
         $view = new View("Page/add_page", "back");
@@ -52,6 +48,7 @@ class Page{
             }
         }
     }
+
     public function editPageAction() {
         if(empty($_POST)) {
             $_SESSION['alert']['danger'][] = 'Vous ne pouvez pas aller sur ce lien';
@@ -87,6 +84,15 @@ class Page{
                 $_SESSION['alert']['success'][] = 'Votre modification a bien été prise en compte';
                 header('location: /admin/pages');
                 session_write_close();
+            }
+        }
+    }
+
+    public function deletePageAction() {
+        $pages = new ModelPage;
+        if (!empty($_POST)) {
+            if (!empty($_POST['deletePage'])) {
+                $pages->delete($_POST['id_page']);
             }
         }
     }

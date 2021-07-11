@@ -35,7 +35,7 @@
         <div class="header-topElements">
 			<a class="titlePage" href="/"><img src=<?php App\Core\View::getAssets("logos/odyssey_logo_v2.svg")?> alt="Odyssey" class="back-mainPage-header-logo"></a>
             <nav>
-				<?php echo App\Core\FrontPage::getFrontMenu();?>
+				<?php echo App\Core\FrontPage::getFrontMenu('Menu header');?>
             </nav>
         </div>
         <div class="header-content">
@@ -73,7 +73,7 @@
 		</div>
 		<nav>
 			<p>Navigation</p>
-			<?php echo App\Core\FrontPage::getFrontMenu();?>
+			<?php echo App\Core\FrontPage::getFrontMenu('Menu footer');?>
 		</nav>
 		<nav>
 			<p>Assistance</p>

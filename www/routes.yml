@@ -49,12 +49,12 @@
   action: categories
   label: Catégories
 
-/admin/edit-category:
+/edit-category:
   controller: Article
   action: editcategory
   label: Modifier une catégorie
 
-/admin/users:
+/users:
   controller: Users
   action: default
   label: Utilisateurs
@@ -87,7 +87,7 @@
     listId: basics
     icon: icon_user
 
-/admin/pages:
+/pages:
   controller: Page
   action: default
   label: Pages
@@ -147,6 +147,7 @@
 /admin/edit-role:
   controller: Role
   action: editrole
+  label: Modifier un role
 
 /admin/template:
   controller: Template
