@@ -86,7 +86,7 @@ class Article
 
                     if(empty($article->query(['id'],["uri"=>"/article/".$dataArticle['uri']]))){
                         $article->setTitle(htmlspecialchars(addslashes($dataArticle['title'])));
-                        $article->setContent(addslashes($dataArticle['content']));
+                        $article->setContent(htmlspecialchars(addslashes($dataArticle['content'])));
                         $article->setStatus($dataArticle['status']);
                         $article->setIsvisible($dataArticle['isvisible']);
                         if ($dataArticle['status'] == "Brouillon") {
@@ -175,7 +175,7 @@ class Article
 
                             //Modification de l'article sélectionné
                             $article->setTitle(htmlspecialchars(addslashes($dataArticle['title'])));
-                            $article->setContent(addslashes($dataArticle['content']));
+                            $article->setContent(htmlspecialchars(addslashes($dataArticle['content'])));
                             $article->setDescription($dataArticle['description']);
 
                             $article->setStatus($dataArticle['status']);
