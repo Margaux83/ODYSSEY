@@ -47,7 +47,7 @@ function deleteArticle(e) {
                 'Votre article a bien été supprimé.',
                 'success'
             ).then(function() {
-            $.post( "articles", { id_article: id, deleteArticle: "true" })
+            $.post( "delete-article", { id_article: id, deleteArticle: "true" })
                     .done(function( data ) {
                         location.reload();
                     });

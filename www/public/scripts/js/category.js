@@ -38,7 +38,7 @@ function deleteCategory(e) {
                 'Votre catégorie a bien été supprimée.',
                 'success'
             ).then(function() {
-                $.post( "categories", { id_category: id, deleteCategory: "true" })
+                $.post( "delete-category", { id_category: id, deleteCategory: "true" })
                     .done(function( data ) {
                         location.reload();
                     });

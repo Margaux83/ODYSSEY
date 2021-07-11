@@ -221,6 +221,17 @@ class Article
         }
     }
 
+    public function deleteArticleAction() {
+        //Instanciation de la classe article
+        $article = new Arti();
+
+        if (!empty($_POST)) {
+            if (!empty($_POST['deleteArticle'])) {
+                $article->delete($_POST['id_article']);
+            }
+        }
+    }
+
     public function categoriesAction()
     {
         $security = Security::getInstance();
@@ -349,6 +360,18 @@ class Article
                     $_SESSION['alert']['danger'][] = $errors[0];
                 }
 
+            }
+        }
+    }
+
+    public function deleteCategoryAction() {
+        //Instanciation de la classe Category
+        $category = new Category();
+
+        //Suppression d'une catégorie grâce à son id
+        if (!empty($_POST)) {
+            if (!empty($_POST['deleteCategory'])) {
+                $category->delete($_POST['id_category']);
             }
         }
     }

@@ -44,6 +44,10 @@
   action: editArticle
   label: Modifier un article
 
+/admin/delete-article:
+  controller: Article
+  action: deleteArticle
+
 /admin/categories:
   controller: Article
   action: categories
@@ -53,6 +57,10 @@
   controller: Article
   action: editcategory
   label: Modifier une catégorie
+
+/admin/delete-category:
+  controller: Article
+  action: deleteCategory
 
 /users:
   controller: Users
