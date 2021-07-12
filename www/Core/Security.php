@@ -27,7 +27,8 @@ class Security
         return self::$_instance;
     }
 
-    public static function isAuthorized($uri) {
+    public static function isAuthorized($uri): bool
+    {
         if (in_array('/login', self::$_alwaysAuthorizedUri)) return true;
         self::$_actualUri = $uri;
         $user = new User();
@@ -69,7 +70,8 @@ class Security
 		);
 
 		if (count($result) && password_verify($pwdUserLogin, $result[0]["password"])){
-		    if($result[0]["isVerified"] == "1") {
+
+            if($result[0]["isVerified"] == "1") {
                     $_SESSION["userId"] = $result[0]["id"];
                     $_SESSION['alert']['success'][] = 'Vous êtes désormais connecté';
                     return true;

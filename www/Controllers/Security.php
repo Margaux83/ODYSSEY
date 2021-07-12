@@ -74,6 +74,9 @@ class Security{
             if (isset($_GET['email']) && !empty($_GET['email']) && isset($_GET['token']) && !empty($_GET['token'])) {
                 $user = new User();
 
+
+
+
                 $db = new Database("User");
                 $result = $db->query(
                     ["id"],
@@ -101,7 +104,12 @@ class Security{
             header('Location: /admin/dashboard');
             return;
         }
+
+        $user = new User();
         $view = new View("User/login", "back_management");
+
+        $form = $user->buildFormLogin();
+        $view->assign("form", $form);
     }
 
     public function logoutAction(){

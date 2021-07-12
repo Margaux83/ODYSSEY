@@ -2,7 +2,8 @@
     <h1>Connexion</h1>
 </section>
 <section>
-    <form method="POST">
+    <?php  App\Core\Form::showForm($form); ?>
+    <!----<form method="POST">
         <div class="formElement">
             <label for="login-email" class="requiredLabel">Identifiant</label>
             <input name="login-email" id="login-email" type="email" placeholder="your.email@exemple.com" required>
@@ -20,5 +21,5 @@
             <button id="login_submit" type="submit" class="secondary" onclick="window.location='register'">S'INSCRIRE</button>
             <button id="login_submit" type="submit" class="primary">SE CONNECTER</button>
         </div>
-    </form>
+    </form>---->
 </section>

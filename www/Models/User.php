@@ -24,7 +24,7 @@ class User extends Database
      */
     public function __construct(){
         parent::__construct();
-        if(empty($this->id)) {
+        if(!empty($this->id)) {
             $this->setId($_SESSION['userId']);
         }
     }
@@ -342,6 +342,50 @@ class User extends Database
                 "class"=>"buttonComponent d-flex floatRight",
                 "name"=>""
             ]
+        ];
+    }
+
+    /**
+     * @return array
+     */
+    public function buildFormLogin(){
+
+        return [
+            "config"=>[
+                "method"=>"POST",
+                "Action"=>"",
+                "reset" => "Annuler",
+                "Submit"=>"Se connecter",
+                "class"=>"formElement"
+            ],
+            "input"=>[
+                "login-email"=>[
+                    "class"=>"requiredLabel",
+                    "id"=>"login-email",
+                    "type"=>"email",
+                    "label"=>"Adresse Mail",
+                    "lengthMax"=>"320",
+                    "lengthMin"=>"8",
+                    "required"=>true,
+                    "error"=>"Votre email doit faire entre 8 et 320 caractères",
+                    "placeholder"=>"Votre email"
+                ],
+                "login-pwd"=>[
+                    "class"=>"requiredLabel",
+                    "type"=>"password",
+                    "id"=>"login-pwd",
+                    "label"=>"Mot de passe",
+                    "lengthMin"=>"8",
+                    "required"=>true,
+                    "error"=>"Votre mot de passe doit faire plus de 8 caractères",
+                    "placeholder"=>"Votre mot de passe"
+                ]
+            ],
+            "button"=>[
+                "class"=>"primary",
+                "name"=>""
+            ]
+
         ];
     }
 
