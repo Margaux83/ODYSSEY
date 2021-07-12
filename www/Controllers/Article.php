@@ -21,6 +21,7 @@ class Article
              header('Location: /login');
        }
 
+         //Instanciation de la classe Article
         $articles = new Arti();
          //Fonction pour récupérer la liste de tous les articles
         $articles->getAllArticles();
@@ -29,9 +30,10 @@ class Article
         $view = new View("Article/articles", "back");
 
         //Affiche la liste de tous les articles
-        $view->assign("infoArticlesByUser", $articles->getArticleByUser($_SESSION["userId"]));
-        //Affiche la liste des articles qui ont été créés par l'utilisateur connecté
         $view->assign("infoArticles", $articles->getAllArticles());
+        //Affiche la liste des articles qui ont été créés par l'utilisateur connecté
+        $view->assign("infoArticlesByUser", $articles->getArticleByUser($_SESSION["userId"]));
+
 
     }
 

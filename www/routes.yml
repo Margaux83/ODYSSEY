@@ -62,7 +62,7 @@
   controller: Article
   action: deleteCategory
 
-/users:
+/admin/users:
   controller: Users
   action: default
   label: Utilisateurs
@@ -94,6 +94,10 @@
     min-statut: true
     listId: basics
     icon: icon_user
+
+/admin/delete-user:
+  controller: Users
+  action: deleteUser
 
 /pages:
   controller: Page
