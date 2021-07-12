@@ -12,6 +12,7 @@ class Security
 	private static $_instance = null;
     private static $_userConnectedId = null;
     private static $_actualUri;
+    private static $_alwaysAuthorizedUri = ['/login'];
 
 	private function __construct($_userConnectedId) {
         self::$_userConnectedId = $_userConnectedId;
@@ -27,6 +28,7 @@ class Security
     }
 
     public static function isAuthorized($uri) {
+        if (in_array('/login', self::$_alwaysAuthorizedUri)) return true;
         self::$_actualUri = $uri;
         $user = new User();
         $role = new Role();

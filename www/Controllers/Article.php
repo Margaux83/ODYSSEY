@@ -87,7 +87,7 @@ class Article
                             $article->setIsdraft(0);
                         }
                         $article->setIsdeleted(0);
-                        $article->setDescription($dataArticle["description"]);
+                        $article->setDescription(htmlspecialchars(addslashes($dataArticle["description"])));
                         $article->setId_user($_SESSION["userId"]);
                         $article->setUri(htmlspecialchars(addslashes(str_replace(' ', '_', "/article/".$dataArticle['uri']))));
 
@@ -168,7 +168,7 @@ class Article
                             //Modification de l'article sélectionné
                             $article->setTitle(htmlspecialchars(addslashes($dataArticle['title'])));
                             $article->setContent(htmlspecialchars(addslashes($dataArticle['content'])));
-                            $article->setDescription($dataArticle['description']);
+                            $article->setDescription(htmlspecialchars(addslashes($dataArticle['description'])));
 
                             $article->setStatus($dataArticle['status']);
                             $article->setIsvisible($dataArticle['isvisible']);
