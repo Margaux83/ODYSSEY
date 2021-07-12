@@ -22,10 +22,10 @@ class User extends Database
     /**
      * User constructor.
      */
-    public function __construct(){
+    public function __construct($idUser = null){
         parent::__construct();
-        if(empty($this->id)) {
-            $this->setId($_SESSION['userId']);
+        if(!empty($idUser)) {
+            $this->setId($idUser);
         }
     }
 

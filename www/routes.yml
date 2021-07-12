@@ -264,6 +264,14 @@
   freeAccess: true
 ### ### ###
 
+# FRONT ACTION #
+/actionfront/postcommentfront:
+  controller: Comment
+  action: postCommentFromFront
+  label: Créer un commentaire
+  freeAccess: true
+### ### ###
+
 # INSTALLER #
 /admin/installer:
   controller: Installer

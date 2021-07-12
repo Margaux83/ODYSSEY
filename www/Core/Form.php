@@ -28,7 +28,7 @@ class Form
         return $errors; //tableau des erreurs
     }
 
-    public static function showForm($form){
+    public static function showForm($form, $echoDirectly = true){
         $html = "<form ".(!empty($form["config"]["id"]) ? "id='ody_form_".$form["config"]["id"]."'": "")." class='".($form["config"]["class"]??"")."' method='".( self::cleanWord($form["config"]["method"]) ?? "GET" )."' action='".( $form["config"]["action"] ?? "" )."'>";
 
         foreach ($form["input"] as $name => $dataInput) {
@@ -118,7 +118,11 @@ class Form
             ."</button></div></form>";
 
 
-        echo $html;
+        if ($echoDirectly) {
+            echo $html;
+        }else {
+            return $html;
+        }
     }
 
     public static function cleanWord($word){
