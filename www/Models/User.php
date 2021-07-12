@@ -382,7 +382,7 @@ class User extends Database
                 ]
             ],
             "button"=>[
-                "class"=>"primary",
+                "class"=>"primary float-right",
                 "name"=>""
             ]
 
