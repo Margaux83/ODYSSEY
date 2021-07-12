@@ -99,7 +99,7 @@
   controller: Users
   action: deleteUser
 
-/pages:
+/admin/pages:
   controller: Page
   action: default
   label: Pages
@@ -122,6 +122,10 @@
 /admin/edit-page:
   controller: Page
   action: editPage
+
+/admin/delete-page:
+  controller: Page
+  action: deletePage
 
 /admin/deleted-page:
   controller: Page
