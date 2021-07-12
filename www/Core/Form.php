@@ -10,6 +10,7 @@ class Form
         if( count($data) == count($config["input"])) {
 
             foreach ($config["input"] as $name => $configInput) {
+
                 if (!empty($configInput["lengthMin"])
                     && is_numeric($configInput["lengthMin"])
                     && strlen($data[$name]) < $configInput["lengthMin"]) {
@@ -47,7 +48,6 @@ class Form
                     ." </label>";
             }
 
-
             if ($dataInput["type"] === "textarea"){
                 $html .= "<textarea 
                              id='".$dataInput["id"]."'
@@ -57,7 +57,7 @@ class Form
                               placeholder='".($dataInput["placeholder"] ?? "")."'
                             ".((!empty($dataInput["required"]))?"required='required'":"")." 
                             ".((!empty($dataInput["disabled"]))?"disabled='disabled'":"")." 
-                          
+                            ".((!empty($dataInput["readonly"]))?"readonly='readonly'":"")." 
                             >  ".((!empty($dataInput["defaultValue"]))?"" . $dataInput["defaultValue"] . "":"")."</textarea>";
                 $html .= "<br>";
                 $html .= "<br>";
@@ -105,7 +105,8 @@ class Form
                             type='".($dataInput["type"] ?? "text")."'
                             placeholder='".($dataInput["placeholder"] ?? "")."'
                             ".((!empty($dataInput["required"]))?"required='required'":"")." 
-                            ".((!empty($dataInput["disabled"]))?"disabled='disabled'":"")." 
+                            ".((!empty($dataInput["disabled"]))?"disabled='disabled'":"")."
+                            ".((!empty($dataInput["readonly"]))?"readonly='readonly'":"")." 
                             ".((!empty($dataInput["defaultValue"]))?"value='" . $dataInput["defaultValue"] . "'":"")."
                             >";
             }
