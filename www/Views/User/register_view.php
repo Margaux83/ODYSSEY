@@ -2,7 +2,13 @@
     <h1>Inscription</h1>
 </section>
 <section>
+    <?php  App\Core\Form::showForm($form); ?>
     <form method="POST">
+        <div class="formSubmitElement">
+            <button id="login_submit" type="button" class="secondary" onclick="window.location='login'">SE CONNECTER</button>
+        </div>
+    </form>
+   <!--- <form method="POST">
         <div class="formElement">
             <label for="name" class="requiredLabel">Nom</label>
             <input name="lastname" id="name" type="text" placeholder="Votre nom" required>
@@ -31,5 +37,5 @@
             <button id="login_submit" type="submit" class="secondary" onclick="window.location='login'">SE CONNECTER</button>
             <button id="login_submit" type="submit" class="primary">S'INSCRIRE</button>
         </div>
-    </form>
+    </form>--->
 </section>

@@ -382,7 +382,7 @@ class User extends Database
                 ]
             ],
             "button"=>[
-                "class"=>"primary float-right",
+                "class"=>"primary",
                 "name"=>""
             ]
 
@@ -438,14 +438,14 @@ class User extends Database
                     "error"=>"Votre mot de passe doit faire plus de 8 caractères",
                     "placeholder"=>"Votre mot de passe"
                 ],
-                /*"pwdConfirm"=>[
+                "password-confirm"=>[
                     "type"=>"password",
-                    "label"=>"Confirmation de mot de passe",
-                    "confirm"=>"pwd",
+                    "label"=>"Confirmation du mot de passe",
+                    "lengthMin"=>"8",
                     "required"=>true,
-                    "error"=>"Votre mot de passe de confirmation est incorrect",
-                    "placeholder"=>"Confirmation"
-                ],*/
+                    "error"=>"Votre mot de passe doit faire plus de 8 caractères",
+                    "placeholder"=>"Votre mot de passe"
+                ],
                 "phone"=>[
                     "type"=>"text",
                     "label"=>"Numéro de téléphone",
@@ -454,6 +454,10 @@ class User extends Database
                     "error"=>"Votre numéro de téléphone doit contenir 10 chiffres",
                     "placeholder"=>"Votre numéro de téléphone"
                 ],
+            ],
+            "button"=>[
+                "class"=>"primary",
+                "name"=>""
             ]
 
         ];
