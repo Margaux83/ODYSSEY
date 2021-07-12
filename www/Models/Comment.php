@@ -4,16 +4,19 @@
 namespace App\Models;
 
 use App\Core\Database;
+use App\Models\User;
+use App\Models\Article;
 
 
 class Comment extends Database
 {
     protected $id=null;
     protected $content;
-    protected $id_article;
-    protected $isdeleted;
-    protected $id_user;
-    protected $id_comment;
+    protected $id_Article;
+    protected $id_User;
+    protected $id_Comment;
+    protected $isDeleted;
+    protected $isVerified;
 
     /**
      * @param $id
@@ -51,72 +54,118 @@ class Comment extends Database
     /**
      * @param $isdeleted
      */
-    public function setIsdeleted($isdeleted)
+    public function setIsDeleted($isDeleted)
     {
-        $this->isdeleted = $isdeleted;
+        $this->isDeleted = $isDeleted;
     }
 
     /**
      * @return mixed
      */
-    public function getIsdeleted()
+    public function getIsDeleted()
     {
-        return $this->isdeleted;
+        return $this->isDeleted;
     }
 
     /**
-     * @param $id_article
+     * @param $id_Article
      */
-    public function setId_article($id_article)
+    public function setId_Article($id_Article)
     {
-        $this->id_article = $id_article;
+        $this->id_Article = $id_Article;
     }
 
-    public function getId_article()
+    public function getId_Article()
     {
-        return $this->id_article;
+        return $this->id_Article;
     }
 
     /**
      * @param mixed $id_user
      */
-    public function setIdUser($id_user)
+    public function setId_User($id_User)
     {
-        $this->id_user = $id_user;
+        $this->id_User = $id_User;
     }
 
     /**
      * @return mixed
      */
-    public function getIdUser()
+    public function getId_User()
     {
-        return $this->id_user;
+        return $this->id_User;
     }
 
     /**
      * @param mixed $id_comment
      */
-    public function setIdComment($id_comment)
+    public function setId_Comment($id_Comment)
     {
-        $this->id_comment = $id_comment;
+        $this->id_Comment = $id_Comment;
     }
 
     /**
      * @return mixed
      */
-    public function getIdComment()
+    public function getId_Comment()
     {
-        return $this->id_comment;
+        return $this->id_Comment;
+    }
+
+    public function getIsVerified() {
+        return $this->isVerified;
+    }
+    public function setIsVerified($isVerified) {
+        $this->isVerified = $isVerified;
     }
 
     public function getAllComments()
     {
-        $db = new Database("Comment");
-        return $result = $db->query(
-            ["ody_Comment.id" ,"ody_Comment.content","ody_User.firstname", "ody_User.lastname", "ody_Article.title", "ody_Comment.creationDate", "ody_Comment.updateDate", "ody_Comment.id_Article", "ody_Comment.id_Comment","ody_Comment.id_User","ody_Comment.isVerified"],
-            ["ody_Comment.isDeleted" => "0"],
-            "",
-            " INNER JOIN ody_User ON ody_Comment.id_User = ody_User.ID INNER JOIN ody_Article ON ody_Comment.id_Article = ody_Article.ID"
+        $results = $this->query(
+            ['id', 'content', 'creationDate', 'updateDate', 'isVerified', 'id_User', 'id_Article'],
+            ['isDeleted' => 0]
         );
+
+        if (count($results)) {
+            $user = new User();
+            $article = new Article();
+            foreach ($results as $key => $result) {
+                if (!empty($result['id_User'])) {
+                    $userSelected = $user->query(['lastname', 'firstname'])[0];
+                    $results[$key]['lastname'] = $userSelected['lastname'];
+                    $results[$key]['firstname'] = $userSelected['firstname'];
+                }
+                if (!empty($result['id_Article'])) {
+                    $articleSelected = $article->query(['title'])[0];
+                    $results[$key]['title'] = $articleSelected['title'];
+                }
+            }
+        }
+
+        return $results;
+    }
+
+    public function buildFormPostFront($idArticle)
+    {
+        return [
+            "config" => [
+                "method" => "POST",
+                "action" => "actionfront/postcommentfront",
+                "Submit" => "Commenter",
+                "class" => "ody_frontForm"
+            ],
+            "input" => [
+                "content"=>[
+                    "type"=>"text",
+                    "label"=>"Contenu",
+                    "required"=>false,
+                    "placeholder"=>"Ecrivez votre commentaire"
+                ],
+                "id_Article"=>[
+                    "type"=>"hidden",
+                    "defaultValue" => $idArticle
+                ]
+            ]
+        ];
     }
 }
