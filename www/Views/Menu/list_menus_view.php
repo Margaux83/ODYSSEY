@@ -95,24 +95,19 @@
         ody_cleanMenuElements();
 
         if (selectedMenuId) {
-            menus.forEach(function(menu) {
-                if (menu.id === selectedMenuId) {
-                    actualMenu = JSON.parse(menu['contentMenu']);
-                    ody_loadMenuData(actualMenu);
-                }
-            });
-            document.getElementById("submitButton").innerHTML = 'Enregistrer';
+            ody_showMenuDataWithId(selectedMenuId);
         }else {
             document.getElementById("ody_inputContainer_contentMenu").innerHTML = `<input id="contentMenu" name="contentMenu" type="hidden" placeholder="">`;
             document.getElementById("submitButton").innerHTML = 'Créer le menu';
             ody_showMenuData();
-        }
-        document.getElementById('id').value = selectedMenuId;
-        document.getElementById('name').value = selectedMenuId 
-            ? selectInfos.options[selectInfos.selectedIndex].text
-            : '';
 
-        lastSelectedMenuId = selectedMenuId;
+            document.getElementById('id').value = selectedMenuId;
+            document.getElementById('name').value = selectedMenuId 
+                ? selectInfos.options[selectInfos.selectedIndex].text
+                : '';
+
+            lastSelectedMenuId = selectedMenuId;
+        }
     }
 
     function ody_cleanMenuElements() {
@@ -172,7 +167,7 @@
             }
             if (selectedObject) {
                 document.getElementById(`ody_menuChecklist_${contentSelected.object.toLowerCase()}_${contentSelected.id}`).checked = true;
-                htmlContentSelectedMenu.push(`<li>
+                htmlContentSelectedMenu.push(`<li id="${contentSelected.id}" draggable="true">
                     <div class="menuManagementListContent">
                         <p>${selectedObject.title}</p>
                         <p>${contentSelected.object} : ${selectedObject.uri}</p>
@@ -198,7 +193,11 @@
                         <p>Page obligatoire : /home</p>
                     </div>
                 </li>
+            </ul>
+            <ul id="menuManagementList" class="menuManagementList">
                 ${dataContentMenu.join('\n')}
+            </ul>
+            <ul class="menuManagementList">
                 <li>
                     <div class="menuManagementListContent">
                         <p>Contact</p>
@@ -206,9 +205,107 @@
                     </div>
                 </li>
             </ul>`;
+
+        ody_addDraggableMenuElements();
+    }
+
+    function ody_showMenuDataWithId(idMenu = null) {
+        if (!idMenu) {
+            ody_showMenuData();
+            return;
+        }
+
+        menus.forEach(function(menu) {
+            if (menu.id == idMenu) {
+                actualMenu = JSON.parse(menu['contentMenu']);
+                ody_loadMenuData(actualMenu);
+                document.getElementById('id').value = idMenu;
+                document.getElementById('name').value = menu.name;
+
+                lastSelectedMenuId = selectedMenuId;
+                document.getElementById("submitButton").innerHTML = 'Enregistrer';
+                document.getElementById('ody_selectMenu').value = idMenu;
+            }
+        });
+    }
+
+    var ody_lastDragElement = null;
+
+    function ody_handleDragStart(e) {
+        ody_lastDragElement = this;
+
+        e.dataTransfer.effectAllowed = 'move';
+        e.dataTransfer.setData('text/html', this.outerHTML);
+        
+        this.classList.add('dragElem');
+    }
+
+    function ody_handleDragOver(e) {
+        if (e.preventDefault) {
+            e.preventDefault();
+        }
+        this.classList.add('over');
+
+        e.dataTransfer.dropEffect = 'move';
+
+        return false;
+    }
+
+    function ody_handleDragLeave(e) {
+        this.classList.remove('over');
+    }
+
+    function ody_handleDrop(e) {
+        if (e.stopPropagation) {
+            e.stopPropagation();
+        }
+
+        if (ody_lastDragElement != this) {
+            this.parentNode.removeChild(ody_lastDragElement);
+            var dropHTML = e.dataTransfer.getData('text/html');
+            this.insertAdjacentHTML('beforebegin',dropHTML);
+            var dropElem = this.previousSibling;
+            ody_addDraggableEffet(dropElem);
+        }
+        ody_lastDragElement.classList.remove('dragElem');
+        this.classList.remove('over');
+        return false;
+    }
+
+    function ody_handleDragEnd(e) {
+        ody_lastDragElement.classList.remove('dragElem');
+        this.classList.remove('over');
+
+        var cols = document.querySelectorAll('#menuManagementList li');
+        [].forEach.call(cols, function(col, index) {
+            actualMenu.forEach(function(actualMenuElement) {
+                if (actualMenuElement.id == col.id) {
+                    actualMenuElement.order = index;
+                }
+            })
+        });
+
+        actualMenu.sort(function(a,b) {
+            return a.order - b.order;
+        });
+
+        document.getElementById('contentMenu').value = JSON.stringify(actualMenu);
+    }
+
+    function ody_addDraggableMenuElements() {
+        var cols = document.querySelectorAll('#menuManagementList li');
+            [].forEach.call(cols, ody_addDraggableEffet);
+    }
+
+    function ody_addDraggableEffet(object) {
+        object.addEventListener('dragstart', ody_handleDragStart, false);
+        object.addEventListener('dragover', ody_handleDragOver, false);
+        object.addEventListener('dragleave', ody_handleDragLeave, false);
+        object.addEventListener('drop', ody_handleDrop, false);
+        object.addEventListener('dragend', ody_handleDragEnd, false);
     }
 
     document.addEventListener('DOMContentLoaded', function() {
-        ody_showMenuData();
+        ody_showMenuDataWithId(<?php echo ($menuSelected ?? '');?>);
     })
 </script>
