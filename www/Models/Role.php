@@ -120,27 +120,19 @@ class Role extends Database
                     ]
                 ]
             ],
-            "basics" => [
-                "title" => "Permissions générales",
-                "values" => [
-                    "access_admin" => [
-                        "desc" => "Acceder au panel admin"
-                    ]
-                ]
-            ],
             "users" => [
                 "title" => "Gestion des utilisateurs",
                 "values" => [
-                    "/users" => [
+                    "/admin/users" => [
                         "desc" => "Voir les utilisateurs"
                     ],
-                    "/add-users" => [
+                    "/admin/add-users" => [
                         "desc" => "Ajouter un utilisateur"
                     ],
-                    "/edit-user" => [
+                    "/admin/edit-user" => [
                         "desc" => "Modifier un utilisateur"
                     ],
-                    "/delete-user" => [
+                    "/admin/delete-user" => [
                         "desc" => "Supprimer un utilisateur"
                     ]
 
@@ -149,16 +141,16 @@ class Role extends Database
             'pages' => [
                 'title' => 'Gestion des pages',
                 'values' => [
-                    "/pages" => [
+                    "/admin/pages" => [
                         "desc" => "Voir les pages"
                     ],
-                    "/add-page" => [
+                    "/admin/add-page" => [
                         'desc' => 'Ajouter une page'
                     ],
-                    "/edit-page" => [
+                    "/admin/edit-page" => [
                         'desc' => 'Modifier une page'
                     ],
-                    "/delete-page" => [
+                    "/admin/delete-page" => [
                         'desc' => 'Supprimer une page'
                     ]
                 ]
@@ -166,16 +158,16 @@ class Role extends Database
             'articles' => [
                 'title' => 'Gestion des articles',
                 'values' => [
-                    "/articles" => [
+                    "/admin/articles" => [
                         "desc" => "Voir les articles"
                     ],
-                    "/add-article" => [
+                    "/admin/add-article" => [
                         'desc' => 'Ajouter une article'
                     ],
-                    "/edit-article" => [
+                    "/admin/edit-article" => [
                         'desc' => 'Modifier une article'
                     ],
-                    "/delete-article" => [
+                    "/admin/delete-article" => [
                         'desc' => 'Supprimer une article'
                     ]
                 ]
@@ -183,7 +175,7 @@ class Role extends Database
             'comment' => [
                 'title' => 'Gestion des commentaire',
                 'values' => [
-                    "/comments" => [
+                    "/admin/comments" => [
                         'desc' => 'Accepter/Refuser des commentaires '
                     ],
                 ]
@@ -191,16 +183,16 @@ class Role extends Database
             "roles" => [
                 "title" => "Gestion des roles",
                 "values" => [
-                    "/roles" => [
+                    "/admin/roles" => [
                         "desc" => "Voir les rôles"
                     ],
-                    "/add-role" => [
+                    "/admin/add-role" => [
                         "desc" => "Ajouter un rôle"
                     ],
-                    "/edit-role" => [
+                    "/admin/edit-role" => [
                         "desc" => "Modifier un rôle"
                     ],
-                    "/delete-role" => [
+                    "/admin/delete-role" => [
                         "desc" => "Supprimer un rôle"
                     ]
                 ]
@@ -208,16 +200,16 @@ class Role extends Database
             "menus" => [
                 "title" => "Gestion des menus",
                 "values" => [
-                    "/menus" => [
+                    "/admin/menus" => [
                         "desc" => "Voir les menus"
                     ],
-                    "/menu-add" => [
+                    "/admin/menu-add" => [
                         "desc" => "Ajouter un menu"
                     ],
-                    "/menu-edit" => [
+                    "/admin/menu-edit" => [
                         "desc" => "Modifier un menu"
                     ],
-                    "/menu-delete" => [
+                    "/admin/menu-delete" => [
                         "desc" => "Supprimer un menu"
                     ]
                 ]
