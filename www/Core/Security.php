@@ -28,15 +28,18 @@ class Security
     }
 
     public static function isAuthorized($uri) {
+
         if (in_array($uri, self::$_alwaysAuthorizedUri)) return true;
 
         self::$_actualUri = $uri;
         $user = new User($_SESSION['userId']);
         $role = new Role();
+
         $result = $role->query(
             ["value"],
             ["id" => $user->getRole()]
         );
+
         $perms = json_decode($result[0]['value'], true);
         if (array_key_exists($uri, $perms) || array_key_exists("all_perms", $perms)) {
             // TODO Redirection à faire autre part que /dashboard
