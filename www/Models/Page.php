@@ -209,6 +209,7 @@ class Page extends Database
         return $this->uri;
     }
 
+    //Formbuilder des pages
     public function buildFormPage() {
         $form = new Form();
         return [
@@ -294,6 +295,7 @@ class Page extends Database
         ];
     }
 
+    //Fonction qui va chercher les informations des pages enregistrées et qui ne sont pas supprimées
     public function getAllPages()
     {
         $db = new Database("Page");

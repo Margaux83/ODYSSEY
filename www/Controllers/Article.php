@@ -21,14 +21,7 @@ class Article
              header('Location: /login');
        }
 
-         //Instanciation de la classe article
-        $article = new Arti();
-
-        if (!empty($_POST)) {
-            if (!empty($_POST['deleteArticle'])) {
-                $article->delete($_POST['id_article']);
-            }
-        }
+         //Instanciation de la classe Article
         $articles = new Arti();
          //Fonction pour récupérer la liste de tous les articles
         $articles->getAllArticles();
@@ -37,14 +30,10 @@ class Article
         $view = new View("Article/articles", "back");
 
         //Affiche la liste de tous les articles
-        $view->assign("infoArticlesByUser", $articles->getArticleByUser($_SESSION["userId"]));
-        //Affiche la liste des articles qui ont été créés par l'utilisateur connecté
         $view->assign("infoArticles", $articles->getAllArticles());
+        //Affiche la liste des articles qui ont été créés par l'utilisateur connecté
+        $view->assign("infoArticlesByUser", $articles->getArticleByUser($_SESSION["userId"]));
 
-
-
-        $form = $article->buildFormDeleteArticle();
-        $view->assign("form", $form);
 
     }
 
@@ -70,10 +59,6 @@ class Article
         $form = $article->buildFormArticle();
         $view->assign("form", $form);
 
-        //Création du formBuilder des catégories
-        $formCategory = $category->buildFormCategory();
-        $view->assign("formCategory", $formCategory);
-
         //On vérifie si des données sont bien envoyées
         if (!empty($_POST['insert_article'])) {
             $dataArticle = $_POST;
@@ -95,7 +80,7 @@ class Article
 
                     if(empty($article->query(['id'],["uri"=>"/article/".$dataArticle['uri']]))){
                         $article->setTitle(htmlspecialchars(addslashes($dataArticle['title'])));
-                        $article->setContent(addslashes($dataArticle['content']));
+                        $article->setContent(htmlspecialchars(addslashes($dataArticle['content'])));
                         $article->setStatus($dataArticle['status']);
                         $article->setIsvisible($dataArticle['isvisible']);
                         if ($dataArticle['status'] == "Brouillon") {
@@ -104,9 +89,9 @@ class Article
                             $article->setIsdraft(0);
                         }
                         $article->setIsdeleted(0);
-                        $article->setDescription($dataArticle["description"]);
+                        $article->setDescription(htmlspecialchars(addslashes($dataArticle["description"])));
                         $article->setId_user($_SESSION["userId"]);
-                        $article->setUri("/article/".$dataArticle['uri']);
+                        $article->setUri(htmlspecialchars(addslashes(str_replace(' ', '_', "/article/".$dataArticle['uri']))));
 
                         $article->save();
                         $result = $article->getLastFromTable();
@@ -184,8 +169,8 @@ class Article
 
                             //Modification de l'article sélectionné
                             $article->setTitle(htmlspecialchars(addslashes($dataArticle['title'])));
-                            $article->setContent(addslashes($dataArticle['content']));
-                            $article->setDescription($dataArticle['description']);
+                            $article->setContent(htmlspecialchars(addslashes($dataArticle['content'])));
+                            $article->setDescription(htmlspecialchars(addslashes($dataArticle['description'])));
 
                             $article->setStatus($dataArticle['status']);
                             $article->setIsvisible($dataArticle['isvisible']);
@@ -197,7 +182,7 @@ class Article
                         $uriverification = empty($article->getUriForVerification($_POST["id"],'/article/' . $dataArticle['uri']));
 
                             if ($uriverification) {
-                                $article->setUri('/article/' . $dataArticle['uri']);
+                                $article->setUri(htmlspecialchars(addslashes(str_replace(' ', '_', "/article/".$dataArticle['uri']))));
                             }
                             else{
                                 $_SESSION['alert']['danger'][] = 'Cette uri existe déjà';
@@ -226,6 +211,161 @@ class Article
                 $view->assign("form", $form);
                 $view->assign('article', $article);
 
+            }
+        }
+    }
+
+    public function deleteArticleAction() {
+        //Instanciation de la classe article
+        $article = new Arti();
+
+        if (!empty($_POST)) {
+            if (!empty($_POST['deleteArticle'])) {
+                $article->delete($_POST['id_article']);
+            }
+        }
+    }
+
+    public function categoriesAction()
+    {
+        $security = Security::getInstance();
+        //Vérifie si l'utilisateur est connecté, sinon on le redirige sur la page de login
+        if(!$security->isConnected()){
+            header('Location: /login');
+        }
+
+        //Affiche la vue des catégories
+        $view = new View("Categories/categories", "back");
+        //Instanciation de la classe Category
+        $category = new Category();
+        //On récupère, grâce à la fonction query, les informations de tous les articles
+        $listCategories = $category->query(['id','label', 'creationDate', 'updateDate'],['isDeleted'=>0]);
+        //Affiche la liste de tous les catégories
+        $view->assign("listCategories", $listCategories);
+
+        //Création du formBuilder des catégories
+        $formCategory = $category->buildFormCategory();
+        $view->assign("formCategory", $formCategory);
+
+        //Suppression d'une catégorie grâce à son id
+        if (!empty($_POST)) {
+            if (!empty($_POST['deleteCategory'])) {
+                $category->delete($_POST['id_category']);
+            }
+        }
+
+        //On vérifie si des données sont bien envoyées
+        if(!empty($_POST['insert_category'])){
+            $dataArticle = $_POST;
+            foreach ($dataArticle as $key => $value) {
+                switch ($key) {
+                    case "insert_category":
+                        unset($dataArticle["insert_category"]);
+                        break;
+                }
+            }
+            if (!empty($dataArticle)) {
+
+
+                $errors = Form::validator($dataArticle, $formCategory);
+                if (empty($errors)) {
+                    //On vérifie si la catégorie existe déjà dans la base de donnée
+                    if(!empty($category->query(['id'],['label'=>$dataArticle['label']]))){
+                        $_SESSION['alert']['danger'][] = 'La catégorie existe déjà';
+                    }
+                    else{
+                        //S'il n'y a pas d'erreurs, on envoie les données dans la requête pour ajouter la catégorie
+                        $category->setLabel(htmlspecialchars(addslashes($dataArticle["label"])));
+                        $category->setIsdeleted(0);
+                        $category->save();
+                        $_SESSION['alert']['success'][] = 'La catégorie a bien été modifiée !';
+                        header('location: /admin/categories');
+                        session_write_close();
+                    }
+
+                }
+                else{
+                    //S'il y a des erreurs, on prépare leur affichage
+                    $_SESSION['alert']['danger'][] = $errors[0];
+                }
+
+            }
+        }
+
+    }
+
+
+    public function editcategoryAction()
+    {
+        $security = Security::getInstance();
+        //Vérifie si l'utilisateur est connecté, sinon on le redirige sur la page de login
+        if(!$security->isConnected()){
+            header('Location: /login');
+        }
+
+        //Affichage de la vue pour la modification de catégories
+        $view = new View("Categories/edit_categories", "back");
+        //Instanciation de la classe Category
+        $category = new Category();
+
+        //On va récupérer les informations de la catégorie en envoyant l'id dans le setId
+        if (!empty($_POST)) {
+            if($_POST['id'] != "") {
+                $category->setId($_POST["id"]);
+            }
+        }
+
+        //Création du formBuilder des catégories
+        $formCategory = $category->buildFormCategory();
+        $view->assign("formCategory", $formCategory);
+
+        //On vérifie si des données sont bien envoyées
+        if(!empty($_POST['insert_category'])){
+            $dataArticle = $_POST;
+            foreach ($dataArticle as $key => $value) {
+                switch ($key) {
+                    case "insert_category":
+                        unset($dataArticle["insert_category"]);
+                        break;
+                }
+            }
+            if (!empty($dataArticle)) {
+
+                $errors = Form::validator($dataArticle, $formCategory);
+                if (empty($errors)) {
+                    //On vérifie si la catégorie existe déjà dans la base de donnée
+                    $uriverification = empty($category->getCategoryForVerification($_POST["id"],$dataArticle['label']));
+
+                    if ($uriverification) {
+                        //S'il n'y a pas d'erreurs, on envoie les données dans la requête pour modifier la catégorie
+                        $category->setLabel(htmlspecialchars(addslashes($dataArticle["label"])));
+                        $category->setIsdeleted(0);
+                        $category->save();
+                        $_SESSION['alert']['success'][] = 'La catégorie a bien été enregistrée !';
+                        header('location: /admin/categories');
+                        session_write_close();
+                    }
+                    else{
+                        $_SESSION['alert']['danger'][] = 'Cette catégorie existe déjà';
+                    }
+                }
+                else{
+                    //S'il y a des erreurs, on prépare leur affichage
+                    $_SESSION['alert']['danger'][] = $errors[0];
+                }
+
+            }
+        }
+    }
+
+    public function deleteCategoryAction() {
+        //Instanciation de la classe Category
+        $category = new Category();
+
+        //Suppression d'une catégorie grâce à son id
+        if (!empty($_POST)) {
+            if (!empty($_POST['deleteCategory'])) {
+                $category->delete($_POST['id_category']);
             }
         }
     }

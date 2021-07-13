@@ -413,6 +413,65 @@ body main.fullContent {
   border: 1px solid red;
 }
 
+[draggable] {
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+      user-select: none;
+  /* Required to make elements draggable in old WebKit */
+  -khtml-user-drag: element;
+  -webkit-user-drag: element;
+}
+
+ul.menuManagementList li {
+  list-style: none;
+  cursor: move !important;
+  display: flex;
+  padding: 15px;
+  background-color: #ebebeb;
+  border: 1px solid lightgrey;
+  border-bottom: 0;
+}
+
+ul.menuManagementList li:last-child {
+  border-bottom: 1px solid lightgrey;
+}
+
+ul.menuManagementList li .menuManagementListContent {
+  margin: auto 0;
+}
+
+ul.menuManagementList li .menuManagementListContent p {
+  font-style: italic;
+  opacity: 0.7;
+}
+
+ul.menuManagementList li .menuManagementListContent p:first-child {
+  font-style: normal;
+  opacity: 1;
+}
+
+ul.menuManagementList li img {
+  height: 18px;
+  opacity: 0.3;
+  width: auto;
+  margin: auto;
+  margin-right: 0;
+  transition: 0.5s;
+}
+
+ul.menuManagementList li img:hover {
+  opacity: 0.8;
+}
+
+ul.menuManagementList li.dragElem {
+  opacity: 0.5;
+}
+
+ul.menuManagementList li.over {
+  border-top: 2px dashed #155263 !important;
+}
+
 main #back-manPage-gridContent {
   padding: 15px 0;
   width: 100%;
@@ -1016,46 +1075,6 @@ ul.checkList li .checklistContent label {
   padding: 10px;
   display: block;
   width: 100%;
-}
-
-ul.menuManagementList li {
-  list-style: none;
-  display: flex;
-  padding: 15px;
-  background-color: #ebebeb;
-  border: 1px solid lightgrey;
-  border-bottom: 0;
-}
-
-ul.menuManagementList li:last-child {
-  border-bottom: 1px solid lightgrey;
-}
-
-ul.menuManagementList li .menuManagementListContent {
-  margin: auto 0;
-}
-
-ul.menuManagementList li .menuManagementListContent p {
-  font-style: italic;
-  opacity: 0.7;
-}
-
-ul.menuManagementList li .menuManagementListContent p:first-child {
-  font-style: normal;
-  opacity: 1;
-}
-
-ul.menuManagementList li img {
-  height: 18px;
-  opacity: 0.3;
-  width: auto;
-  margin: auto;
-  margin-right: 0;
-  transition: 0.5s;
-}
-
-ul.menuManagementList li img:hover {
-  opacity: 0.8;
 }
 
 .statisticsBasicContainer .statisticsBasic {

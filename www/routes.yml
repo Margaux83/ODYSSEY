@@ -44,7 +44,25 @@
   action: editArticle
   label: Modifier un article
 
-/users:
+/admin/delete-article:
+  controller: Article
+  action: deleteArticle
+
+/admin/categories:
+  controller: Article
+  action: categories
+  label: Catégories
+
+/admin/edit-category:
+  controller: Article
+  action: editcategory
+  label: Modifier une catégorie
+
+/admin/delete-category:
+  controller: Article
+  action: deleteCategory
+
+/admin/users:
   controller: Users
   action: default
   label: Utilisateurs
@@ -77,7 +95,11 @@
     listId: basics
     icon: icon_user
 
-/pages:
+/admin/delete-user:
+  controller: Users
+  action: deleteUser
+
+/admin/pages:
   controller: Page
   action: default
   label: Pages
@@ -101,7 +123,11 @@
   controller: Page
   action: editPage
 
-/deleted-page:
+/admin/delete-page:
+  controller: Page
+  action: deletePage
+
+/admin/deleted-page:
   controller: Page
   action: listdeletedpage
   label: Corbeille
@@ -139,7 +165,7 @@
   action: editrole
   label: Modifier un role
 
-/template:
+/admin/template:
   controller: Template
   action: default
   label: Templates
@@ -235,6 +261,14 @@
   controller: Users
   action: newPasswordConfirm
   label: Créer votre nouveau mot de passe
+  freeAccess: true
+### ### ###
+
+# FRONT ACTION #
+/actionfront/postcommentfront:
+  controller: Comment
+  action: postCommentFromFront
+  label: Créer un commentaire
   freeAccess: true
 ### ### ###
 

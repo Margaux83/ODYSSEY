@@ -12,6 +12,7 @@ class Security
 	private static $_instance = null;
     private static $_userConnectedId = null;
     private static $_actualUri;
+    private static $_alwaysAuthorizedUri = ['/login', '/logout', '/register', '/admin/dashboard', '/forgotpassword', '/forgotpasswordconfirm'];
 
 	private function __construct($_userConnectedId) {
         self::$_userConnectedId = $_userConnectedId;
@@ -27,16 +28,17 @@ class Security
     }
 
     public static function isAuthorized($uri) {
+        if (in_array($uri, self::$_alwaysAuthorizedUri)) return true;
+
         self::$_actualUri = $uri;
-        $user = new User();
+        $user = new User($_SESSION['userId']);
         $role = new Role();
-        $db = new Database("Role");
-        $result = $db->query(
+        $result = $role->query(
             ["value"],
             ["id" => $user->getRole()]
         );
         $perms = json_decode($result[0]['value'], true);
-        if (array_key_exists($uri, $perms) || array_key_exists("all_perms", $perms) || $uri == "/dashboard") {
+        if (array_key_exists($uri, $perms) || array_key_exists("all_perms", $perms)) {
             // TODO Redirection à faire autre part que /dashboard
             return true;
         }
@@ -60,8 +62,8 @@ class Security
 		$emailUserLogin = htmlspecialchars(addslashes($_POST['login-email']));
 		$pwdUserLogin = htmlspecialchars(addslashes($_POST['login-pwd']));
 
-		$db = new Database("User");
-		$result = $db->query(
+		$user = new User();
+		$result = $user->query(
 			["id", "password", "isVerified"],
 			["email" => $emailUserLogin]
 		);

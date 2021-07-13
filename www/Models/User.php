@@ -22,10 +22,10 @@ class User extends Database
     /**
      * User constructor.
      */
-    public function __construct(){
+    public function __construct($idUser = null){
         parent::__construct();
-        if(empty($this->id)) {
-            $this->setId($_SESSION['userId']);
+        if(!empty($idUser)) {
+            $this->setId($idUser);
         }
     }
 
@@ -523,7 +523,7 @@ class User extends Database
                     "lengthMax"=>"320",
                     "lengthMin"=>"8",
                     "required"=>true,
-                    "disabled"=>true,
+                    "readonly"=>true,
                     "error"=>"Votre email doit faire entre 8 et 320 caractères",
                     "placeholder"=>"Votre email",
                     "defaultValue" => $this->getEmail()
@@ -532,7 +532,6 @@ class User extends Database
                     "type"=>"text",
                     "label"=>"Numéro de téléphone",
                     "lengthMax"=>"10",
-                    "lengthMin"=>"10",
                     "required"=>true,
                     "error"=>"Votre numéro de téléphone doit contenir 10 chiffres",
                     "placeholder"=>"Votre numéro de téléphone",
