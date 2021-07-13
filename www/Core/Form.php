@@ -137,10 +137,10 @@ class Form
                 "label" => "Choisir une visibilité"
             ],
             "1"=>[
-                "label" => "Protégé",
+                "label" => "Public",
             ],
             "2"=>[
-                "label" => "Public",
+                "label" => "Protégé",
             ],
             "3"=>[
                 "label" => "Privé"

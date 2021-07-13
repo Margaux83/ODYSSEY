@@ -15,6 +15,16 @@ class Installer {
     }
 
     public static function makeInstall() {
+        // TODO Ecriture des fichiers d'environnement .env et .end.prod
+
+
+        file_put_contents(".env.dist", "test");
+
+
+        file_put_contents(".env.prod.dist", "qzdzqd");
+
+
+
         $query = self::getDatabaseQuery();
         $database = new Database();
         $install = $database->createDatabase($query);
@@ -23,10 +33,6 @@ class Installer {
         } else {
             echo 'Erreur dans l\'installation';
         }
-    }
-
-    public static function createDatabase() {
-
     }
 
     public static function getDatabaseQuery() {

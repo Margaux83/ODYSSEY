@@ -48,7 +48,7 @@ class Routing{
     }
 
     public function getControllerWithNamespace(){
-        return APP_NAMESPACE.$this->controller;
+        return "\App\\".$this->controller;
     }
 
     public function getMenuData(){
