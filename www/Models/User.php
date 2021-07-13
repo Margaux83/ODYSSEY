@@ -557,13 +557,21 @@ class User extends Database
 
     public function getAllUsers()
     {
-        $db = new Database("User");
-        return $result = $db->query(
-            ["ody_User.id", "ody_User.firstname", "ody_User.lastname", "ody_User.email", "ody_User.status", "ody_User.role", "ody_User.creationDate", "ody_User.lastConnexionDate", "ody_Role.name"],
-            ["ody_User.isDeleted" => "0"],
-            "",
-            " INNER JOIN ody_Role ON ody_Role.id = ody_User.role"
+        $results = $this->query(
+            ["id", "firstname", "lastname", "email", "status", "role", "creationDate", "lastConnexionDate"],
+            ["isDeleted" => "0"]
         );
-    }
 
+        if (count($results)) {
+            $role = new Role();
+            foreach ($results as $key => $result) {
+                if (!empty($result['role'])) {
+                    $userSelected = $role->query(['name'])[0];
+                    $results[$key]['name'] = $userSelected['name'];
+                }
+            }
+        }
+
+        return $results;
+    }
 }
