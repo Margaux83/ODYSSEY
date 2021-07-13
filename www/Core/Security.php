@@ -12,7 +12,7 @@ class Security
 	private static $_instance = null;
     private static $_userConnectedId = null;
     private static $_actualUri;
-    private static $_alwaysAuthorizedUri = ['/login', '/logout', '/register', '/admin/dashboard'];
+    private static $_alwaysAuthorizedUri = ['/login', '/logout', '/register', '/admin/dashboard', '/forgotpassword', '/forgotpasswordconfirm'];
 
 	private function __construct($_userConnectedId) {
         self::$_userConnectedId = $_userConnectedId;
