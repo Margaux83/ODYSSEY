@@ -2,7 +2,7 @@
     <div id='installer-stepElement-part-1' class="stepElement selected">
         <div class="stepStatusAndPath">
             <div id="installer-stepElement-stateIcon-part-1" class="stepStatus">
-                <img src=<?php App\Core\View::getAssets("/icons/icon_plane.png")?> class="iconWhite">
+                <img src=<?php App\Core\View::getAssets("/icons/icon_plane.png")?> alt="" class="iconWhite">
             </div>
             <div class="stepPath"></div>
         </div>
@@ -172,3 +172,9 @@
         <span style="color: red;">*</span> Ces champs sont obligatoires pour valider l'installation de odysseyCMS.
     </p>
 </footer>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        installer_elements.iconSelected = '<img src=<?php App\Core\View::getAssets("/icons/icon_plane.png")?> alt="" class="iconWhite">';
+    })
+</script>
