@@ -58,7 +58,7 @@ class Form
                             ".((!empty($dataInput["required"]))?"required='required'":"")." 
                             ".((!empty($dataInput["disabled"]))?"disabled='disabled'":"")." 
                             ".((!empty($dataInput["readonly"]))?"readonly='readonly'":"")." 
-                            >  ".((!empty($dataInput["defaultValue"]))?"" . $dataInput["defaultValue"] . "":"")."</textarea>";
+                            >".((!empty($dataInput["defaultValue"]))?"" . $dataInput["defaultValue"] . "":"")."</textarea>";
                 $html .= "<br>";
                 $html .= "<br>";
 
@@ -137,10 +137,10 @@ class Form
                 "label" => "Choisir une visibilité"
             ],
             "1"=>[
-                "label" => "Protégé",
+                "label" => "Public",
             ],
             "2"=>[
-                "label" => "Public",
+                "label" => "Protégé",
             ],
             "3"=>[
                 "label" => "Privé"

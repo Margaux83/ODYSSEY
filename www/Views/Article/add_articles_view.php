@@ -14,8 +14,6 @@
         <?php  App\Core\Form::showForm($form); ?>
 </section>
 
-<script src=<?php App\Core\View::getAssets("modal.js")?>></script>
-<script src=<?php App\Core\View::getAssets("popups.js")?>></script>
 <script>
     $("#title").keyup(function(){
         update();
