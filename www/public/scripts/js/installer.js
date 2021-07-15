@@ -37,7 +37,9 @@ function installer_goToPreviousPart(){
 }
 
 function installer_goToNextPart(event){
-    event.preventDefault();
+    if(installer_actualPart < 4) {
+        event.preventDefault();
+    }
     if (installer_actualPart < installer_lastPart){
         document.getElementById('installer_goBackButton').classList.remove('d-none');
         document.getElementById('installer-stepElement-part-' + installer_actualPart).classList.remove('selected');

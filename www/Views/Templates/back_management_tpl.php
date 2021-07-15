@@ -14,7 +14,8 @@
 
     <script src=<?php App\Core\View::getAssets("menu.js")?>></script>
     <script src=<?php App\Core\View::getAssets("chart.js")?>></script>
-    <script src=<?php App\Core\View::getAssets("installer.js")?>></script>
+    <script src=<?php App\Core\View::getAssets("sweetalert2.all.min.js")?>></script>
+
 </head>
 <body class="preload" style="min-height: 0;">
     <img src=<?php App\Core\View::getAssets("logos/odyssey_logo_withoutText.svg")?> alt="" class="backgroundImg">

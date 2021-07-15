@@ -39,24 +39,24 @@
             OdyseyCMS permet de créer rapidement de nouvelles applications pour les agences de voyages.
             Après l'installation, vous pourrez vous connecter à un panneau d'administration pour éditer la configuration de votre site Web.
         </p>
-        <p>
+        <!--<p>
             L'URL de base est l'URL de votre site Web qui peut être lue à partir de la barre supérieure de votre navigateur.
-        </p>
+        </p>-->
     </div>
 </section>
 <section>
-    <form onsubmit="installer_goToNextPart()">
+    <form onsubmit="installer_goToNextPart()" id="formInstaller">
         <div id='installer-formElementsContainer-part-1'>
             <div class="formElement">
                 <label for="config-siteName" class="requiredLabel">Nom du site</label>
-                <input name="config-siteName" id="config-siteName" type="text" required>
+                <input name="config[siteName]" id="config-siteName" type="text" required>
             </div>
-            
+            <!--
             <div class="formElement">
                 <label for="config-siteUrl" class="requiredLabel">URL de base</label>
                 <input name="config-siteUrl" id="config-siteUrl" placeholder="www.exemple.com" type="text" required>
             </div>
-            
+            -->
             <div class="formElement">
                 <label for="config-siteLanguage" class="requiredLabel">Langue</label>
                 <select name="config-siteLanguage" id="config-siteLanguage" required>
@@ -97,19 +97,26 @@
         </div>
 
         <div id='installer-formElementsContainer-part-3' class="d-none">
+            <!--
             <div class="formElement">
                 <label for="config-bddServerName" class="requiredLabel">Nom du serveur</label>
                 <input name="config-bddServerName" id="config-bddServerName" type="text" required>
             </div>
-
+            -->
+            <!--
             <div class="formElement">
                 <label for="config-bddServerPort" class="requiredLabel">Port du serveur</label>
                 <input name="config-bddServerPort" id="config-bddServerPort" type="text" required>
             </div>
+            -->
+            <div class="formElement">
+                <label for="config-bddName" class="requiredLabel">Nom de la base de données</label>
+                <input name="config-bddName" id="config-bddName" type="text" required>
+            </div>
 
             <div class="formElement">
-                <label for="config-bddName" class="requiredLabel">Port du serveur</label>
-                <input name="config-bddName" id="config-bddName" type="text" required>
+                <label for="config-bddName" class="requiredLabel">Hôte de la base de données</label>
+                <input name="config-bddHost" id="config-bddName" type="text" required>
             </div>
 
             <div class="formElement">
@@ -121,11 +128,12 @@
                 <label for="config-bddPwd" class="requiredLabel">Mot de passe</label>
                 <input name="config-bddPwd" id="config-bddPwd" type="text" required>
             </div>
-
+            <!--
             <div class="formElement">
                 <label for="config-bddPrefix">Préfixe</label>
-                <input name="config-bddPrefix" id="config-bddPrefix" type="text">
+                <input name="config-bddPrefix" id="config-bddPrefix" type="text" value="ody_">
             </div>
+            -->
         </div>
 
         <div id='installer-formElementsContainer-part-4' class="d-none">
@@ -153,11 +161,12 @@
                 <label for="config-userAdminFirstName" class="requiredLabel">Prénom</label>
                 <input name="config-userAdminFirstName" id="config-userAdminFirstName" type="text" required>
             </div>
-
+            <!--
             <div class="formElement">
                 <label for="config-userAdminMail" class="requiredLabel">Prénom</label>
                 <input name="config-userAdminMail" id="config-userAdminMail" type="text" required>
             </div>
+            -->
         </div>
 
         <div class="formSubmitElement">
@@ -172,6 +181,8 @@
         <span style="color: red;">*</span> Ces champs sont obligatoires pour valider l'installation de odysseyCMS.
     </p>
 </footer>
+
+<script src=<?php App\Core\View::getAssets("installer.js")?>></script>
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {
