@@ -2,7 +2,6 @@
 
 namespace App\Core;
 
-use App\Core\CurrentUser;
 use App\Core\Database;
 use App\Models\Role;
 use App\Models\User;
@@ -14,7 +13,7 @@ class Security
     private static $_actualUri;
     private static $_alwaysAuthorizedUri = ['/login', '/logout', '/register', '/admin/dashboard', '/forgotpassword', '/forgotpasswordconfirm', '/make-install'];
 
-	private function __construct($_userConnectedId) {
+	private function __construct($_userConnectedId = null) {
         self::$_userConnectedId = $_userConnectedId;
     }
 
@@ -30,6 +29,7 @@ class Security
     public static function isAuthorized($uri) {
 
         if (in_array($uri, self::$_alwaysAuthorizedUri)) return true;
+        if(!(new Security)->isConnected()) return true;
 
         self::$_actualUri = $uri;
         $user = new User($_SESSION['userId']);
