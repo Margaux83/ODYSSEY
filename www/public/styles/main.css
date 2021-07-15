@@ -413,6 +413,65 @@ body main.fullContent {
   border: 1px solid red;
 }
 
+[draggable] {
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+      user-select: none;
+  /* Required to make elements draggable in old WebKit */
+  -khtml-user-drag: element;
+  -webkit-user-drag: element;
+}
+
+ul.menuManagementList li {
+  list-style: none;
+  cursor: move !important;
+  display: flex;
+  padding: 15px;
+  background-color: #ebebeb;
+  border: 1px solid lightgrey;
+  border-bottom: 0;
+}
+
+ul.menuManagementList li:last-child {
+  border-bottom: 1px solid lightgrey;
+}
+
+ul.menuManagementList li .menuManagementListContent {
+  margin: auto 0;
+}
+
+ul.menuManagementList li .menuManagementListContent p {
+  font-style: italic;
+  opacity: 0.7;
+}
+
+ul.menuManagementList li .menuManagementListContent p:first-child {
+  font-style: normal;
+  opacity: 1;
+}
+
+ul.menuManagementList li img {
+  height: 18px;
+  opacity: 0.3;
+  width: auto;
+  margin: auto;
+  margin-right: 0;
+  transition: 0.5s;
+}
+
+ul.menuManagementList li img:hover {
+  opacity: 0.8;
+}
+
+ul.menuManagementList li.dragElem {
+  opacity: 0.5;
+}
+
+ul.menuManagementList li.over {
+  border-top: 2px dashed #155263 !important;
+}
+
 main #back-manPage-gridContent {
   padding: 15px 0;
   width: 100%;
@@ -939,6 +998,85 @@ ul.listItemBasic li.listItem .listItem-cpt {
   text-align: center;
 }
 
+ul.multiList li.listHiddable {
+  padding: 10px;
+  background-color: #ebebeb;
+  border: 1px solid lightgrey;
+  border-radius: 5px;
+  margin-bottom: 10px;
+  list-style: none;
+}
+
+ul.multiList li.listHiddable:last-child {
+  margin-bottom: 0;
+}
+
+ul.multiList li.listHiddable .listTitle {
+  display: flex;
+  width: 100%;
+}
+
+ul.multiList li.listHiddable .listTitle::after {
+  content: "";
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 0 6px 6px 6px;
+  border-color: transparent transparent black transparent;
+  margin: auto 0 auto auto;
+  transition: 0.5s;
+  transform: rotate(0deg);
+}
+
+ul.multiList li.listHiddable.hidden .listTitle::after {
+  transform: rotate(-180deg);
+}
+
+ul.multiList li.listHiddable.hidden ul {
+  margin: 0;
+}
+
+ul.multiList li.listHiddable.hidden ul li {
+  border: 0px solid transparent;
+  overflow: hidden;
+  max-height: 0;
+}
+
+ul.checkList {
+  margin-top: 10px;
+  max-height: 50vh;
+  overflow: auto;
+  transition: 0.5s;
+}
+
+ul.checkList li {
+  display: flex;
+  list-style: none;
+  border: 1px solid lightgrey;
+  border-bottom: 0;
+  max-height: 200px;
+  overflow: auto;
+  transition: 0.5s;
+}
+
+ul.checkList li input[type=checkbox] {
+  margin: 10px;
+}
+
+ul.checkList li:last-child {
+  border-bottom: 1px solid lightgrey;
+}
+
+ul.checkList li .checklistContent {
+  flex: 1;
+}
+
+ul.checkList li .checklistContent label {
+  padding: 10px;
+  display: block;
+  width: 100%;
+}
+
 .statisticsBasicContainer .statisticsBasic {
   min-height: 100px;
   min-width: 170px;
@@ -990,7 +1128,7 @@ ul.listItemBasic li.listItem .listItem-cpt {
 }
 
 .statisticsBasicContainer .statisticsBasic .numberStat-neutral::after {
-  content: " \=";
+  content: " =";
   font-weight: 700;
 }
 
@@ -1034,7 +1172,7 @@ ul.listItemBasic li.listItem .listItem-cpt {
   opacity: 0.5;
   position: absolute;
   -o-object-fit: cover;
-  object-fit: cover;
+     object-fit: cover;
   filter: brightness(0) invert(100%);
 }
 
@@ -1096,39 +1234,45 @@ input[type=submit]:focus {
   outline: 0;
 }
 
-form {
+form,
+.formContainer {
   width: 100%;
 }
 
-form .formElement {
+form .formElement,
+.formContainer .formElement {
   display: flex;
   flex-wrap: wrap;
   width: 100%;
   margin-top: 20px;
 }
 
-form .formElement label {
+form .formElement label,
+.formContainer .formElement label {
   min-width: 150px;
-  max-width: 150px;
-  flex: 1;
   margin: auto 0;
   margin-right: 10px;
 }
 
 @media screen and (min-width: 900px) {
-  form .formElement label {
+  form .formElement label,
+  .formContainer .formElement label {
     text-align: end;
   }
 }
 
-form .formElement label.requiredLabel::after {
+form .formElement label.requiredLabel::after,
+.formContainer .formElement label.requiredLabel::after {
   content: " *";
   color: red;
 }
 
 form .formElement input,
 form .formElement select,
-form .formElement textarea {
+form .formElement textarea,
+.formContainer .formElement input,
+.formContainer .formElement select,
+.formContainer .formElement textarea {
   min-width: 250px;
   max-width: 400px;
   flex: 3;
@@ -1137,14 +1281,21 @@ form .formElement textarea {
   border-radius: 5px;
 }
 
-form .formSubmitElement {
+form .formSubmitElement,
+.formContainer .formSubmitElement {
   width: 100%;
-  max-width: 500px;
   margin-top: 30px;
-  text-align: end;
 }
 
-form .formSubmitElement input[type=submit] {
+form .formSubmitElement button,
+.formContainer .formSubmitElement button {
+  height: auto;
+  padding: 12px 20px;
+  border-radius: 5px;
+}
+
+form .formSubmitElement input[type=submit],
+.formContainer .formSubmitElement input[type=submit] {
   margin: 5px;
   border: 0;
   padding: 10px 20px;
@@ -1155,12 +1306,14 @@ form .formSubmitElement input[type=submit] {
   cursor: pointer;
 }
 
-form .formSubmitElement input[type=submit]:hover {
+form .formSubmitElement input[type=submit]:hover,
+.formContainer .formSubmitElement input[type=submit]:hover {
   background-color: #155263;
   color: white;
 }
 
-form .formSubmitElement input[type=submit]:hover img {
+form .formSubmitElement input[type=submit]:hover img,
+.formContainer .formSubmitElement input[type=submit]:hover img {
   filter: brightness(0) invert(100%);
 }
 
@@ -1194,38 +1347,3 @@ select textarea {
   font-family: "Roboto", Verdana, "Geneva", Tahoma, sans-serif;
 }
 
-input[type=text], input[type=email], input[type=password] select {
-  width: 100%;
-  padding: 12px 20px;
-  margin: 8px 0;
-  display: inline-block;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  box-sizing: border-box;
-}
-.btn {
-  cursor: pointer;
-  border: 0;
-  background-color: #dbe0e6;
-  padding: 10px 20px;
-  border-radius: 20px;
-  transition: 0.5s;
-}
-
-.btnPrimary {
-  background-color: #5a09e0;
-  color: white;
-}
-
-.btnPrimary:hover {
-  background-color: #1c0049;
-}
-
-.btnSecondary {
-  background-color: #ef3dab;
-  color: white;
-}
-
-.btnSecondary:hover {
-  background-color: #c0127d;
-}

@@ -5,7 +5,7 @@ namespace App\Core;
 
 class Routing{
 
-    public $routesPath = "routes.yml";
+    private static $routesPath = "routes.yml";
     public $controller="";
     public $action="defaultAction";
     public $routes = [];
@@ -13,10 +13,10 @@ class Routing{
 
 
     public function __construct($uri){
-        if (!file_exists($this->routesPath)){
-            die("Error : file ".$this->routesPath." don't exist.");
+        if (!file_exists(self::$routesPath)){
+            die("Error : file ".self::$routesPath." don't exist.");
         }
-        $this->routes = yaml_parse_file($this->routesPath);
+        $this->routes = yaml_parse_file(self::$routesPath);
         //Faut vérifier qu'il y a un controller pour cette route
         if(!empty($this->routes[$uri])){
             $this->setController($this->routes[$uri]["controller"]);
@@ -53,6 +53,14 @@ class Routing{
 
     public function getMenuData(){
         return $this->routes;
+    }
+
+    public static function getListOfRoutes() {
+        return yaml_parse_file(self::$routesPath);
+    }
+
+    public static function getBaseUrl() {
+        return $_SERVER['REQUEST_SCHEME'] . '://' . $_SERVER['HTTP_HOST'];
     }
 
     /*

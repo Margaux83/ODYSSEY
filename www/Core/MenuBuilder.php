@@ -79,7 +79,7 @@ class MenuBuilder
                         . '"';
 
                     $html= '<li'.$class.'><a href="'.$link.'">'
-                        .'<img src="public/images/icons/'.$data['menuData']['icon'].'.png" alt="" class="icon iconWhite"><p>'.$data['label'].'</p></a>'
+                        .'<img src="'.Routing::getBaseUrl().'/public/images/icons/'.$data['menuData']['icon'].'.png" alt="" class="icon iconWhite"><p>'.$data['label'].'</p></a>'
                         .'</a>';
 
                     //Adding the sub-menu

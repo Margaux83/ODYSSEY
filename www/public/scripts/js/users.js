@@ -65,7 +65,9 @@ $(document).ready(function() {
 });
 
 function editUser(e) {
+
     let id = $(e).attr("data-id");
+    console.log(id);
     $.redirect('edit-user', {'id_user': id});
 }
 
@@ -84,10 +86,10 @@ function deleteUser(e) {
         if (result.isConfirmed) {
             swal.fire(
                 'Supprimé!',
-                'L\' utilisateur a bien été supprimé.',
+                'L\'utilisateur a bien été supprimé.',
                 'success'
             ).then(function() {
-                $.post( "users", { id_user: id, deleteUser: "true" })
+                $.post( "delete-user", { id_user: id, deleteUser: "true" })
                     .done(function( data ) {
                         location.reload();
                     });

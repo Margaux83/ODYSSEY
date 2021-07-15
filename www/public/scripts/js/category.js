@@ -1,35 +1,26 @@
 /**
- * Affiche le datatable pour la liste de tous les articles
+ * Affiche le datatable pour la liste de toutes les catégories
  */
 $(document).ready(function() {
-    $('#table_all_articles').DataTable({
+    $('#table_all_categories').DataTable({
 
     });
 });
 
 /**
- * Affiche le datatable pour la liste des articles de l'utilisateur connecté
- */
-$(document).ready(function() {
-    $('#table_all_articles_user').DataTable({
-
-    });
-});
-
-/**
- * Fonction pour modifier l'article en fonction de son id, redirige sur la page edit-article
+ * Fonction pour modifier la catégorie en fonction de son id, redirige sur la page edit-category
  * @param e
  */
-function editArticle(e) {
+function editCategory(e) {
     let id= $(e).attr("data-id");
-    $.redirect('edit-article', {'id': id});
+    $.redirect('edit-category', {'id': id});
 }
 
 /**
- * Fonction pour supprimer un article en fonction de son id, envoie l'id dans l'action "articles" du controller Article
+ * Fonction pour supprimer une catégorie en fonction de son id, envoie l'id dans l'action "categories" du controller Article
  * @param e
  */
-function deleteArticle(e) {
+function deleteCategory(e) {
     let id = $(e).attr("data-id");
 
     swal.fire({
@@ -44,10 +35,10 @@ function deleteArticle(e) {
         if (result.isConfirmed) {
             swal.fire(
                 'Supprimé!',
-                'Votre article a bien été supprimé.',
+                'Votre catégorie a bien été supprimée.',
                 'success'
             ).then(function() {
-            $.post( "delete-article", { id_article: id, deleteArticle: "true" })
+                $.post( "delete-category", { id_category: id, deleteCategory: "true" })
                     .done(function( data ) {
                         location.reload();
                     });
@@ -57,7 +48,7 @@ function deleteArticle(e) {
         ) {
             swal.fire(
                 'Annulé',
-                'Votre article n\'a pas été supprimé',
+                'Votre catégorie n\'a pas été supprimée',
                 'error'
             )
         }

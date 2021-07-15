@@ -18,7 +18,7 @@
         </div>
 
         <div class="formSubmitElement">
-            <button id="forget_submit" type="submit" class="secondary" onclick="window.location='forgotpassword'">RETOUR</button>
+            <button id="forget_submit" class="secondary" onclick="window.location='forgotpassword'">RETOUR</button>
             <button id="forget_submit" type="submit" class="primary">ENVOYER</button>
         </div>
     </form>

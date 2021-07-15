@@ -2,6 +2,7 @@
 namespace App\Models;
 
 use App\Core\Database;
+use App\Models\Role;
 
 class User extends Database
 {
@@ -14,14 +15,18 @@ class User extends Database
     protected $status;
     protected $role;
     protected $isDeleted;
+    protected $updateDate;
     protected $token;
     protected $isVerified;
 
     /**
      * User constructor.
      */
-    public function __construct(){
+    public function __construct($idUser = null){
         parent::__construct();
+        if(!empty($idUser)) {
+            $this->setId($idUser);
+        }
     }
 
     /**
@@ -29,6 +34,7 @@ class User extends Database
      */
     public function setId($id){
         $this->id = $id;
+
         //Il va chercher en BDD toutes les informations de l'utilisateur
         $data = array_diff_key(
             get_object_vars($this),
@@ -213,6 +219,22 @@ class User extends Database
     }
 
     /**
+     * @param $updateDate
+     */
+    public function setUpdateDate($updateDate)
+    {
+        $this->updateDate = $updateDate;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getUpdateDate()
+    {
+        return $this->updateDate;
+    }
+
+    /**
      * @param $role
      */
     public function setToken($token){
@@ -394,6 +416,8 @@ class User extends Database
     }
 
     public function buildFormRegisterBack(){
+        $role = new Role();
+
         return [
             "config"=>[
                 "method"=>"POST",
@@ -438,6 +462,14 @@ class User extends Database
                     "required"=>true,
                     "error"=>"Votre numéro de téléphone doit contenir 10 chiffres",
                     "placeholder"=>"Votre numéro de téléphone"
+                ],
+                "role"=>[
+                    "type"=>"select",
+                    "label"=>"Rôle",
+                    "required"=>true,
+                    "error"=>"Veuillez sélectionner un élément",
+                    "placeholder"=>"Choisir un rôle",
+                    "options"=> $role->buildAllRolesFormSelect($this->role)
                 ]
             ],
             "button"=>[
@@ -448,6 +480,8 @@ class User extends Database
     }
 
     public function buildFormUpdateBack(){
+        $role = new Role();
+
         return [
             "config"=>[
                 "method"=>"POST",
@@ -489,6 +523,7 @@ class User extends Database
                     "lengthMax"=>"320",
                     "lengthMin"=>"8",
                     "required"=>true,
+                    "readonly"=>true,
                     "error"=>"Votre email doit faire entre 8 et 320 caractères",
                     "placeholder"=>"Votre email",
                     "defaultValue" => $this->getEmail()
@@ -497,11 +532,20 @@ class User extends Database
                     "type"=>"text",
                     "label"=>"Numéro de téléphone",
                     "lengthMax"=>"10",
-                    "lengthMin"=>"10",
                     "required"=>true,
                     "error"=>"Votre numéro de téléphone doit contenir 10 chiffres",
                     "placeholder"=>"Votre numéro de téléphone",
                     "defaultValue" => $this->getPhone()
+                ],
+                "role"=>[
+                    "type"=>"select",
+                    "label"=>"Rôle",
+                    "required"=>true,
+                    "error"=>"Veuillez sélectionner un élément",
+                    "placeholder"=>"Choisir un rôle",
+                    "options"=>
+                        $role->buildAllRolesFormSelect($this->role)
+
                 ],
             ],
             "button"=>[
@@ -513,11 +557,21 @@ class User extends Database
 
     public function getAllUsers()
     {
-        $db = new Database("User");
-        return $result = $db->query(
+        $results = $this->query(
             ["id", "firstname", "lastname", "email", "status", "role", "creationDate", "lastConnexionDate"],
             ["isDeleted" => "0"]
         );
-    }
 
+        if (count($results)) {
+            $role = new Role();
+            foreach ($results as $key => $result) {
+                if (!empty($result['role'])) {
+                    $userSelected = $role->query(['name'])[0];
+                    $results[$key]['name'] = $userSelected['name'];
+                }
+            }
+        }
+
+        return $results;
+    }
 }

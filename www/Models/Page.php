@@ -209,6 +209,7 @@ class Page extends Database
         return $this->uri;
     }
 
+    //Formbuilder des pages
     public function buildFormPage() {
         $form = new Form();
         return [
@@ -230,7 +231,6 @@ class Page extends Database
                     "lengthMax"=>"255",
                     "lengthMin"=>"2",
                     "required"=>true,
-                    "class"=>"input",
                     "error"=>"Le titre de la page doit faire entre 2 et 255 caractères",
                     "placeholder"=>"Votre titre",
                     "defaultValue"=>$this->getTitle()
@@ -238,15 +238,21 @@ class Page extends Database
                 "content"=>[
                     "type"=>"textarea",
                     "label"=>"",
-                    "lengthMax"=>"255",
                     "lengthMin"=>"2",
                     "error"=>"Le contenu de la page doit faire entre 2 et 255 caractères",
-                    "id"=>"content",
-                    "required"=>true,
-                    "class"=>"trumbowygTextarea",
-
+                    "id"=>"full-featured-non-premium",
                     "placeholder"=>"Votre contenu",
                     "defaultValue"=>$this->getContent()
+                ],
+                "uri"=>[
+                    "type"=>"text",
+                    "label"=>"Veuillez choisir une uri pour votre page",
+                    "lengthMax"=>"255",
+                    "lengthMin"=>"2",
+                    "required"=>true,
+                    "error"=>"Votre uri doit faire entre 2 et 255 caractères",
+                    "placeholder"=>"Uri",
+                    "defaultValue"=>ltrim($this->getUri(), '/')
                 ],
                 "description"=>[
                     "type"=>"text",
@@ -259,17 +265,6 @@ class Page extends Database
                     "class"=>"textareaComment d-flex",
                     "placeholder"=>"Votre contenu",
                     "defaultValue"=>$this->getDescription()
-                ],
-                "uri"=>[
-                    "type"=>"text",
-                    "label"=>"Veuillez choisir une uri pour votre page",
-                    "lengthMax"=>"255",
-                    "lengthMin"=>"2",
-                    "required"=>true,
-                    "class"=>"input",
-                    "error"=>"Votre uri doit faire entre 2 et 255 caractères",
-                    "placeholder"=>"Uri",
-                    "defaultValue"=>ltrim($this->getUri(), '/')
                 ],
                 "status"=>[
                     "type"=>"select",
@@ -296,14 +291,25 @@ class Page extends Database
         ];
     }
 
+    //Fonction qui va chercher les informations des pages enregistrées et qui ne sont pas supprimées
     public function getAllPages()
     {
         $db = new Database("Page");
-        return $result = $db->query(
-            ["ody_Page.id" ,"ody_Page.title", "ody_Page.description", "ody_User.firstname", "ody_User.lastname", "ody_Page.status", "ody_Page.uri", "ody_Page.creationDate", "ody_Page.updateDate"],
-            ["ody_Page.isDeleted" => "0"],
-            "",
-            " INNER JOIN ody_User ON ody_Page.id_User = ody_User.ID"
+        $results = $db->query(
+            ["id" ,"title", "description", "status", "uri", "creationDate", "updateDate", "id_User"],
+            ["isDeleted" => "0"]
         );
+        if (count($results)) {
+            $user = new User();
+            foreach ($results as $key => $result) {
+                if (!empty($result['id_User'])) {
+                    $userSelected = $user->query(['firstname', 'lastname'])[0];
+                    $results[$key]['firstname'] = $userSelected['firstname'];
+                    $results[$key]['lastname'] = $userSelected['lastname'];
+                }
+            }
+        }
+        
+        return $results;
     }
 }
