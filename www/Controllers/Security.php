@@ -56,7 +56,7 @@ class Security{
                         $object = "Email confirmation - ODYSSEY";;
                         $mailer->sendMail($_POST['firstname'], $_POST['lastname'], $_POST['email'], $object, $bodymail->buildBodyMailConfirmation($_POST['email'], $token));
                         $_SESSION['alert']['success'][] = 'Un mail de validation vous a été envoyé';
-                        header('location: /login');
+                        //header('location: /login');
                         session_write_close();
                     }
                 }

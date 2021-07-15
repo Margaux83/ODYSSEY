@@ -45,7 +45,7 @@
     </div>
 </section>
 <section>
-    <form onsubmit="installer_goToNextPart()" id="formInstaller">
+    <form onsubmit="installer_goToNextPart()" id="formInstaller" action="/make-install" method="post">
         <div id='installer-formElementsContainer-part-1'>
             <div class="formElement">
                 <label for="config-siteName" class="requiredLabel">Nom du site</label>
@@ -59,15 +59,15 @@
             -->
             <div class="formElement">
                 <label for="config-siteLanguage" class="requiredLabel">Langue</label>
-                <select name="config-siteLanguage" id="config-siteLanguage" required>
+                <select name="config[language]" id="config-siteLanguage" required>
                     <option value="fr">Français</option>
-                    <option value="uk">English</option>
+                    <option value="en">English</option>
                 </select>
             </div>
-            
+            <!--
             <div class="formElement">
                 <label for="config-siteTimeZone" class="requiredLabel">Fuseau horaire</label>
-                <select name="config-siteTimeZone" id="config-siteTimeZone" required>
+                <select name="config[siteTimeZone]" id="config-siteTimeZone" required>
                     <option value="utc0">(UTC+0)</option>
                     <option value="utc1">(UTC+1)</option>
                     <option value="utc2">(UTC+2)</option>
@@ -83,12 +83,13 @@
                     <option value="utc12">(UTC+12)</option>
                 </select>
             </div>
+            -->
         </div>
 
         <div id='installer-formElementsContainer-part-2' class="d-none">
             <div class="formElement">
                 <label for="config-siteTheme" class="requiredLabel">Thème</label>
-                <select name="config-siteTheme" id="config-siteTheme" required>
+                <select name="config[theme]" id="config-siteTheme" required>
                     <option value="default">Par défaut</option>
                     <option value="light">Clair</option>
                     <option value="dark">Sombre</option>
@@ -111,55 +112,54 @@
             -->
             <div class="formElement">
                 <label for="config-bddName" class="requiredLabel">Nom de la base de données</label>
-                <input name="config-bddName" id="config-bddName" type="text" required>
+                <input name="database[dbname]" id="config-bddName" type="text" required>
             </div>
 
             <div class="formElement">
-                <label for="config-bddName" class="requiredLabel">Hôte de la base de données</label>
-                <input name="config-bddHost" id="config-bddName" type="text" required>
+                <label for="config-bddHost" class="requiredLabel">Hôte de la base de données</label>
+                <input name="database[dbhost]" id="config-bddName" type="text" required>
             </div>
 
             <div class="formElement">
                 <label for="config-bddUser" class="requiredLabel">Utilisateur</label>
-                <input name="config-bddUser" id="config-bddUser" type="text" required>
+                <input name="database[dbuser]" id="config-bddUser" type="text" required>
             </div>
 
             <div class="formElement">
                 <label for="config-bddPwd" class="requiredLabel">Mot de passe</label>
-                <input name="config-bddPwd" id="config-bddPwd" type="text" required>
+                <input name="database[dbpwd]" id="config-bddPwd" type="text" required>
             </div>
-            <!--
             <div class="formElement">
                 <label for="config-bddPrefix">Préfixe</label>
-                <input name="config-bddPrefix" id="config-bddPrefix" type="text" value="ody_">
+                <input name="database[dbprefix]" id="config-bddPrefix" type="text" value="ody_">
             </div>
-            -->
         </div>
 
         <div id='installer-formElementsContainer-part-4' class="d-none">
             <div class="formElement">
-                <label for="config-userAdmiPseudo" class="requiredLabel">Nom d'utilisateur</label>
-                <input name="config-userAdmiPseudo" id="config-userAdmiPseudo" type="text" required>
+                <label for="config-userAdminEmail" class="requiredLabel">Adresse mail</label>
+                <input name="user[userAdminEmail]" id="config-userAdminEmail" type="text" required>
             </div>
 
             <div class="formElement">
                 <label for="config-userAdminPwd" class="requiredLabel">Mot de passe</label>
-                <input name="config-userAdminPwd" id="config-userAdminPwd" type="text" required>
+                <input name="user[userAdminPwd]" id="config-userAdminPwd" type="password" required>
             </div>
-
+            <!--
             <div class="formElement">
                 <label for="config-userAdminPwdConfirm" class="requiredLabel">Confirmation du mot de passe</label>
-                <input name="config-userAdminPwdConfirm" id="config-userAdminPwdConfirm" type="text" required>
+                <input name="user[userAdminPwdConfirm]" id="config-userAdminPwdConfirm" type="text" required>
             </div>
+            -->
 
             <div class="formElement">
                 <label for="config-userAdminLastName" class="requiredLabel">Nom</label>
-                <input name="config-userAdminLastName" id="config-userAdminLastName" type="text" required>
+                <input name="user[userAdminLastName]" id="config-userAdminLastName" type="text" required>
             </div>
 
             <div class="formElement">
                 <label for="config-userAdminFirstName" class="requiredLabel">Prénom</label>
-                <input name="config-userAdminFirstName" id="config-userAdminFirstName" type="text" required>
+                <input name="user[userAdminFirstName]" id="config-userAdminFirstName" type="text" required>
             </div>
             <!--
             <div class="formElement">

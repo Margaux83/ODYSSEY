@@ -232,16 +232,6 @@ CREATE TABLE `ody_User` (
   `creationDate` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updateDate` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
-
---
--- Déchargement des données de la table `ody_User`
---
-
-INSERT INTO `ody_User` (`id`, `firstname`, `lastname`, `email`, `password`, `role`, `phone`, `status`, `token`, `isVerified`, `lastConnexionDate`, `isDeleted`, `creationDate`, `updateDate`) VALUES
-(1, 'Margaux', 'HEBERT', 'margauxhebert83@gmail.com', '$2y$10$8eu.p5x/z0I5.G66ituxXeh7OMS7v9esZGxZAK1elfWZslLCi1jfq', 1, '0154657841', NULL, '', 1, '2021-07-13 16:56:14', 0, '2021-06-15 18:49:12', '2021-07-12 12:18:48'),
-(2, 'Loudovic', 'Rex-Harrison', 'loudovic.rexharrison@gmail.com', '$2y$10$be60Ehz.z6dL3HRdWMQXIeJO82MS.qSaB0NwwbnGeLZu7IYydkaeG', 1, '0425784512', NULL, '', 1, '2021-07-13 16:56:16', 0, '2021-07-12 14:09:28', '2021-07-13 18:53:18'),
-(3, 'Louis', 'Moulin', 'moulin.louis93@gmail.com', '$2y$10$5.3kQd5Og94vSvgmuLdbsuLhyKm1Vlm2Cn2x/yj1Zh1jhRbF3BQcm', 1, '0659737458', NULL, '', 1, '2021-07-13 16:56:22', 0, '2021-07-12 23:17:58', '2021-07-13 18:01:59');
-
 -- --------------------------------------------------------
 
 --

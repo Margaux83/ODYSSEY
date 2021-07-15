@@ -2,6 +2,7 @@
 
 namespace App\Core;
 
+use App\Core\Installer;
 
 class Routing{
 
@@ -13,6 +14,8 @@ class Routing{
 
 
     public function __construct($uri){
+        if(!Installer::checkIfEnvExist() && $uri != "/installer" && $uri != "/make-install") $this->redirectToInstaller();
+
         if (!file_exists(self::$routesPath)){
             die("Error : file ".self::$routesPath." don't exist.");
         }
@@ -61,6 +64,11 @@ class Routing{
 
     public static function getBaseUrl() {
         return $_SERVER['REQUEST_SCHEME'] . '://' . $_SERVER['HTTP_HOST'];
+    }
+
+    public function redirectToInstaller() {
+        header('location: /installer');
+        exit(0);
     }
 
     /*

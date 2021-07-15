@@ -9,6 +9,7 @@ use App\Core\View;
 use App\Core\Security;
 use App\Core\FrontPage;
 use App\Core\Error;
+use App\Core\Installer;
 
 // Class PHPMailer
 require "Autoloader.php";
@@ -43,7 +44,8 @@ if( file_exists("./Controllers/".$c.".php")){
 			//$a = loginAction // defaultAction
             $security = Security::getInstance();
             if(!$security->isConnected()
-                && MenuBuilder::needToBeConnected()){
+                && MenuBuilder::needToBeConnected()
+                && Installer::checkIfEnvExist()){
                header('Location: /login');
             }else {
                 if(!Security::isAuthorized($uri)) {
@@ -51,7 +53,6 @@ if( file_exists("./Controllers/".$c.".php")){
                     header('location: /admin/dashboard');
                     session_write_close();
                 } else {
-
                     $cObject->$a();
                 }
             }

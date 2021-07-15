@@ -15,7 +15,7 @@ class Installer{
 
     public function makeInstallAction() {
         $install = new InstallerCore();
-        if(!InstallerCore::checkIfInstallPossible()) {
+        if(InstallerCore::checkIfInstallPossible()) {
             InstallerCore::makeInstall();
             echo 'Install à faire -> ';
         } else {
