@@ -58,7 +58,7 @@ class Form
                             ".((!empty($dataInput["required"]))?"required='required'":"")." 
                             ".((!empty($dataInput["disabled"]))?"disabled='disabled'":"")." 
                             ".((!empty($dataInput["readonly"]))?"readonly='readonly'":"")." 
-                            >  ".((!empty($dataInput["defaultValue"]))?"" . $dataInput["defaultValue"] . "":"")."</textarea>";
+                            >".((!empty($dataInput["defaultValue"]))?"" . $dataInput["defaultValue"] . "":"")."</textarea>";
                 $html .= "<br>";
                 $html .= "<br>";
 

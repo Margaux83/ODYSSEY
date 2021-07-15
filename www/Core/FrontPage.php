@@ -98,7 +98,7 @@ class FrontPage extends Database
         }elseif (strpos($uri, 'article')) {
             $article = new Article();
             $resultArticle = $article->query(
-                ['id', 'title', 'content'],
+                ['id', 'title', 'content', 'description'],
                 [
                     'uri' => $uri,
                     'isVisible' => 1
@@ -108,6 +108,7 @@ class FrontPage extends Database
                 $view = new View("front_page", "front");
                 $view->assign("idArticle", $resultArticle[0]['id']);
                 $view->assign("title", $resultArticle[0]['title']);
+                $view->assign("description", $resultArticle[0]['description']);
                 $view->assign("content", $resultArticle[0]['content']);
             }else {
                 Error::errorPage(404, 'L\'article n\'existe pas');
@@ -115,7 +116,7 @@ class FrontPage extends Database
         }else {
             $page = new Page();
             $resultPage = $page->query(
-                ['title', 'content'],
+                ['id', 'title', 'content', 'description'],
                 [
                     'uri' => $uri,
                     'isVisible' => 1
@@ -124,7 +125,9 @@ class FrontPage extends Database
 
             if ($resultPage) {
                 $view = new View("front_page", "front");
+                $view->assign("idArticle", $resultPage[0]['id']);
                 $view->assign("title", $resultPage[0]['title']);
+                $view->assign("description", $resultPage[0]['description']);
                 $view->assign("content", $resultPage[0]['content']);
             }else {
                 Error::errorPage(404, 'La page n\'existe pas');

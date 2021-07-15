@@ -238,13 +238,9 @@ class Page extends Database
                 "content"=>[
                     "type"=>"textarea",
                     "label"=>"",
-                    "lengthMax"=>"255",
                     "lengthMin"=>"2",
                     "error"=>"Le contenu de la page doit faire entre 2 et 255 caractères",
-                    "id"=>"content",
-                    "required"=>true,
-                    "class"=>"trumbowygTextarea",
-
+                    "id"=>"full-featured-non-premium",
                     "placeholder"=>"Votre contenu",
                     "defaultValue"=>$this->getContent()
                 ],
