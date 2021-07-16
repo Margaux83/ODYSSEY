@@ -56,7 +56,6 @@ var myChart = new Chart(ctx, {
 
 $(document).ready(function() {
     $('#table_all_pages').DataTable({
-
     });
 });
 function editPage(e) {
@@ -81,7 +80,7 @@ function deletePage(e) {
                 'Votre page a bien été supprimé.',
                 'success'
             ).then(function() {
-                $.post( "pages", { id_page: id, deletePage: "true" })
+                $.post( "delete-page", { id_page: id, deletePage: "true" })
                     .done(function( data ) {
                         location.reload();
                     });

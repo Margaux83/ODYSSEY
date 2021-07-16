@@ -2,8 +2,8 @@
 <html lang="fr">
 <head>
 	<meta charset="UTF-8">
-	<title>Template de Front</title>
-	<meta name="description" content="ceci est la page de front">
+	<title>Odyssey - <?= $title ?></title>
+	<meta name="description" content="<?= $description ?>">
 	<link rel="stylesheet" type="text/css" href=<?php App\Core\View::getAssets(App\Core\FrontPage::getTemplateCss());?>>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
@@ -35,7 +35,7 @@
         <div class="header-topElements">
 			<a class="titlePage" href="/"><img src=<?php App\Core\View::getAssets("logos/odyssey_logo_v2.svg")?> alt="Odyssey" class="back-mainPage-header-logo"></a>
             <nav>
-				<?php echo App\Core\FrontPage::getFrontMenu();?>
+				<?php echo App\Core\FrontPage::getFrontMenu('Menu header');?>
             </nav>
         </div>
         <div class="header-content">
@@ -73,15 +73,14 @@
 		</div>
 		<nav>
 			<p>Navigation</p>
-			<?php echo App\Core\FrontPage::getFrontMenu();?>
+			<?php echo App\Core\FrontPage::getFrontMenu('Menu footer');?>
 		</nav>
 		<nav>
 			<p>Assistance</p>
 			<ul>
-				<li>Mentions légales</li>
+                <li><a href="/politique-de-confidentialite">Politique de confidentialité</a></li>
 				<li>Mesures Covid</li>
 				<li>Centre d'aide</li>
-				<li>Options d'annulation</li>
 				<li>Confiance et sécurité</li>
 			</ul>
 		</nav>

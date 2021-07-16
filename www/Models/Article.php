@@ -19,6 +19,8 @@ class Article extends Database
     protected $description;
     protected $isdeleted;
     protected $id_user;
+    protected $uri;
+   // protected $media;
 
     public function __construct(){
         parent::__construct();
@@ -40,7 +42,6 @@ class Article extends Database
         $columns = array_keys($data);
         $statement = $this->pdo->prepare("SELECT " . implode(',', $columns) . " FROM ".$this->table." WHERE id=:id");
         $statement->execute(array(":id" => $this->getId()));
-        //$result = $statement->fetchAll();
 
        $obj = $statement->fetchObject(__CLASS__);
        $this->setArticleFromObj($obj);
@@ -227,6 +228,38 @@ class Article extends Database
         return $this->id_user;
     }
 
+    /**
+     * @return mixed
+     */
+    public function getUri()
+    {
+        return $this->uri;
+    }
+
+    /**
+     * @param mixed $uri
+     */
+    public function setUri($uri)
+    {
+        $this->uri = $uri;
+    }
+
+    /**
+     * @return mixed
+     */
+   public function getMedia()
+    {
+        return $this->media;
+    }
+
+    /**
+     * @param mixed $media
+     */
+    public function setMedia($media)
+    {
+        $this->media = $media;
+    }
+
     public function get_foreignKeys()
     {
         return ['category'];
@@ -279,10 +312,10 @@ class Article extends Database
                 "label" => "Choisir une visibilité"
             ],
             "1"=>[
-                "label" => "Protégé",
+                "label" => "Public",
             ],
             "2"=>[
-                "label" => "Public",
+                "label" => "Protégé",
             ],
             "3"=>[
                 "label" => "Privé"
@@ -311,6 +344,7 @@ class Article extends Database
                 "Action"=>"",
                 "Submit"=>"Publier",
                 "class"=>"",
+                "enctype"=>"multipart/form-data"
 
             ],
 
@@ -328,28 +362,36 @@ class Article extends Database
                     "lengthMax"=>"255",
                     "lengthMin"=>"2",
                     "required"=>true,
-                    "class"=>"input",
                     "error"=>"Le titre de l'article doit faire entre 2 et 255 caractères",
                     "placeholder"=>"Votre titre",
 
                     "defaultValue"=>$this->getTitle()
                 ],
+                "uri"=>[
+
+                    "type"=>"text",
+                    "label"=>"Veuillez choisir une uri pour votre article",
+                    "lengthMax"=>"255",
+                    "lengthMin"=>"2",
+                    "required"=>true,
+                    "class"=>"input",
+                    "error"=>"L'uri l'article doit faire entre 2 et 255 caractères",
+                    "placeholder"=>"Votre uri",
+                    "defaultValue"=>substr($this->getUri(), 9)
+                ],
                     "content"=>[
                         "type"=>"textarea",
                         "label"=>"",
-                        "lengthMax"=>"255",
                         "lengthMin"=>"2",
                         "error"=>"Le contenu de l'article doit faire entre 2 et 255 caractères",
-                        "id"=>"content",
+                        "id"=>"full-featured-non-premium",
                         "required"=>true,
-                        "class"=>"trumbowygTextarea",
-
-                         "placeholder"=>"Votre contenu",
+                        "placeholder"=>"Votre contenu",
                         "defaultValue"=>$this->getContent()
                     ],
                     "description"=>[
                         "type"=>"textarea",
-                        "label"=>"Desciption",
+                        "label"=>"Description",
                         "lengthMax"=>"255",
                         "lengthMin"=>"2",
                         "error"=>"La description de l'article doit faire entre 2 et 255 caractères",
@@ -395,54 +437,6 @@ class Article extends Database
         ];
     }
 
-    public function buildFormDeleteArticle()
-    {
-        return [
 
-            "config"=>[
-                "method"=>"POST",
-                "Action"=>"",
-                "Submit"=>"Oui, je supprime",
-                "class"=>"",
-
-            ],
-            "button"=>[
-                "class"=>"buttonComponent",
-                "name"=>"submit_delete_article",
-                "id"=>"deleteArticleFromIndexArticle"
-            ],
-            "input"=>[
-                "id_delete_article"=>[
-                    "type"=>"hidden",
-                ]
-            ]
-
-        ];
-    }
-
-    public function buildFormDeleteArticleOfUser()
-    {
-        return [
-
-            "config"=>[
-                "method"=>"POST",
-                "Action"=>"",
-                "Submit"=>"Oui, je supprime",
-                "class"=>"",
-
-            ],
-            "button"=>[
-                "class"=>"buttonComponent",
-                "name"=>"submit_delete_article_of_user",
-                "id"=>"deleteArticleFromIndexArticle"
-            ],
-            "input"=>[
-                "id_delete_article_of_user"=>[
-                    "type"=>"hidden",
-                ]
-            ]
-
-        ];
-    }
 
 }

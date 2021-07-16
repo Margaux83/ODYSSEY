@@ -10,6 +10,7 @@ class Form
         if( count($data) == count($config["input"])) {
 
             foreach ($config["input"] as $name => $configInput) {
+
                 if (!empty($configInput["lengthMin"])
                     && is_numeric($configInput["lengthMin"])
                     && strlen($data[$name]) < $configInput["lengthMin"]) {
@@ -28,25 +29,36 @@ class Form
         return $errors; //tableau des erreurs
     }
 
-    public static function showForm($form){
-        $html = "<form class='".($form["config"]["class"]??"")."' method='".( self::cleanWord($form["config"]["method"]) ?? "GET" )."' action='".( $form["config"]["action"] ?? "" )."'>";
+    public static function showForm($form, $echoDirectly = true){
+        $html = "<form ".(!empty($form["config"]["id"]) ? "id='ody_form_".$form["config"]["id"]."'": "")." class='".($form["config"]["class"]??"")."' method='".( self::cleanWord($form["config"]["method"]) ?? "GET" )."' action='".( $form["config"]["action"] ?? "" )."'  enctype='".( $form["config"]["enctype"] ?? "" )."'>";
 
         foreach ($form["input"] as $name => $dataInput) {
-            $html .= "&emsp;&emsp;";
-            $html .="<label for='".$name."'>".($dataInput["label"]??"")." </label>";
-            $html .= "&ensp;";
+            $html .= "<div id='ody_inputContainer_".$name."' " . ($dataInput["type"] === "hidden" ? "" : "class='formElement'") . ">";
 
+            if ($dataInput["type"] !== "hidden") {
+                $html .= "<label for='".$name."'"
+                        .((!empty($dataInput["required"])) 
+                            ? $dataInput["required"] 
+                                ? (!empty($dataInput["label"]))
+                                    ? "class='requiredLabel'" 
+                                    : ""
+                                : ""
+                            :"")." >"
+                        .($dataInput["label"]??"")
+                    ." </label>";
+            }
 
             if ($dataInput["type"] === "textarea"){
                 $html .= "<textarea 
-                            id='".$name."'
+                             id='".$dataInput["id"]."'
                              class='".($dataInput["class"]??"")."' 
                             name='".$name."'
                             ".((!empty($dataInput["required"]))?"required='required'":"")."
                               placeholder='".($dataInput["placeholder"] ?? "")."'
                             ".((!empty($dataInput["required"]))?"required='required'":"")." 
-                          
-                            >  ".((!empty($dataInput["defaultValue"]))?"" . $dataInput["defaultValue"] . "":"")."</textarea>";
+                            ".((!empty($dataInput["disabled"]))?"disabled='disabled'":"")." 
+                            ".((!empty($dataInput["readonly"]))?"readonly='readonly'":"")." 
+                            >".((!empty($dataInput["defaultValue"]))?"" . $dataInput["defaultValue"] . "":"")."</textarea>";
                 $html .= "<br>";
                 $html .= "<br>";
 
@@ -93,19 +105,25 @@ class Form
                             type='".($dataInput["type"] ?? "text")."'
                             placeholder='".($dataInput["placeholder"] ?? "")."'
                             ".((!empty($dataInput["required"]))?"required='required'":"")." 
+                            ".((!empty($dataInput["disabled"]))?"disabled='disabled'":"")."
+                            ".((!empty($dataInput["readonly"]))?"readonly='readonly'":"")." 
                             ".((!empty($dataInput["defaultValue"]))?"value='" . $dataInput["defaultValue"] . "'":"")."
                             >";
             }
 
+            $html .= "</div>";
         }
 
-        $html .= "<br>";
-        $html .= "<br>";
+        $html .= "<div class='formSubmitElement'>"
+            . "<button type='submit' id='".( self::cleanWord($form["button"]["id"] ?? "submitButton") ?? "submitButton" )."' name='".( self::cleanWord($form["button"]["name"] ?? "submitButton") ?? "" )."' value='".( self::cleanWord($form["config"]["Submit"] ?? "Valider" ) ?? "Valider" )."' class='".( self::cleanWord($form["button"]["class"] ?? "") ?? "" )."'>".( self::cleanWord($form["config"]["Submit"] ?? "Valider") ?? "Valider" )
+            ."</button></div></form>";
 
-        $html .= "<button type='submit' name='".( self::cleanWord($form["button"]["name"]) ?? "" )."' value='".( self::cleanWord($form["config"]["Submit"]) ?? "Valider" )."' class='".( self::cleanWord($form["button"]["class"]) ?? "" )."'>".( self::cleanWord($form["config"]["Submit"]) ?? "Valider" )."</button></form>";
 
-
-        echo $html;
+        if ($echoDirectly) {
+            echo $html;
+        }else {
+            return $html;
+        }
     }
 
     public static function cleanWord($word){
@@ -119,10 +137,10 @@ class Form
                 "label" => "Choisir une visibilité"
             ],
             "1"=>[
-                "label" => "Protégé",
+                "label" => "Public",
             ],
             "2"=>[
-                "label" => "Public",
+                "label" => "Protégé",
             ],
             "3"=>[
                 "label" => "Privé"

@@ -1,4 +1,3 @@
-
 <section>
     <h1>Inscription</h1>
 </section>
@@ -30,7 +29,7 @@
         </div>
         <div class="formSubmitElement">
             <button id="login_submit" type="submit" class="secondary" onclick="window.location='login'">SE CONNECTER</button>
-            <button id="login_submit" type="submit" class="primary">S'INSCRIRE</button>
+            <button id="login_submit" class="primary">S'INSCRIRE</button>
         </div>
     </form>
 </section>

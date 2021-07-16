@@ -1,4 +1,16 @@
-/dashboard:
+### FRONT ###
+/sitemap.xml:
+  controller: Base
+  action: sitemap
+  label: Sitemap
+### ### ###
+
+### BACK ADMIN ###
+/admin:
+  controller: Base
+  action: default
+
+/admin/dashboard:
   controller: Base
   action: dashboard
   label: Tableau de bord
@@ -8,7 +20,7 @@
     listId: basics
     icon: icon_home
 
-/articles:
+/admin/articles:
   controller: Article
   action: default
   label: Articles
@@ -18,22 +30,40 @@
     listId: basics
     icon: icon_page
     children: [
-      /add-article,
-      /update-article
+      /admin/add-article,
+      /admin/categories
     ]
 
-/add-article:
+/admin/add-article:
   controller: Article
   action: addarticle
   label: Ajouter un article
 
-/update-article:
+/admin/edit-article:
   controller: Article
   action: editArticle
   label: Modifier un article
 
-/users:
-  controller: User
+/admin/delete-article:
+  controller: Article
+  action: deleteArticle
+
+/admin/categories:
+  controller: Article
+  action: categories
+  label: Catégories
+
+/admin/edit-category:
+  controller: Article
+  action: editcategory
+  label: Modifier une catégorie
+
+/admin/delete-category:
+  controller: Article
+  action: deleteCategory
+
+/admin/users:
+  controller: Users
   action: default
   label: Utilisateurs
   menuData:
@@ -41,8 +71,35 @@
     min-statut: true
     listId: basics
     icon: icon_user
+    children: [
+        /admin/add-users,
+  ]
 
-/pages:
+/admin/add-users:
+  controller: Users
+  action: addUsers
+  label: Ajouter un utilisateur
+  menuData:
+    visible: false
+    min-statut: true
+    listId: basics
+    icon: icon_user
+
+/admin/edit-user:
+  controller: Users
+  action: editUsers
+  label: Modifier un utilisateur
+  menuData:
+    visible: false
+    min-statut: true
+    listId: basics
+    icon: icon_user
+
+/admin/delete-user:
+  controller: Users
+  action: deleteUser
+
+/admin/pages:
   controller: Page
   action: default
   label: Pages
@@ -53,25 +110,29 @@
     label: Pages
     icon: icon_page
     children: [
-        /add-page,
-        /deleted-page
+        /admin/add-page,
+        /admin/deleted-page
     ]
 
-/add-page:
+/admin/add-page:
   controller: Page
   action: addpage
   label: Ajouter une page
 
-/edit-page:
+/admin/edit-page:
   controller: Page
   action: editPage
 
-/deleted-page:
+/admin/delete-page:
+  controller: Page
+  action: deletePage
+
+/admin/deleted-page:
   controller: Page
   action: listdeletedpage
   label: Corbeille
 
-/comments:
+/admin/comments:
   controller: Comment
   action: default
   label: Commentaires
@@ -81,7 +142,8 @@
     listId: basics
     icon: icon_comment
 
-/medias:
+
+/admin/medias:
   controller: Media
   action: default
   label: Medias
@@ -89,18 +151,49 @@
     visible: true
     min-statut: true
     listId: basics
-    icon: icon_menu
+    icon: icon_media
     children: [
-      /medias,
-      /add-media
+        /admin/add-media
     ]
 
-/add-media:
+/admin/roles:
+  controller: Role
+  action: default
+  label: Roles
+  menuData:
+    visible: true
+    min-statut: true
+    listId: basics
+    icon: icon_menu
+    children: [
+      /admin/add-role
+    ]
+
+/admin/add-role:
+  controller: Role
+  action: addrole
+  label: Ajouter un role
+
+/admin/edit-role:
+  controller: Role
+  action: editrole
+  label: Modifier un role
+
+/admin/add-media:
   controller: Media
   action: addMedia
-  label: Ajouter média
+  label: Ajouter un média
 
-/template:
+/admin/edit-medias:
+  controller: Media
+  action: editMedia
+  label: Modifier un média
+
+/admin/delete-media:
+  controller: Media
+  action: deleteMedia
+
+/admin/template:
   controller: Template
   action: default
   label: Templates
@@ -110,8 +203,8 @@
     listId: management
     icon: icon_page
 
-/menu-management:
-  controller: MenuManagement
+/admin/menu-management:
+  controller: Menu
   action: default
   label: Gestion du menu
   menuData:
@@ -120,7 +213,7 @@
     listId: management
     icon: icon_menu
 
-/newsletter:
+/admin/newsletter:
   controller: Newsletter
   action: default
   label: Newsletter
@@ -130,11 +223,33 @@
     listId: management
     icon: icon_newsletter
 
-/profile:
+/:
+  controller: WebAccess
+  action: default
+  label: Accès au site
+  menuData:
+    visible: true
+    min-statut: true
+    listId: settings
+    icon: icon_web
+
+/admin/settings:
+  controller: Settings
+  action: default
+  label: Paramètres
+  menuData:
+    visible: true
+    min-statut: true
+    listId: settings
+    icon: icon_settings
+
+/admin/profile:
   controller: Profile
   action: default
   label: Profil
+### ### ###
 
+### SECURITY ###
 /login:
   controller: Security
   action: login
@@ -145,6 +260,12 @@
   controller: Security
   action: register
   label: S'inscrire
+  freeAccess: true
+
+/logout:
+  controller: Security
+  action: logout
+  label: Déconnexion
   freeAccess: true
 
 /verification:
@@ -164,32 +285,22 @@
   label: Mot de passe oublié
   freeAccess: true
 
-/logout:
-  controller: Security
-  action: logout
-  label: Déconnexion
+/newpasswordconfirm:
+  controller: Users
+  action: newPasswordConfirm
+  label: Créer votre nouveau mot de passe
   freeAccess: true
+### ### ###
 
-/web-access:
-  controller: WebAccess
-  action: default
-  label: Accès au site
-  menuData:
-    visible: true
-    min-statut: true
-    listId: settings
-    icon: icon_web
+# FRONT ACTION #
+/actionfront/postcommentfront:
+  controller: Comment
+  action: postCommentFromFront
+  label: Créer un commentaire
+  freeAccess: true
+### ### ###
 
-/settings:
-  controller: Settings
-  action: default
-  label: Paramètres
-  menuData:
-    visible: true
-    min-statut: true
-    listId: settings
-    icon: icon_settings
-
+# INSTALLER #
 /installer:
   controller: Installer
   action: setup
@@ -200,3 +311,4 @@
     min-statut: true
     listId: installer
     icon: icon_settings
+### ### ###

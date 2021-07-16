@@ -2,6 +2,7 @@
 namespace App\Models;
 
 use App\Core\Database;
+use App\Models\Role;
 
 class User extends Database
 {
@@ -14,14 +15,18 @@ class User extends Database
     protected $status;
     protected $role;
     protected $isDeleted;
+    protected $updateDate;
     protected $token;
     protected $isVerified;
 
     /**
      * User constructor.
      */
-    public function __construct(){
+    public function __construct($idUser = null){
         parent::__construct();
+        if(!empty($idUser)) {
+            $this->setId($idUser);
+        }
     }
 
     /**
@@ -29,6 +34,7 @@ class User extends Database
      */
     public function setId($id){
         $this->id = $id;
+
         //Il va chercher en BDD toutes les informations de l'utilisateur
         $data = array_diff_key(
             get_object_vars($this),
@@ -67,6 +73,22 @@ class User extends Database
      */
     public function getId(){
         return $this->id;
+    }
+
+    /**
+     * @param $id_user
+     */
+    public function setId_user($id_user)
+    {
+        $this->id_user = $id_user;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getId_user()
+    {
+        return $this->id_user;
     }
 
     /**
@@ -197,6 +219,22 @@ class User extends Database
     }
 
     /**
+     * @param $updateDate
+     */
+    public function setUpdateDate($updateDate)
+    {
+        $this->updateDate = $updateDate;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getUpdateDate()
+    {
+        return $this->updateDate;
+    }
+
+    /**
      * @param $role
      */
     public function setToken($token){
@@ -262,11 +300,11 @@ class User extends Database
     {
         return [
             "config" => [
-				"method" => "POST",
-				"Action" => "",
-				"Submit" => "Modifier",
-				"class" => "form_register"
-			],
+                "method" => "POST",
+                "Action" => "",
+                "Submit" => "Modifier",
+                "class" => "form_register"
+            ],
             "input" => [
                 "firstname"=>[
                     "type"=>"text",
@@ -377,4 +415,163 @@ class User extends Database
         ];
     }
 
+    public function buildFormRegisterBack(){
+        $role = new Role();
+
+        return [
+            "config"=>[
+                "method"=>"POST",
+                "Action"=>"",
+                "reset" => "Annuler",
+                "Submit"=>"Enregistrer",
+                "class"=>"form-group"
+            ],
+            "input"=>[
+                "lastname"=>[
+                    "type"=>"text",
+                    "label"=>"Nom",
+                    "lengthMax"=>"255",
+                    "lengthMin"=>"2",
+                    "required"=>true,
+                    "error"=>"Votre nom doit faire entre 2 et 255 caractères",
+                    "placeholder"=>"Votre nom"
+                ],
+                "firstname"=>[
+                    "type"=>"text",
+                    "class"=>"form_input",
+                    "label"=>"Prénom",
+                    "lengthMax"=>"120",
+                    "lengthMin"=>"2",
+                    "required"=>true,
+                    "error"=>"Votre prénom doit faire entre 2 et 120 caractères",
+                    "placeholder"=>"Votre prénom",
+                ],
+                "email"=>[
+                    "type"=>"email",
+                    "label"=>"Adresse Mail",
+                    "lengthMax"=>"320",
+                    "lengthMin"=>"8",
+                    "required"=>true,
+                    "error"=>"Votre email doit faire entre 8 et 320 caractères",
+                    "placeholder"=>"Votre email"
+                ],
+                "phone"=>[
+                    "type"=>"text",
+                    "label"=>"Numéro de téléphone",
+                    "lengthMin"=>"10",
+                    "required"=>true,
+                    "error"=>"Votre numéro de téléphone doit contenir 10 chiffres",
+                    "placeholder"=>"Votre numéro de téléphone"
+                ],
+                "role"=>[
+                    "type"=>"select",
+                    "label"=>"Rôle",
+                    "required"=>true,
+                    "error"=>"Veuillez sélectionner un élément",
+                    "placeholder"=>"Choisir un rôle",
+                    "options"=> $role->buildAllRolesFormSelect($this->role)
+                ]
+            ],
+            "button"=>[
+                "class"=>"buttonComponent d-flex floatRight",
+                "name"=>""
+            ]
+        ];
+    }
+
+    public function buildFormUpdateBack(){
+        $role = new Role();
+
+        return [
+            "config"=>[
+                "method"=>"POST",
+                "Action"=>"users",
+                "reset" => "Annuler",
+                "Submit"=>"Enregistrer",
+                "class"=>"form-group"
+
+            ],
+            "input"=>[
+                "id_user"=>[
+                    "type"=>"hidden",
+                    "defaultValue"=>$this->getId()
+                ],
+                "lastname"=>[
+                    "type"=>"text",
+                    "label"=>"Nom",
+                    "lengthMax"=>"255",
+                    "lengthMin"=>"2",
+                    "required"=>true,
+                    "error"=>"Votre nom doit faire entre 2 et 255 caractères",
+                    "placeholder"=>"Votre nom",
+                    "defaultValue" => $this->getLastname()
+
+                ],
+                "firstname"=>[
+                    "type"=>"text",
+                    "label"=>"Prénom",
+                    "lengthMax"=>"120",
+                    "lengthMin"=>"2",
+                    "required"=>true,
+                    "error"=>"Votre prénom doit faire entre 2 et 120 caractères",
+                    "placeholder"=>"Votre prénom",
+                    "defaultValue" => $this->getFirstname()
+                ],
+                "email"=>[
+                    "type"=>"email",
+                    "label"=>"Adresse Mail",
+                    "lengthMax"=>"320",
+                    "lengthMin"=>"8",
+                    "required"=>true,
+                    "readonly"=>true,
+                    "error"=>"Votre email doit faire entre 8 et 320 caractères",
+                    "placeholder"=>"Votre email",
+                    "defaultValue" => $this->getEmail()
+                ],
+                "phone"=>[
+                    "type"=>"text",
+                    "label"=>"Numéro de téléphone",
+                    "lengthMax"=>"10",
+                    "required"=>true,
+                    "error"=>"Votre numéro de téléphone doit contenir 10 chiffres",
+                    "placeholder"=>"Votre numéro de téléphone",
+                    "defaultValue" => $this->getPhone()
+                ],
+                "role"=>[
+                    "type"=>"select",
+                    "label"=>"Rôle",
+                    "required"=>true,
+                    "error"=>"Veuillez sélectionner un élément",
+                    "placeholder"=>"Choisir un rôle",
+                    "options"=>
+                        $role->buildAllRolesFormSelect($this->role)
+
+                ],
+            ],
+            "button"=>[
+                "class"=>"buttonComponent d-flex floatRight",
+                "name"=>""
+            ]
+        ];
+    }
+
+    public function getAllUsers()
+    {
+        $results = $this->query(
+            ["id", "firstname", "lastname", "email", "status", "role", "creationDate", "lastConnexionDate"],
+            ["isDeleted" => "0"]
+        );
+
+        if (count($results)) {
+            $role = new Role();
+            foreach ($results as $key => $result) {
+                if (!empty($result['role'])) {
+                    $userSelected = $role->query(['name'])[0];
+                    $results[$key]['name'] = $userSelected['name'];
+                }
+            }
+        }
+
+        return $results;
+    }
 }
