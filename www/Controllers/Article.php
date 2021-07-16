@@ -79,8 +79,8 @@ class Article
 
 
                     if(empty($article->query(['id'],["uri"=>"/article/".$dataArticle['uri']]))){
-                        $article->setTitle(htmlspecialchars(addslashes($dataArticle['title'])));
-                        $article->setContent(htmlspecialchars(addslashes($dataArticle['content'])));
+                        $article->setTitle($dataArticle['title']);
+                        $article->setContent($dataArticle['content']);
                         $article->setStatus($dataArticle['status']);
                         $article->setIsvisible($dataArticle['isvisible']);
                         if ($dataArticle['status'] == "Brouillon") {
@@ -89,9 +89,9 @@ class Article
                             $article->setIsdraft(0);
                         }
                         $article->setIsdeleted(0);
-                        $article->setDescription(htmlspecialchars(addslashes($dataArticle["description"])));
+                        $article->setDescription($dataArticle["description"]);
                         $article->setId_user($_SESSION["userId"]);
-                        $article->setUri(htmlspecialchars(addslashes(str_replace(' ', '_', "/article/".$dataArticle['uri']))));
+                        $article->setUri(addslashes(str_replace(' ', '_', "/article/".$dataArticle['uri'])));
 
                         $article->save();
                         $result = $article->getLastFromTable();
@@ -168,9 +168,9 @@ class Article
 
 
                             //Modification de l'article sélectionné
-                            $article->setTitle(htmlspecialchars(addslashes($dataArticle['title'])));
-                            $article->setContent(htmlspecialchars(addslashes($dataArticle['content'])));
-                            $article->setDescription(htmlspecialchars(addslashes($dataArticle['description'])));
+                            $article->setTitle($dataArticle['title']);
+                            $article->setContent($dataArticle['content']);
+                            $article->setDescription($dataArticle['description']);
 
                             $article->setStatus($dataArticle['status']);
                             $article->setIsvisible($dataArticle['isvisible']);
@@ -182,7 +182,7 @@ class Article
                         $uriverification = empty($article->getUriForVerification($_POST["id"],'/article/' . $dataArticle['uri']));
 
                             if ($uriverification) {
-                                $article->setUri(htmlspecialchars(addslashes(str_replace(' ', '_', "/article/".$dataArticle['uri']))));
+                                $article->setUri(addslashes(str_replace(' ', '_', "/article/".$dataArticle['uri'])));
                             }
                             else{
                                 $_SESSION['alert']['danger'][] = 'Cette uri existe déjà';
@@ -275,7 +275,7 @@ class Article
                     }
                     else{
                         //S'il n'y a pas d'erreurs, on envoie les données dans la requête pour ajouter la catégorie
-                        $category->setLabel(htmlspecialchars(addslashes($dataArticle["label"])));
+                        $category->setLabel(addslashes($dataArticle["label"]));
                         $category->setIsdeleted(0);
                         $category->save();
                         $_SESSION['alert']['success'][] = 'La catégorie a bien été modifiée !';
@@ -338,7 +338,7 @@ class Article
 
                     if ($uriverification) {
                         //S'il n'y a pas d'erreurs, on envoie les données dans la requête pour modifier la catégorie
-                        $category->setLabel(htmlspecialchars(addslashes($dataArticle["label"])));
+                        $category->setLabel(addslashes($dataArticle["label"]));
                         $category->setIsdeleted(0);
                         $category->save();
                         $_SESSION['alert']['success'][] = 'La catégorie a bien été enregistrée !';

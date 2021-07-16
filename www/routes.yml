@@ -273,7 +273,7 @@
 ### ### ###
 
 # INSTALLER #
-/admin/installer:
+/installer:
   controller: Installer
   action: setup
   label: Installation

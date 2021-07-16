@@ -18,17 +18,9 @@
 
 </section>
 
-<script>
-    $(document).ready(function(){
-
-        $('#content').trumbowyg({
-            autogrow: true
-        });
-    });
-</script>
-
-<script src=<?php App\Core\View::getAssets("modal.js")?>></script>
-<script src=<?php App\Core\View::getAssets("popups.js")?>></script>
+<script src='https://cdn.tiny.cloud/1/sfgeuuulhp5vmw2y9c0fo94ydvh7zpah75c6trahqaw5g1y7/tinymce/5/tinymce.min.js' referrerpolicy="origin"></script>
+<script src=<?php App\Core\View::getAssets("TinyMCE/fr_FR.js")?>></script>
+<script src=<?php App\Core\View::getAssets("TinyMCE/tinymce_editor.js")?>></script>
 
 <script>
     $("#title").keyup(function(){

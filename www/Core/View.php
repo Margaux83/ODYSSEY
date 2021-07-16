@@ -25,13 +25,13 @@ class View
 		
 		switch ($nameFileType){
 			case "css" :
-				echo SITEURL . '/public/styles/'.$nameFile;
+				echo Routing::getBaseUrl() . '/public/styles/'.$nameFile;
 				return;
 			case ($nameFileType == "png" || $nameFileType == "jpg" || $nameFileType == "svg") :
-				echo SITEURL . '/public/images/'.$nameFile;
+				echo Routing::getBaseUrl() . '/public/images/'.$nameFile;
 				return;
 			case ($nameFileType == "js") :
-				echo SITEURL . '/public/scripts/js/'.$nameFile;
+				echo Routing::getBaseUrl() . '/public/scripts/js/'.$nameFile;
 				return;
 			default :
 				return;

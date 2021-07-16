@@ -35,10 +35,10 @@ class Database
         $columnFilter = [];
         foreach ($filter as $key => $value) {
             if (!is_null($value)) {
-                $columnFilter[] = $key . "=:" . substr($key, strpos($key, '.') + 1);
+                $columnFilter[] = $key . "=:" . $key;
+                // $columnFilter[] = $key . "=:" . substr($key, strpos($key, '.') + 1);
             }
         }
-
         $sql = "SELECT " . implode(",", $requestedParams) . " FROM " . $this->table
             . ($moreString ? $moreString : '')
             . (count($filter) ? " WHERE " . implode(" AND ", $columnFilter) : '')
@@ -47,7 +47,7 @@ class Database
         $query = $this->pdo->prepare($sql);
         foreach ($filter as $key => $value) {
             if (!is_null($value)) {
-                $query->bindValue(":".substr($key, strpos($key, '.') + 1), $value);
+                $query->bindValue(":".$key, $value);
             }
         }
         $query->execute();
