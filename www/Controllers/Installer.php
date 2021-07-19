@@ -20,11 +20,13 @@ class Installer{
 
     public function makeInstallAction() {
         $install = new InstallerCore();
-        if(InstallerCore::checkIfInstallPossible()) {
+        if(InstallerCore::checkIfInstallPossible() && InstallerCore::checkDatabaseConnection()) {
             InstallerCore::makeInstall();
             echo 'Install à faire -> ';
         } else {
+            $_SESSION['alert']['danger'][] = 'Connexion à la base de données impossible';
             header('location:' . Routing::getBaseUrl());
+            session_write_close();
         }
     }
 }

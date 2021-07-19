@@ -17,6 +17,8 @@ class Installer {
     }
 
     public static function makeInstall() {
+        echo 'qzd';
+        exit(0);
         // TODO Ecriture des fichiers d'environnement .env et .end.prod
         echo '<pre>';
         var_dump($_POST);
@@ -60,6 +62,26 @@ class Installer {
             return true;
         }
         return false;
+    }
+
+    public static function checkDatabaseConnection() {
+        try {
+            $conn = new \PDO(
+                "mysql:dbname=" . $_POST['database']['dbname'] . ";host=" . $_POST['database']['dbhost'],
+                $_POST['database']['dbuser'],
+                $_POST['database']['dbpwd']);
+            return true;
+        } catch(\PDOException $ex) {
+            return false;
+        }
+    }
+
+    public static function checkIfDatabaseExist() {
+        var_dump($_POST['database']);
+
+        exit(0);
+        return false;
+
     }
 
     public static function writeEnvFiles($config, $database) {

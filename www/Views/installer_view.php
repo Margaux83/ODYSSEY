@@ -1,3 +1,4 @@
+<?php $this->addModal("alert"); ?>
 <section class="stepContainer">
     <div id='installer-stepElement-part-1' class="stepElement selected">
         <div class="stepStatusAndPath">
@@ -117,7 +118,7 @@
 
             <div class="formElement">
                 <label for="config-bddHost" class="requiredLabel">Hôte de la base de données</label>
-                <input name="database[dbhost]" id="config-bddName" type="text" required>
+                <input name="database[dbhost]" id="config-bddHost" type="text" required>
             </div>
 
             <div class="formElement">
@@ -171,6 +172,7 @@
 
         <div class="formSubmitElement">
             <button id="installer_goBackButton" type="button" class="cancel d-none" onclick="installer_goToPreviousPart()">Retour</button>
+            <button id="installer_testDb" type="button" class="primary" style="visibility:hidden" onclick="installer_checkDbConnection()">Tester la connectivité</button>
             <button id="installer_submit" type="submit" class="primary">Suivant</button>
         </div>
     </form>
