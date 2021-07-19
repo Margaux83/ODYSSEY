@@ -21,20 +21,27 @@ class Installer {
         echo '<pre>';
         var_dump($_POST);
         self::writeEnvFiles($_POST['config'], $_POST['database']);
+        new ConstantManager();
+        $install = self::makeDatabase();
 
-        $query = self::getDatabaseQuery();
-        $database = new Database();
-        $install = $database->createDatabase($query);
-        var_dump($install);
         if($install > 0) {
             echo 'Install de la bdd faites';
             self::createFirstUser($_POST['user']);
             $_SESSION['alert']['danger'][] = 'GG';
-            //header('location: /login');
+            header('location: /login');
             session_write_close();
         } else {
-            echo 'Erreur dans l\'installation';
+            header('location: /installer');
+            session_write_close();
         }
+    }
+
+    public static function makeDatabase() {
+        $query = self::getDatabaseQuery();
+        $database = new Database();
+        $install = $database->createDatabase($query);
+        var_dump($install);
+        return $install;
     }
 
     public static function getDatabaseQuery() {

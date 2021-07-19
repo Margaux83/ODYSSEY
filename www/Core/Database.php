@@ -114,7 +114,7 @@ class Database
     public function createDatabase($query) {
         if(!empty($query)) {
             $query = $this->pdo->exec($query);
-            return $query;
+            return true;
         }
         return false;
     }

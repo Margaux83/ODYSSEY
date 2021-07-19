@@ -6,11 +6,16 @@ use App\Core\View;
 use App\Models\User;
 use App\Core\Form;
 use App\Core\Installer as InstallerCore;
+use App\Core\Routing;
 
 
 class Installer{
     public function setupAction(){
-		$view = new View("installer", "back_management");
+        if(InstallerCore::checkIfInstallPossible()) {
+            $view = new View("installer", "back_management");
+        } else {
+            header('location:' . Routing::getBaseUrl());
+        }
     }
 
     public function makeInstallAction() {
@@ -19,7 +24,7 @@ class Installer{
             InstallerCore::makeInstall();
             echo 'Install à faire -> ';
         } else {
-            echo 'Installation déjà installé';
+            header('location:' . Routing::getBaseUrl());
         }
     }
 }

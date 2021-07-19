@@ -14,13 +14,14 @@ use App\Core\Installer;
 // Class PHPMailer
 require "Autoloader.php";
 Autoloader::register();
-new ConstantManager();
 
 date_default_timezone_set('Europe/Paris');
 
 $uriExploded = explode("?", $_SERVER["REQUEST_URI"]);
 $uri = $uriExploded[0];
-
+if($uri != "/make-install") {
+    new ConstantManager();
+}
 if (strpos($uri, '/actionfront/')) {
     $uri = '/actionfront' . explode("actionfront", $uri)[1];
 }

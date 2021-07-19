@@ -114,13 +114,6 @@ CREATE TABLE `ody_Comment` (
   `isVerified` int(11) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
---
--- Déchargement des données de la table `ody_Comment`
---
-
-INSERT INTO `ody_Comment` (`id`, `content`, `isDeleted`, `creationDate`, `updateDate`, `id_Article`, `id_User`, `id_Comment`, `isVerified`) VALUES
-(4, 'Clairement c\'est hyper stressant !', 0, '2021-07-13 17:04:01', NULL, 11, 3, NULL, 0);
-
 -- --------------------------------------------------------
 
 --
