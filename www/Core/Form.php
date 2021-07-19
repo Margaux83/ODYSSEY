@@ -6,7 +6,6 @@ class Form
 {
     public static function validator($data, $config){
         $errors = [];
-
         if( count($data) == count($config["input"])) {
 
             foreach ($config["input"] as $name => $configInput) {

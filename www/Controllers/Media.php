@@ -60,38 +60,46 @@ class Media {
                 //On vérifie s'il y a des erreurs
 
                 if (empty($errors)) {
-
-                    $target_dir = $_SERVER["DOCUMENT_ROOT"] . "/public/images/uploads/";
-                    $target_file = $target_dir . basename($_FILES["media"]["name"]);
-                    $uploadOk = 1;
-
-                    if (file_exists($target_file)) {
-
-                        unlink($target_file);
-                        move_uploaded_file($_FILES["media"]["tmp_name"], $target_file);
-                        $_SESSION['alert']['success'][] = 'Le média a bien été uploadé !';
-                        $media->setName(htmlspecialchars(addslashes($dataArticle['name'])));
-                        $media->setMedia(htmlspecialchars(addslashes($_FILES['media']["name"])));
-                        $media->setIsdeleted(0);
-                        $media->save();
-                        $_SESSION['alert']['success'][] = 'Le média a bien été enregistré !';
-                        header('location: /admin/medias');
-                        session_write_close();
+                    if (!empty($media->query(['id'], ['name' => $dataArticle['name']]))) {
+                        $_SESSION['alert']['danger'][] = 'Le média existe déjà';
                     } else {
 
-                        if ($_FILES["media"]["size"] > 500000) {
-                            $_SESSION['alert']['danger'][] = "Le fichier est trop volumineux.";
-                            $uploadOk = 0;
-                        }
+                        $target_dir = $_SERVER["DOCUMENT_ROOT"] . "/public/images/uploads/";
+                        $target_file = $target_dir . basename($_FILES["media"]["name"]);
+                        $uploadOk = 1;
 
-                        if (!preg_match("/.(jpg|jpeg|png|svg)$/i", $target_file)) {
-                            $_SESSION['alert']['danger'][] = "Seuls les fichiers JPG, JPEG, PNG, GIF et SVG sont autorisés.";
-                            $uploadOk = 0;
-                        }
+                        if (file_exists($target_file)) {
 
-                        if ($uploadOk == 0) {
-                            $_SESSION['alert']['danger'][] = "Votre fichier n'a pas pu être uploadé";
+                            unlink($target_file);
+                            move_uploaded_file($_FILES["media"]["tmp_name"], $target_file);
+                            $_SESSION['alert']['success'][] = 'Le média a bien été uploadé !';
+                            $media->setName(htmlspecialchars(addslashes($dataArticle['name'])));
+                            $media->setMedia(htmlspecialchars(addslashes($_FILES['media']["name"])));
+                            $media->setIsdeleted(0);
+                            $media->save();
+                            $_SESSION['alert']['success'][] = 'Le média a bien été enregistré !';
+                            header('location: /admin/medias');
+                            session_write_close();
                         } else {
+
+                            if ($_FILES["media"]["size"] > 500000) {
+                                $_SESSION['alert']['danger'][] = "Le fichier est trop volumineux.";
+                                $uploadOk = 0;
+                            }
+
+                            if (!preg_match("/.(jpg|jpeg|png|svg)$/i", $target_file)) {
+                                $_SESSION['alert']['danger'][] = "Seuls les fichiers JPG, JPEG, PNG, GIF et SVG sont autorisés.";
+                                $uploadOk = 0;
+                            }
+                            if (strpos($target_file, ' ')) {
+                                $_SESSION['alert']['danger'][] = "Le fichier ne doit pas contenir d'espaces.";
+                                $uploadOk = 0;
+                            }
+
+
+                            if ($uploadOk == 0) {
+                                $_SESSION['alert']['danger'][] = "Votre fichier n'a pas pu être uploadé";
+                            } else {
                                 move_uploaded_file($_FILES["media"]["tmp_name"], $target_file);
                                 $media->setName(htmlspecialchars(addslashes($dataArticle['name'])));
                                 $media->setMedia(htmlspecialchars(addslashes($_FILES['media']["name"])));
@@ -101,6 +109,7 @@ class Media {
                                 $_SESSION['alert']['success'][] = 'Le média a bien été uploadé !';
                                 header('location: /admin/medias');
                                 session_write_close();
+                            }
                         }
                     }
                 }
@@ -111,6 +120,10 @@ class Media {
         }
     }
 
+    /**
+     * Affiche la page d'ajout des médias où on va modifier un média déjà existant dans la base de données
+     * Il faut être connecté pour accéder à la page
+     */
     public function editMediaAction()
     {
 
@@ -150,12 +163,16 @@ class Media {
                 //On vérifie s'il y a des erreurs
 
                 if (empty($errors)) {
+                    if(!empty($media->query(['id'],['name'=>$dataArticle['name']]))){
+                        $_SESSION['alert']['danger'][] = 'Le média existe déjà';
+                    }else {
                         $media->setName(htmlspecialchars(addslashes($dataArticle['name'])));
                         $media->setIsdeleted(0);
                         $media->save();
                         $_SESSION['alert']['success'][] = 'Le média a bien été modifié !';
                         header('location: /admin/medias');
                         session_write_close();
+                    }
                 }
                 else {
                     $_SESSION['alert']['danger'][] = $errors[0];

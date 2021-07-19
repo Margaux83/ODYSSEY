@@ -37,7 +37,7 @@
                         <p class="listItem-cpt"><?= $media["name"] ?></p>
                     </td>
                     <td>
-                        <img src=<?php App\Core\View::getAssets("uploads/{$media["media"]}")?> alt="" height="50" width="50"></p>
+                        <img src=<?php App\Core\View::getAssets("uploads/".utf8_decode($media["media"]))?> alt="" height="50" width="50"></p>
                     </td>
                     <td class="action-btn">
                         <div class="listItem-cpt listActions">
