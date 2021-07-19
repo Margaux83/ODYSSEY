@@ -5,9 +5,7 @@ namespace App;
 use App\Core\Form;
 use App\Core\Security;
 use App\Core\View;
-use App\Models\User;
 use App\Models\Media as ModelMedia;
-use App\Core\Helpers;
 
 class Media {
     /**
@@ -72,8 +70,8 @@ class Media {
                         unlink($target_file);
                         move_uploaded_file($_FILES["media"]["tmp_name"], $target_file);
                         $_SESSION['alert']['success'][] = 'Le média a bien été uploadé !';
-                        $media->setName($dataArticle['name']);
-                        $media->setMedia($_FILES['media']["name"]);
+                        $media->setName(htmlspecialchars(addslashes($dataArticle['name'])));
+                        $media->setMedia(htmlspecialchars(addslashes($_FILES['media']["name"])));
                         $media->setIsdeleted(0);
                         $media->save();
                         $_SESSION['alert']['success'][] = 'Le média a bien été enregistré !';
@@ -95,9 +93,8 @@ class Media {
                             $_SESSION['alert']['danger'][] = "Votre fichier n'a pas pu être uploadé";
                         } else {
                                 move_uploaded_file($_FILES["media"]["tmp_name"], $target_file);
-
-                                $media->setName($dataArticle['name']);
-                                $media->setMedia($_FILES['media']["name"]);
+                                $media->setName(htmlspecialchars(addslashes($dataArticle['name'])));
+                                $media->setMedia(htmlspecialchars(addslashes($_FILES['media']["name"])));
                                 $media->setIsdeleted(0);
                                 $media->save();
                                 $_SESSION['alert']['success'][] = 'Le média a bien été enregistré !';
@@ -124,6 +121,47 @@ class Media {
         }
 
         $view = new View("Media/edit_medias", "back");
+
+        $media = new ModelMedia;
+
+        if (!empty($_POST)) {
+            if($_POST['id'] != "") {
+                $media->setId($_POST["id"]);
+            }
+        }
+
+
+
+        $form = $media->buildFormMediaEdit();
+        $view->assign("form", $form);
+
+        if (!empty($_POST['insert_media'])) {
+            $dataArticle = $_POST;
+            foreach ($dataArticle as $key => $value) {
+                switch ($key) {
+                    case "insert_media":
+                        unset($dataArticle["insert_media"]);
+                        break;
+                }
+            }
+            if (!empty($dataArticle)) {
+
+                $errors = Form::validator($dataArticle, $form);
+                //On vérifie s'il y a des erreurs
+
+                if (empty($errors)) {
+                        $media->setName(htmlspecialchars(addslashes($dataArticle['name'])));
+                        $media->setIsdeleted(0);
+                        $media->save();
+                        $_SESSION['alert']['success'][] = 'Le média a bien été modifié !';
+                        header('location: /admin/medias');
+                        session_write_close();
+                }
+                else {
+                    $_SESSION['alert']['danger'][] = $errors[0];
+                }
+            }
+        }
     }
 
     public function deleteMediaAction() {

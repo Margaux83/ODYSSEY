@@ -152,4 +152,46 @@ class Media extends Database {
         ];
     }
 
+
+    public function buildFormMediaEdit()
+    {
+        return [
+
+            "config"=>[
+                "method"=>"POST",
+                "Action"=>"",
+                "Submit"=>"Publier",
+                "class"=>"",
+                "enctype"=>"multipart/form-data"
+            ],
+
+            "input"=>[
+
+                "id"=>[
+                    "type"=>"hidden",
+                    "required"=>true,
+                    "defaultValue"=>$this->getID()
+                ],
+                "name"=>[
+
+                    "type"=>"text",
+                    "label"=>"Veuillez choisir un nom pour votre media",
+                    "lengthMax"=>"255",
+                    "lengthMin"=>"2",
+                    "required"=>true,
+                    "error"=>"Le titre de l'article doit faire entre 2 et 255 caractères",
+                    "placeholder"=>"Nom du média",
+
+                    "defaultValue"=>$this->getName()
+                ]
+            ],
+            "button"=>[
+                "class"=>"buttonComponent d-flex floatRight",
+                "name"=>"insert_media"
+            ]
+
+        ];
+    }
+
+
 }
