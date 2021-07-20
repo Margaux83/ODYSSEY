@@ -29,4 +29,23 @@ class Template
         
         return true;
     }
+
+    public static function searchPageSelectedTheme($uri) {
+        $config = new Config();
+        $configResults = $config->query(['value'], ['options' => 'theme']);
+
+        if (count($configResults)) {
+            $selectedTheme = $configResults[0]['value'];
+        }else {
+            $selectedTheme = THEME;
+        }
+
+        foreach(scandir('./public/styles/themes/' . self::getSelectedTheme() . '/pages') as $key=> $founded) {
+            if ($founded === trim($uri, '/') . '.php') {
+                return 'public/styles/themes/' . self::getSelectedTheme() . '/pages/' . $founded;
+            }
+        };
+
+        return false;
+    }
 }
