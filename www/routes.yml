@@ -175,6 +175,11 @@
     listId: management
     icon: icon_page
 
+/admin/template-select:
+  controller: Template
+  action: change
+  label: Templates
+
 /admin/menu-management:
   controller: Menu
   action: default

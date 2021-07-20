@@ -9,7 +9,6 @@ class ConstantManager
 	private $data = [];
 
 	public function __construct(){
-
 		if(!file_exists($this->envFile))
 		die("Le fichier ".$this->envFile." n'existe pas");
 
