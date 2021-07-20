@@ -18,7 +18,10 @@ class Security{
         echo "controller security action default";
     }
 
-
+    /**
+     * Fonction qui permet d'ajouter un utilisateur dans la base de données quand il s'inscrit
+     * Un mail lui est envoyé pour qu'il confirme son compte
+     */
     public function registerAction(){
         $coreSecurity = coreSecurity::getInstance();
         //Lorque l'utilisateur se connecte, il est redirigé sur la page de dashboard
@@ -80,6 +83,9 @@ class Security{
 
     }
 
+    /**
+     * Fonction qui permet de vérifier le compte de l'utilisateur, un token lui est envoyé par mail pour confirmer son identité
+     */
     public function verificationAction() {
         if (!empty($_GET)) {
             //Au moment de la vérification du compte, on vérifie si on reçoie bien un email et un token
@@ -109,6 +115,9 @@ class Security{
         }
     }
 
+    /**
+     * Fonction qui permet à l'utilisateur de se connecter au CMS, une fois connecté, il est rédirigé sur la page de dashboard
+     */
     public function loginAction(){
 
         //Si l'utilisateur se connecte bien, on le redirige sur la page de dashboard
@@ -129,6 +138,9 @@ class Security{
         $view->assign("form", $form);
     }
 
+    /**
+     * Fonction de déconnexion
+     */
     public function logoutAction(){
         //Quand l'utilisateur se déconnecte, on détruit la session de son id et le redirige sur la page de connexion
         $coreSecurity = coreSecurity::getInstance();
@@ -136,6 +148,10 @@ class Security{
         header('Location: /login');
     }
 
+    /**
+     * Fonction qui permet d'envoyer un mail à un utilisateur qui aurait oublié son mot de passe
+     * Dans le mail se trouve un lien qui le redirigera sur la page de réinitialisation de mot de passe
+     */
     public function forgotPasswordAction(){
         //Si l'utilisateur se connecte bien, on le redirige sur la page de dashboard
         $coreSecurity = coreSecurity::getInstance();
@@ -193,6 +209,10 @@ class Security{
         }
     }
 
+    /**
+     * Lorsqu'il arrive sur le formulaire de réinitialisation du mot de passe, l'utilisateur peut entrer un nouveau mot de passe et le confirmer
+     * Le changement de mot de passe sera pris en compte dans la base de données
+     */
     public function forgotPasswordConfirmAction(){
         //Si l'utilisateur se connecte bien, on le redirige sur la page de dashboard
         $coreSecurity = coreSecurity::getInstance();

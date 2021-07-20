@@ -12,6 +12,7 @@ use App\Models\Category;
 
 class Article
 {
+
     public function defaultAction()
     {
 

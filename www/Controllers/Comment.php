@@ -47,7 +47,7 @@ class Comment
         if (!empty($_POST)) {
             $comment = new ModelComment;
             if (!empty($_POST['content']) && !empty($_POST['id_Article'])) {
-                $comment->setContent($_POST['content']);
+                $comment->setContent(htmlspecialchars(addslashes($_POST['content'])));
                 $comment->setId_Article($_POST['id_Article']);
                 $comment->setId_User($_SESSION["userId"]);
                 $comment->setIsDeleted(0);
