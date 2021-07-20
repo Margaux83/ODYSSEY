@@ -94,44 +94,50 @@ class FrontPage extends Database
 
     public static function findContentToShow($uri) {
         self::$_actualUri = $uri;
-        if ($uri === '/'){
-            $view = new View("front_home", "front");
-        }elseif (strpos($uri, 'article')) {
-            $article = new Article();
-            $resultArticle = $article->query(
-                ['id', 'title', 'content', 'description'],
-                [
-                    'uri' => $uri,
-                    'isVisible' => 1
-                ]
-            );
-            if ($resultArticle) {
-                $view = new View("front_page", "front");
-                $view->assign("idArticle", $resultArticle[0]['id']);
-                $view->assign("title", $resultArticle[0]['title']);
-                $view->assign("description", $resultArticle[0]['description']);
-                $view->assign("content", $resultArticle[0]['content']);
-            }else {
-                Error::errorPage(404, 'L\'article n\'existe pas');
-            }
-        }else {
-            $page = new Page();
-            $resultPage = $page->query(
-                ['id', 'title', 'content', 'description'],
-                [
-                    'uri' => $uri,
-                    'isVisible' => 1
-                    ]
-            );
 
-            if ($resultPage) {
-                $view = new View("front_page", "front");
-                $view->assign("idArticle", $resultPage[0]['id']);
-                $view->assign("title", $resultPage[0]['title']);
-                $view->assign("description", $resultPage[0]['description']);
-                $view->assign("content", $resultPage[0]['content']);
+        if (Template::searchPageSelectedTheme($uri)) {
+            $view = new View("front_home", "front", Template::searchPageSelectedTheme($uri));
+        }else {
+            if ($uri === '/'){
+                $view = new View("front_home", "front", Template::searchPageSelectedTheme('home'));
+                $view->assign("title", 'Accueil');
+            }elseif (strpos($uri, 'article')) {
+                $article = new Article();
+                $resultArticle = $article->query(
+                    ['id', 'title', 'content', 'description'],
+                    [
+                        'uri' => $uri,
+                        'isVisible' => 1
+                    ]
+                );
+                if ($resultArticle) {
+                    $view = new View("front_page", "front");
+                    $view->assign("idArticle", $resultArticle[0]['id']);
+                    $view->assign("title", $resultArticle[0]['title']);
+                    $view->assign("description", $resultArticle[0]['description']);
+                    $view->assign("content", $resultArticle[0]['content']);
+                }else {
+                    Error::errorPage(404, 'L\'article n\'existe pas');
+                }
             }else {
-                Error::errorPage(404, 'La page n\'existe pas');
+                $page = new Page();
+                $resultPage = $page->query(
+                    ['id', 'title', 'content', 'description'],
+                    [
+                        'uri' => $uri,
+                        'isVisible' => 1
+                        ]
+                );
+    
+                if ($resultPage) {
+                    $view = new View("front_page", "front");
+                    $view->assign("idArticle", false);
+                    $view->assign("title", $resultPage[0]['title']);
+                    $view->assign("description", $resultPage[0]['description']);
+                    $view->assign("content", $resultPage[0]['content']);
+                }else {
+                    Error::errorPage(404, 'La page n\'existe pas');
+                }
             }
         }
     }

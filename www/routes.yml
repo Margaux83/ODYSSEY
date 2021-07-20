@@ -310,10 +310,14 @@
   controller: Installer
   action: setup
   label: Installation
-  freeAccess: true
-  menuData:
-    visible: false
-    min-statut: true
-    listId: installer
-    icon: icon_settings
+
+/make-install:
+  controller: Installer
+  action: makeInstall
+  label: Installation
 ### ### ###
+
+/temporary-install:
+  controller: Installer
+  action: temporaryInstall
+  label: Installation

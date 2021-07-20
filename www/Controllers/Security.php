@@ -67,7 +67,7 @@ class Security{
                         //Une fois que l'utilisateur s'est inscrit, un mail lui est envoyé pour qu'il confirme sont compte et il est rédirigé sur la page de connexion
                         $mailer->sendMail($_POST['firstname'], $_POST['lastname'], $_POST['email'], $object, $bodymail->buildBodyMailConfirmation($_POST['email'], $token));
                         $_SESSION['alert']['success'][] = 'Un mail de validation vous a été envoyé';
-                        header('location: /login');
+                        //header('location: /login');
                         session_write_close();
                     }
                 }

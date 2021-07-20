@@ -26,6 +26,10 @@ var installer_elements = {
 }
 
 function installer_goToPreviousPart(){
+    document.getElementById('installer_testDb').style.visibility = 'hidden';
+    if(installer_actualPart === 4) {
+        document.getElementById('installer_testDb').style.visibility = 'visible';
+    }
     if (installer_actualPart === 2){
         document.getElementById('installer_goBackButton').classList.add('d-none');
     }
@@ -37,7 +41,13 @@ function installer_goToPreviousPart(){
 }
 
 function installer_goToNextPart(event){
-    event.preventDefault();
+    document.getElementById('installer_testDb').style.visibility = 'hidden';
+    if(installer_actualPart === 2) {
+        document.getElementById('installer_testDb').style.visibility = 'visible';
+    }
+    if(installer_actualPart < 4) {
+        event.preventDefault();
+    }
     if (installer_actualPart < installer_lastPart){
         document.getElementById('installer_goBackButton').classList.remove('d-none');
         document.getElementById('installer-stepElement-part-' + installer_actualPart).classList.remove('selected');
@@ -58,4 +68,34 @@ function installer_loadSection(index){
     document.getElementById('installer-formElementsContainer-part-' + index).classList.remove('d-none');
     document.getElementById('installer-stepElement-part-' + installer_actualPart).classList.remove('passed');
     document.getElementById('installer-stepElement-part-' + installer_actualPart).classList.add('selected');
+}
+
+function installer_checkDbConnection(event) {
+    console.log('qzd');
+    var bddName = document.getElementById('config-bddName').value;
+    var bddHost = document.getElementById('config-bddHost').value;
+    var bddUser = document.getElementById('config-bddUser').value;
+    var bddPwd = document.getElementById('config-bddPwd').value;
+    if(bddName.length === 0 || bddHost.length === 0 || bddUser.length === 0 || bddPwd.length === 0) {
+        alert("Veuillez saisir tous les champs ci-dessus afin de tester la connectivité de la base de données !");
+    } else {
+        // WORK
+        /*
+$.ajax({
+    type: 'POST',
+    url: "/",
+    data: post_data,
+    success: function(responseText) {  if(responseText == 1) {
+        $('#response', form).html('<p class="message">Error...</p>');
+    } else { if(responseText == "") {
+        $(form).fadeOut(500, function(){
+            form.html(msg).fadeIn();
+        });
+
+    }
+    }
+    }
+});
+*/
+    }
 }
