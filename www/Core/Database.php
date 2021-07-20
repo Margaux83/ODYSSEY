@@ -10,7 +10,7 @@ class Database
     public function __construct($class = null)
     {
         try {
-            $this->pdo = new \PDO(DBDRIVER . ":dbname=" . DBNAME . ";host=" . DBHOST . ";port=" . DBPORT, DBUSER, DBPWD);
+            $this->pdo = new \PDO(DBDRIVER . ":dbname=" . DBNAME . ";host=" . DBHOST, DBUSER, DBPWD);
 
             $this->pdo->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
             $this->pdo->setAttribute(\PDO::ATTR_EMULATE_PREPARES, false);
@@ -109,6 +109,14 @@ class Database
             }
            $query->execute();
         }
+    }
+
+    public function createDatabase($query) {
+        if(!empty($query)) {
+            $query = $this->pdo->exec($query);
+            return true;
+        }
+        return false;
     }
 
     //On sélectionne l'id de la dernière entrée

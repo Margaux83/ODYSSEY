@@ -1,3 +1,4 @@
+<?php $this->addModal("alert"); ?>
 <section class="stepContainer">
     <div id='installer-stepElement-part-1' class="stepElement selected">
         <div class="stepStatusAndPath">
@@ -39,35 +40,35 @@
             OdyseyCMS permet de créer rapidement de nouvelles applications pour les agences de voyages.
             Après l'installation, vous pourrez vous connecter à un panneau d'administration pour éditer la configuration de votre site Web.
         </p>
-        <p>
+        <!--<p>
             L'URL de base est l'URL de votre site Web qui peut être lue à partir de la barre supérieure de votre navigateur.
-        </p>
+        </p>-->
     </div>
 </section>
 <section>
-    <form onsubmit="installer_goToNextPart()">
+    <form onsubmit="installer_goToNextPart()" id="formInstaller" action="/make-install" method="post">
         <div id='installer-formElementsContainer-part-1'>
             <div class="formElement">
                 <label for="config-siteName" class="requiredLabel">Nom du site</label>
-                <input name="config-siteName" id="config-siteName" type="text" required>
+                <input name="config[siteName]" id="config-siteName" type="text" required>
             </div>
-            
+            <!--
             <div class="formElement">
                 <label for="config-siteUrl" class="requiredLabel">URL de base</label>
                 <input name="config-siteUrl" id="config-siteUrl" placeholder="www.exemple.com" type="text" required>
             </div>
-            
+            -->
             <div class="formElement">
                 <label for="config-siteLanguage" class="requiredLabel">Langue</label>
-                <select name="config-siteLanguage" id="config-siteLanguage" required>
+                <select name="config[language]" id="config-siteLanguage" required>
                     <option value="fr">Français</option>
-                    <option value="uk">English</option>
+                    <option value="en">English</option>
                 </select>
             </div>
-            
+            <!--
             <div class="formElement">
                 <label for="config-siteTimeZone" class="requiredLabel">Fuseau horaire</label>
-                <select name="config-siteTimeZone" id="config-siteTimeZone" required>
+                <select name="config[siteTimeZone]" id="config-siteTimeZone" required>
                     <option value="utc0">(UTC+0)</option>
                     <option value="utc1">(UTC+1)</option>
                     <option value="utc2">(UTC+2)</option>
@@ -83,12 +84,13 @@
                     <option value="utc12">(UTC+12)</option>
                 </select>
             </div>
+            -->
         </div>
 
         <div id='installer-formElementsContainer-part-2' class="d-none">
             <div class="formElement">
                 <label for="config-siteTheme" class="requiredLabel">Thème</label>
-                <select name="config-siteTheme" id="config-siteTheme" required>
+                <select name="config[theme]" id="config-siteTheme" required>
                     <option value="default">Par défaut</option>
                     <option value="light">Clair</option>
                     <option value="dark">Sombre</option>
@@ -97,71 +99,80 @@
         </div>
 
         <div id='installer-formElementsContainer-part-3' class="d-none">
+            <!--
             <div class="formElement">
                 <label for="config-bddServerName" class="requiredLabel">Nom du serveur</label>
                 <input name="config-bddServerName" id="config-bddServerName" type="text" required>
             </div>
-
+            -->
+            <!--
             <div class="formElement">
                 <label for="config-bddServerPort" class="requiredLabel">Port du serveur</label>
                 <input name="config-bddServerPort" id="config-bddServerPort" type="text" required>
             </div>
+            -->
+            <div class="formElement">
+                <label for="config-bddName" class="requiredLabel">Nom de la base de données</label>
+                <input name="database[dbname]" id="config-bddName" type="text" required>
+            </div>
 
             <div class="formElement">
-                <label for="config-bddName" class="requiredLabel">Port du serveur</label>
-                <input name="config-bddName" id="config-bddName" type="text" required>
+                <label for="config-bddHost" class="requiredLabel">Hôte de la base de données</label>
+                <input name="database[dbhost]" id="config-bddHost" type="text" required>
             </div>
 
             <div class="formElement">
                 <label for="config-bddUser" class="requiredLabel">Utilisateur</label>
-                <input name="config-bddUser" id="config-bddUser" type="text" required>
+                <input name="database[dbuser]" id="config-bddUser" type="text" required>
             </div>
 
             <div class="formElement">
                 <label for="config-bddPwd" class="requiredLabel">Mot de passe</label>
-                <input name="config-bddPwd" id="config-bddPwd" type="text" required>
+                <input name="database[dbpwd]" id="config-bddPwd" type="text" required>
             </div>
-
             <div class="formElement">
                 <label for="config-bddPrefix">Préfixe</label>
-                <input name="config-bddPrefix" id="config-bddPrefix" type="text">
+                <input name="database[dbprefix]" id="config-bddPrefix" type="text" value="ody_">
             </div>
         </div>
 
         <div id='installer-formElementsContainer-part-4' class="d-none">
             <div class="formElement">
-                <label for="config-userAdmiPseudo" class="requiredLabel">Nom d'utilisateur</label>
-                <input name="config-userAdmiPseudo" id="config-userAdmiPseudo" type="text" required>
+                <label for="config-userAdminEmail" class="requiredLabel">Adresse mail</label>
+                <input name="user[userAdminEmail]" id="config-userAdminEmail" type="text" required>
             </div>
 
             <div class="formElement">
                 <label for="config-userAdminPwd" class="requiredLabel">Mot de passe</label>
-                <input name="config-userAdminPwd" id="config-userAdminPwd" type="text" required>
+                <input name="user[userAdminPwd]" id="config-userAdminPwd" type="password" required>
             </div>
-
+            <!--
             <div class="formElement">
                 <label for="config-userAdminPwdConfirm" class="requiredLabel">Confirmation du mot de passe</label>
-                <input name="config-userAdminPwdConfirm" id="config-userAdminPwdConfirm" type="text" required>
+                <input name="user[userAdminPwdConfirm]" id="config-userAdminPwdConfirm" type="text" required>
             </div>
+            -->
 
             <div class="formElement">
                 <label for="config-userAdminLastName" class="requiredLabel">Nom</label>
-                <input name="config-userAdminLastName" id="config-userAdminLastName" type="text" required>
+                <input name="user[userAdminLastName]" id="config-userAdminLastName" type="text" required>
             </div>
 
             <div class="formElement">
                 <label for="config-userAdminFirstName" class="requiredLabel">Prénom</label>
-                <input name="config-userAdminFirstName" id="config-userAdminFirstName" type="text" required>
+                <input name="user[userAdminFirstName]" id="config-userAdminFirstName" type="text" required>
             </div>
-
+            <!--
             <div class="formElement">
                 <label for="config-userAdminMail" class="requiredLabel">Prénom</label>
                 <input name="config-userAdminMail" id="config-userAdminMail" type="text" required>
             </div>
+            -->
         </div>
 
         <div class="formSubmitElement">
             <button id="installer_goBackButton" type="button" class="cancel d-none" onclick="installer_goToPreviousPart()">Retour</button>
+            <button id="installer_testDb" type="button" class="primary" style="visibility:hidden" onclick="installer_checkDbConnection()">Tester la connectivité</button>
             <button id="installer_submit" type="submit" class="primary">Suivant</button>
         </div>
     </form>
@@ -172,6 +183,8 @@
         <span style="color: red;">*</span> Ces champs sont obligatoires pour valider l'installation de odysseyCMS.
     </p>
 </footer>
+
+<script src=<?php App\Core\View::getAssets("installer.js")?>></script>
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {
