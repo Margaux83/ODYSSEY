@@ -176,8 +176,6 @@
 
 <script src=<?php App\Core\View::getAssets("article.js")?>></script>
 <script src=<?php App\Core\View::getAssets("charts.js")?>></script>
-<script src=<?php App\Core\View::getAssets("modal.js")?>></script>
-<script src=<?php App\Core\View::getAssets("popups.js")?>></script>
 
 <script src=<?php App\Core\View::getAssets("datatables.js")?>></script>
 <script src=<?php App\Core\View::getAssets("jquery.redirect.js")?>></script>

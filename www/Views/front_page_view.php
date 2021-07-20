@@ -3,3 +3,5 @@
 <section>
     <?php echo $content?>
 </section>
+
+<?php echo App\Core\FrontPage::getCommentarySection($idArticle); ?>

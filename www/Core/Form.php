@@ -6,10 +6,10 @@ class Form
 {
     public static function validator($data, $config){
         $errors = [];
-
         if( count($data) == count($config["input"])) {
 
             foreach ($config["input"] as $name => $configInput) {
+
                 if (!empty($configInput["lengthMin"])
                     && is_numeric($configInput["lengthMin"])
                     && strlen($data[$name]) < $configInput["lengthMin"]) {
@@ -28,8 +28,8 @@ class Form
         return $errors; //tableau des erreurs
     }
 
-    public static function showForm($form){
-        $html = "<form ".(!empty($form["config"]["id"]) ? "id='ody_form_".$form["config"]["id"]."'": "")." class='".($form["config"]["class"]??"")."' method='".( self::cleanWord($form["config"]["method"]) ?? "GET" )."' action='".( $form["config"]["action"] ?? "" )."'>";
+    public static function showForm($form, $echoDirectly = true){
+        $html = "<form ".(!empty($form["config"]["id"]) ? "id='ody_form_".$form["config"]["id"]."'": "")." class='".($form["config"]["class"]??"")."' method='".( self::cleanWord($form["config"]["method"]) ?? "GET" )."' action='".( $form["config"]["action"] ?? "" )."'  enctype='".( $form["config"]["enctype"] ?? "" )."'>";
 
         foreach ($form["input"] as $name => $dataInput) {
             $html .= "<div id='ody_inputContainer_".$name."' " . ($dataInput["type"] === "hidden" ? "" : "class='formElement'") . ">";
@@ -47,7 +47,6 @@ class Form
                     ." </label>";
             }
 
-
             if ($dataInput["type"] === "textarea"){
                 $html .= "<textarea 
                              id='".$dataInput["id"]."'
@@ -57,8 +56,8 @@ class Form
                               placeholder='".($dataInput["placeholder"] ?? "")."'
                             ".((!empty($dataInput["required"]))?"required='required'":"")." 
                             ".((!empty($dataInput["disabled"]))?"disabled='disabled'":"")." 
-                          
-                            >  ".((!empty($dataInput["defaultValue"]))?"" . $dataInput["defaultValue"] . "":"")."</textarea>";
+                            ".((!empty($dataInput["readonly"]))?"readonly='readonly'":"")." 
+                            >".((!empty($dataInput["defaultValue"]))?"" . $dataInput["defaultValue"] . "":"")."</textarea>";
                 $html .= "<br>";
                 $html .= "<br>";
 
@@ -105,7 +104,8 @@ class Form
                             type='".($dataInput["type"] ?? "text")."'
                             placeholder='".($dataInput["placeholder"] ?? "")."'
                             ".((!empty($dataInput["required"]))?"required='required'":"")." 
-                            ".((!empty($dataInput["disabled"]))?"disabled='disabled'":"")." 
+                            ".((!empty($dataInput["disabled"]))?"disabled='disabled'":"")."
+                            ".((!empty($dataInput["readonly"]))?"readonly='readonly'":"")." 
                             ".((!empty($dataInput["defaultValue"]))?"value='" . $dataInput["defaultValue"] . "'":"")."
                             >";
             }
@@ -118,7 +118,11 @@ class Form
             ."</button></div></form>";
 
 
-        echo $html;
+        if ($echoDirectly) {
+            echo $html;
+        }else {
+            return $html;
+        }
     }
 
     public static function cleanWord($word){
@@ -132,10 +136,10 @@ class Form
                 "label" => "Choisir une visibilité"
             ],
             "1"=>[
-                "label" => "Protégé",
+                "label" => "Public",
             ],
             "2"=>[
-                "label" => "Public",
+                "label" => "Protégé",
             ],
             "3"=>[
                 "label" => "Privé"

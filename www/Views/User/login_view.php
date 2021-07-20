@@ -26,7 +26,7 @@
         </div>
 
         <div class="formSubmitElement">
-            <button id="login_submit" type="submit" class="secondary" onclick="window.location='register'">S'INSCRIRE</button>
+            <button id="login_submit" class="secondary" onclick="window.location='register'">S'INSCRIRE</button>
             <button id="login_submit" type="submit" class="primary">SE CONNECTER</button>
         </div>
     </form>---->

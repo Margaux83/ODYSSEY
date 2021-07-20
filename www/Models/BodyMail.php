@@ -1,7 +1,29 @@
 <?php
 namespace App\Models;
 
+use App\Core\Routing;
+
 class BodyMail {
+    protected $baseurl;
+
+    public function __construct(){
+        self::setBaseurl(Routing::getBaseUrl());
+    }
+    /**
+     * @return mixed
+     */
+    public function getBaseurl()
+    {
+        return $this->baseurl;
+    }
+
+    /**
+     * @param mixed $baseurl
+     */
+    public function setBaseurl($baseurl)
+    {
+        $this->baseurl = $baseurl;
+    }
 
     public function buildBodyMailConfirmation($email, $token) {
         return "<body style=\"background-color: #f4f4f4; margin: 0 !important; padding: 0 !important;\">
@@ -43,7 +65,7 @@ class BodyMail {
                                     <td bgcolor=\"#ffffff\" align=\"center\" style=\"padding: 20px 30px 60px 30px;\">
                                         <table border=\"0\" cellspacing=\"0\" cellpadding=\"0\">
                                             <tr>
-                                                <td align=\"center\" style=\"border-radius: 3px;\" bgcolor=\"#99E1E5\"><a href=\"http://localhost:8080/verification?email={$email}&token={$token}\" target=\"_blank\" style=\"font-size: 20px; font-family: Helvetica, Arial, sans-serif; color: #ffffff; text-decoration: none; color: #ffffff; text-decoration: none; padding: 15px 25px; border-radius: 2px; border: 1px solid #99E1E5; display: inline-block;\">Confirmer le compte</a></td>
+                                                <td align=\"center\" style=\"border-radius: 3px;\" bgcolor=\"#99E1E5\"><a href=\"{$this->baseurl}/verification?email={$email}&token={$token}\" target=\"_blank\" style=\"font-size: 20px; font-family: Helvetica, Arial, sans-serif; color: #ffffff; text-decoration: none; color: #ffffff; text-decoration: none; padding: 15px 25px; border-radius: 2px; border: 1px solid #99E1E5; display: inline-block;\">Confirmer le compte</a></td>
                                             </tr>
                                         </table>
                                     </td>
@@ -58,7 +80,7 @@ class BodyMail {
                     </tr> <!-- COPY -->
                     <tr>
                         <td bgcolor=\"#ffffff\" align=\"left\" style=\"padding: 20px 30px 20px 30px; color: #666666; font-family: 'Lato', Helvetica, Arial, sans-serif; font-size: 18px; font-weight: 400; line-height: 25px;\">
-                            <p style=\"margin: 0;\"><a href=\"http://localhost:8080/verification?email={$email}&token={$token}\" target=\"_blank\" style=\"color: #99E1E5;\">http://localhost:8080/verification?email={$email}&token={$token}</a></p>
+                            <p style=\"margin: 0;\"><a href=\"{$this->baseurl}/verification?email={$email}&token={$token}\" target=\"_blank\" style=\"color: #99E1E5;\">{$this->baseurl}/verification?email={$email}&token={$token}</a></p>
                         </td>
                     </tr>
                     <tr>
@@ -118,7 +140,7 @@ class BodyMail {
                                     <td bgcolor=\"#ffffff\" align=\"center\" style=\"padding: 20px 30px 60px 30px;\">
                                         <table border=\"0\" cellspacing=\"0\" cellpadding=\"0\">
                                             <tr>
-                                                <td align=\"center\" style=\"border-radius: 3px;\" bgcolor=\"#99E1E5\"><a href=\"http://localhost:8080/forgotpasswordconfirm?email={$email}&token={$token}\" target=\"_blank\" style=\"font-size: 20px; font-family: Helvetica, Arial, sans-serif; color: #ffffff; text-decoration: none; color: #ffffff; text-decoration: none; padding: 15px 25px; border-radius: 2px; border: 1px solid #99E1E5; display: inline-block;\">Changer de mot de passe</a></td>
+                                                <td align=\"center\" style=\"border-radius: 3px;\" bgcolor=\"#99E1E5\"><a href=\"{$this->baseurl}/forgotpasswordconfirm?email={$email}&token={$token}\" target=\"_blank\" style=\"font-size: 20px; font-family: Helvetica, Arial, sans-serif; color: #ffffff; text-decoration: none; color: #ffffff; text-decoration: none; padding: 15px 25px; border-radius: 2px; border: 1px solid #99E1E5; display: inline-block;\">Changer de mot de passe</a></td>
                                             </tr>
                                         </table>
                                     </td>
@@ -184,7 +206,7 @@ class BodyMail {
                                     <td bgcolor=\"#ffffff\" align=\"center\" style=\"padding: 20px 30px 60px 30px;\">
                                         <table border=\"0\" cellspacing=\"0\" cellpadding=\"0\">
                                             <tr>
-                                                <td align=\"center\" style=\"border-radius: 3px;\" bgcolor=\"#99E1E5\"><a href=\"http://localhost:8080/newpasswordconfirm?email={$email}&token={$token}\" target=\"_blank\" style=\"font-size: 20px; font-family: Helvetica, Arial, sans-serif; color: #ffffff; text-decoration: none; color: #ffffff; text-decoration: none; padding: 15px 25px; border-radius: 2px; border: 1px solid #99E1E5; display: inline-block;\">Créer votre nouveau mot de passe</a></td>
+                                                <td align=\"center\" style=\"border-radius: 3px;\" bgcolor=\"#99E1E5\"><a href=\"{$this->baseurl}/newpasswordconfirm?email={$email}&token={$token}\" target=\"_blank\" style=\"font-size: 20px; font-family: Helvetica, Arial, sans-serif; color: #ffffff; text-decoration: none; color: #ffffff; text-decoration: none; padding: 15px 25px; border-radius: 2px; border: 1px solid #99E1E5; display: inline-block;\">Créer votre nouveau mot de passe</a></td>
                                             </tr>
                                         </table>
                                     </td>

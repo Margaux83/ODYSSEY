@@ -22,10 +22,10 @@ class User extends Database
     /**
      * User constructor.
      */
-    public function __construct(){
+    public function __construct($idUser = null){
         parent::__construct();
-        if(!empty($this->id)) {
-            $this->setId($_SESSION['userId']);
+        if(!empty($idUser)) {
+            $this->setId($idUser);
         }
     }
 
@@ -73,22 +73,6 @@ class User extends Database
      */
     public function getId(){
         return $this->id;
-    }
-
-    /**
-     * @param $id_user
-     */
-    public function setId_user($id_user)
-    {
-        $this->id_user = $id_user;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getId_user()
-    {
-        return $this->id_user;
     }
 
     /**
@@ -571,7 +555,7 @@ class User extends Database
                     "lengthMax"=>"320",
                     "lengthMin"=>"8",
                     "required"=>true,
-                    "disabled"=>true,
+                    "readonly"=>true,
                     "error"=>"Votre email doit faire entre 8 et 320 caractères",
                     "placeholder"=>"Votre email",
                     "defaultValue" => $this->getEmail()
@@ -580,7 +564,6 @@ class User extends Database
                     "type"=>"text",
                     "label"=>"Numéro de téléphone",
                     "lengthMax"=>"10",
-                    "lengthMin"=>"10",
                     "required"=>true,
                     "error"=>"Votre numéro de téléphone doit contenir 10 chiffres",
                     "placeholder"=>"Votre numéro de téléphone",
@@ -606,13 +589,21 @@ class User extends Database
 
     public function getAllUsers()
     {
-        $db = new Database("User");
-        return $result = $db->query(
-            ["ody_User.id", "ody_User.firstname", "ody_User.lastname", "ody_User.email", "ody_User.status", "ody_User.role", "ody_User.creationDate", "ody_User.lastConnexionDate", "ody_Role.name"],
-            ["ody_User.isDeleted" => "0"],
-            "",
-            " INNER JOIN ody_Role ON ody_Role.id = ody_User.role"
+        $results = $this->query(
+            ["id", "firstname", "lastname", "email", "status", "role", "creationDate", "lastConnexionDate"],
+            ["isDeleted" => "0"]
         );
-    }
 
+        if (count($results)) {
+            $role = new Role();
+            foreach ($results as $key => $result) {
+                if (!empty($result['role'])) {
+                    $userSelected = $role->query(['name'])[0];
+                    $results[$key]['name'] = $userSelected['name'];
+                }
+            }
+        }
+
+        return $results;
+    }
 }

@@ -142,6 +142,20 @@
     listId: basics
     icon: icon_comment
 
+
+/admin/medias:
+  controller: Media
+  action: default
+  label: Medias
+  menuData:
+    visible: true
+    min-statut: true
+    listId: basics
+    icon: icon_media
+    children: [
+        /admin/add-media
+    ]
+
 /admin/roles:
   controller: Role
   action: default
@@ -164,6 +178,20 @@
   controller: Role
   action: editrole
   label: Modifier un role
+
+/admin/add-media:
+  controller: Media
+  action: addMedia
+  label: Ajouter un média
+
+/admin/edit-medias:
+  controller: Media
+  action: editMedia
+  label: Modifier un média
+
+/admin/delete-media:
+  controller: Media
+  action: deleteMedia
 
 /admin/template:
   controller: Template
@@ -264,8 +292,16 @@
   freeAccess: true
 ### ### ###
 
+# FRONT ACTION #
+/actionfront/postcommentfront:
+  controller: Comment
+  action: postCommentFromFront
+  label: Créer un commentaire
+  freeAccess: true
+### ### ###
+
 # INSTALLER #
-/admin/installer:
+/installer:
   controller: Installer
   action: setup
   label: Installation

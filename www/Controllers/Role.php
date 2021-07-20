@@ -56,7 +56,7 @@ class Role
             $role->setValue(json_encode($_POST['values']));
             $role->save();
             $_SESSION['alert']['success'][] = "Le rôle a bien été modifié !";
-            header('location: /roles');
+            header('location: /admin/roles');
             session_write_close();
         }
 
