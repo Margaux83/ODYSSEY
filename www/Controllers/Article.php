@@ -12,6 +12,10 @@ use App\Models\Category;
 
 class Article
 {
+
+    /**
+     * Affcihage de la liste des articles enregistrés dans la base de données
+     */
     public function defaultAction()
     {
 
@@ -38,7 +42,9 @@ class Article
     }
 
 
-
+    /**
+     * FOnction d'ajout d'un article dans la base de données
+     */
     public function addarticleAction()
     {
 
@@ -70,16 +76,18 @@ class Article
             }
             if (!empty($dataArticle)) {
 
+
                 $errors = Form::validator($dataArticle, $form);
                 //On vérifie s'il y a des erreurs
                 if (empty($errors)) {
                     //S'il n'y a pas d'erreurs, on envoie les données dans la requête pour ajouter l'article
-
+                    var_dump($dataArticle);
+                    die();
 
 
                     if(empty($article->query(['id'],["uri"=>"/article/".$dataArticle['uri']]))){
-                        $article->setTitle($dataArticle['title']);
-                        $article->setContent($dataArticle['content']);
+                        $article->setTitle(htmlspecialchars(addslashes($dataArticle['title'])));
+                        $article->setContent(htmlspecialchars(addslashes($dataArticle['content'])));
                         $article->setStatus($dataArticle['status']);
                         $article->setIsvisible($dataArticle['isvisible']);
                         if ($dataArticle['status'] == "Brouillon") {
@@ -88,7 +96,7 @@ class Article
                             $article->setIsdraft(0);
                         }
                         $article->setIsdeleted(0);
-                        $article->setDescription($dataArticle["description"]);
+                        $article->setDescription(htmlspecialchars(addslashes($dataArticle["description"])));
                         $article->setId_user($_SESSION["userId"]);
                         $article->setUri(addslashes(str_replace(' ', '_', "/article/".$dataArticle['uri'])));
 
@@ -167,9 +175,9 @@ class Article
 
 
                             //Modification de l'article sélectionné
-                            $article->setTitle($dataArticle['title']);
-                            $article->setContent($dataArticle['content']);
-                            $article->setDescription($dataArticle['description']);
+                            $article->setTitle(htmlspecialchars(addslashes($dataArticle['title'])));
+                            $article->setContent(htmlspecialchars(addslashes($dataArticle['content'])));
+                            $article->setDescription(htmlspecialchars(addslashes($dataArticle['description'])));
 
                             $article->setStatus($dataArticle['status']);
                             $article->setIsvisible($dataArticle['isvisible']);
@@ -274,7 +282,7 @@ class Article
                     }
                     else{
                         //S'il n'y a pas d'erreurs, on envoie les données dans la requête pour ajouter la catégorie
-                        $category->setLabel(addslashes($dataArticle["label"]));
+                        $category->setLabel(htmlspecialchars(addslashes($dataArticle["label"])));
                         $category->setIsdeleted(0);
                         $category->save();
                         $_SESSION['alert']['success'][] = 'La catégorie a bien été modifiée !';
@@ -337,7 +345,7 @@ class Article
 
                     if ($uriverification) {
                         //S'il n'y a pas d'erreurs, on envoie les données dans la requête pour modifier la catégorie
-                        $category->setLabel(addslashes($dataArticle["label"]));
+                        $category->setLabel(htmlspecialchars(addslashes($dataArticle["label"])));
                         $category->setIsdeleted(0);
                         $category->save();
                         $_SESSION['alert']['success'][] = 'La catégorie a bien été enregistrée !';
