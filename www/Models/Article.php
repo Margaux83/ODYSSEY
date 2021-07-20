@@ -344,8 +344,6 @@ class Article extends Database
                 "Action"=>"",
                 "Submit"=>"Publier",
                 "class"=>"",
-                "enctype"=>"multipart/form-data"
-
             ],
 
             "input"=>[
