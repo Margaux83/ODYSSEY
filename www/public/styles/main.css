@@ -1317,6 +1317,64 @@ form .formSubmitElement input[type=submit]:hover img,
   filter: brightness(0) invert(100%);
 }
 
+.templateCards {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  padding: 0;
+  margin: 0;
+}
+
+.templateCards .templateCard {
+  background-color: lightgrey;
+  list-style: none;
+  margin: 10px;
+  max-width: 300px;
+  width: 50%;
+  border-radius: 10px;
+}
+
+.templateCards .templateCard .templateName {
+  background-color: #155263;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 10px;
+}
+
+.templateCards .templateCard .templateName.selected {
+  position: relative;
+}
+
+.templateCards .templateCard .templateName.selected::after {
+  content: "\2714";
+  position: absolute;
+  top: 10px;
+  right: 10px;
+}
+
+.templateCards .templateCard .templateDesc,
+.templateCards .templateCard .templateCreators,
+.templateCards .templateCard .templateStatusSection {
+  padding: 0 20px;
+  max-height: 0;
+  overflow: hidden;
+  transition: 0.5s;
+}
+
+.templateCards .templateCard .templateStatusSection {
+  display: flex;
+  justify-content: space-between;
+}
+
+.templateCards .templateCard:hover .templateDesc,
+.templateCards .templateCard:hover .templateCreators,
+.templateCards .templateCard:hover .templateStatusSection {
+  max-height: 300px;
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 20px;
+}
+
 * {
   box-sizing: border-box;
   padding: 0;
