@@ -13,9 +13,15 @@ class View
 	private $view; // default, dashboard, profile, ....
 	private $data = [];
 
-	public function __construct($view="default", $template="front"){
+	public function __construct($view="default", $template="front", $templateView = false){
 		$this->setTemplate($template);
 		$this->setView($view);
+
+		if ($templateView !== false) {
+			if(file_exists($templateView)){
+				$this->view = $templateView;
+			}
+		}
 		//$this->setErrorView($view);
 	}
 
@@ -27,7 +33,7 @@ class View
 			case "css" :
 				echo Routing::getBaseUrl() . '/public/styles/'.$nameFile;
 				return;
-			case ($nameFileType == "png" || $nameFileType == "jpg" || $nameFileType == "svg") :
+			case ($nameFileType == "png" || $nameFileType == "jpg" || $nameFileType == "svg" || $nameFileType == "jpeg") :
 				echo Routing::getBaseUrl() . '/public/images/'.$nameFile;
 				return;
 			case ($nameFileType == "js") :

@@ -142,6 +142,20 @@
     listId: basics
     icon: icon_comment
 
+
+/admin/medias:
+  controller: Media
+  action: default
+  label: Medias
+  menuData:
+    visible: true
+    min-statut: true
+    listId: basics
+    icon: icon_media
+    children: [
+        /admin/add-media
+    ]
+
 /admin/roles:
   controller: Role
   action: default
@@ -165,6 +179,20 @@
   action: editrole
   label: Modifier un role
 
+/admin/add-media:
+  controller: Media
+  action: addMedia
+  label: Ajouter un média
+
+/admin/edit-medias:
+  controller: Media
+  action: editMedia
+  label: Modifier un média
+
+/admin/delete-media:
+  controller: Media
+  action: deleteMedia
+
 /admin/template:
   controller: Template
   action: default
@@ -174,6 +202,11 @@
     min-statut: true
     listId: management
     icon: icon_page
+
+/admin/template-select:
+  controller: Template
+  action: change
+  label: Templates
 
 /admin/menu-management:
   controller: Menu
@@ -277,10 +310,14 @@
   controller: Installer
   action: setup
   label: Installation
-  freeAccess: true
-  menuData:
-    visible: false
-    min-statut: true
-    listId: installer
-    icon: icon_settings
+
+/make-install:
+  controller: Installer
+  action: makeInstall
+  label: Installation
 ### ### ###
+
+/temporary-install:
+  controller: Installer
+  action: temporaryInstall
+  label: Installation

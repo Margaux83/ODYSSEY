@@ -2,7 +2,7 @@
 <html lang="fr">
 <head>
 	<meta charset="UTF-8">
-	<title>Odyssey - <?= $title ?></title>
+	<title>Odyssey - <?= (empty($title)) ? 'Accueil ' : $title; ?></title>
 	<meta name="description" content="<?= $description ?>">
 	<link rel="stylesheet" type="text/css" href=<?php App\Core\View::getAssets(App\Core\FrontPage::getTemplateCss());?>>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">

@@ -50,7 +50,6 @@ class Article
         }
 
         $article = new Arti();
-        $category = new Category();
 
         //Affiche la vue pour ajouter un article
         $view = new View("Article/add_articles", "back");
