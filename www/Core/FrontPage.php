@@ -6,6 +6,7 @@ use App\Models\Article;
 use App\Core\View;
 use App\Core\Form;
 use App\Core\Error;
+use App\Core\Template;
 use App\Models\User;
 use App\Models\Page;
 use App\Models\Menu;
@@ -13,11 +14,11 @@ use App\Models\Comment;
 
 class FrontPage extends Database
 {
-    private static $_themeSelected = 'theme_classic/';
+    private static $_themeSelected;
     private static $_actualUri;
 
     public static function getTemplateCss() {
-        return self::$_themeSelected.'front.css';
+        return 'themes/'.Template::getSelectedTheme().'front.css';
     }
 
     public static function getCommentarySection($idArticle = null) {
