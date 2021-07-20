@@ -29,4 +29,9 @@ class Installer{
             session_write_close();
         }
     }
+
+    public function temporaryInstallAction() {
+        $install = InstallerCore::makeDatabase();
+        header('location: /admin/dashboard');
+    }
 }

@@ -283,3 +283,8 @@
   action: makeInstall
   label: Installation
 ### ### ###
+
+/temporary-install:
+  controller: Installer
+  action: temporaryInstall
+  label: Installation

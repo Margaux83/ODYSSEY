@@ -17,8 +17,6 @@ class Installer {
     }
 
     public static function makeInstall() {
-        echo 'qzd';
-        exit(0);
         // TODO Ecriture des fichiers d'environnement .env et .end.prod
         echo '<pre>';
         var_dump($_POST);
