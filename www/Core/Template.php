@@ -40,12 +40,14 @@ class Template
             $selectedTheme = THEME;
         }
 
-        foreach(scandir('./public/styles/themes/' . self::getSelectedTheme() . '/pages') as $key=> $founded) {
-            if ($founded === trim($uri, '/') . '.php') {
-                return 'public/styles/themes/' . self::getSelectedTheme() . '/pages/' . $founded;
-            }
-        };
-
+        if (is_dir('./public/styles/themes/' . self::getSelectedTheme() . '/pages')) {
+            foreach(scandir('./public/styles/themes/' . self::getSelectedTheme() . '/pages') as $key=> $founded) {
+                if ($founded === trim($uri, '/') . '.php') {
+                    return 'public/styles/themes/' . self::getSelectedTheme() . '/pages/' . $founded;
+                }
+            };
+        }
+        
         return false;
     }
 }
