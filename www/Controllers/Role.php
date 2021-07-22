@@ -67,7 +67,6 @@ class Role
 
     public function deleteRoleAction() {
         $role = new ModelRole;
-
         if (!empty($_POST)) {
             if (!empty($_POST['deleteRole'])) {
                 $role->delete($_POST['id_role']);

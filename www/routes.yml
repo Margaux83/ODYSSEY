@@ -156,6 +156,20 @@
         /admin/add-media
     ]
 
+/admin/add-media:
+  controller: Media
+  action: addMedia
+  label: Ajouter un média
+
+/admin/edit-medias:
+  controller: Media
+  action: editMedia
+  label: Modifier un média
+
+/admin/delete-media:
+  controller: Media
+  action: deleteMedia
+
 /admin/roles:
   controller: Role
   action: default
@@ -179,19 +193,11 @@
   action: editrole
   label: Modifier un role
 
-/admin/add-media:
-  controller: Media
-  action: addMedia
-  label: Ajouter un média
+/admin/delete-role:
+  controller: Role
+  action: deleteRole
 
-/admin/edit-medias:
-  controller: Media
-  action: editMedia
-  label: Modifier un média
 
-/admin/delete-media:
-  controller: Media
-  action: deleteMedia
 
 /admin/template:
   controller: Template

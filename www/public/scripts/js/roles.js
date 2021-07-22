@@ -20,7 +20,7 @@ function deleteRole(e) {
                 'Votre rôle a bien été supprimé.',
                 'success'
             ).then(function() {
-                $.post( "roles", { id_role: id, deleteRole: "true" })
+                $.post( "delete-role", { id_role: id, deleteRole: "true" })
                     .done(function( data ) {
                         location.reload();
                     });
