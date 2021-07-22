@@ -7,6 +7,7 @@ use App\Core\View;
 use App\Models\User;
 use App\Models\Page as ModelPage;
 use App\Core\Helpers;
+use function Sodium\add;
 
 class Page{
 
@@ -39,10 +40,10 @@ class Page{
             if (empty($errors)) {
                 //S'il n'y a pas d'erreurs, on envoie les données dans la requête pour ajouter l'article
                 // Champs du formulaire
-                $page->setTitle($_POST['title']);
-                $page->setContent($_POST['content']);
-                $page->setDescription($_POST['description']);
-                $page->setUri(addslashes("/".$_POST['uri']));
+                $page->setTitle(htmlspecialchars(addslashes($_POST['title'])));
+                $page->setContent(htmlspecialchars(addslashes($_POST['content'])));
+                $page->setDescription(htmlspecialchars(addslashes($_POST['description'])));
+                $page->setUri(htmlspecialchars(addslashes("/".$_POST['uri'])));
                 $page->setStatus($_POST['status']);
                 $page->setIsvisible($_POST['isvisible']);
                 $page->setId_user($_SESSION["userId"]);
@@ -82,10 +83,10 @@ class Page{
             if (empty($errors)) {
                 //S'il n'y a pas d'erreurs, on envoie les données dans la requête pour modifier l'article
                 // Champs du formulaire
-                $page->setTitle($_POST['title']);
-                $page->setContent($_POST['content']);
-                $page->setDescription($_POST['description']);
-                $page->setUri(addslashes("/".$_POST['uri']));
+                $page->setTitle(htmlspecialchars(addslashes($_POST['title'])));
+                $page->setContent(htmlspecialchars(addslashes($_POST['content'])));
+                $page->setDescription(htmlspecialchars(addslashes($_POST['description'])));
+                $page->setUri(htmlspecialchars(addslashes("/".$_POST['uri'])));
                 $page->setStatus($_POST['status']);
                 $page->setIsvisible($_POST['isvisible']);
                 $page->setId_user($_SESSION["userId"]);
