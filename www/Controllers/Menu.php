@@ -18,7 +18,7 @@ class Menu
                     $menuToSave->setId($_POST['id']);
                 }
                 if (!empty($_POST['name'])) {
-                    $menuToSave->setName($_POST['name']);
+                    $menuToSave->setName(htmlspecialchars(addslashes($_POST['name'])));
                 }
                 $menuToSave->setContentMenu($_POST['contentMenu']);
                 $menuToSave->setIsDeleted(0);
