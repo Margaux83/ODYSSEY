@@ -28,7 +28,7 @@ class FrontPage extends Database
         }
 
         $comment = new Comment();
-        $resultComments = $comment->query(['id', 'content', 'id_User', 'id_Comment'], ['id_article' => $idArticle]);
+        $resultComments = $comment->query(['id', 'content', 'id_User', 'id_Comment'], ['id_article' => $idArticle, 'isDeleted'=>0]);
 
         $html = '<section class="commentsSection"><h2>Commentaires ('
             . count($resultComments)

@@ -8,6 +8,7 @@ use App\Models\Comment as ModelComment;
 use App\Core\Helpers;
 use App\Models\User;
 use App\Models\Article;
+use function Sodium\add;
 
 class Comment
 {

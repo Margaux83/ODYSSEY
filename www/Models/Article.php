@@ -344,8 +344,6 @@ class Article extends Database
                 "Action"=>"",
                 "Submit"=>"Publier",
                 "class"=>"",
-                "enctype"=>"multipart/form-data"
-
             ],
 
             "input"=>[
@@ -385,16 +383,12 @@ class Article extends Database
                         "lengthMin"=>"2",
                         "error"=>"Le contenu de l'article doit faire entre 2 et 255 caractères",
                         "id"=>"full-featured-non-premium",
-                        "required"=>true,
                         "placeholder"=>"Votre contenu",
                         "defaultValue"=>$this->getContent()
                     ],
                     "description"=>[
                         "type"=>"textarea",
                         "label"=>"Description",
-                        "lengthMax"=>"255",
-                        "lengthMin"=>"2",
-                        "error"=>"La description de l'article doit faire entre 2 et 255 caractères",
                         "id"=>"content",
                         "required"=>false,
                         "class"=>"textareaComment d-flex",
