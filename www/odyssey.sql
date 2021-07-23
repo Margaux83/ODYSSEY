@@ -244,6 +244,18 @@ CREATE TABLE `ody_Voyage` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
+-- Structure de la table `ody_Config`
+--
+
+CREATE TABLE `ody_Config` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `options` varchar(500) COLLATE utf8_bin NOT NULL,
+  `value` varchar(500) COLLATE utf8_bin NOT NULL,
+  `creationDate` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updateDate` datetime DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+--
 -- Index pour les tables déchargées
 --
 

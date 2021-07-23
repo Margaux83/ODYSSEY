@@ -303,7 +303,7 @@ class Page extends Database
             $user = new User();
             foreach ($results as $key => $result) {
                 if (!empty($result['id_User'])) {
-                    $userSelected = $user->query(['firstname', 'lastname'])[0];
+                    $userSelected = $user->query(['firstname', 'lastname'], ['id' => $result['id_User']])[0];
                     $results[$key]['firstname'] = $userSelected['firstname'];
                     $results[$key]['lastname'] = $userSelected['lastname'];
                 }

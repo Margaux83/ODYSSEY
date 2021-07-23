@@ -27,8 +27,6 @@ class Article
 
          //Instanciation de la classe Article
         $articles = new Arti();
-         //Fonction pour récupérer la liste de tous les articles
-        $articles->getAllArticles();
 
         //Affiche moi la vue des articles;
         $view = new View("Article/articles", "back");
