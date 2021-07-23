@@ -12,6 +12,9 @@ use function Sodium\add;
 
 class Role
 {
+    /**
+     * Renvoie la page principale des rôles, affiche la liste des rôles qui ne sont pas supprimés
+     */
     public function defaultAction()
     {
         $role = new ModelRole;
@@ -21,6 +24,9 @@ class Role
         $view->assign("allRoles", $allRoles);
     }
 
+    /**
+     * Renvoie la page d'ajout d'un rôle, envoie les valeurs des permissions d'accès sous format JSON
+     */
     public function addRoleAction()
     {
         $role = new ModelRole;
@@ -40,6 +46,9 @@ class Role
 
     }
 
+    /**
+     * Renvoie la page de modification d'un rôle
+     */
     public function editRoleAction()
     {
         $role = new ModelRole;
@@ -65,6 +74,9 @@ class Role
         $view->assign("roleResult", $result[0]);
     }
 
+    /**
+     * Permet de supprimer un rôle, passe le isDeleted du rôle à 1, il ne sera donc plus afficher sur les pages
+     */
     public function deleteRoleAction() {
         $role = new ModelRole;
         if (!empty($_POST)) {

@@ -91,6 +91,10 @@ class Role extends Database
         return $this->value;
     }
 
+    /**
+     * @return array
+     * Retorune tous les rôles de la base de données qui ne sont pas supprimés
+     */
     public function getAllRoles()
     {
         $db = new Database("Role");
@@ -100,6 +104,12 @@ class Role extends Database
         );
     }
 
+    /**
+     * @param $value
+     * @param $id
+     * @return false|mixed
+     * Retroune les permissions d'un rôle
+     */
     public function getPerms($value, $id) {
         $db = new Database("Role");
         $result = $db->query(
@@ -110,6 +120,10 @@ class Role extends Database
         return $perms[$value] ?? false;
     }
 
+    /**
+     * @return array
+     * Retroune la liste des rôle sous forme de tableau où chaque permission est assignée à une uri
+     */
     public function rolesList()
     {
         return [
