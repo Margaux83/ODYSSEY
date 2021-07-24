@@ -558,7 +558,7 @@ class User extends Database
     public function getAllUsers()
     {
         $results = $this->query(
-            ["id", "firstname", "lastname", "email", "status", "role", "creationDate", "lastConnexionDate"],
+            ["id", "firstname", "lastname", "email", "status", "role", "isVerified", "creationDate", "lastConnexionDate", "updateDate"],
             ["isDeleted" => "0"]
         );
 

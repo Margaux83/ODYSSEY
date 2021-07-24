@@ -10,6 +10,8 @@ use App\Core\View;
 use App\Models\User as User;
 use App\Core\Mailer;
 use App\Models\BodyMail;
+use App\Core\Statistic;
+
 
 
 class Users{
@@ -22,8 +24,38 @@ class Users{
 
         //Affichage de la vue des utilisateur;
         $view = new View("User/users", "back");
+
+        //Statistique des utilisateurs
+        $statisticsPages = Statistic::getSimpleStatistics(
+            [
+                [
+                    'label' => 'Utilisateurs',
+                    'element' => 'User',
+                    'filter' => [
+                        'isDeleted' => 0
+                    ]
+                ],
+                [
+                    'label' => 'Utilisateurs vérifié',
+                    'element' => 'User',
+                    'filter' => [
+                        'isVerified' => 1
+                    ]
+                ],
+                [
+                    'label' => 'Utilisateurs non vérifié',
+                    'element' => 'User',
+                    'filter' => [
+                        'isVerified' => 0
+                    ]
+                ]
+            ]
+        );
+
         //Affiche la liste des utilisateurs enregistrés
         $view->assign('allUsers', $allUsers);
+        $view->assign("statistics", $statisticsPages);
+
     }
 
     public function addUsersAction()
@@ -81,7 +113,6 @@ class Users{
             }
 
         }
-
 
     }
 
