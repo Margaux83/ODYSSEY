@@ -363,7 +363,7 @@ class Article extends Database
                     "error"=>"Le titre de l'article doit faire entre 2 et 255 caractères",
                     "placeholder"=>"Votre titre",
 
-                    "defaultValue"=>$this->getTitle()
+                    "defaultValue"=> (empty($this->getTitle())) ? (empty($_POST['title'])) ? '' : $_POST['title'] : $this->getTitle()
                 ],
                 "uri"=>[
 
@@ -375,7 +375,7 @@ class Article extends Database
                     "class"=>"input",
                     "error"=>"L'uri l'article doit faire entre 2 et 255 caractères",
                     "placeholder"=>"Votre uri",
-                    "defaultValue"=>substr($this->getUri(), 9)
+                    "defaultValue"=> (empty(substr($this->getUri(), 9))) ? (empty($_POST['uri'])) ? '' : $_POST['uri'] : substr($this->getUri(), 9)
                 ],
                     "content"=>[
                         "type"=>"textarea",
@@ -384,16 +384,19 @@ class Article extends Database
                         "error"=>"Le contenu de l'article doit faire entre 2 et 255 caractères",
                         "id"=>"full-featured-non-premium",
                         "placeholder"=>"Votre contenu",
-                        "defaultValue"=>$this->getContent()
+                        "defaultValue"=> (empty($this->getContent())) ? (empty($_POST['content'])) ? '' : $_POST['content'] : $this->getContent()
                     ],
                     "description"=>[
                         "type"=>"textarea",
-                        "label"=>"Description",
+                        "label"=>"Description (SEO)",
+                        "lengthMin"=>"2",
+                        "lengthMax"=>"150",
+                        "error"=>"Le contenu de votre description doit faire entre 2 et 150 caractères",
                         "id"=>"content",
-                        "required"=>false,
+                        "required"=>true,
                         "class"=>"textareaComment d-flex",
                         "placeholder"=>"Votre contenu",
-                        "defaultValue"=>$this->getDescription()
+                        "defaultValue"=> (empty($this->getDescription())) ? (empty($_POST['description'])) ? '' : $_POST['description'] : $this->getDescription()
                     ],
                     "category"=>[
                         "type"=>"select",
@@ -430,6 +433,8 @@ class Article extends Database
 
         ];
     }
+
+
 
     public function getAllArticles($id_user = null): array
     {
