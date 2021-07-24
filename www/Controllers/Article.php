@@ -78,7 +78,7 @@ class Article
                         $article->save();
                         $result = $article->getLastFromTable();
                         //Enregristrement de l'id de l'article et l'id de la catégorie dans la table intermédaire qui fait le lien entre les articles et les catégorie
-                         $article->saveArticleCategory($dataArticle['category'], $result[0]["id"]);
+                        $article->saveArticleCategory($dataArticle['category'], $result[0]["id"]);
 
                         $_SESSION['alert']['success'][] = 'L\'article a bien été enregistré !';
                         header('location: /admin/articles');

@@ -134,24 +134,16 @@ class Database
         return $querySelect->fetchAll();
     }
 
-    public function saveArticleCategory($category,$id_Article)
-    {
-        $sql = $this->pdo->prepare("INSERT INTO ody_Category_Article (id_Category,id_Article) VALUES (".$category.",".$id_Article." )");
-        $sql->execute();
-    }
-
     public function delete($id)
     {
         $query = $this->pdo->prepare("UPDATE " . $this->table . " SET isDeleted=1 WHERE id=" . $id);
         $query->execute();
-
     }
 
     public function verify($id)
     {
         $query = $this->pdo->prepare("UPDATE " . $this->table . " SET isVerified=1 WHERE id=" . $id);
         $query->execute();
-
     }
 
     public function updateWithData($data = [])
@@ -161,32 +153,4 @@ class Database
             $this->$setAction($value);
         }
     }
-
-    //Retourne l'uri d'un article si elle existe déjà dans la base de données
-    public function getUriForVerification($id,$uri)
-    {
-        $sql = "SELECT uri FROM " . $this->table . " WHERE isDeleted!=1 AND uri='".$uri."' AND id!=".$id;
-
-        $query = $this->pdo->prepare($sql);
-        $query->execute();
-        return $query->fetchAll();
-    }
-
-    //Retourne le label d'une catégorie si elle existe déjà dans la base de données
-    public function getCategoryForVerification($id,$label)
-    {
-        $sql = "SELECT label FROM ody_Category WHERE isDeleted!=1 AND label='".$label."' AND id!=".$id;
-
-        $query = $this->pdo->prepare($sql);
-        $query->execute();
-        return $query->fetchAll();
-    }
-
-    //Mise à jour de la catégorie d'un article
-    public function updateCategoryOfArticle($id, $id_category)
-    {
-        $query = $this->pdo->prepare("UPDATE ody_Category_Article SET id_Category=".$id_category." WHERE id_Article=" . $id);
-        $query->execute();
-    }
-
 }

@@ -474,4 +474,29 @@ class Article extends Database
         }
         return $results;
     }
+
+
+    //Retourne l'uri d'un article si elle existe déjà dans la base de données
+    public function getUriForVerification($id,$uri)
+    {
+        return Article::query(
+            ["uri"],
+            ["isDeleted" => "0", "uri" => $uri, "!id" => $id]
+        );
+    }
+
+    //Mise à jour de la catégorie d'un article
+    public function updateCategoryOfArticle($id, $id_category)
+    {
+        $query = $this->pdo->prepare("UPDATE ody_Category_Article SET id_Category=".$id_category." WHERE id_Article=" . $id);
+        $query->execute();
+    }
+
+    public function saveArticleCategory($category,$id_Article)
+    {
+        $category_article = new Category_Article();
+        $category_article->setIdCategory($category);
+        $category_article->setIdArticle($id_Article);
+        $category_article->save();
+    }
 }
