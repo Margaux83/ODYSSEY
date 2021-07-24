@@ -46,147 +46,27 @@
 
 <section class="col-8 multipleSectionContainer" style="grid-column: 1 / 9; grid-row: 2;">
     <div class="multipleSection">
-        <h1 class="titleSection"><img src=<?php App\Core\View::getAssets("icons/icon_plane.png")?> alt="">Voyages</h1>
-        <ul class="listItemBasic limit-height-300">
-            <li class="legend"><p>Informations</p><p>Inscrits</p></li>
-            <li class="listItem">
-                <div>
-                    <p>12/12/2021</p>
-                    <h2>Destination</h2>
-                </div>
-                <p class="listItem-cpt">152/245</p>
-            </li>
-            <li class="listItem">
-                <div>
-                    <p>12/12/2021</p>
-                    <h2>Destination</h2>
-                </div>
-                <p class="listItem-cpt">152/245</p>
-            </li>
-            <li class="listItem">
-                <div>
-                    <p>12/12/2021</p>
-                    <h2>Destination</h2>
-                </div>
-                <p class="listItem-cpt">152/245</p>
-            </li>
-            <li class="listItem">
-                <div>
-                    <p>12/12/2021</p>
-                    <h2>Destination</h2>
-                </div>
-                <p class="listItem-cpt">152/245</p>
-            </li>
-            <li class="listItem">
-                <div>
-                    <p>12/12/2021</p>
-                    <h2>Destination</h2>
-                </div>
-                <p class="listItem-cpt">152/245</p>
-            </li>
-            <li class="listItem">
-                <div>
-                    <p>12/12/2021</p>
-                    <h2>Destination</h2>
-                </div>
-                <p class="listItem-cpt">152/245</p>
-            </li>
-            <li class="listItem">
-                <div>
-                    <p>12/12/2021</p>
-                    <h2>Destination</h2>
-                </div>
-                <p class="listItem-cpt">152/245</p>
-            </li>
-            <li class="listItem">
-                <div>
-                    <p>12/12/2021</p>
-                    <h2>Destination</h2>
-                </div>
-                <p class="listItem-cpt">152/245</p>
-            </li>
-            <li class="listItem">
-                <div>
-                    <p>12/12/2021</p>
-                    <h2>Destination</h2>
-                </div>
-                <p class="listItem-cpt">152/245</p>
-            </li>
-        </ul>
-    </div>
-    <div class="multipleSection">
-        <h1 class="titleSection"><img src=<?php App\Core\View::getAssets("icons/icon_calendar.png")?> alt="">Réservations</h1>
-        <ul class="listItemBasic limit-height-300">
-            <li class="legend"><p>Informations</p><p>Places</p></li>
-            <li class="listItem">
-                <div>
-                    <p>12/12/2021</p>
-                    <h2>Destination - Nom Prénom</h2>
-                </div>
-                <p class="listItem-cpt">1</p>
-            </li>
-            <li class="listItem">
-                <div>
-                    <p>12/12/2021</p>
-                    <h2>Destination - Nom Prénom</h2>
-                </div>
-                <p class="listItem-cpt">2</p>
-            </li>
-            <li class="listItem">
-                <div>
-                    <p>12/12/2021</p>
-                    <h2>Destination - Nom Prénom</h2>
-                </div>
-                <p class="listItem-cpt">5</p>
-            </li>
-            <li class="listItem">
-                <div>
-                    <p>12/12/2021</p>
-                    <h2>Destination - Nom Prénom</h2>
-                </div>
-                <p class="listItem-cpt">1</p>
-            </li>
-            <li class="listItem">
-                <div>
-                    <p>12/12/2021</p>
-                    <h2>Destination - Nom Prénom</h2>
-                </div>
-                <p class="listItem-cpt">3</p>
-            </li>
-        </ul>
-    </div>
-    <div class="multipleSection">
         <h1 class="titleSection"><img src=<?php App\Core\View::getAssets("icons/icon_cancel.png")?> alt="">Annulations</h1>
         <ul class="listItemBasic limit-height-300">
-            <li class="legend"><p>Informations</p><p>Places</p></li>
-            <li class="listItem">
-                <div>
-                    <p>12/12/2021</p>
-                    <h2>Destination - Nom Prénom</h2>
-                </div>
-                <p class="listItem-cpt">2</p>
-            </li>
-            <li class="listItem">
-                <div>
-                    <p>12/12/2021</p>
-                    <h2>Destination - Nom Prénom</h2>
-                </div>
-                <p class="listItem-cpt">1</p>
-            </li>
-            <li class="listItem">
-                <div>
-                    <p>12/12/2021</p>
-                    <h2>Destination - Nom Prénom</h2>
-                </div>
-                <p class="listItem-cpt">1</p>
-            </li>
-            <li class="listItem">
-                <div>
-                    <p>12/12/2021</p>
-                    <h2>Destination - Nom Prénom</h2>
-                </div>
-                <p class="listItem-cpt">3</p>
-            </li>
+            <?php foreach ($users as $key => $user) {
+                echo $user;
+            }?>
+        </ul>
+    </div>
+    <div class="multipleSection">
+        <h1 class="titleSection"><img src=<?php App\Core\View::getAssets("icons/icon_plane.png")?> alt="">Pages</h1>
+        <ul class="listItemBasic limit-height-300">
+            <?php foreach ($pages as $key => $page) {
+                echo $page;
+            }?>
+        </ul>
+    </div>
+    <div class="multipleSection">
+        <h1 class="titleSection"><img src=<?php App\Core\View::getAssets("icons/icon_calendar.png")?> alt="">Articles</h1>
+        <ul class="listItemBasic limit-height-300">
+            <?php foreach ($articles as $key => $article) {
+                echo $article;
+            }?>
         </ul>
     </div>
 </section>
@@ -197,48 +77,28 @@
         <?php foreach ($comments as $key => $comment) {
                 echo $comment;
             }?>
-        <!--
-        <li class="listItem">
-            <p class="flex-weight-1">Contact</p>
-            <p class="flex-weight-1 status-color-important">Affichage</p>
-            <p></p>
-        </li>
-        -->
     </ul>
-    <div class="d-flex callToActionContainer">
-        <button class="callToAction-withIcon">
-            <img src=<?php App\Core\View::getAssets("icons/icon_pen.png")?> alt="Nouveau Message">
-        </button>
-    </div>
 </section>
 
 <!-- Line 3 -->
 <section class="col-8" style="grid-column: 1 / 9; grid-row: 3;">
     <h1 class="titleSection"><img src=<?php App\Core\View::getAssets("icons/icon_quick_access.png")?> alt="">Accès rapides</h1>
     <ul class="quickAccessContainer">
-        <li>
-            <p class="quickAccessTitle">Vols</p>
-            <img src=<?php App\Core\View::getAssets("icons/icon_plane.png")?> alt="">
-        </li>
-        <li>
+        <li onclick="window.location.assign('/admin/pages')">
             <p class="quickAccessTitle">Pages</p>
             <img src=<?php App\Core\View::getAssets("icons/icon_page.png")?> alt="">
         </li>
-        <li>
-            <p class="quickAccessTitle">Articles</p>
+        <li onclick="window.location.assign('/admin/articles')">
+            <p class="quickAccessTitle" >Articles</p>
             <img src=<?php App\Core\View::getAssets("icons/icon_book.png")?> alt="">
         </li>
-        <li>
+        <li onclick="window.location.assign('/admin/comments')">
             <p class="quickAccessTitle">Commentaires</p>
             <img src=<?php App\Core\View::getAssets("icons/icon_comment.png")?> alt="">
         </li>
-        <li>
+        <li onclick="window.location.assign('/admin/users')">
             <p class="quickAccessTitle">Utilisateurs</p>
             <img src=<?php App\Core\View::getAssets("icons/icon_user.png")?> alt="">
-        </li>
-        <li>
-            <p class="quickAccessTitle">Statistiques</p>
-            <img src=<?php App\Core\View::getAssets("icons/icon_stat.png")?> alt="">
         </li>
     </ul>
 </section>
