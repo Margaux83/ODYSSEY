@@ -235,15 +235,6 @@ class Page extends Database
                     "placeholder"=>"Votre titre",
                     "defaultValue"=>$this->getTitle()
                 ],
-                "content"=>[
-                    "type"=>"textarea",
-                    "label"=>"",
-                    "lengthMin"=>"2",
-                    "error"=>"Le contenu de la page doit faire entre 2 et 255 caractères",
-                    "id"=>"full-featured-non-premium",
-                    "placeholder"=>"Votre contenu",
-                    "defaultValue"=>$this->getContent()
-                ],
                 "uri"=>[
                     "type"=>"text",
                     "label"=>"Veuillez choisir une uri pour votre page",
@@ -253,6 +244,15 @@ class Page extends Database
                     "error"=>"Votre uri doit faire entre 2 et 255 caractères",
                     "placeholder"=>"Uri",
                     "defaultValue"=>ltrim($this->getUri(), '/')
+                ],
+                "content"=>[
+                    "type"=>"textarea",
+                    "label"=>"",
+                    "lengthMin"=>"2",
+                    "error"=>"Le contenu de la page doit faire entre 2 et 255 caractères",
+                    "id"=>"full-featured-non-premium",
+                    "placeholder"=>"Votre contenu",
+                    "defaultValue"=>$this->getContent()
                 ],
                 "description"=>[
                     "type"=>"text",
