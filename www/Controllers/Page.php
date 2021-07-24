@@ -16,7 +16,7 @@ class Page{
         $pages = new ModelPage;
         //Fonction pour récupérer la liste de toutes les pages
         $allPages = $pages->getAllPages();
-        $allPagesByUser = $pages->getAllPagesByUser($_SESSION["userId"]);
+        $allPagesByUser = $pages->getAllPages($_SESSION["userId"]);
 
         //Affiche moi la vue des pages
         $view = new View("Page/pages", "back");
@@ -43,10 +43,10 @@ class Page{
             if (empty($errors)) {
                 //S'il n'y a pas d'erreurs, on envoie les données dans la requête pour ajouter l'article
                 // Champs du formulaire
-                $page->setTitle(htmlspecialchars(addslashes($_POST['title'])));
-                $page->setContent(htmlspecialchars(addslashes($_POST['content'])));
-                $page->setDescription(htmlspecialchars(addslashes($_POST['description'])));
-                $page->setUri(htmlspecialchars(addslashes("/".$_POST['uri'])));
+                $page->setTitle($_POST['title']);
+                $page->setContent($_POST['content']);
+                $page->setDescription($_POST['description']);
+                $page->setUri("/".$_POST['uri']);
                 $page->setStatus($_POST['status']);
                 $page->setIsvisible($_POST['isvisible']);
                 $page->setId_user($_SESSION["userId"]);
@@ -86,10 +86,10 @@ class Page{
             if (empty($errors)) {
                 //S'il n'y a pas d'erreurs, on envoie les données dans la requête pour modifier l'article
                 // Champs du formulaire
-                $page->setTitle(htmlspecialchars(addslashes($_POST['title'])));
-                $page->setContent(htmlspecialchars(addslashes($_POST['content'])));
-                $page->setDescription(htmlspecialchars(addslashes($_POST['description'])));
-                $page->setUri(htmlspecialchars(addslashes("/".$_POST['uri'])));
+                $page->setTitle($_POST['title']);
+                $page->setContent($_POST['content']);
+                $page->setDescription($_POST['description']);
+                $page->setUri("/".$_POST['uri']);
                 $page->setStatus($_POST['status']);
                 $page->setIsvisible($_POST['isvisible']);
                 $page->setId_user($_SESSION["userId"]);

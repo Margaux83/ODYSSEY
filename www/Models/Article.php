@@ -363,7 +363,7 @@ class Article extends Database
                     "error"=>"Le titre de l'article doit faire entre 2 et 255 caractères",
                     "placeholder"=>"Votre titre",
 
-                    "defaultValue"=>$this->getTitle()
+                    "defaultValue"=> (empty($this->getTitle())) ? (empty($_POST['title'])) ? '' : $_POST['title'] : $this->getTitle()
                 ],
                 "uri"=>[
 
@@ -375,7 +375,7 @@ class Article extends Database
                     "class"=>"input",
                     "error"=>"L'uri l'article doit faire entre 2 et 255 caractères",
                     "placeholder"=>"Votre uri",
-                    "defaultValue"=>substr($this->getUri(), 9)
+                    "defaultValue"=> (empty(substr($this->getUri(), 9))) ? (empty($_POST['uri'])) ? '' : $_POST['uri'] : substr($this->getUri(), 9)
                 ],
                     "content"=>[
                         "type"=>"textarea",
@@ -384,16 +384,19 @@ class Article extends Database
                         "error"=>"Le contenu de l'article doit faire entre 2 et 255 caractères",
                         "id"=>"full-featured-non-premium",
                         "placeholder"=>"Votre contenu",
-                        "defaultValue"=>$this->getContent()
+                        "defaultValue"=> (empty($this->getContent())) ? (empty($_POST['content'])) ? '' : $_POST['content'] : $this->getContent()
                     ],
                     "description"=>[
                         "type"=>"textarea",
-                        "label"=>"Description",
+                        "label"=>"Description (SEO)",
+                        "lengthMin"=>"2",
+                        "lengthMax"=>"150",
+                        "error"=>"Le contenu de votre description doit faire entre 2 et 150 caractères",
                         "id"=>"content",
-                        "required"=>false,
+                        "required"=>true,
                         "class"=>"textareaComment d-flex",
                         "placeholder"=>"Votre contenu",
-                        "defaultValue"=>$this->getDescription()
+                        "defaultValue"=> (empty($this->getDescription())) ? (empty($_POST['description'])) ? '' : $_POST['description'] : $this->getDescription()
                     ],
                     "category"=>[
                         "type"=>"select",
@@ -433,4 +436,67 @@ class Article extends Database
 
 
 
+    public function getAllArticles($id_user = null): array
+    {
+        $filter = ["isDeleted" => "0"];
+        if(!empty($id_user)) {
+            $filter = ["id_User" => $id_user];
+        }
+        $results = Article::query(
+            ["id" ,"uri", "title", "content", "description", "status", "creationDate", "updateDate", "isDeleted", "id_User"],
+            $filter
+        );
+        if (count($results)) {
+            $user = new User();
+            $category_article = new Category_Article();
+            $category = new Category();
+            // INNER JOIN ON TABLE ody_user
+            foreach ($results as $key => $result) {
+                if (!empty($result['id_User'])) {
+                    $userSelected = $user->query(['firstname', 'lastname'], ['id' => $result['id_User']])[0];
+                    $results[$key]['firstname'] = $userSelected['firstname'];
+                    $results[$key]['lastname'] = $userSelected['lastname'];
+                }
+            }
+            // DOUBLE JOIN ON TABLE ody_Category_Article and ody_Category
+            foreach ($results as $key => $result) {
+                $results_category = $category_article->query(
+                    ["id_Category"],
+                    ["id_Article" => $results[$key]['id']]
+                );
+                foreach($results_category as $result2) {
+                    if (!empty($result2["id_Category"])) {
+                        $categorySelected = $category->query(['label'], ['id' => $result2['id_Category']])[0];
+                        $results[$key]['label'] = $categorySelected['label'];
+                    }
+                }
+            }
+        }
+        return $results;
+    }
+
+
+    //Retourne l'uri d'un article si elle existe déjà dans la base de données
+    public function getUriForVerification($id,$uri)
+    {
+        return Article::query(
+            ["uri"],
+            ["isDeleted" => "0", "uri" => $uri, "!id" => $id]
+        );
+    }
+
+    //Mise à jour de la catégorie d'un article
+    public function updateCategoryOfArticle($id, $id_category)
+    {
+        $query = $this->pdo->prepare("UPDATE ody_Category_Article SET id_Category=".$id_category." WHERE id_Article=" . $id);
+        $query->execute();
+    }
+
+    public function saveArticleCategory($category,$id_Article)
+    {
+        $category_article = new Category_Article();
+        $category_article->setIdCategory($category);
+        $category_article->setIdArticle($id_Article);
+        $category_article->save();
+    }
 }

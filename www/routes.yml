@@ -36,7 +36,7 @@
 
 /admin/add-article:
   controller: Article
-  action: addarticle
+  action: addArticle
   label: Ajouter un article
 
 /admin/edit-article:
@@ -55,7 +55,7 @@
 
 /admin/edit-category:
   controller: Article
-  action: editcategory
+  action: editCategory
   label: Modifier une catégorie
 
 /admin/delete-category:

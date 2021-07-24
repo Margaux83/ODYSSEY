@@ -459,6 +459,8 @@ class User extends Database
                     "type"=>"text",
                     "label"=>"Numéro de téléphone",
                     "lengthMin"=>"10",
+                    "lengthMax"=>"10",
+
                     "required"=>true,
                     "error"=>"Votre numéro de téléphone doit contenir 10 chiffres",
                     "placeholder"=>"Votre numéro de téléphone"
@@ -522,7 +524,6 @@ class User extends Database
                     "label"=>"Adresse Mail",
                     "lengthMax"=>"320",
                     "lengthMin"=>"8",
-                    "required"=>true,
                     "readonly"=>true,
                     "error"=>"Votre email doit faire entre 8 et 320 caractères",
                     "placeholder"=>"Votre email",

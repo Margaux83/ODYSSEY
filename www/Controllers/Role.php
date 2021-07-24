@@ -26,7 +26,7 @@ class Role
         $role = new ModelRole;
 
         if (!empty($_POST['values']) && !empty($_POST['name'])) {
-            $role->setName(htmlspecialchars(addslashes($_POST['name'])));
+            $role->setName($_POST['name']);
             $role->setValue(json_encode($_POST['values']));
             $role->save();
             $_SESSION['alert']['success'][] = "Le rôle a bien été ajouté !";
@@ -51,7 +51,7 @@ class Role
             ["id" => $actualRole]
         );
         if (!empty($_POST['values']) && !empty($_POST['name'])) {
-            $role->setName(htmlspecialchars(addslashes($_POST['name'])));
+            $role->setName($_POST['name']);
             $role->setValue(json_encode($_POST['values']));
             $role->save();
             $_SESSION['alert']['success'][] = "Le rôle a bien été modifié !";
