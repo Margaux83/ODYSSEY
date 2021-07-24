@@ -10,7 +10,6 @@ use App\Models\Media as ModelMedia;
 class Media {
     /**
      * Affiche la page principale des médias où on va retrouver la liste des médias enregistrés dans la base de données
-     * Il faut être connecté pour accéder à la page
      */
     public function defaultAction() {
         $security = Security::getInstance();
@@ -28,8 +27,7 @@ class Media {
 
     /**
      * Affiche la page d'ajout des médias où on va enregistrer un nouveau média dans la base de données
-     * Upload des fichiers dans le dossier /www/public/uploads
-     * Il faut être connecté pour accéder à la page
+     * Upload des fichiers dans le dossier /www/public/uploads avec vérification de la validité des fichiers (extensions, taille, espaces dans le nom du fichier)
      */
     public function addMediaAction() {
         $security = Security::getInstance();
@@ -119,7 +117,7 @@ class Media {
 
     /**
      * Affiche la page d'ajout des médias où on va modifier un média déjà existant dans la base de données
-     * Il faut être connecté pour accéder à la page
+     * Récupération et affichage du nom du media dans le formulaire grâce au setId qui prend en paramètre l'id de celui-ci
      */
     public function editMediaAction()
     {
@@ -138,8 +136,6 @@ class Media {
                 $media->setId($_POST["id"]);
             }
         }
-
-
 
         $form = $media->buildFormMediaEdit();
         $view->assign("form", $form);
@@ -176,6 +172,9 @@ class Media {
         }
     }
 
+    /**
+     * Suppression d'un média grâce à son Id
+     */
     public function deleteMediaAction() {
         $media = new ModelMedia();
 

@@ -136,6 +136,9 @@
     listId: basics
     icon: icon_comment
 
+/admin/delete-comment:
+  controller: comment
+  action: deleteComment
 
 /admin/medias:
   controller: Media

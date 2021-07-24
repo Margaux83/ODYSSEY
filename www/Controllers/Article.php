@@ -14,7 +14,8 @@ class Article
 {
 
     /**
-     * Affichage de la liste des articles enregistrés dans la base de données seulement pour les utilisateurs authentifiés
+     * Affichage de la liste des articles enregistrés et non supprimés dans la base de données
+     * Affichage de la liste des articles ajoutés par l'utilisateur connecté
      */
     public function defaultAction()
     {
@@ -33,6 +34,9 @@ class Article
 
     /**
      * Fonction d'ajout d'un article dans la base de données
+     * Avec enregistrement de la catégorie de l'article
+     * On vérifie si l'uri existe déjà dans la base de données, on envoie un message d'erreur
+     * On ajout le préfixe "/article/" devant l'uri pour différencier les articles et les pages
      */
     public function addArticleAction()
     {
@@ -95,6 +99,13 @@ class Article
 
     }
 
+    /**
+     * Fonction de modification d'un article dans la base de données
+     * Avec enregistrement de la catégorie de l'article
+     * On vérifie si l'uri existe déjà dans la base de données, on envoie un message d'erreur
+     * On ajoute le préfixe "/article/" devant l'uri pour différencier les articles et les pages
+     * Récupération et affichage des informations de l'article dans le formulaire grâce au setId qui prend en paramètre l'id de l'article
+     */
     public static function editArticleAction()
     {
         $security = Security::getInstance();
@@ -168,6 +179,9 @@ class Article
         }
     }
 
+    /**
+     * Suppression d'un article grâce à son Id
+     */
     public function deleteArticleAction() {
         $article = new Article_Model();
 
@@ -178,6 +192,10 @@ class Article
         }
     }
 
+    /**
+     * Affichage de la liste des catégories enregistrées et non supprimées dans la base de données
+     * Posibilité d'ajouter une catégorie à partir de cette page, on ne peut pas ajouter une catégorie qui existe déjà dans la base de données
+     */
     public function categoriesAction()
     {
         $security = Security::getInstance();
@@ -193,11 +211,6 @@ class Article
         $formCategory = $category->buildFormCategory();
         $view->assign("formCategory", $formCategory);
 
-        if (!empty($_POST)) {
-            if (!empty($_POST['deleteCategory'])) {
-                $category->delete($_POST['id_category']);
-            }
-        }
 
         if(!empty($_POST['insert_category'])){
             $dataArticle = $_POST;
@@ -230,6 +243,10 @@ class Article
     }
 
 
+    /**
+     * Fonction de modification d'une catégorie, on ne peut pas lui donner le nom d'une catégorie qui existe déjà dans la base de données
+     * Récupération et affichage du nom de la catégorie dans le formulaire grâce au setId qui prend en paramètre l'id de celle-ci
+     **/
     public function editCategoryAction()
     {
         $security = Security::getInstance();
@@ -281,6 +298,9 @@ class Article
         }
     }
 
+    /**
+     * Suppression d'une catéorie grâce à son Id
+     */
     public function deleteCategoryAction() {
         $category = new Category();
 

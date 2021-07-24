@@ -57,7 +57,7 @@ function deleteComment(e) {
                 'Le commentaire a bien été supprimé.',
                 'success'
             ).then(function() {
-                $.post( "comments", { id_comment: id, deleteComment: "true" })
+                $.post( "delete-comment", { id_comment: id, deleteComment: "true" })
                     .done(function( data ) {
                         location.reload();
                     });

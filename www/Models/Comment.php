@@ -119,6 +119,10 @@ class Comment extends Database
         $this->isVerified = $isVerified;
     }
 
+    /**
+     * @return array
+     * Récupération des informations des commentaires qui ne sont pas supprimés et qui vont pouvoir être affichés sur les views et sur le front
+     **/
     public function getAllComments()
     {
         $results = $this->query(

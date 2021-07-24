@@ -13,6 +13,10 @@ use function Sodium\add;
 class Comment
 {
 
+    /**
+     * Affichage de la liste des commentaires enregistrés et non supprimés dans la base de données
+     * Vérification du commentaire par un administrateur
+     */
     public function defaultAction()
     {
 
@@ -30,13 +34,11 @@ class Comment
         if (!empty($_POST)) {
                 $comments->verify($_POST['id_comment']);
         }
-        if (!empty($_POST)) {
-            if (!empty($_POST['deleteComment'])) {
-                $comments->delete($_POST['id_comment']);
-            }
-        }
     }
 
+    /**
+     * Ajout d'un commentaire à partir du front, sur la page d'un article
+     */
     public function postCommentFromFrontAction() {
         $selectedArticle = null;
 
@@ -62,6 +64,19 @@ class Comment
                 }
             }else {
                 header('Location: /');
+            }
+        }
+    }
+
+    /**
+     * Suppression d'un commentaire grâce à son Id
+     */
+    public function deleteCommentAction() {
+        $category = new ModelComment();
+
+        if (!empty($_POST)) {
+            if (!empty($_POST['deleteComment'])) {
+                $category->delete($_POST['id_comment']);
             }
         }
     }
