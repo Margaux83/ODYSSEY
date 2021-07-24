@@ -431,15 +431,17 @@ class Article extends Database
         ];
     }
 
-    public function getAllArticles()
+    public function getAllArticles(): array
     {
-        $db = new Database("Page");
-        $results = $db->query(
-            ["id" ,"uri", "title", "content", "description", "status", "updateDate", "id_User"],
+        $results = Article::query(
+            ["id" ,"uri", "title", "content", "description", "status", "creationDate", "updateDate", "isDeleted", "id_User"],
             ["isDeleted" => "0"]
         );
         if (count($results)) {
             $user = new User();
+            $category_article = new Category_Article();
+            $category = new Category();
+            // INNER JOIN ON TABLE ody_user
             foreach ($results as $key => $result) {
                 if (!empty($result['id_User'])) {
                     $userSelected = $user->query(['firstname', 'lastname'], ['id' => $result['id_User']])[0];
@@ -447,17 +449,22 @@ class Article extends Database
                     $results[$key]['lastname'] = $userSelected['lastname'];
                 }
             }
+            // DOUBLE JOIN ON TABLE ody_Category_Article and ody_Category
+            foreach ($results as $key => $result) {
+                $results_category = $category_article->query(
+                    ["id_Category"],
+                    ["id_Article" => $results[$key]['id']]
+                );
+                foreach($results_category as $result2) {
+                    if (!empty($result2["id_Category"])) {
+                        $categorySelected = $category->query(['label'], ['id' => $result2['id_Category']])[0];
+                        $results[$key]['label'] = $categorySelected['label'];
+                    }
+                }
+            }
         }
 
         return $results;
-
-
-        $sql = "SELECT ody_Article.uri, ody_Article.id, ody_Article.title, ody_Article.content, ody_Article.description, ody_Article.status, ody_Article.isVisible, ody_Article.isDraft,
-                    ody_Article.isDeleted, ody_Article.creationDate, ody_Article.updateDate, ody_Article.id_User, ody_User.firstname, ody_User.lastname, ody_User.role, ody_Category.label, ody_Category.isDeleted  FROM " . $this->table . " INNER JOIN ody_User ON ". $this->table.".id_User = ody_User.ID INNER JOiN ody_Category_Article ON ". $this->table.".ID 
-                    = ody_Category_Article.id_Article INNER JOIN ody_Category ON ody_Category_Article.id_Category = ody_Category.ID WHERE ody_Article.isDeleted!=1";
-        $query = $this->pdo->prepare($sql);
-        $query->execute();
-        return $query->fetchAll();
     }
 
 
