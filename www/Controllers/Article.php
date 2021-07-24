@@ -27,7 +27,7 @@ class Article
         $view = new View("Article/articles", "back");
 
         $view->assign("infoArticles", $articles->getAllArticles());
-        $view->assign("infoArticlesByUser", $articles->getArticleByUser($_SESSION["userId"]));
+        $view->assign("infoArticlesByUser", $articles->getAllArticles($_SESSION["userId"]));
     }
 
 
@@ -101,22 +101,20 @@ class Article
         $security = Security::getInstance();
         //Vérifie si l'utilisateur est connecté, sinon on le redirige sur la page de login
          if(!$security->isConnected()){
-           header('Location: /login');
-       }
-
+             header('Location: /login');
+         }
          //Instanciation de la classe Article
         $article = new Article_Model();
-
 
         //Affiche la vue pour modifier un article
         $view = new View("Article/edit_articles", "back");
 
         //On va récupérer les informations de l'article en envoyant l'id dans le setId
-            if (!empty($_POST)) {
-                if($_POST['id'] != "") {
-                    $article->setId($_POST["id"]);
-                }
+        if (!empty($_POST)) {
+            if($_POST['id'] != "") {
+                $article->setId($_POST["id"]);
             }
+        }
 
         //Création du formBuilder des articles
         $form = $article->buildFormArticle();
@@ -135,34 +133,27 @@ class Article
             }
             if (!empty($dataArticle)) {
                 $errors = Form::validator($dataArticle, $form);
-
                 if (empty($errors)) {
-
                     //On vérifie si un article a bien été sélectionné avant de faire la modification
                     if(strlen($dataArticle['id']) == 0) {
                         $_SESSION['alert']['danger'][] = 'Veuillez sélectionner un article';
-                    }
-                    else {
+                    } else {
+                        //Modification de l'article sélectionné
+                        $article->setTitle(htmlspecialchars(addslashes($dataArticle['title'])));
+                        $article->setContent(addslashes($dataArticle['content']));
+                        $article->setDescription(htmlspecialchars(addslashes($dataArticle['description'])));
 
+                        $article->setStatus($dataArticle['status']);
+                        $article->setIsvisible($dataArticle['isvisible']);
+                        $article->setId_user($_SESSION["userId"]);
 
-                            //Modification de l'article sélectionné
-                            $article->setTitle(htmlspecialchars(addslashes($dataArticle['title'])));
-                            $article->setContent(addslashes($dataArticle['content']));
-                            $article->setDescription(htmlspecialchars(addslashes($dataArticle['description'])));
-
-                            $article->setStatus($dataArticle['status']);
-                            $article->setIsvisible($dataArticle['isvisible']);
-                            $article->setId_user($_SESSION["userId"]);
-
-                            // Champs par défaut
-                            $article->setIsdeleted(0);
+                        // Champs par défaut
+                        $article->setIsdeleted(0);
                         //On vérifie si l'uri existe dans la base de données pour un autre article
                         $uriverification = empty($article->getUriForVerification($_POST["id"],'/article/' . $dataArticle['uri']));
-
                             if ($uriverification) {
                                 $article->setUri(htmlspecialchars(addslashes(str_replace(' ', '_', "/article/".$dataArticle['uri']))));
-                            }
-                            else{
+                            } else {
                                 $_SESSION['alert']['danger'][] = 'Cette uri existe déjà';
                             }
                             $article->save();
@@ -172,10 +163,8 @@ class Article
                                 header('location: /admin/articles');
                                 session_write_close();
                             }
-
                         }
-                    }
-                else {
+                    } else {
                     //S'il y a des erreurs, on prépare leur affichage
                     $_SESSION['alert']['danger'][] = $errors[0];
                 }
@@ -188,7 +177,6 @@ class Article
                 $form = $article->buildFormArticle();
                 $view->assign("form", $form);
                 $view->assign('article', $article);
-
             }
         }
     }
@@ -243,15 +231,12 @@ class Article
                 }
             }
             if (!empty($dataArticle)) {
-
-
                 $errors = Form::validator($dataArticle, $formCategory);
                 if (empty($errors)) {
                     //On vérifie si la catégorie existe déjà dans la base de donnée
                     if(!empty($category->query(['id'],['label'=>$dataArticle['label']]))){
                         $_SESSION['alert']['danger'][] = 'La catégorie existe déjà';
-                    }
-                    else{
+                    } else {
                         //S'il n'y a pas d'erreurs, on envoie les données dans la requête pour ajouter la catégorie
                         $category->setLabel(htmlspecialchars(addslashes($dataArticle["label"])));
                         $category->setIsdeleted(0);
@@ -260,13 +245,10 @@ class Article
                         header('location: /admin/categories');
                         session_write_close();
                     }
-
-                }
-                else{
+                } else {
                     //S'il y a des erreurs, on prépare leur affichage
                     $_SESSION['alert']['danger'][] = $errors[0];
                 }
-
             }
         }
 
@@ -322,12 +304,10 @@ class Article
                         $_SESSION['alert']['success'][] = 'La catégorie a bien été enregistrée !';
                         header('location: /admin/categories');
                         session_write_close();
-                    }
-                    else{
+                    } else {
                         $_SESSION['alert']['danger'][] = 'Cette catégorie existe déjà';
                     }
-                }
-                else{
+                } else {
                     //S'il y a des erreurs, on prépare leur affichage
                     $_SESSION['alert']['danger'][] = $errors[0];
                 }
