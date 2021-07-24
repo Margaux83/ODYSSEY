@@ -8,6 +8,7 @@ use App\Models\User;
 use App\Models\Role as ModelRole;
 use App\Core\Helpers;
 use App\Core\Database;
+use function Sodium\add;
 
 class Role
 {
@@ -25,7 +26,6 @@ class Role
         $role = new ModelRole;
 
         if (!empty($_POST['values']) && !empty($_POST['name'])) {
-            //var_dump($_POST);
             $role->setName($_POST['name']);
             $role->setValue(json_encode($_POST['values']));
             $role->save();
@@ -51,7 +51,6 @@ class Role
             ["id" => $actualRole]
         );
         if (!empty($_POST['values']) && !empty($_POST['name'])) {
-            //var_dump($_POST);
             $role->setName($_POST['name']);
             $role->setValue(json_encode($_POST['values']));
             $role->save();
@@ -68,7 +67,6 @@ class Role
 
     public function deleteRoleAction() {
         $role = new ModelRole;
-
         if (!empty($_POST)) {
             if (!empty($_POST['deleteRole'])) {
                 $role->delete($_POST['id_role']);

@@ -491,6 +491,8 @@ class User extends Database
                     "type"=>"text",
                     "label"=>"Numéro de téléphone",
                     "lengthMin"=>"10",
+                    "lengthMax"=>"10",
+
                     "required"=>true,
                     "error"=>"Votre numéro de téléphone doit contenir 10 chiffres",
                     "placeholder"=>"Votre numéro de téléphone"
@@ -554,7 +556,6 @@ class User extends Database
                     "label"=>"Adresse Mail",
                     "lengthMax"=>"320",
                     "lengthMin"=>"8",
-                    "required"=>true,
                     "readonly"=>true,
                     "error"=>"Votre email doit faire entre 8 et 320 caractères",
                     "placeholder"=>"Votre email",
@@ -590,7 +591,7 @@ class User extends Database
     public function getAllUsers()
     {
         $results = $this->query(
-            ["id", "firstname", "lastname", "email", "status", "role", "creationDate", "lastConnexionDate"],
+            ["id", "firstname", "lastname", "email", "status", "role", "isVerified", "creationDate", "lastConnexionDate", "updateDate"],
             ["isDeleted" => "0"]
         );
 
@@ -598,7 +599,7 @@ class User extends Database
             $role = new Role();
             foreach ($results as $key => $result) {
                 if (!empty($result['role'])) {
-                    $userSelected = $role->query(['name'])[0];
+                    $userSelected = $role->query(['name'], ['id' => $result['role']])[0];
                     $results[$key]['name'] = $userSelected['name'];
                 }
             }

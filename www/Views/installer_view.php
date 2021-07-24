@@ -91,9 +91,8 @@
             <div class="formElement">
                 <label for="config-siteTheme" class="requiredLabel">Thème</label>
                 <select name="config[theme]" id="config-siteTheme" required>
-                    <option value="default">Par défaut</option>
-                    <option value="light">Clair</option>
-                    <option value="dark">Sombre</option>
+                    <option value="theme_classic/">Par défaut (clair)</option>
+                    <option value="theme_dark/">Sombre</option>
                 </select>
             </div>
         </div>

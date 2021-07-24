@@ -7,6 +7,7 @@ use App\Core\View;
 use App\Models\User;
 use App\Models\Page as ModelPage;
 use App\Core\Helpers;
+use function Sodium\add;
 
 class Page{
 
@@ -15,11 +16,14 @@ class Page{
         $pages = new ModelPage;
         //Fonction pour récupérer la liste de toutes les pages
         $allPages = $pages->getAllPages();
+        $allPagesByUser = $pages->getAllPages($_SESSION["userId"]);
 
         //Affiche moi la vue des pages
         $view = new View("Page/pages", "back");
         //Affiche la liste de toutes pages
         $view->assign("allPages", $allPages);
+        $view->assign("allPagesByUser", $allPagesByUser);
+
     }
 
     public function addPageAction(){
@@ -42,7 +46,7 @@ class Page{
                 $page->setTitle($_POST['title']);
                 $page->setContent($_POST['content']);
                 $page->setDescription($_POST['description']);
-                $page->setUri(addslashes("/".$_POST['uri']));
+                $page->setUri("/".$_POST['uri']);
                 $page->setStatus($_POST['status']);
                 $page->setIsvisible($_POST['isvisible']);
                 $page->setId_user($_SESSION["userId"]);
@@ -85,7 +89,7 @@ class Page{
                 $page->setTitle($_POST['title']);
                 $page->setContent($_POST['content']);
                 $page->setDescription($_POST['description']);
-                $page->setUri(addslashes("/".$_POST['uri']));
+                $page->setUri("/".$_POST['uri']);
                 $page->setStatus($_POST['status']);
                 $page->setIsvisible($_POST['isvisible']);
                 $page->setId_user($_SESSION["userId"]);
