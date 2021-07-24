@@ -303,13 +303,35 @@ class Page extends Database
             $user = new User();
             foreach ($results as $key => $result) {
                 if (!empty($result['id_User'])) {
-                    $userSelected = $user->query(['firstname', 'lastname'])[0];
+                    $userSelected = $user->query(['firstname', 'lastname'], ['id' => $result['id_User']])[0];
                     $results[$key]['firstname'] = $userSelected['firstname'];
                     $results[$key]['lastname'] = $userSelected['lastname'];
                 }
             }
         }
         
+        return $results;
+    }
+
+    //Fonction qui va chercher les informations des pages enregistrées et qui ne sont pas supprimées
+    public function getAllPagesByUser($id)
+    {
+        $db = new Database("Page");
+        $results = $db->query(
+            ["id" ,"title", "description", "status", "uri", "creationDate", "updateDate", "id_User"],
+            ["isDeleted" => "0", "id_User" => $id]
+        );
+        if (count($results)) {
+            $user = new User();
+            foreach ($results as $key => $result) {
+                if (!empty($result['id_User'])) {
+                    $userSelected = $user->query(['firstname', 'lastname'], ['id' => $result['id_User']])[0];
+                    $results[$key]['firstname'] = $userSelected['firstname'];
+                    $results[$key]['lastname'] = $userSelected['lastname'];
+                }
+            }
+        }
+
         return $results;
     }
 }

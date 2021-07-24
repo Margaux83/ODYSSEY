@@ -58,6 +58,12 @@ $(document).ready(function() {
     $('#table_all_pages').DataTable({
     });
 });
+
+$(document).ready(function() {
+    $('#table_all_pages_user').DataTable({
+    });
+});
+
 function editPage(e) {
     let id = $(e).attr("data-id");
     $.redirect('edit-page', {'id_page': id});
