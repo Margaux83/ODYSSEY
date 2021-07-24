@@ -1,4 +1,4 @@
-<section id="dashboard-section-statistics" class="col-6" style="grid-column: 1 / 7; grid-row: 1;">
+<section id="dashboard-section-statistics" class="col-6" style="grid-column: 1 / 9; grid-row: 1;">
     <h1 class="titleSection"><img src=<?php App\Core\View::getAssets("icons/icon_stat.png")?> alt="">Statistiques</h1>
     <div class="d-flex-wrap statisticsBasicContainer" id="dashboard-section-statisticsContainer">
         <?php foreach ($statistics as $key => $statistic) {
@@ -7,7 +7,7 @@
     </div>
 </section>
 
-<!-- Line 2 -->
+<!-- Line 2
 <section class="col-6" style="grid-column: 7 / 13; grid-row: 1;">
     <h1 class="titleSection"><img src=<?php App\Core\View::getAssets("icons/icon_alert.png")?> alt="">Alertes</h1>
     <ul class="listItemComplete limit-height-125"  style="min-height: 80%;">
@@ -42,11 +42,11 @@
             <p></p>
         </li>
     </ul>
-</section>
+</section>-->
 
 <section class="col-8 multipleSectionContainer" style="grid-column: 1 / 9; grid-row: 2;">
     <div class="multipleSection">
-        <h1 class="titleSection"><img src=<?php App\Core\View::getAssets("icons/icon_cancel.png")?> alt="">Annulations</h1>
+        <h1 class="titleSection"><img src=<?php App\Core\View::getAssets("icons/icon_user.png")?> alt="">Utilisateurs</h1>
         <ul class="listItemBasic limit-height-300">
             <?php foreach ($users as $key => $user) {
                 echo $user;
@@ -54,7 +54,7 @@
         </ul>
     </div>
     <div class="multipleSection">
-        <h1 class="titleSection"><img src=<?php App\Core\View::getAssets("icons/icon_plane.png")?> alt="">Pages</h1>
+        <h1 class="titleSection"><img src=<?php App\Core\View::getAssets("icons/icon_page.png")?> alt="">Pages</h1>
         <ul class="listItemBasic limit-height-300">
             <?php foreach ($pages as $key => $page) {
                 echo $page;
@@ -62,7 +62,7 @@
         </ul>
     </div>
     <div class="multipleSection">
-        <h1 class="titleSection"><img src=<?php App\Core\View::getAssets("icons/icon_calendar.png")?> alt="">Articles</h1>
+        <h1 class="titleSection"><img src=<?php App\Core\View::getAssets("icons/icon_page.png")?> alt="">Articles</h1>
         <ul class="listItemBasic limit-height-300">
             <?php foreach ($articles as $key => $article) {
                 echo $article;
@@ -71,7 +71,7 @@
     </div>
 </section>
 
-<section class="col-12" style="grid-column: 9 / 13; grid-row: 2 / 4;">
+<section class="col-12" style="grid-column: 9 / 13; grid-row: 1 / 4;">
     <h1 class="titleSection"><img src=<?php App\Core\View::getAssets("icons/icon_comment.png")?> alt="">Commentaires</h1>
     <ul class="listItemComplete limit-height-375"  style="min-height: 80%;">
         <?php foreach ($comments as $key => $comment) {
