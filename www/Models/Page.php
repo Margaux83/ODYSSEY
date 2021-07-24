@@ -292,12 +292,15 @@ class Page extends Database
     }
 
     //Fonction qui va chercher les informations des pages enregistrées et qui ne sont pas supprimées
-    public function getAllPages()
+    public function getAllPages($id_user = null): array
     {
-        $db = new Database("Page");
-        $results = $db->query(
+        $filter = ["isDeleted" => "0"];
+        if(!empty($id_user)) {
+            $filter = ["id_User" => $id_user];
+        }
+        $results = Page::query(
             ["id" ,"title", "description", "status", "uri", "creationDate", "updateDate", "id_User"],
-            ["isDeleted" => "0"]
+            $filter
         );
         if (count($results)) {
             $user = new User();
@@ -310,28 +313,6 @@ class Page extends Database
             }
         }
         
-        return $results;
-    }
-
-    //Fonction qui va chercher les informations des pages enregistrées et qui ne sont pas supprimées
-    public function getAllPagesByUser($id)
-    {
-        $db = new Database("Page");
-        $results = $db->query(
-            ["id" ,"title", "description", "status", "uri", "creationDate", "updateDate", "id_User"],
-            ["isDeleted" => "0", "id_User" => $id]
-        );
-        if (count($results)) {
-            $user = new User();
-            foreach ($results as $key => $result) {
-                if (!empty($result['id_User'])) {
-                    $userSelected = $user->query(['firstname', 'lastname'], ['id' => $result['id_User']])[0];
-                    $results[$key]['firstname'] = $userSelected['firstname'];
-                    $results[$key]['lastname'] = $userSelected['lastname'];
-                }
-            }
-        }
-
         return $results;
     }
 }
