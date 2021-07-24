@@ -431,11 +431,15 @@ class Article extends Database
         ];
     }
 
-    public function getAllArticles(): array
+    public function getAllArticles($id_user = null): array
     {
+        $filter = ["isDeleted" => "0"];
+        if(!empty($id_user)) {
+            $filter = ["id_User" => $id_user];
+        }
         $results = Article::query(
             ["id" ,"uri", "title", "content", "description", "status", "creationDate", "updateDate", "isDeleted", "id_User"],
-            ["isDeleted" => "0"]
+            $filter
         );
         if (count($results)) {
             $user = new User();
@@ -463,9 +467,6 @@ class Article extends Database
                 }
             }
         }
-
         return $results;
     }
-
-
 }
