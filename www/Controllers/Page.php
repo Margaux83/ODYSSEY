@@ -16,11 +16,14 @@ class Page{
         $pages = new ModelPage;
         //Fonction pour récupérer la liste de toutes les pages
         $allPages = $pages->getAllPages();
+        $allPagesByUser = $pages->getAllPagesByUser($_SESSION["userId"]);
 
         //Affiche moi la vue des pages
         $view = new View("Page/pages", "back");
         //Affiche la liste de toutes pages
         $view->assign("allPages", $allPages);
+        $view->assign("allPagesByUser", $allPagesByUser);
+
     }
 
     public function addPageAction(){

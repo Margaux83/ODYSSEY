@@ -224,16 +224,6 @@
     listId: management
     icon: icon_menu
 
-/admin/newsletter:
-  controller: Newsletter
-  action: default
-  label: Newsletter
-  menuData:
-    visible: true
-    min-statut: true
-    listId: management
-    icon: icon_newsletter
-
 /:
   controller: WebAccess
   action: default
