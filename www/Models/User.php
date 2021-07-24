@@ -566,7 +566,7 @@ class User extends Database
             $role = new Role();
             foreach ($results as $key => $result) {
                 if (!empty($result['role'])) {
-                    $userSelected = $role->query(['name'])[0];
+                    $userSelected = $role->query(['name'], ['id' => $result['role']])[0];
                     $results[$key]['name'] = $userSelected['name'];
                 }
             }
