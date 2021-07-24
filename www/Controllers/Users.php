@@ -192,8 +192,6 @@ class Users{
                     $user->setRole($_POST['role']);
 
                     // Champs par défaut
-                    $user->setIsDeleted(0);
-                    $user->setIsVerified(1);
                     $user->save();
 
                     $_SESSION['alert']['success'][] = 'Votre modification a bien été prise en compte';
