@@ -162,13 +162,13 @@ class Role extends Database
                         "desc" => "Voir les articles"
                     ],
                     "/admin/add-article" => [
-                        'desc' => 'Ajouter une article'
+                        'desc' => 'Ajouter un article'
                     ],
                     "/admin/edit-article" => [
-                        'desc' => 'Modifier une article'
+                        'desc' => 'Modifier un article'
                     ],
                     "/admin/delete-article" => [
-                        'desc' => 'Supprimer une article'
+                        'desc' => 'Supprimer un article'
                     ]
                 ]
             ],
@@ -227,12 +227,13 @@ class Role extends Database
         ];
 
         foreach ($roles as $key => $role) {
-            $returnedArray[$key+1] = [
+            $returnedArray[$role['id']] = [
                 "label" => $role['name'],
                 "selected" => $role['id'] === $selectedRoleId
             ];
 
         }
         return $returnedArray;
+
     }
 }

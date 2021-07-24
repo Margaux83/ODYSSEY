@@ -131,7 +131,7 @@ class Comment extends Database
             $article = new Article();
             foreach ($results as $key => $result) {
                 if (!empty($result['id_User'])) {
-                    $userSelected = $user->query(['lastname', 'firstname'])[0];
+                    $userSelected = $user->query(['firstname', 'lastname'], ['id' => $result['id_User']])[0];
                     $results[$key]['lastname'] = $userSelected['lastname'];
                     $results[$key]['firstname'] = $userSelected['firstname'];
                 }

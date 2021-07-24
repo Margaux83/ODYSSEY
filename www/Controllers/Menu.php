@@ -23,6 +23,7 @@ class Menu
                 $menuToSave->setContentMenu($_POST['contentMenu']);
                 $menuToSave->setIsDeleted(0);
                 $menuToSave->save();
+                $_SESSION['alert']['success'][] = 'Le menu a bien été enregistré !';
             }
         }
 
