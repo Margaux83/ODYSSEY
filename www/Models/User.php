@@ -415,7 +415,7 @@ class User extends Database
         ];
     }
 
-    public function buildFormRegisterBack(){
+    public function buildFormUser(){
         $role = new Role();
 
         return [
@@ -425,73 +425,6 @@ class User extends Database
                 "reset" => "Annuler",
                 "Submit"=>"Enregistrer",
                 "class"=>"form-group"
-            ],
-            "input"=>[
-                "lastname"=>[
-                    "type"=>"text",
-                    "label"=>"Nom",
-                    "lengthMax"=>"255",
-                    "lengthMin"=>"2",
-                    "required"=>true,
-                    "error"=>"Votre nom doit faire entre 2 et 255 caractères",
-                    "placeholder"=>"Votre nom"
-                ],
-                "firstname"=>[
-                    "type"=>"text",
-                    "class"=>"form_input",
-                    "label"=>"Prénom",
-                    "lengthMax"=>"120",
-                    "lengthMin"=>"2",
-                    "required"=>true,
-                    "error"=>"Votre prénom doit faire entre 2 et 120 caractères",
-                    "placeholder"=>"Votre prénom",
-                ],
-                "email"=>[
-                    "type"=>"email",
-                    "label"=>"Adresse Mail",
-                    "lengthMax"=>"320",
-                    "lengthMin"=>"8",
-                    "required"=>true,
-                    "error"=>"Votre email doit faire entre 8 et 320 caractères",
-                    "placeholder"=>"Votre email"
-                ],
-                "phone"=>[
-                    "type"=>"text",
-                    "label"=>"Numéro de téléphone",
-                    "lengthMin"=>"10",
-                    "lengthMax"=>"10",
-
-                    "required"=>true,
-                    "error"=>"Votre numéro de téléphone doit contenir 10 chiffres",
-                    "placeholder"=>"Votre numéro de téléphone"
-                ],
-                "role"=>[
-                    "type"=>"select",
-                    "label"=>"Rôle",
-                    "required"=>true,
-                    "error"=>"Veuillez sélectionner un élément",
-                    "placeholder"=>"Choisir un rôle",
-                    "options"=> $role->buildAllRolesFormSelect($this->role)
-                ]
-            ],
-            "button"=>[
-                "class"=>"buttonComponent d-flex floatRight",
-                "name"=>""
-            ]
-        ];
-    }
-
-    public function buildFormUpdateBack(){
-        $role = new Role();
-
-        return [
-            "config"=>[
-                "method"=>"POST",
-                "Action"=>"users",
-                "reset" => "Annuler",
-                "Submit"=>"Enregistrer",
-                "class"=>"form-group"
-
             ],
             "input"=>[
                 "id_user"=>[
@@ -506,37 +439,38 @@ class User extends Database
                     "required"=>true,
                     "error"=>"Votre nom doit faire entre 2 et 255 caractères",
                     "placeholder"=>"Votre nom",
-                    "defaultValue" => $this->getLastname()
-
+                    "defaultValue" => (empty($this->getLastname())) ? (empty($_POST['lastname'])) ? '' : $_POST['lastname'] : $this->getLastname()
                 ],
                 "firstname"=>[
                     "type"=>"text",
+                    "class"=>"form_input",
                     "label"=>"Prénom",
                     "lengthMax"=>"120",
                     "lengthMin"=>"2",
                     "required"=>true,
                     "error"=>"Votre prénom doit faire entre 2 et 120 caractères",
                     "placeholder"=>"Votre prénom",
-                    "defaultValue" => $this->getFirstname()
+                    "defaultValue" => (empty($this->getFirstname())) ? (empty($_POST['firstname'])) ? '' : $_POST['firstname'] : $this->getFirstname()
                 ],
                 "email"=>[
                     "type"=>"email",
                     "label"=>"Adresse Mail",
                     "lengthMax"=>"320",
                     "lengthMin"=>"8",
-                    "readonly"=>true,
+                    "required"=>true,
                     "error"=>"Votre email doit faire entre 8 et 320 caractères",
                     "placeholder"=>"Votre email",
-                    "defaultValue" => $this->getEmail()
+                    "defaultValue" => (empty($this->getEmail())) ? (empty($_POST['email'])) ? '' : $_POST['email'] : $this->getEmail()
                 ],
                 "phone"=>[
                     "type"=>"text",
                     "label"=>"Numéro de téléphone",
+                    "lengthMin"=>"10",
                     "lengthMax"=>"10",
                     "required"=>true,
                     "error"=>"Votre numéro de téléphone doit contenir 10 chiffres",
                     "placeholder"=>"Votre numéro de téléphone",
-                    "defaultValue" => $this->getPhone()
+                    "defaultValue" => (empty($this->getPhone())) ? (empty($_POST['phone'])) ? '' : $_POST['phone'] : $this->getPhone()
                 ],
                 "role"=>[
                     "type"=>"select",
@@ -544,10 +478,8 @@ class User extends Database
                     "required"=>true,
                     "error"=>"Veuillez sélectionner un élément",
                     "placeholder"=>"Choisir un rôle",
-                    "options"=>
-                        $role->buildAllRolesFormSelect($this->role)
-
-                ],
+                    "options"=> $role->buildAllRolesFormSelect($this->role)
+                ]
             ],
             "button"=>[
                 "class"=>"buttonComponent d-flex floatRight",
