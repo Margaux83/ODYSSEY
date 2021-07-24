@@ -35,7 +35,11 @@ class Database
         $columnFilter = [];
         foreach ($filter as $key => $value) {
             if (!is_null($value)) {
-                $columnFilter[] = $key . "=:" . $key;
+                if($key[0] !== "!") {
+                    $columnFilter[] = $key . "=:" . $key;
+                } else {
+                    $columnFilter[] = ltrim($key, $key[0]) . "!=:" . ltrim($key, $key[0]);
+                }
                 // $columnFilter[] = $key . "=:" . substr($key, strpos($key, '.') + 1);
             }
         }
@@ -47,7 +51,11 @@ class Database
         $query = $this->pdo->prepare($sql);
         foreach ($filter as $key => $value) {
             if (!is_null($value)) {
-                $query->bindValue(":".$key, $value);
+                if($key[0] !== "!") {
+                    $query->bindValue(":".$key, $value);
+                } else {
+                    $query->bindValue(":".ltrim($key, $key[0]), $value);
+                }
             }
         }
         $query->execute();
@@ -89,8 +97,6 @@ class Database
                                             :" . implode(",:", $columns) . "
                                             )");
             $query->execute($data);
-
-
         } else {
             foreach ($data as $key => $value) {
                 if (!is_null($value)) {
@@ -122,7 +128,7 @@ class Database
     //On sélectionne l'id de la dernière entrée
     public function getLastFromTable()
     {
-        $selectLastId="SELECT id FROM " . $this->table ." ORDER BY id DESC LIMIT 1 ";
+        $selectLastId="SELECT id FROM " . $this->table . " ORDER BY id DESC LIMIT 1 ";
         $querySelect = $this->pdo->prepare($selectLastId);
         $querySelect->execute();
         return $querySelect->fetchAll();
