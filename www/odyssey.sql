@@ -218,18 +218,6 @@ INSERT INTO `ody_User` (`id`, `firstname`, `lastname`, `email`, `password`, `rol
 (1, 'Admin', 'Louis', 'admin@gmail.com', '$2y$10$WG.3paYCoOlaeuK9fvU90eFxQTHrs0NJV0qycwo2pwTIp22pJ0aWm', 1, '0764859586', NULL, '', 1, '2021-07-24 08:44:45', 0, '2021-07-23 22:13:34', '2021-07-24 00:29:04');
 
 --
--- Structure de la table `ody_Config`
---
-
-CREATE TABLE `ody_Config` (
-  `id` int(10) UNSIGNED NOT NULL,
-  `options` varchar(500) COLLATE utf8_bin NOT NULL,
-  `value` varchar(500) COLLATE utf8_bin NOT NULL,
-  `creationDate` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updateDate` datetime DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
-
---
 -- Index pour les tables déchargées
 --
 
