@@ -142,4 +142,13 @@ class Category extends Database
         }
         return $returnedArray;
     }
+
+    //Retourne le label d'une catégorie si elle existe déjà dans la base de données
+    public function getCategoryForVerification($id,$label)
+    {
+        return Category::query(
+            ["label"],
+            ["isDeleted" => "0", "label" => $label]
+        );
+    }
 }
