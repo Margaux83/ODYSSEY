@@ -20,7 +20,7 @@ class Media {
 
         $view = new View("Media/medias", "back");
         $medias = new ModelMedia();
-        //Fonction pour récupérer la liste de tous les médias
+
         $mediaInfos = $medias->query(['id', 'name', 'media', 'creationDate', 'updateDate'], ['isDeleted'=>0]);
         $view->assign("mediaInfos",$mediaInfos);
 
@@ -33,7 +33,6 @@ class Media {
      */
     public function addMediaAction() {
         $security = Security::getInstance();
-        //Vérifie si l'utilisateur est connecté, sinon on le redirige sur la page de login
         if(!$security->isConnected()){
             header('Location: /login');
         }
@@ -41,7 +40,6 @@ class Media {
         $view = new View("Media/add_media", "back");
 
         $media = new ModelMedia;
-        //Création du formBuilder des articles
         $form = $media->buildFormMedia();
         $view->assign("form", $form);
 
@@ -57,7 +55,6 @@ class Media {
             if (!empty($dataArticle)) {
 
                 $errors = Form::validator($dataArticle, $form);
-                //On vérifie s'il y a des erreurs
 
                 if (empty($errors)) {
                     if (!empty($media->query(['id'], ['name' => $dataArticle['name']]))) {
@@ -128,7 +125,6 @@ class Media {
     {
 
         $security = Security::getInstance();
-        //Vérifie si l'utilisateur est connecté, sinon on le redirige sur la page de login
         if(!$security->isConnected()){
             header('Location: /login');
         }
@@ -160,7 +156,6 @@ class Media {
             if (!empty($dataArticle)) {
 
                 $errors = Form::validator($dataArticle, $form);
-                //On vérifie s'il y a des erreurs
 
                 if (empty($errors)) {
                     if(!empty($media->query(['id'],['name'=>$dataArticle['name']]))){

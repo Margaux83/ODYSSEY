@@ -140,7 +140,6 @@ class Base{
             ]
         );
 
-		//Affiche moi la vue dashboard;
 		$view = new View("dashboard", "back");
 		$view->assign("statistics", $statisticsPages);
 		$view->assign("comments", $listComments);
