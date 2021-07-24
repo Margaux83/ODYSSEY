@@ -7,62 +7,47 @@ use App\Core\Database;
 use App\Core\Form;
 use App\Core\Security;
 use App\Core\View;
-use App\Models\Article as Arti;
+use App\Models\Article as Article_Model;
 use App\Models\Category;
 
 class Article
 {
 
     /**
-     * Affcihage de la liste des articles enregistrés dans la base de données
+     * Affichage de la liste des articles enregistrés dans la base de données seulement pour les utilisateurs authentifiés
      */
     public function defaultAction()
     {
-
         $security = Security::getInstance();
-        //Vérifie si l'utilisateur est connecté, sinon on le redirige sur la page de login
          if(!$security->isConnected()){
              header('Location: /login');
-       }
+         }
+         $articles = new Article_Model();
 
-         //Instanciation de la classe Article
-        $articles = new Arti();
-
-        //Affiche moi la vue des articles;
         $view = new View("Article/articles", "back");
 
-        //Affiche la liste de tous les articles
         $view->assign("infoArticles", $articles->getAllArticles());
-        //Affiche la liste des articles qui ont été créés par l'utilisateur connecté
         $view->assign("infoArticlesByUser", $articles->getArticleByUser($_SESSION["userId"]));
-
-
     }
 
 
     /**
-     * FOnction d'ajout d'un article dans la base de données
+     * Fonction d'ajout d'un article dans la base de données
      */
-    public function addarticleAction()
+    public function addArticleAction()
     {
-
-
         $security = Security::getInstance();
-        //Vérifie si l'utilisateur est connecté, sinon on le redirige sur la page de login
         if (!$security->isConnected()) {
             header('Location: /login');
         }
 
-        $article = new Arti();
+        $article = new Article_Model();
 
-        //Affiche la vue pour ajouter un article
         $view = new View("Article/add_articles", "back");
 
-        //Création du formBuilder des articles
         $form = $article->buildFormArticle();
         $view->assign("form", $form);
 
-        //On vérifie si des données sont bien envoyées
         if (!empty($_POST['insert_article'])) {
             $dataArticle = $_POST;
             foreach ($dataArticle as $key => $value) {
@@ -73,13 +58,8 @@ class Article
                 }
             }
             if (!empty($dataArticle)) {
-
-
                 $errors = Form::validator($dataArticle, $form);
-                //On vérifie s'il y a des erreurs
                 if (empty($errors)) {
-                    //S'il n'y a pas d'erreurs, on envoie les données dans la requête pour ajouter l'article
-
                     if(empty($article->query(['id'],["uri"=>"/article/".$dataArticle['uri']]))){
                         $article->setTitle(htmlspecialchars(addslashes($dataArticle['title'])));
                         $article->setContent(addslashes($dataArticle['content']));
@@ -100,7 +80,6 @@ class Article
                         //Enregristrement de l'id de l'article et l'id de la catégorie dans la table intermédaire qui fait le lien entre les articles et les catégorie
                          $article->saveArticleCategory($dataArticle['category'], $result[0]["id"]);
 
-
                         $_SESSION['alert']['success'][] = 'L\'article a bien été enregistré !';
                         header('location: /admin/articles');
                         session_write_close();
@@ -110,17 +89,14 @@ class Article
                         session_write_close();
                     }
                 } else {
-                    //S'il y a des erreurs, on prépare leur affichage
                     $_SESSION['alert']['danger'][] = $errors[0];
                 }
-
-
             }
         }
 
     }
 
-    public static function editarticleAction()
+    public static function editArticleAction()
     {
         $security = Security::getInstance();
         //Vérifie si l'utilisateur est connecté, sinon on le redirige sur la page de login
@@ -129,7 +105,7 @@ class Article
        }
 
          //Instanciation de la classe Article
-        $article = new Arti();
+        $article = new Article_Model();
 
 
         //Affiche la vue pour modifier un article
@@ -219,7 +195,7 @@ class Article
 
     public function deleteArticleAction() {
         //Instanciation de la classe article
-        $article = new Arti();
+        $article = new Article_Model();
 
         if (!empty($_POST)) {
             if (!empty($_POST['deleteArticle'])) {
@@ -297,7 +273,7 @@ class Article
     }
 
 
-    public function editcategoryAction()
+    public function editCategoryAction()
     {
         $security = Security::getInstance();
         //Vérifie si l'utilisateur est connecté, sinon on le redirige sur la page de login
