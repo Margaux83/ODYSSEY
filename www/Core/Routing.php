@@ -85,7 +85,68 @@ class Routing{
         die("Aucun route ne correspond à ".$controller." -> ".$action );
     }
 
+    static function writeUrlSitemap($loc, $lastmod) {
+        return '<url>
+                    <loc>'.$loc.'</loc>
+                    <lastmod>'.$lastmod.'</lastmod>
+                </url>';
+    }
 
+    /**
+     * Returns the elements to put in the sitemap.xml coming from the public roads included in the routes.yml file
+     * @param $routes
+     * @param $routes_exclude
+     * @return string
+     */
+    static function getBaseRouteSitemap($routes, $routes_exclude): string
+    {
+        $sitemap = "";
+
+        foreach ($routes as $key => $route) {
+            if(!in_array($key, $routes_exclude) && !strpos($key, 'admin')) {
+                $loc = self::getBaseUrl() . $key;
+                $lastmod = date('c',time());
+                //$priority = "1.0"; Impossible de déterminer une priorité pertinente sans crawler
+                $sitemap .= self::writeUrlSitemap($loc, $lastmod);
+            }
+        }
+        return $sitemap;
+    }
+
+    /**
+     *
+     * Returns the elements to put in the sitemap.xml coming from the routes coming from the articles and the pages created from the CMS
+     * @return string
+     */
+    static function getDynamicSitemap(): string
+    {
+        $sitemap = "";
+
+        $article = new \App\Models\Article();
+        $page = new \App\Models\Page();
+        $all_articles = $article->query(
+            ["uri"],
+            ["isDeleted" => "0"]
+        );
+        $all_pages = $page->query(
+            ["uri"],
+            ["isDeleted" => "0"]
+        );
+
+        foreach($all_articles as $article) {
+            $loc = self::getBaseUrl() . $article['uri'];
+            $lastmod = date('c',time());
+            //$priority = "1.0"; Impossible de déterminer une priorité pertinente sans crawler
+            $sitemap .= self::writeUrlSitemap($loc, $lastmod);
+        }
+        foreach($all_pages as $page) {
+            $loc = self::getBaseUrl() . $page['uri'];
+            $lastmod = date('c',time());
+            //$priority = "1.0"; Impossible de déterminer une priorité pertinente sans crawler
+            $sitemap .= self::writeUrlSitemap($loc, $lastmod);
+        }
+        return $sitemap;
+    }
 }
 /*
 if(file_exists("routes.yml")){
