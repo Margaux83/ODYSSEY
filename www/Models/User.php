@@ -522,7 +522,6 @@ class User extends Database
                     "label"=>"Adresse Mail",
                     "lengthMax"=>"320",
                     "lengthMin"=>"8",
-                    "required"=>true,
                     "readonly"=>true,
                     "error"=>"Votre email doit faire entre 8 et 320 caractères",
                     "placeholder"=>"Votre email",
