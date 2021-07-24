@@ -24,9 +24,7 @@
             <th>Status</th>
             <th>Rôle</th>
             <th>Date d'inscription</th>
-            <th>Dernière connexion</th>
             <th>Action</th>
-
         </tr>
         </thead>
         <tbody>
@@ -61,7 +59,6 @@
                 </td>
                 <td><?= $user['name']?></td>
                 <td><?= date("d/m/Y H:i", strtotime($user["creationDate"])) ?></td>
-                <td><?= date("d/m/Y H:i", strtotime($user["lastConnexionDate"])) ?></td>
                 <td class="action-btn">
                     <div class="listItem-cpt listActions">
                         <a href="#" id="editUser" onclick="editUser(this)" data-id="<?= $user["id"] ?>">

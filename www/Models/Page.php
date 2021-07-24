@@ -233,7 +233,7 @@ class Page extends Database
                     "required"=>true,
                     "error"=>"Le titre de la page doit faire entre 2 et 255 caractères",
                     "placeholder"=>"Votre titre",
-                    "defaultValue"=>$this->getTitle()
+                    "defaultValue"=> (empty($this->getTitle())) ? (empty($_POST['title'])) ? '' : $_POST['title'] : $this->getTitle()
                 ],
                 "uri"=>[
                     "type"=>"text",
@@ -243,7 +243,7 @@ class Page extends Database
                     "required"=>true,
                     "error"=>"Votre uri doit faire entre 2 et 255 caractères",
                     "placeholder"=>"Uri",
-                    "defaultValue"=>ltrim($this->getUri(), '/')
+                    "defaultValue"=> (empty($this->getUri())) ? (empty($_POST['uri'])) ? '' : $_POST['uri'] : substr($this->getUri(), 1)
                 ],
                 "content"=>[
                     "type"=>"textarea",
@@ -252,19 +252,19 @@ class Page extends Database
                     "error"=>"Le contenu de la page doit faire entre 2 et 255 caractères",
                     "id"=>"full-featured-non-premium",
                     "placeholder"=>"Votre contenu",
-                    "defaultValue"=>$this->getContent()
+                    "defaultValue"=> (empty($this->getContent())) ? (empty($_POST['content'])) ? '' : $_POST['content'] : $this->getContent()
                 ],
                 "description"=>[
                     "type"=>"text",
-                    "label"=>"Description",
-                    "lengthMax"=>"255",
+                    "label"=>"Description (SEO)",
                     "lengthMin"=>"2",
+                    "lengthMax"=>"150",
                     "error"=>"La description de la page doit faire entre 2 et 255 caractères",
                     "id"=>"content",
-                    "required"=>false,
+                    "required"=>true,
                     "class"=>"textareaComment d-flex",
                     "placeholder"=>"Votre contenu",
-                    "defaultValue"=>$this->getDescription()
+                    "defaultValue"=> (empty($this->getDescription())) ? (empty($_POST['description'])) ? '' : $_POST['description'] : $this->getDescription()
                 ],
                 "status"=>[
                     "type"=>"select",

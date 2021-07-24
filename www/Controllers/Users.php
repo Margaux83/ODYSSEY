@@ -78,7 +78,7 @@ class Users{
         $token = rand(100000, 999999);
 
         //Création du formBuilder des utilisateurs
-        $form = $user->buildFormRegisterBack();
+        $form = $user->buildFormUser();
         $view->assign("form", $form);
 
         //On vérifie si des données sont bien envoyées
@@ -177,7 +177,7 @@ class Users{
         $user->setId($_POST["id_user"]);
 
         //Création du formBuilder des utilisateurs
-        $form = $user->buildFormUpdateBack();
+        $form = $user->buildFormUser();
         $view->assign("form", $form);
 
         //On vérifie si des données sont bien envoyées et que le nom de famille n'est pas vide

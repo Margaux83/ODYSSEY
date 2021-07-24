@@ -37,18 +37,27 @@ class Page{
         $view->assign("form", $form);
 
         //On vérifie si des données sont bien envoyées
-        if(!empty($_POST)) {
-            $errors = Form::validator($_POST, $form);
+        if (!empty($_POST['insert_page'])) {
+            $dataPage = $_POST;
+            foreach ($dataPage as $key => $value) {
+                switch ($key) {
+                    case "insert_page":
+                        unset($dataPage["insert_page"]);
+                        break;
+                }
+            }
+        if(!empty($dataPage)) {
+            $errors = Form::validator($dataPage, $form);
             //On vérifie s'il y a des erreurs
             if (empty($errors)) {
                 //S'il n'y a pas d'erreurs, on envoie les données dans la requête pour ajouter l'article
                 // Champs du formulaire
-                $page->setTitle($_POST['title']);
-                $page->setContent($_POST['content']);
-                $page->setDescription($_POST['description']);
-                $page->setUri("/".$_POST['uri']);
-                $page->setStatus($_POST['status']);
-                $page->setIsvisible($_POST['isvisible']);
+                $page->setTitle($dataPage['title']);
+                $page->setContent($dataPage['content']);
+                $page->setDescription($dataPage['description']);
+                $page->setUri(str_replace(' ', '_', "/".$dataPage['uri']));
+                $page->setStatus($dataPage['status']);
+                $page->setIsvisible($dataPage['isvisible']);
                 $page->setId_user($_SESSION["userId"]);
                 // Champs par défaut
                 $page->setIsdeleted(0);
@@ -59,7 +68,12 @@ class Page{
                 header('location: /admin/pages');
                 session_write_close();
             }
+            else {
+                $_SESSION['alert']['danger'][] = $errors[0];
+            }
         }
+    }
+
     }
 
     public function editPageAction() {
@@ -80,31 +94,42 @@ class Page{
         $view->assign("form", $form);
 
         //On vérifie si des données sont bien envoyées et que le titre de la page a bien été renseigné
-        if(!empty($_POST) && !empty($_POST['title'])) {
-            $errors = Form::validator($_POST, $form);
+        if (!empty($_POST['insert_page'])) {
+            $dataPage = $_POST;
+            foreach ($dataPage as $key => $value) {
+                switch ($key) {
+                    case "insert_page":
+                        unset($dataPage["insert_page"]);
+                        break;
+                }
+            }
+        if(!empty($dataPage) && !empty($dataPage['title'])) {
+            $errors = Form::validator($dataPage, $form);
             //On vérifie s'il y a des erreurs
             if (empty($errors)) {
                 //S'il n'y a pas d'erreurs, on envoie les données dans la requête pour modifier l'article
                 // Champs du formulaire
-                $page->setTitle($_POST['title']);
-                $page->setContent($_POST['content']);
-                $page->setDescription($_POST['description']);
-                $page->setUri("/".$_POST['uri']);
-                $page->setStatus($_POST['status']);
-                $page->setIsvisible($_POST['isvisible']);
+                $page->setTitle($dataPage['title']);
+                $page->setContent($dataPage['content']);
+                $page->setDescription($dataPage['description']);
+                $page->setUri(str_replace(' ', '_', "/".$dataPage['uri']));
+                $page->setStatus($dataPage['status']);
+                $page->setIsvisible($dataPage['isvisible']);
                 $page->setId_user($_SESSION["userId"]);
                 $page->setUpdateDate(date ('Y-m-d H:i:s'));
 
                 // Champs par défaut
-                $page->setIsdeleted(0);
-
                 $page->save();
 
                 $_SESSION['alert']['success'][] = 'Votre modification a bien été prise en compte';
                 header('location: /admin/pages');
                 session_write_close();
             }
+            else {
+                $_SESSION['alert']['danger'][] = $errors[0];
+            }
         }
+    }
     }
 
     public function deletePageAction() {
