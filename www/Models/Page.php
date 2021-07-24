@@ -294,9 +294,9 @@ class Page extends Database
     //Fonction qui va chercher les informations des pages enregistrées et qui ne sont pas supprimées
     public function getAllPages($id_user = null): array
     {
-        $filter = ["isDeleted" => "0"];
+        $filter["isDeleted"] = "0";
         if(!empty($id_user)) {
-            $filter = ["id_User" => $id_user];
+            $filter["id_User"] = $id_user;
         }
         $results = Page::query(
             ["id" ,"title", "description", "status", "uri", "creationDate", "updateDate", "id_User"],
