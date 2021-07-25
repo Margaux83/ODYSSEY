@@ -10,7 +10,7 @@ class ListQuery
      * @return array|string[]
      * TODO : Mettre un commentaire d'explication
      */
-    public static function getSimpleList($elementQuery) {
+    public static function getSimpleList($elementQuery, $elementFilters = []) {
         $legendHtml = '<li class="legend">';
 
         $elementClass = "App\\Models\\".$elementQuery['element'];
@@ -18,7 +18,7 @@ class ListQuery
         if (class_exists($elementClass)){
             $entity = new $elementClass;
 
-            $resultsQuery = $entity->query(array_keys($elementQuery['columns']));
+            $resultsQuery = $entity->query(array_keys($elementQuery['columns']), $elementQuery['filter'] ?? []);
         }else {
             return [];
         }
