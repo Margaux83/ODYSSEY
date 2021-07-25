@@ -92,6 +92,9 @@ class Base{
                         'label' => 'Date d\'inscription',
                         'size' => 3
                     ]
+                ],
+                'filter' => [
+                    'isDeleted' => 0
                 ]
             ]
         );
@@ -138,7 +141,9 @@ class Base{
                         'size' => 3
                     ]
                 ],
-
+                'filter' => [
+                    'isDeleted' => 0
+                ]
             ]
         );
 
