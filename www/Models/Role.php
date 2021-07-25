@@ -113,14 +113,16 @@ class Role extends Database
 
     public function rolesList()
     {
-        return [
-            "all" => [
-                "values" => [
-                    "all_perms" => [
-                        "desc" => "Donner tous les droits"
-                    ]
+        /*
+        "all" => [
+            "values" => [
+                "all_perms" => [
+                    "desc" => "Donner tous les droits"
                 ]
-            ],
+            ]
+        ],
+         */
+        return [
             "users" => [
                 "title" => "Gestion des utilisateurs",
                 "values" => [
@@ -136,7 +138,6 @@ class Role extends Database
                     "/admin/delete-user" => [
                         "desc" => "Supprimer un utilisateur"
                     ]
-
                 ]
             ],
             'pages' => [
