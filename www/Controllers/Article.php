@@ -85,17 +85,14 @@ class Article
                         $_SESSION['alert']['success'][] = 'L\'article a bien été enregistré !';
                         header('location: /admin/articles');
                         session_write_close();
-                    }else{
+                    } else {
                         $_SESSION['alert']['danger'][] = 'Cette uri existe déjà';
-                        header('location: /admin/add-article');
-                        session_write_close();
                     }
                 } else {
                     $_SESSION['alert']['danger'][] = $errors[0];
                 }
             }
         }
-
     }
 
     /**

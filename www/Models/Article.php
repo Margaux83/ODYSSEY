@@ -4,6 +4,7 @@
 namespace App\Models;
 
 use App\Core\Database;
+use App\Core\Helpers;
 
 class Article extends Database
 {
@@ -99,7 +100,7 @@ class Article extends Database
      */
     public function getContent()
     {
-        return $this->content;
+        return stripslashes($this->content);
     }
 
     /**
@@ -317,7 +318,6 @@ class Article extends Database
     {
         $category = new Category();
         return [
-
             "config"=>[
                 "method"=>"POST",
                 "Action"=>"",
@@ -326,12 +326,15 @@ class Article extends Database
             ],
 
             "input"=>[
-
-                    "id"=>[
-                        "type"=>"hidden",
-                        "required"=>true,
-                        "defaultValue"=>$this->getID()
-                    ],
+                "csrf"=>[
+                    "type"=>"hidden",
+                    "defaultValue"=>Helpers::generateCsrfToken()
+                ],
+                "id"=>[
+                    "type"=>"hidden",
+                    "required"=>true,
+                    "defaultValue"=>$this->getID()
+                ],
                 "title"=>[
 
                     "type"=>"text",

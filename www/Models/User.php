@@ -2,6 +2,7 @@
 namespace App\Models;
 
 use App\Core\Database;
+use App\Core\Helpers;
 use App\Models\Role;
 
 class User extends Database
@@ -302,6 +303,10 @@ class User extends Database
                 "class" => "form_register"
             ],
             "input" => [
+                "csrf"=>[
+                    "type"=>"hidden",
+                    "defaultValue"=>Helpers::generateCsrfToken()
+                ],
                 "firstname"=>[
                     "type"=>"text",
                     "class"=>"form_input",
@@ -350,6 +355,10 @@ class User extends Database
                 "class" => "form_register"
             ],
             "input" => [
+                "csrf"=>[
+                    "type"=>"hidden",
+                    "defaultValue"=>Helpers::generateCsrfToken()
+                ],
                 "password"=> [
                     "type"=>"password",
                     "class"=>"requiredLabel",
@@ -402,6 +411,10 @@ class User extends Database
                 "class"=>"formElement"
             ],
             "input"=>[
+                "csrf"=>[
+                    "type"=>"hidden",
+                    "defaultValue"=>Helpers::generateCsrfToken()
+                ],
                 "login-email"=>[
                     "class"=>"requiredLabel",
                     "id"=>"login-email",
@@ -445,6 +458,10 @@ class User extends Database
                 "class"=>"formElement"
             ],
             "input"=>[
+                "csrf"=>[
+                    "type"=>"hidden",
+                    "defaultValue"=>Helpers::generateCsrfToken()
+                ],
                 "lastname"=>[
                     "type"=>"text",
                     "label"=>"Nom",
@@ -525,6 +542,10 @@ class User extends Database
                 "class"=>"formElement"
             ],
             "input"=>[
+                "csrf"=>[
+                    "type"=>"hidden",
+                    "defaultValue"=>Helpers::generateCsrfToken()
+                ],
                 "email"=>[
                     "class"=>"requiredLabel",
                     "id"=>"email",
@@ -559,6 +580,10 @@ class User extends Database
                 "class"=>"formElement"
             ],
             "input"=>[
+                "csrf"=>[
+                    "type"=>"hidden",
+                    "defaultValue"=>Helpers::generateCsrfToken()
+                ],
                 "token"=>[
                     "class"=>"requiredLabel",
                     "id"=>"token",
@@ -611,6 +636,10 @@ class User extends Database
                 "class"=>"form-group"
             ],
             "input"=>[
+                "csrf"=>[
+                    "type"=>"hidden",
+                    "defaultValue"=>Helpers::generateCsrfToken()
+                ],
                 "id_user"=>[
                     "type"=>"hidden",
                     "defaultValue"=>$this->getId()

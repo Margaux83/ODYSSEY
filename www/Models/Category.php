@@ -5,6 +5,7 @@ namespace App\Models;
 
 
 use App\Core\Database;
+use App\Core\Helpers;
 
 class Category extends Database
 {
@@ -105,6 +106,10 @@ class Category extends Database
                 "class"=>"d-flex d-flex-wrap formModalOneInput",
             ],
             "input"=>[
+                "csrf"=>[
+                    "type"=>"hidden",
+                    "defaultValue"=>Helpers::generateCsrfToken()
+                ],
                 "id"=>[
                     "type"=>"hidden",
                     "required"=>true,

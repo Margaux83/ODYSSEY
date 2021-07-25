@@ -3,6 +3,7 @@ namespace App\Models;
 
 use App\Core\Database;
 use App\Core\Form;
+use App\Core\Helpers;
 
 class Page extends Database
 {
@@ -95,7 +96,7 @@ class Page extends Database
      */
     public function getContent()
     {
-        return $this->content;
+        return stripcslashes($this->content);
     }
 
     /**
@@ -224,6 +225,10 @@ class Page extends Database
             ],
 
             "input"=>[
+                "csrf"=>[
+                    "type"=>"hidden",
+                    "defaultValue"=>Helpers::generateCsrfToken()
+                ],
                 "id_page"=>[
                     "type"=>"hidden",
                     "defaultValue"=>$this->getId()
