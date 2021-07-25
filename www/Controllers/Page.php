@@ -4,14 +4,14 @@ namespace App;
 
 use App\Core\Form;
 use App\Core\View;
-use App\Models\User;
 use App\Models\Page as ModelPage;
-use App\Core\Helpers;
-use function Sodium\add;
 
 class Page{
 
-
+    /**
+     * Display the list of registered and undeleted pages in the database
+     * Display of the list of pages added by the connected user
+     */
     public function defaultAction(){
 
         $pages = new ModelPage;
@@ -25,6 +25,9 @@ class Page{
         $view->assign("allPagesByUser", Helpers::cleanArray($allPagesByUser));
     }
 
+    /**
+     * Function to add an article to the database
+     */
     public function addPageAction(){
 
         $page = new ModelPage();
@@ -69,6 +72,10 @@ class Page{
 
     }
 
+    /**
+     * Function to modify a page in the database
+     * Retrieve and display the information of the page in the form thanks to the setId which takes in parameter the id of the page
+     **/
     public function editPageAction() {
         if(empty($_POST)) {
             $_SESSION['alert']['danger'][] = 'Vous ne pouvez pas aller sur ce lien';
@@ -120,6 +127,9 @@ class Page{
     }
     }
 
+    /**
+     * Deleting a page using its Id
+     */
     public function deletePageAction() {
         $pages = new ModelPage;
         if (!empty($_POST)) {

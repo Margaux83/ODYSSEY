@@ -18,9 +18,7 @@ class Page extends Database
     protected $uri;
 
 
-    /**
-     * User constructor.
-     */
+
     public function __construct(){
         parent::__construct();
     }
@@ -30,9 +28,12 @@ class Page extends Database
         return $this->id;
     }
 
+    /**
+     * @param $id
+     * When an id is passed in parameter, we get the information of the corresponding page
+     */
     public function setId($id){
         $this->id = $id;
-        //Il va chercher en BDD toutes les informations de l'utilisateur
         $data = array_diff_key(
             get_object_vars($this),
             get_class_vars(get_parent_class())
@@ -209,7 +210,9 @@ class Page extends Database
         return $this->uri;
     }
 
-    //Formbuilder des pages
+    /**
+     * @return array
+     */
     public function buildFormPage() {
         $form = new Form();
         return [
@@ -291,7 +294,11 @@ class Page extends Database
         ];
     }
 
-    //Fonction qui va chercher les informations des pages enregistrées et qui ne sont pas supprimées
+    /**
+     * @param null $id_user
+     * @return array
+     * Function that fetches information from registered pages that are not deleted
+     */
     public function getAllPages($id_user = null): array
     {
         $filter["isDeleted"] = "0";

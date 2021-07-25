@@ -25,6 +25,12 @@ class BodyMail {
         $this->baseurl = $baseurl;
     }
 
+    /**
+     * @param $email
+     * @param $token
+     * @return string
+     * Body of the email that will be sent to the user who registered to validate his account
+     */
     public function buildBodyMailConfirmation($email, $token) {
         return "<body style=\"background-color: #f4f4f4; margin: 0 !important; padding: 0 !important;\">
     <!-- HIDDEN PREHEADER TEXT -->
@@ -100,6 +106,12 @@ class BodyMail {
 </body>";
     }
 
+    /**
+     * @param $email
+     * @param $token
+     * @return string
+     * Body of the email that will be sent to the user who forgot his password to reset it
+     */
     public function buildBodyForgotPassword($email, $token) {
         return "<body style=\"background-color: #f4f4f4; margin: 0 !important; padding: 0 !important;\">
     <!-- HIDDEN PREHEADER TEXT -->
@@ -165,6 +177,12 @@ class BodyMail {
 </body>";
     }
 
+    /**
+     * @param $email
+     * @param $token
+     * @return string
+     * Body of the mail that will be sent to the user who has been added to the CMS by an administrator and who must also validate his account
+     */
     public function buildBodyMailConfirmationBack($email, $token) {
         return "<body style=\"background-color: #f4f4f4; margin: 0 !important; padding: 0 !important;\">
     <!-- HIDDEN PREHEADER TEXT -->

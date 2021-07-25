@@ -31,7 +31,7 @@ class Article extends Database
 
     /**
      * @param $id
-     * Quand un id est passé en paramètre, on récupère les informations de l'article correspondant
+     * When an id is passed in parameter, we get the information of the corresponding article
      */
     public function setId($id){
         $this->id = $id;
@@ -230,29 +230,13 @@ class Article extends Database
         $this->uri = $uri;
     }
 
-    /**
-     * @return mixed
-     */
-   public function getMedia()
-    {
-        return $this->media;
-    }
-
-    /**
-     * @param mixed $media
-     */
-    public function setMedia($media)
-    {
-        $this->media = $media;
-    }
-
     public function get_foreignKeys()
     {
         return ['category'];
     }
 
     /**
-     * Fonction qui va récupérer la catégorie de l'article sélectionné
+     * Function that allows you to build the options of the item's status select
      **/
     public function searchCategory() {
         $categoryArticle = new Category_Article();
@@ -262,7 +246,7 @@ class Article extends Database
 
 
     /**
-     * Fonction qui permet de build les options du select de Statut de l'article
+     * Function that allows you to build the options of the article's status select
      **/
     public function buildAllStatusFormSelect() {
         $status = [
@@ -296,7 +280,7 @@ class Article extends Database
     }
 
     /**
-     * Fonction qui permet de build les options du select de Visibilté de l'article
+     * Function that allows you to build the options of the article's Visibility selector
      **/
     public function buildAllVisibilityFormSelect() {
         $status = [
@@ -326,6 +310,9 @@ class Article extends Database
         return $returnedArray;
     }
 
+    /**
+     * @return array
+     */
     public function buildFormArticle()
     {
         $category = new Category();
@@ -430,7 +417,7 @@ class Article extends Database
     /**
      * @param null $id_user
      * @return array
-     * Récupération des informations des articles qui ne sont pas supprimés et qui vont pouvoir être affichés sur les views
+     * Recovery of the information of the articles which are not deleted and which will be able to be posted on the views
      */
     public function getAllArticles($id_user = null): array
     {
@@ -473,8 +460,11 @@ class Article extends Database
 
 
     /**
-     * Retourne l'uri d'un article si elle existe déjà dans la base de données
-     **/
+     * @param $id
+     * @param $uri
+     * @return array
+     * Returns the uri of an item if it already exists in the database
+     */
     public function getUriForVerification($id,$uri)
     {
         return Article::query(
@@ -484,8 +474,10 @@ class Article extends Database
     }
 
     /**
-     * Mise à jour de la catégorie d'un article
-     **/
+     * @param $id
+     * @param $id_category
+     * Update the category of an article
+     */
     public function updateCategoryOfArticle($id, $id_category)
     {
         $query = $this->pdo->prepare("UPDATE ody_Category_Article SET id_Category=".$id_category." WHERE id_Article=" . $id);
@@ -495,7 +487,7 @@ class Article extends Database
     /**
      * @param $category
      * @param $id_Article
-     * Sauvegarde de l'id de la catégrie et de l'id de l'article dans la table intermédiaire ody_Category_Article
+     * Save the category id and the article id in the intermediate table ody_Category_Article
      */
     public function saveArticleCategory($category,$id_Article)
     {

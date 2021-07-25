@@ -2,7 +2,6 @@
 
 namespace App\Core;
 
-use App\Core\Database;
 use App\Models\Role;
 use App\Models\User;
 
@@ -17,6 +16,11 @@ class Security
         self::$_userConnectedId = $_userConnectedId;
     }
 
+    /**
+     * @param null $_userConnectedId
+     * @return Security|null
+     * Return the instance of the connected user
+     */
     public static function getInstance($_userConnectedId = null) {
         if(is_null(self::$_instance)) {
 			session_start();
@@ -59,6 +63,10 @@ class Security
 		return isset($_SESSION["userId"]);
 	}
 
+    /**
+     * @return bool|void
+     * Check if the user is connected
+     */
 	public function getConnectedUser(){
 		if ($this->isConnected()){
             $_SESSION['alert']['danger'][] = 'Vous êtes déjà connecté';

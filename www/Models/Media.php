@@ -24,7 +24,7 @@ class Media extends Database {
 
     /**
      * @param $id
-     * Quand un id est passé en paramètre, on récupère les informations de le média correspondant
+     * When an id is passed in parameter, we get the information of the corresponding media
      */
     public function setId($id){
         $this->id = $id;
@@ -110,6 +110,9 @@ class Media extends Database {
         return $this->isdeleted;
     }
 
+    /**
+     * @return array
+     */
     public function buildFormMedia()
     {
         return [
@@ -156,7 +159,9 @@ class Media extends Database {
         ];
     }
 
-
+    /**
+     * @return array
+     */
     public function buildFormMediaEdit()
     {
         return [

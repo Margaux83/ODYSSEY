@@ -5,8 +5,13 @@ namespace App;
 use App\Core\View;
 use App\Core\Error;
 use App\Core\Template as CoreTemplate;
-use App\Core\ConstantManager;
 
+
+/**
+ * Class Template
+ * @package App
+ * TODO : Mettre des commentaires d'explication
+ */
 class Template
 {
     private static $templatesPath = './public/styles/themes';

@@ -2,8 +2,11 @@
 
 namespace App\Core;
 
-use App\Core\Installer;
-
+/**
+ * Class ConstantManager
+ * @package App\Core
+ * Class that manage and define the environment constants of the project
+ */
 class ConstantManager
 {
 
@@ -19,7 +22,6 @@ class ConstantManager
 		$this->parseFile($this->envFile);
 
 		if(!empty($this->data["ENV"])){
-			//Parse : .env.prod ou .env.dev
 			$this->parseFile($this->envFile.".".$this->data["ENV"]);
 		}
 
@@ -50,8 +52,6 @@ class ConstantManager
 
 			while (!feof($handle)) {
 				$line = trim(fgets($handle));
-				//  $line = "DBHOST=database #Voir le host de docker";
-				//  $data["DBHOST"]="database";
 				preg_match("/([^=]*)=([^#]*)/", $line, $results);
 				if(!empty($results[1]) && !empty($results[2])){
 					$this->data[$results[1]] = $results[2];

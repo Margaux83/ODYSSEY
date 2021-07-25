@@ -9,6 +9,10 @@ use App\Core\Form;
 
 class Profile
 {
+    /**
+     * Retrieve and display the information of the user in the form thanks to the setId which takes in parameter the id of the user
+     * The user can then modify his information directly in the form
+     */
     public function defaultAction(){
         $security = Security::getInstance();
 		if(!$security->isConnected()){
