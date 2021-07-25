@@ -3,63 +3,54 @@
 
 namespace App;
 
-use App\Core\Database;
 use App\Core\Form;
+use App\Core\Helpers;
 use App\Core\Security;
 use App\Core\View;
-use App\Models\Article as Arti;
+use App\Models\Article as Article_Model;
 use App\Models\Category;
 
 class Article
 {
+
+    /**
+     * Display the list of registered and undeleted articles in the database
+     * Display of the list of articles added by the connected user
+     */
     public function defaultAction()
     {
-
         $security = Security::getInstance();
-        //Vérifie si l'utilisateur est connecté, sinon on le redirige sur la page de login
          if(!$security->isConnected()){
              header('Location: /login');
-       }
+         }
+         $articles = new Article_Model();
 
-         //Instanciation de la classe Article
-        $articles = new Arti();
-         //Fonction pour récupérer la liste de tous les articles
-        $articles->getAllArticles();
-
-        //Affiche moi la vue des articles;
         $view = new View("Article/articles", "back");
-
-        //Affiche la liste de tous les articles
-        $view->assign("infoArticles", $articles->getAllArticles());
-        //Affiche la liste des articles qui ont été créés par l'utilisateur connecté
-        $view->assign("infoArticlesByUser", $articles->getArticleByUser($_SESSION["userId"]));
-
-
+        $view->assign("infoArticles", Helpers::cleanArray($articles->getAllArticles()));
+        $view->assign("infoArticlesByUser", Helpers::cleanArray($articles->getAllArticles($_SESSION["userId"])));
     }
 
 
-
-    public function addarticleAction()
+    /**
+     * Function to add an article to the database
+     * With registration of the category of the article
+     * We check if the uri already exists in the database, if so we send an error message
+     * We add the prefix "/article/" before the uri to differentiate the uri of the articles and the pages
+     */
+    public function addArticleAction()
     {
-
-
         $security = Security::getInstance();
-        //Vérifie si l'utilisateur est connecté, sinon on le redirige sur la page de login
         if (!$security->isConnected()) {
             header('Location: /login');
         }
 
-        $article = new Arti();
-        $category = new Category();
+        $article = new Article_Model();
 
-        //Affiche la vue pour ajouter un article
         $view = new View("Article/add_articles", "back");
 
-        //Création du formBuilder des articles
         $form = $article->buildFormArticle();
         $view->assign("form", $form);
 
-        //On vérifie si des données sont bien envoyées
         if (!empty($_POST['insert_article'])) {
             $dataArticle = $_POST;
             foreach ($dataArticle as $key => $value) {
@@ -70,14 +61,8 @@ class Article
                 }
             }
             if (!empty($dataArticle)) {
-
                 $errors = Form::validator($dataArticle, $form);
-                //On vérifie s'il y a des erreurs
                 if (empty($errors)) {
-                    //S'il n'y a pas d'erreurs, on envoie les données dans la requête pour ajouter l'article
-
-
-
                     if(empty($article->query(['id'],["uri"=>"/article/".$dataArticle['uri']]))){
                         $article->setTitle($dataArticle['title']);
                         $article->setContent($dataArticle['content']);
@@ -91,13 +76,11 @@ class Article
                         $article->setIsdeleted(0);
                         $article->setDescription($dataArticle["description"]);
                         $article->setId_user($_SESSION["userId"]);
-                        $article->setUri(addslashes(str_replace(' ', '_', "/article/".$dataArticle['uri'])));
+                        $article->setUri(str_replace(' ', '_', "/article/".$dataArticle['uri']));
 
                         $article->save();
                         $result = $article->getLastFromTable();
-                        //Enregristrement de l'id de l'article et l'id de la catégorie dans la table intermédaire qui fait le lien entre les articles et les catégorie
-                         $article->saveArticleCategory($dataArticle['category'], $result[0]["id"]);
-
+                        $article->saveArticleCategory($dataArticle['category'], $result[0]["id"]);
 
                         $_SESSION['alert']['success'][] = 'L\'article a bien été enregistré !';
                         header('location: /admin/articles');
@@ -108,44 +91,40 @@ class Article
                         session_write_close();
                     }
                 } else {
-                    //S'il y a des erreurs, on prépare leur affichage
                     $_SESSION['alert']['danger'][] = $errors[0];
                 }
-
-
             }
         }
 
     }
 
-    public static function editarticleAction()
+    /**
+     * Function to modify an article in the database
+     * With registration of the category of the article
+     * We check if the uri already exists in the database, if so we send an error message
+     * We add the prefix "/article/" before the uri to differentiate the uri of the articles and the pages
+     * Retrieve and display the information of the article in the form thanks to the setId which takes in parameter the id of the article
+     */
+    public static function editArticleAction()
     {
         $security = Security::getInstance();
-        //Vérifie si l'utilisateur est connecté, sinon on le redirige sur la page de login
          if(!$security->isConnected()){
-           header('Location: /login');
-       }
+             header('Location: /login');
+         }
+        $article = new Article_Model();
 
-         //Instanciation de la classe Article
-        $article = new Arti();
-
-
-        //Affiche la vue pour modifier un article
         $view = new View("Article/edit_articles", "back");
 
-        //On va récupérer les informations de l'article en envoyant l'id dans le setId
-            if (!empty($_POST)) {
-                if($_POST['id'] != "") {
-                    $article->setId($_POST["id"]);
-                }
+        if (!empty($_POST)) {
+            if($_POST['id'] != "") {
+                $article->setId($_POST["id"]);
             }
+        }
 
-        //Création du formBuilder des articles
         $form = $article->buildFormArticle();
         $view->assign("form", $form);
 
 
-        //On vérifie si des données sont bien envoyées
         if(!empty($_POST['insert_article'])) {
             $dataArticle = $_POST;
             foreach ($dataArticle as $key => $value) {
@@ -157,34 +136,23 @@ class Article
             }
             if (!empty($dataArticle)) {
                 $errors = Form::validator($dataArticle, $form);
-
                 if (empty($errors)) {
-
-                    //On vérifie si un article a bien été sélectionné avant de faire la modification
                     if(strlen($dataArticle['id']) == 0) {
                         $_SESSION['alert']['danger'][] = 'Veuillez sélectionner un article';
-                    }
-                    else {
+                    } else {
+                        $article->setTitle($dataArticle['title']);
+                        $article->setContent($dataArticle['content']);
+                        $article->setDescription($dataArticle['description']);
 
+                        $article->setStatus($dataArticle['status']);
+                        $article->setIsvisible($dataArticle['isvisible']);
+                        $article->setId_user($_SESSION["userId"]);
 
-                            //Modification de l'article sélectionné
-                            $article->setTitle($dataArticle['title']);
-                            $article->setContent($dataArticle['content']);
-                            $article->setDescription($dataArticle['description']);
-
-                            $article->setStatus($dataArticle['status']);
-                            $article->setIsvisible($dataArticle['isvisible']);
-                            $article->setId_user($_SESSION["userId"]);
-
-                            // Champs par défaut
-                            $article->setIsdeleted(0);
-                        //On vérifie si l'uri existe dans la base de données pour un autre article
+                        $article->setIsdeleted(0);
                         $uriverification = empty($article->getUriForVerification($_POST["id"],'/article/' . $dataArticle['uri']));
-
                             if ($uriverification) {
-                                $article->setUri(addslashes(str_replace(' ', '_', "/article/".$dataArticle['uri'])));
-                            }
-                            else{
+                                $article->setUri(str_replace(' ', '_', "/article/".$dataArticle['uri']));
+                            } else {
                                 $_SESSION['alert']['danger'][] = 'Cette uri existe déjà';
                             }
                             $article->save();
@@ -194,11 +162,8 @@ class Article
                                 header('location: /admin/articles');
                                 session_write_close();
                             }
-
                         }
-                    }
-                else {
-                    //S'il y a des erreurs, on prépare leur affichage
+                    } else {
                     $_SESSION['alert']['danger'][] = $errors[0];
                 }
                 if (!empty($_POST)) {
@@ -206,18 +171,18 @@ class Article
                         $article->setId($_POST["id"]);
                     }
                 }
-                //Création du formBuilder des articles
                 $form = $article->buildFormArticle();
                 $view->assign("form", $form);
                 $view->assign('article', $article);
-
             }
         }
     }
 
+    /**
+     * Deleting an article using its Id
+     */
     public function deleteArticleAction() {
-        //Instanciation de la classe article
-        $article = new Arti();
+        $article = new Article_Model();
 
         if (!empty($_POST)) {
             if (!empty($_POST['deleteArticle'])) {
@@ -226,35 +191,26 @@ class Article
         }
     }
 
+    /**
+     * Displaythe list of registered and undeleted categories in the database
+     * Possibility to add a category from this page, you cannot add a category that already exists in the database
+     */
     public function categoriesAction()
     {
         $security = Security::getInstance();
-        //Vérifie si l'utilisateur est connecté, sinon on le redirige sur la page de login
         if(!$security->isConnected()){
             header('Location: /login');
         }
 
-        //Affiche la vue des catégories
         $view = new View("Categories/categories", "back");
-        //Instanciation de la classe Category
         $category = new Category();
-        //On récupère, grâce à la fonction query, les informations de tous les articles
         $listCategories = $category->query(['id','label', 'creationDate', 'updateDate'],['isDeleted'=>0]);
-        //Affiche la liste de tous les catégories
-        $view->assign("listCategories", $listCategories);
+        $view->assign("listCategories", Helpers::cleanArray($listCategories));
 
-        //Création du formBuilder des catégories
         $formCategory = $category->buildFormCategory();
         $view->assign("formCategory", $formCategory);
 
-        //Suppression d'une catégorie grâce à son id
-        if (!empty($_POST)) {
-            if (!empty($_POST['deleteCategory'])) {
-                $category->delete($_POST['id_category']);
-            }
-        }
 
-        //On vérifie si des données sont bien envoyées
         if(!empty($_POST['insert_category'])){
             $dataArticle = $_POST;
             foreach ($dataArticle as $key => $value) {
@@ -265,92 +221,75 @@ class Article
                 }
             }
             if (!empty($dataArticle)) {
-
-
                 $errors = Form::validator($dataArticle, $formCategory);
                 if (empty($errors)) {
-                    //On vérifie si la catégorie existe déjà dans la base de donnée
                     if(!empty($category->query(['id'],['label'=>$dataArticle['label']]))){
                         $_SESSION['alert']['danger'][] = 'La catégorie existe déjà';
-                    }
-                    else{
-                        //S'il n'y a pas d'erreurs, on envoie les données dans la requête pour ajouter la catégorie
-                        $category->setLabel(addslashes($dataArticle["label"]));
-                        $category->setIsdeleted(0);
-                        $category->save();
-                        $_SESSION['alert']['success'][] = 'La catégorie a bien été modifiée !';
-                        header('location: /admin/categories');
-                        session_write_close();
-                    }
-
-                }
-                else{
-                    //S'il y a des erreurs, on prépare leur affichage
-                    $_SESSION['alert']['danger'][] = $errors[0];
-                }
-
-            }
-        }
-
-    }
-
-
-    public function editcategoryAction()
-    {
-        $security = Security::getInstance();
-        //Vérifie si l'utilisateur est connecté, sinon on le redirige sur la page de login
-        if(!$security->isConnected()){
-            header('Location: /login');
-        }
-
-        //Affichage de la vue pour la modification de catégories
-        $view = new View("Categories/edit_categories", "back");
-        //Instanciation de la classe Category
-        $category = new Category();
-
-        //On va récupérer les informations de la catégorie en envoyant l'id dans le setId
-        if (!empty($_POST)) {
-            if($_POST['id'] != "") {
-                $category->setId($_POST["id"]);
-            }
-        }
-
-        //Création du formBuilder des catégories
-        $formCategory = $category->buildFormCategory();
-        $view->assign("formCategory", $formCategory);
-
-        //On vérifie si des données sont bien envoyées
-        if(!empty($_POST['insert_category'])){
-            $dataArticle = $_POST;
-            foreach ($dataArticle as $key => $value) {
-                switch ($key) {
-                    case "insert_category":
-                        unset($dataArticle["insert_category"]);
-                        break;
-                }
-            }
-            if (!empty($dataArticle)) {
-
-                $errors = Form::validator($dataArticle, $formCategory);
-                if (empty($errors)) {
-                    //On vérifie si la catégorie existe déjà dans la base de donnée
-                    $uriverification = empty($category->getCategoryForVerification($_POST["id"],$dataArticle['label']));
-
-                    if ($uriverification) {
-                        //S'il n'y a pas d'erreurs, on envoie les données dans la requête pour modifier la catégorie
-                        $category->setLabel(addslashes($dataArticle["label"]));
+                    } else {
+                        $category->setLabel($dataArticle["label"]);
                         $category->setIsdeleted(0);
                         $category->save();
                         $_SESSION['alert']['success'][] = 'La catégorie a bien été enregistrée !';
                         header('location: /admin/categories');
                         session_write_close();
                     }
-                    else{
+                } else {
+                    $_SESSION['alert']['danger'][] = $errors[0];
+                }
+            }
+        }
+
+    }
+
+
+    /**
+     * Function to modify a category, it cannot be given the name of a category that already exists in the database
+     * Retrieve and display the category name in the form thanks to the setId which takes the id of the category in parameter
+     **/
+    public function editCategoryAction()
+    {
+        $security = Security::getInstance();
+        if(!$security->isConnected()){
+            header('Location: /login');
+        }
+
+        $view = new View("Categories/edit_categories", "back");
+        $category = new Category();
+
+        if (!empty($_POST)) {
+            if($_POST['id'] != "") {
+                $category->setId($_POST["id"]);
+            }
+        }
+
+        $formCategory = $category->buildFormCategory();
+        $view->assign("formCategory", Helpers::cleanArray($formCategory));
+
+        if(!empty($_POST['insert_category'])){
+            $dataArticle = $_POST;
+            foreach ($dataArticle as $key => $value) {
+                switch ($key) {
+                    case "insert_category":
+                        unset($dataArticle["insert_category"]);
+                        break;
+                }
+            }
+            if (!empty($dataArticle)) {
+
+                $errors = Form::validator($dataArticle, $formCategory);
+                if (empty($errors)) {
+                    $uriverification = empty($category->getCategoryForVerification($_POST["id"],$dataArticle['label']));
+
+                    if ($uriverification) {
+                        $category->setLabel($dataArticle["label"]);
+                        $category->save();
+                        $_SESSION['alert']['success'][] = 'La catégorie a bien été modifiée !';
+                        header('location: /admin/categories');
+                        session_write_close();
+                    } else {
                         $_SESSION['alert']['danger'][] = 'Cette catégorie existe déjà';
                     }
-                }
-                else{
-                    //S'il y a des erreurs, on prépare leur affichage
+                } else {
                     $_SESSION['alert']['danger'][] = $errors[0];
                 }
 
@@ -358,11 +297,12 @@ class Article
         }
     }
 
+    /**
+     * Deleting a category using its Id
+     */
     public function deleteCategoryAction() {
-        //Instanciation de la classe Category
         $category = new Category();
 
-        //Suppression d'une catégorie grâce à son id
         if (!empty($_POST)) {
             if (!empty($_POST['deleteCategory'])) {
                 $category->delete($_POST['id_category']);

@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.0.4
+-- version 5.1.1
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : database
--- Généré le : sam. 01 mai 2021 à 15:04
--- Version du serveur :  5.7.32
--- Version de PHP : 7.4.11
+-- Généré le : sam. 24 juil. 2021 à 08:53
+-- Version du serveur : 5.7.35
+-- Version de PHP : 7.4.20
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -20,6 +20,8 @@ SET time_zone = "+00:00";
 --
 -- Base de données : `odyssey`
 --
+CREATE DATABASE IF NOT EXISTS `odyssey` DEFAULT CHARACTER SET utf8 COLLATE utf8_bin;
+USE `odyssey`;
 
 -- --------------------------------------------------------
 
@@ -30,7 +32,7 @@ SET time_zone = "+00:00";
 CREATE TABLE `ody_Article` (
   `id` int(11) UNSIGNED NOT NULL,
   `title` varchar(255) COLLATE utf8_bin NOT NULL,
-  `content` text COLLATE utf8_bin NOT NULL,
+  `content` longtext COLLATE utf8_bin NOT NULL,
   `description` text COLLATE utf8_bin,
   `status` tinyint(4) NOT NULL,
   `isVisible` tinyint(4) NOT NULL,
@@ -38,30 +40,9 @@ CREATE TABLE `ody_Article` (
   `isDeleted` tinyint(4) NOT NULL DEFAULT '0',
   `creationDate` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updateDate` datetime DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
-  `id_User` int(11) UNSIGNED NOT NULL
+  `id_User` int(11) UNSIGNED NOT NULL,
+  `uri` varchar(255) COLLATE utf8_bin NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
-
---
--- Déchargement des données de la table `ody_Article`
---
-
-INSERT INTO `ody_Article` (`id`, `title`, `content`, `description`, `status`, `isVisible`, `isDraft`, `isDeleted`, `creationDate`, `updateDate`, `id_User`) VALUES
-(3, 'xgfxf', '<p>wfdgdfgw<br></p>', NULL, 1, 1, 0, 0, '2021-04-16 21:39:05', '2021-04-25 21:12:07', 1),
-(4, 'sshdfhtfd', '&lt;h1&gt;dhsxtfhdddt&lt;/h1&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;h2&gt;cghgfh&lt;br&gt;&lt;/h2&gt;', NULL, 3, 2, 0, 0, '2021-04-16 21:42:33', '2021-04-25 21:12:09', 1),
-(5, 'sshdfhtfd', '&lt;h1&gt;dhsxtfhdddt&lt;/h1&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;h2&gt;cghgfh&lt;br&gt;&lt;/h2&gt;', NULL, 3, 2, 0, 0, '2021-04-16 21:45:40', NULL, 1),
-(6, 'sshdfhtfd', '&lt;h1&gt;dhsxtfhdddt&lt;/h1&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;h2&gt;cghgfh&lt;br&gt;&lt;/h2&gt;', NULL, 3, 2, 0, 0, '2021-04-16 21:46:48', NULL, 1),
-(7, 'Hello', '&lt;p&gt;gfxdf&lt;/p&gt;', NULL, 1, 1, 0, 0, '2021-04-18 17:15:28', '2021-04-28 12:43:11', 1),
-(8, 'srgxtf', '<p>xdhf<br></p>', NULL, 1, 1, 0, 0, '2021-04-20 20:53:56', NULL, 1),
-(12, 'ergre', '<p>z</p>', NULL, 1, 1, 0, 0, '2021-04-21 20:47:24', NULL, 1),
-(13, 'qefsd', '<p>d<br></p>', NULL, 1, 1, 0, 0, '2021-04-21 20:47:55', NULL, 1),
-(14, 'qefsd', '<p>d<br></p>', NULL, 1, 1, 0, 0, '2021-04-21 20:48:53', NULL, 1),
-(15, 'dgdwf', '<p>d<br></p>', NULL, 1, 1, 0, 0, '2021-04-21 20:49:00', NULL, 1),
-(16, 'cvcvn', '<p>&nbsp;vvvvbv</p>', NULL, 1, 1, 0, 0, '2021-04-27 09:59:58', NULL, 1),
-(17, 'Article', '<p>gvnvhj</p>', NULL, 1, 1, 0, 0, '2021-04-27 10:21:35', NULL, 1),
-(18, 'drgt', '<p>dh<br></p>', NULL, 1, 1, 0, 0, '2021-04-27 11:24:39', NULL, 1),
-(19, 'chgfh', '<p>dfgdxfh<br></p>', NULL, 1, 1, 0, 0, '2021-04-28 12:37:32', NULL, 1),
-(20, 'Test', '<p>cchgfh</p>', NULL, 1, 1, 0, 0, '2021-04-28 12:42:25', NULL, 1),
-(21, 'chh', 'chgchv', NULL, 1, 0, 0, 0, '2021-05-01 14:55:06', NULL, 1);
 
 -- --------------------------------------------------------
 
@@ -73,17 +54,9 @@ CREATE TABLE `ody_Category` (
   `id` int(10) UNSIGNED NOT NULL,
   `label` varchar(255) COLLATE utf8_bin NOT NULL,
   `creationDate` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updateDate` datetime DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP
+  `updateDate` datetime DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
+  `isDeleted` tinyint(11) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
-
---
--- Déchargement des données de la table `ody_Category`
---
-
-INSERT INTO `ody_Category` (`id`, `label`, `creationDate`, `updateDate`) VALUES
-(1, 'cgjgh', '2021-05-01 14:03:20', NULL),
-(2, 'xghfg', '2021-05-01 14:09:31', NULL),
-(3, 'xhffgh', '2021-05-01 14:09:37', NULL);
 
 -- --------------------------------------------------------
 
@@ -95,27 +68,6 @@ CREATE TABLE `ody_Category_Article` (
   `id` int(11) NOT NULL,
   `id_Article` int(11) UNSIGNED NOT NULL,
   `id_Category` int(11) UNSIGNED NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Déchargement des données de la table `ody_Category_Article`
---
-
-INSERT INTO `ody_Category_Article` (`id`, `id_Article`, `id_Category`) VALUES
-(2, 15, 1),
-(1, 17, 1),
-(3, 17, 2);
-
--- --------------------------------------------------------
-
---
--- Structure de la table `ody_Category_Page`
---
-
-CREATE TABLE `ody_Category_Page` (
-  `id` int(11) NOT NULL,
-  `id_Category` int(10) UNSIGNED NOT NULL,
-  `id_Page` int(10) UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -132,7 +84,8 @@ CREATE TABLE `ody_Comment` (
   `updateDate` datetime DEFAULT NULL,
   `id_Article` int(11) UNSIGNED NOT NULL,
   `id_User` int(11) UNSIGNED NOT NULL,
-  `id_Comment` int(11) UNSIGNED NOT NULL
+  `id_Comment` int(11) UNSIGNED DEFAULT NULL,
+  `isVerified` int(11) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 -- --------------------------------------------------------
@@ -152,17 +105,40 @@ CREATE TABLE `ody_Config` (
 -- --------------------------------------------------------
 
 --
--- Structure de la table `ody_Menus`
+-- Structure de la table `ody_Media`
 --
 
-CREATE TABLE `ody_Menus` (
+CREATE TABLE `ody_Media` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `name` varchar(255) COLLATE utf8_bin NOT NULL,
+  `media` varchar(255) COLLATE utf8_bin NOT NULL,
+  `isDeleted` tinyint(4) NOT NULL DEFAULT '0',
+  `creationDate` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updateDate` datetime DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `ody_Menu`
+--
+
+CREATE TABLE `ody_Menu` (
   `id` int(11) NOT NULL,
   `name` varchar(255) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL,
-  `orderMenu` tinyint(4) NOT NULL,
+  `contentMenu` varchar(1000) NOT NULL,
   `isDeleted` tinyint(4) NOT NULL DEFAULT '0',
   `creationDate` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updateDate` datetime DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Déchargement des données de la table `ody_Menu`
+--
+
+INSERT INTO `ody_Menu` (`id`, `name`, `contentMenu`, `isDeleted`, `creationDate`, `updateDate`) VALUES
+(1, 'Menu header', '[{\"object\":\"Article\",\"id\":\"55\",\"order\":0},{\"id\":\"7\",\"object\":\"Article\",\"order\":0},{\"object\":\"Page\",\"id\":\"1\",\"order\":1},{\"id\":\"3\",\"object\":\"Page\",\"order\":2},{\"id\":\"2\",\"object\":\"Article\",\"order\":3},{\"id\":\"7\",\"object\":\"Page\",\"order\":\"100\"}]', 0, '2021-06-23 16:11:10', '2021-07-13 17:22:10'),
+(2, 'Menu footer', '[{\"id\":\"1\",\"object\":\"Page\",\"order\":\"100\"}]', 0, '2021-06-23 22:21:36', '2021-07-24 08:30:03');
 
 -- --------------------------------------------------------
 
@@ -175,36 +151,41 @@ CREATE TABLE `ody_Page` (
   `title` varchar(255) COLLATE utf8_bin NOT NULL,
   `content` text COLLATE utf8_bin NOT NULL,
   `description` text COLLATE utf8_bin,
-  `isDraft` tinyint(4) NOT NULL,
   `isVisible` tinyint(4) NOT NULL,
   `status` tinyint(4) NOT NULL,
   `isDeleted` tinyint(4) NOT NULL DEFAULT '0',
   `creationDate` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updateDate` datetime DEFAULT NULL,
-  `id_User` int(11) UNSIGNED NOT NULL
+  `id_User` int(11) UNSIGNED NOT NULL,
+  `uri` varchar(255) COLLATE utf8_bin NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 --
 -- Déchargement des données de la table `ody_Page`
 --
 
-INSERT INTO `ody_Page` (`id`, `title`, `content`, `description`, `isDraft`, `isVisible`, `status`, `isDeleted`, `creationDate`, `updateDate`, `id_User`) VALUES
-(1, 'fxfgxdfgd', 'dfdxgxdfg', NULL, 0, 1, 1, 0, '2021-04-27 08:37:43', NULL, 1);
+INSERT INTO `ody_Page` (`id`, `title`, `content`, `description`, `isVisible`, `status`, `isDeleted`, `creationDate`, `updateDate`, `id_User`, `uri`) VALUES
+(6, 'Accueil', '  Bienvenue sur la page d\'accueil :)', 'accueil', 1, 4, 0, '2021-07-13 17:04:55', '2021-07-13 19:21:52', 1, '/accueil');
 
 -- --------------------------------------------------------
 
 --
--- Structure de la table `ody_Reservations`
+-- Structure de la table `ody_Role`
 --
 
-CREATE TABLE `ody_Reservations` (
+CREATE TABLE `ody_Role` (
   `id` int(11) NOT NULL,
-  `status` tinyint(4) NOT NULL DEFAULT '0',
-  `creationDate` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updateDate` datetime DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
-  `id_Voyage` int(11) UNSIGNED NOT NULL,
-  `id_User` int(10) UNSIGNED NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `name` varchar(255) COLLATE utf8_bin NOT NULL,
+  `value` longtext CHARACTER SET latin1 NOT NULL,
+  `isDeleted` int(4) NOT NULL DEFAULT '0'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+--
+-- Déchargement des données de la table `ody_Role`
+--
+
+INSERT INTO `ody_Role` (`id`, `name`, `value`, `isDeleted`) VALUES
+(1, 'Admin', '{\"all_perms\":\"1\"}', 0);
 
 -- --------------------------------------------------------
 
@@ -217,10 +198,11 @@ CREATE TABLE `ody_User` (
   `firstname` varchar(120) COLLATE utf8_bin NOT NULL,
   `lastname` varchar(255) COLLATE utf8_bin NOT NULL,
   `email` varchar(320) COLLATE utf8_bin NOT NULL,
-  `password` varchar(255) COLLATE utf8_bin NOT NULL,
+  `password` varchar(255) COLLATE utf8_bin DEFAULT NULL,
   `role` tinyint(4) NOT NULL DEFAULT '1',
-  `phone` int(11) NOT NULL,
+  `phone` varchar(10) COLLATE utf8_bin NOT NULL,
   `status` tinyint(4) DEFAULT NULL,
+  `token` varchar(255) COLLATE utf8_bin DEFAULT NULL,
   `isVerified` tinyint(4) NOT NULL DEFAULT '0',
   `lastConnexionDate` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `isDeleted` tinyint(4) NOT NULL DEFAULT '0',
@@ -232,27 +214,8 @@ CREATE TABLE `ody_User` (
 -- Déchargement des données de la table `ody_User`
 --
 
-INSERT INTO `ody_User` (`id`, `firstname`, `lastname`, `email`, `password`, `role`, `phone`, `status`, `isVerified`, `lastConnexionDate`, `isDeleted`, `creationDate`, `updateDate`) VALUES
-(1, 'xhxchg', 'dswgd', 'wdwsgg@gmail.com', '1234', 1, 654852136, 2, 0, '2021-05-01 12:20:03', 0, '2021-04-25 20:56:21', NULL),
-(2, 'dgxdfg', 'dfgxfdg', 'fxdgfg@wdgdfg.com', 'wdgsd', 1, 632584762, 2, 0, '2021-05-01 12:20:03', 0, '2021-04-27 08:42:05', NULL);
-
--- --------------------------------------------------------
-
---
--- Structure de la table `ody_Voyage`
---
-
-CREATE TABLE `ody_Voyage` (
-  `id` int(11) UNSIGNED NOT NULL,
-  `arrival` varchar(255) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL,
-  `departure` varchar(255) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL,
-  `arrivalDate` date NOT NULL,
-  `departureDate` date NOT NULL,
-  `status` tinyint(4) NOT NULL,
-  `isDeleted` tinyint(4) NOT NULL DEFAULT '0',
-  `creationDate` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updateDate` datetime DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+INSERT INTO `ody_User` (`id`, `firstname`, `lastname`, `email`, `password`, `role`, `phone`, `status`, `token`, `isVerified`, `lastConnexionDate`, `isDeleted`, `creationDate`, `updateDate`) VALUES
+(1, 'Admin', 'Louis', 'admin@gmail.com', '$2y$10$WG.3paYCoOlaeuK9fvU90eFxQTHrs0NJV0qycwo2pwTIp22pJ0aWm', 1, '0764859586', NULL, '', 1, '2021-07-24 08:44:45', 0, '2021-07-23 22:13:34', '2021-07-24 00:29:04');
 
 --
 -- Index pour les tables déchargées
@@ -280,21 +243,13 @@ ALTER TABLE `ody_Category_Article`
   ADD KEY `id_Category` (`id_Category`);
 
 --
--- Index pour la table `ody_Category_Page`
---
-ALTER TABLE `ody_Category_Page`
-  ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `id_Category` (`id_Category`),
-  ADD KEY `id_Page` (`id_Page`);
-
---
 -- Index pour la table `ody_Comment`
 --
 ALTER TABLE `ody_Comment`
   ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `id_User` (`id_User`),
-  ADD UNIQUE KEY `id_Comment` (`id_Comment`),
-  ADD KEY `id_Article` (`id_Article`);
+  ADD KEY `id_Article` (`id_Article`),
+  ADD KEY `id_Comment` (`id_Comment`) USING BTREE,
+  ADD KEY `id_User` (`id_User`) USING BTREE;
 
 --
 -- Index pour la table `ody_Config`
@@ -303,16 +258,16 @@ ALTER TABLE `ody_Config`
   ADD PRIMARY KEY (`id`) USING BTREE;
 
 --
--- Index pour la table `ody_Menus`
+-- Index pour la table `ody_Media`
 --
-ALTER TABLE `ody_Menus`
+ALTER TABLE `ody_Media`
   ADD PRIMARY KEY (`id`);
 
 --
--- Index pour la table `ody_Menus`
+-- Index pour la table `ody_Menu`
 --
-ALTER TABLE `ody_Menus`
-  ADD PRIMARY KEY (`ID`);
+ALTER TABLE `ody_Menu`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Index pour la table `ody_Page`
@@ -322,30 +277,16 @@ ALTER TABLE `ody_Page`
   ADD KEY `id_User` (`id_User`);
 
 --
--- Index pour la table `ody_Reservations`
+-- Index pour la table `ody_Role`
 --
-ALTER TABLE `ody_Reservations`
-  ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `id_User` (`id_User`),
-  ADD UNIQUE KEY `id_Voyage` (`id_Voyage`) USING BTREE;
+ALTER TABLE `ody_Role`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Index pour la table `ody_User`
 --
 ALTER TABLE `ody_User`
   ADD PRIMARY KEY (`id`) USING BTREE;
-
---
--- Index pour la table `ody_Voyage`
---
-ALTER TABLE `ody_Voyage`
-  ADD PRIMARY KEY (`id`);
-
---
--- Index pour la table `ody_Voyage`
---
-ALTER TABLE `ody_Voyage`
-  ADD PRIMARY KEY (`ID`);
 
 --
 -- AUTO_INCREMENT pour les tables déchargées
@@ -355,13 +296,13 @@ ALTER TABLE `ody_Voyage`
 -- AUTO_INCREMENT pour la table `ody_Article`
 --
 ALTER TABLE `ody_Article`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT pour la table `ody_Category`
 --
 ALTER TABLE `ody_Category`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 
 --
 -- AUTO_INCREMENT pour la table `ody_Category_Article`
@@ -370,58 +311,46 @@ ALTER TABLE `ody_Category_Article`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
--- AUTO_INCREMENT pour la table `ody_Category_Page`
---
-ALTER TABLE `ody_Category_Page`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
 -- AUTO_INCREMENT pour la table `ody_Comment`
 --
 ALTER TABLE `ody_Comment`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT pour la table `ody_Config`
 --
 ALTER TABLE `ody_Config`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
--- AUTO_INCREMENT pour la table `ody_Menus`
+-- AUTO_INCREMENT pour la table `ody_Media`
 --
-ALTER TABLE `ody_Menus`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+ALTER TABLE `ody_Media`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
--- AUTO_INCREMENT pour la table `ody_Menus`
+-- AUTO_INCREMENT pour la table `ody_Menu`
 --
-ALTER TABLE `ody_Menus`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT;
+ALTER TABLE `ody_Menu`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT pour la table `ody_Page`
 --
 ALTER TABLE `ody_Page`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
--- AUTO_INCREMENT pour la table `ody_Reservations`
+-- AUTO_INCREMENT pour la table `ody_Role`
 --
-ALTER TABLE `ody_Reservations`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+ALTER TABLE `ody_Role`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT pour la table `ody_User`
 --
 ALTER TABLE `ody_User`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
-
---
--- AUTO_INCREMENT pour la table `ody_Voyage`
---
-ALTER TABLE `ody_Voyage`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 
 --
 -- Contraintes pour les tables déchargées
@@ -435,26 +364,12 @@ ALTER TABLE `ody_Category_Article`
   ADD CONSTRAINT `ody_Category_Article_ibfk_2` FOREIGN KEY (`id_Category`) REFERENCES `ody_Category` (`id`);
 
 --
--- Contraintes pour la table `ody_Category_Page`
---
-ALTER TABLE `ody_Category_Page`
-  ADD CONSTRAINT `ody_Category_Page_ibfk_1` FOREIGN KEY (`id_Category`) REFERENCES `ody_Category` (`id`),
-  ADD CONSTRAINT `ody_Category_Page_ibfk_2` FOREIGN KEY (`id_Page`) REFERENCES `ody_Page` (`id`);
-
---
 -- Contraintes pour la table `ody_Comment`
 --
 ALTER TABLE `ody_Comment`
   ADD CONSTRAINT `ody_Comment_ibfk_1` FOREIGN KEY (`id_Article`) REFERENCES `ody_Article` (`id`),
   ADD CONSTRAINT `ody_Comment_ibfk_2` FOREIGN KEY (`id_Comment`) REFERENCES `ody_Comment` (`id`),
   ADD CONSTRAINT `ody_Comment_ibfk_3` FOREIGN KEY (`id_User`) REFERENCES `ody_User` (`id`);
-
---
--- Contraintes pour la table `ody_Reservations`
---
-ALTER TABLE `ody_Reservations`
-  ADD CONSTRAINT `ody_Reservations_ibfk_1` FOREIGN KEY (`id_User`) REFERENCES `ody_User` (`id`),
-  ADD CONSTRAINT `ody_Reservations_ibfk_2` FOREIGN KEY (`id_Voyage`) REFERENCES `ody_Voyage` (`id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

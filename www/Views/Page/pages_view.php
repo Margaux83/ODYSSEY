@@ -69,37 +69,64 @@
     <div class="sectionHeader d-flex">
         <h1 class="titleSection d-flex"><img src=<?php App\Core\View::getAssets("icons/icon_page.png")?> alt="">Mes pages</h1>
     </div>
-    <ul class="listItemBasic limit-height-450">
-        <li class="legend">
-            <p class="flex-weight-1">Dates</p>
-            <p class="flex-weight-1">Titres et descriptions</p>
-            <p class="flex-weight-1">Créateur</p>
-            <p class="flex-weight-1">Status</p>
-            <p class="flex-weight-1">Actions</p>
-        </li>
-        <li class="listItem">
-            <div class="listItem-cpt">
-                <p><img src=<?php App\Core\View::getAssets("icons/plus-solid.svg")?> alt="" height="15" width="15">&nbsp;&nbsp;  15/05/2021</p>
-                <p><img src=<?php App\Core\View::getAssets("icons/pen-solid.svg")?> alt="" height="15" width="15">&nbsp;&nbsp;  15/05/2021</p>
-                <p><img src=<?php App\Core\View::getAssets("icons/check-solid.svg")?> alt="" height="15" width="15">&nbsp;&nbsp;  15/05/2021</p>
+    <table id="table_all_pages_user" class="table thead-dark">
+        <thead>
+        <tr>
+            <th>Dates</th>
+            <th>Titre et description</th>
+            <th>Créateur</th>
+            <th>Statut</th>
+            <th>Action</th>
 
-            </div>
-            <div>
-                <p class="listItem-cpt"><b>Ceci est une page</b><br>Messi vs Ronaldo</p>
-            </div>
-            <div>
-                <p class="listItem-cpt"><b>Louis M.</b><br>Rôle éditeur</p>
-            </div>
-            <div>
-                <p class="listItem-cpt">En cours de création</p>
-            </div>
-            <div class="listItem-cpt listActions">
-                <img src=<?php App\Core\View::getAssets("icons/eye-solid.svg")?> alt="" height="20" width="20">
-                <img src=<?php App\Core\View::getAssets("icons/pen-solid.svg")?> alt="" height="20" width="20">
-                <img class="openModalConfirmDeleteComment" data-target="ModalConfirmDeleteComment" src=<?php App\Core\View::getAssets("icons/trash-solid.svg")?> alt="" height="20" width="20">
-            </div>
-        </li>
-    </ul>
+        </tr>
+        </thead>
+        <tbody>
+        <?php
+        foreach($allPagesByUser as $pageByUser) { ?>
+            <tr class="text-center">
+                <td>
+                    <p><img src=<?php App\Core\View::getAssets("icons/plus-solid.svg")?> alt="" height="15" width="15">&nbsp;&nbsp;  <?= date("d/m/Y H:i", strtotime($pageByUser["creationDate"])) ?></p>
+                    <p><img src=<?php App\Core\View::getAssets("icons/pen-solid.svg")?> alt="" height="15" width="15">&nbsp;&nbsp;  <?= (empty($pageByUser["updateDate"])) ? 'Pas modifié' : date("d/m/Y H:i", strtotime($pageByUser["updateDate"])) ?></p>
+                </td>
+                <td>
+                    <p class="listItem-cpt"><b><?= $pageByUser["title"] ?></b><br><?= $pageByUser["description"] ?></p>
+                </td>
+                <td><?= $pageByUser["firstname"]." ".$pageByUser["lastname"] ?></td>
+                <td>
+                    <?php //Mettre le statut de l'article
+                    switch ($pageByUser["status"]) {
+                        case 1:
+                            echo "Brouillon";
+                            break;
+                        case 2:
+                            echo "Créé";
+                            break;
+                        case 3:
+                            echo "En attente de validation";
+                            break;
+                        case 4:
+                            echo "Validé et posté";
+                            break;
+                    }
+                    ?>
+                </td>
+                <td class="action-btn">
+                    <div class="listItem-cpt listActions">
+                        <a href="<?= $pageByUser["uri"] ?>" target="_blank" id="showPage">
+                            <img src=<?php App\Core\View::getAssets("icons/eye-solid.svg")?> alt="" height="20" width="20">
+                        </a>
+                        <a href="#" id="editPage" onclick="editPage(this)" data-id="<?= $pageByUser["id"] ?>">
+                            <img src=<?php App\Core\View::getAssets("icons/pen-solid.svg")?> alt="" height="20" width="20">
+                        </a>
+                        <a href="#" id="deletePage" onclick="deletePage(this)" data-id="<?= $pageByUser["id"] ?>">
+                            <img src=<?php App\Core\View::getAssets("icons/trash-solid.svg")?> alt="" height="20" width="20">
+                        </a>
+                    </div>
+                </td>
+            </tr>
+        <?php } ?>
+        </tbody>
+    </table>
 </section>
 <div id="hidden_form_container" style="display:none;"></div>
 

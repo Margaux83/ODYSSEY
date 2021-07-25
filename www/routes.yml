@@ -36,7 +36,7 @@
 
 /admin/add-article:
   controller: Article
-  action: addarticle
+  action: addArticle
   label: Ajouter un article
 
 /admin/edit-article:
@@ -55,7 +55,7 @@
 
 /admin/edit-category:
   controller: Article
-  action: editcategory
+  action: editCategory
   label: Modifier une catégorie
 
 /admin/delete-category:
@@ -110,8 +110,7 @@
     label: Pages
     icon: icon_page
     children: [
-        /admin/add-page,
-        /admin/deleted-page
+        /admin/add-page
     ]
 
 /admin/add-page:
@@ -127,11 +126,6 @@
   controller: Page
   action: deletePage
 
-/admin/deleted-page:
-  controller: Page
-  action: listdeletedpage
-  label: Corbeille
-
 /admin/comments:
   controller: Comment
   action: default
@@ -141,6 +135,37 @@
     min-statut: true
     listId: basics
     icon: icon_comment
+
+/admin/delete-comment:
+  controller: comment
+  action: deleteComment
+
+/admin/medias:
+  controller: Media
+  action: default
+  label: Medias
+  menuData:
+    visible: true
+    min-statut: true
+    listId: basics
+    icon: icon_media
+    children: [
+        /admin/add-media
+    ]
+
+/admin/add-media:
+  controller: Media
+  action: addMedia
+  label: Ajouter un média
+
+/admin/edit-medias:
+  controller: Media
+  action: editMedia
+  label: Modifier un média
+
+/admin/delete-media:
+  controller: Media
+  action: deleteMedia
 
 /admin/roles:
   controller: Role
@@ -165,6 +190,12 @@
   action: editrole
   label: Modifier un role
 
+/admin/delete-role:
+  controller: Role
+  action: deleteRole
+
+
+
 /admin/template:
   controller: Template
   action: default
@@ -175,6 +206,11 @@
     listId: management
     icon: icon_page
 
+/admin/template-select:
+  controller: Template
+  action: change
+  label: Templates
+
 /admin/menu-management:
   controller: Menu
   action: default
@@ -184,16 +220,6 @@
     min-statut: true
     listId: management
     icon: icon_menu
-
-/admin/newsletter:
-  controller: Newsletter
-  action: default
-  label: Newsletter
-  menuData:
-    visible: true
-    min-statut: true
-    listId: management
-    icon: icon_newsletter
 
 /:
   controller: WebAccess
@@ -218,6 +244,11 @@
 /admin/profile:
   controller: Profile
   action: default
+  label: Profil
+
+/admin/password-change:
+  controller: Profile
+  action: changePassword
   label: Profil
 ### ### ###
 
@@ -277,10 +308,14 @@
   controller: Installer
   action: setup
   label: Installation
-  freeAccess: true
-  menuData:
-    visible: false
-    min-statut: true
-    listId: installer
-    icon: icon_settings
+
+/make-install:
+  controller: Installer
+  action: makeInstall
+  label: Installation
 ### ### ###
+
+/temporary-install:
+  controller: Installer
+  action: temporaryInstall
+  label: Installation

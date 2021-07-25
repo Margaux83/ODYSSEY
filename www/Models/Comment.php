@@ -119,6 +119,10 @@ class Comment extends Database
         $this->isVerified = $isVerified;
     }
 
+    /**
+     * @return array
+     * Recovering information from comments that are not deleted and that can be displayed on the views and on the front
+     **/
     public function getAllComments()
     {
         $results = $this->query(
@@ -131,12 +135,12 @@ class Comment extends Database
             $article = new Article();
             foreach ($results as $key => $result) {
                 if (!empty($result['id_User'])) {
-                    $userSelected = $user->query(['lastname', 'firstname'])[0];
+                    $userSelected = $user->query(['firstname', 'lastname'], ['id' => $result['id_User']])[0];
                     $results[$key]['lastname'] = $userSelected['lastname'];
                     $results[$key]['firstname'] = $userSelected['firstname'];
                 }
                 if (!empty($result['id_Article'])) {
-                    $articleSelected = $article->query(['title'])[0];
+                    $articleSelected = $article->query(['title'],['id' => $result['id_Article']])[0];
                     $results[$key]['title'] = $articleSelected['title'];
                 }
             }
@@ -145,6 +149,10 @@ class Comment extends Database
         return $results;
     }
 
+    /**
+     * @param $idArticle
+     * @return array
+     */
     public function buildFormPostFront($idArticle)
     {
         return [

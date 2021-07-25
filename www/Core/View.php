@@ -2,23 +2,27 @@
 
 namespace App\Core;
 
-use App\Core\Form;
-use App\Core\MenuBuilder;
-
 class View
 {
-	// front_tpl.php
-	private $template; // front ou back
-	// default_view.php
-	private $view; // default, dashboard, profile, ....
+	private $template;
+	private $view;
 	private $data = [];
 
-	public function __construct($view="default", $template="front"){
+	public function __construct($view="default", $template="front", $templateView = false){
 		$this->setTemplate($template);
 		$this->setView($view);
-		//$this->setErrorView($view);
+
+		if ($templateView !== false) {
+			if(file_exists($templateView)){
+				$this->view = $templateView;
+			}
+		}
 	}
 
+    /**
+     * @param string $nameFile
+     * Return the file passed in parameter and add it to a view or a template
+     */
 	public static function getAssets(string $nameFile){
 		$explodedNameFile = explode(".", trim($nameFile));
 		$nameFileType = array_pop($explodedNameFile);
@@ -27,7 +31,7 @@ class View
 			case "css" :
 				echo Routing::getBaseUrl() . '/public/styles/'.$nameFile;
 				return;
-			case ($nameFileType == "png" || $nameFileType == "jpg" || $nameFileType == "svg") :
+			case ($nameFileType == "png" || $nameFileType == "jpg" || $nameFileType == "svg" || $nameFileType == "jpeg") :
 				echo Routing::getBaseUrl() . '/public/images/'.$nameFile;
 				return;
 			case ($nameFileType == "js") :
@@ -38,11 +42,18 @@ class View
 		}
 	}
 
+    /**
+     * Return the title of the page
+     */
     public static function getActualPageTitle() {
 		$actualPageInfo = MenuBuilder::getActualPageInfo();
 		echo $actualPageInfo['label'] ?? '';
     }
 
+    /**
+     * @param $template
+     * Return the template passed in parameter
+     */
 	public function setTemplate($template){
 		if(file_exists("Views/Templates/".$template."_tpl.php")){
 			$this->template = "Views/Templates/".$template."_tpl.php";
@@ -51,6 +62,10 @@ class View
 		}
 	}
 
+    /**
+     * @param $view
+     * Return the view passed in parameter
+     */
 	public function setView($view){
 		if(file_exists("Views/".$view."_view.php")){
 			$this->view = "Views/".$view."_view.php";
@@ -73,10 +88,7 @@ class View
 		$this->data[$key] = $value;
 	}
 
-
-
 	public function __destruct(){
-		// $this->data = ["pseudo"=>"Prof"];  ----> $pseudo = "Prof";
 		extract($this->data);
 		include $this->template;
 	}

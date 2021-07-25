@@ -18,9 +18,7 @@ class Page extends Database
     protected $uri;
 
 
-    /**
-     * User constructor.
-     */
+
     public function __construct(){
         parent::__construct();
     }
@@ -30,9 +28,12 @@ class Page extends Database
         return $this->id;
     }
 
+    /**
+     * @param $id
+     * When an id is passed in parameter, we get the information of the corresponding page
+     */
     public function setId($id){
         $this->id = $id;
-        //Il va chercher en BDD toutes les informations de l'utilisateur
         $data = array_diff_key(
             get_object_vars($this),
             get_class_vars(get_parent_class())
@@ -209,7 +210,9 @@ class Page extends Database
         return $this->uri;
     }
 
-    //Formbuilder des pages
+    /**
+     * @return array
+     */
     public function buildFormPage() {
         $form = new Form();
         return [
@@ -233,16 +236,7 @@ class Page extends Database
                     "required"=>true,
                     "error"=>"Le titre de la page doit faire entre 2 et 255 caractères",
                     "placeholder"=>"Votre titre",
-                    "defaultValue"=>$this->getTitle()
-                ],
-                "content"=>[
-                    "type"=>"textarea",
-                    "label"=>"",
-                    "lengthMin"=>"2",
-                    "error"=>"Le contenu de la page doit faire entre 2 et 255 caractères",
-                    "id"=>"full-featured-non-premium",
-                    "placeholder"=>"Votre contenu",
-                    "defaultValue"=>$this->getContent()
+                    "defaultValue"=> (empty($this->getTitle())) ? (empty($_POST['title'])) ? '' : $_POST['title'] : $this->getTitle()
                 ],
                 "uri"=>[
                     "type"=>"text",
@@ -252,19 +246,28 @@ class Page extends Database
                     "required"=>true,
                     "error"=>"Votre uri doit faire entre 2 et 255 caractères",
                     "placeholder"=>"Uri",
-                    "defaultValue"=>ltrim($this->getUri(), '/')
+                    "defaultValue"=> (empty($this->getUri())) ? (empty($_POST['uri'])) ? '' : $_POST['uri'] : substr($this->getUri(), 1)
+                ],
+                "content"=>[
+                    "type"=>"textarea",
+                    "label"=>"",
+                    "lengthMin"=>"2",
+                    "error"=>"Le contenu de la page doit faire entre 2 et 255 caractères",
+                    "id"=>"full-featured-non-premium",
+                    "placeholder"=>"Votre contenu",
+                    "defaultValue"=> (empty($this->getContent())) ? (empty($_POST['content'])) ? '' : $_POST['content'] : $this->getContent()
                 ],
                 "description"=>[
                     "type"=>"text",
-                    "label"=>"Description",
-                    "lengthMax"=>"255",
+                    "label"=>"Description (SEO)",
                     "lengthMin"=>"2",
+                    "lengthMax"=>"150",
                     "error"=>"La description de la page doit faire entre 2 et 255 caractères",
                     "id"=>"content",
-                    "required"=>false,
+                    "required"=>true,
                     "class"=>"textareaComment d-flex",
                     "placeholder"=>"Votre contenu",
-                    "defaultValue"=>$this->getDescription()
+                    "defaultValue"=> (empty($this->getDescription())) ? (empty($_POST['description'])) ? '' : $_POST['description'] : $this->getDescription()
                 ],
                 "status"=>[
                     "type"=>"select",
@@ -291,19 +294,26 @@ class Page extends Database
         ];
     }
 
-    //Fonction qui va chercher les informations des pages enregistrées et qui ne sont pas supprimées
-    public function getAllPages()
+    /**
+     * @param null $id_user
+     * @return array
+     * Function that fetches information from registered pages that are not deleted
+     */
+    public function getAllPages($id_user = null): array
     {
-        $db = new Database("Page");
-        $results = $db->query(
+        $filter["isDeleted"] = "0";
+        if(!empty($id_user)) {
+            $filter["id_User"] = $id_user;
+        }
+        $results = Page::query(
             ["id" ,"title", "description", "status", "uri", "creationDate", "updateDate", "id_User"],
-            ["isDeleted" => "0"]
+            $filter
         );
         if (count($results)) {
             $user = new User();
             foreach ($results as $key => $result) {
                 if (!empty($result['id_User'])) {
-                    $userSelected = $user->query(['firstname', 'lastname'])[0];
+                    $userSelected = $user->query(['firstname', 'lastname'], ['id' => $result['id_User']])[0];
                     $results[$key]['firstname'] = $userSelected['firstname'];
                     $results[$key]['lastname'] = $userSelected['lastname'];
                 }

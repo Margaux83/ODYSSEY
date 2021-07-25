@@ -76,6 +76,9 @@ class Menu extends Database
         return $this->isdeleted;
     }
 
+    /**
+     * @return array
+     */
     public function buildCreationForm()
     {
         return [

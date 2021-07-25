@@ -13,11 +13,12 @@ class Routing{
 
 
     public function __construct($uri){
+        if(!Installer::checkIfEnvExist() && $uri != "/installer" && $uri != "/make-install") $this->redirectToInstaller();
+
         if (!file_exists(self::$routesPath)){
             die("Error : file ".self::$routesPath." don't exist.");
         }
         $this->routes = yaml_parse_file(self::$routesPath);
-        //Faut vérifier qu'il y a un controller pour cette route
         if(!empty($this->routes[$uri])){
             $this->setController($this->routes[$uri]["controller"]);
             $this->setAction($this->routes[$uri]["action"]);
@@ -29,44 +30,71 @@ class Routing{
 
     }
 
-
-    //PascalCase pour une class
+    /**
+     * @param $controller
+     */
     public function setController($controller){
         $this->controller=ucfirst(mb_strtolower($controller));
     }
 
+    /**
+     * @param $action
+     */
     public function setAction($action){
         $this->action=$action."Action";
     }
 
+    /**
+     * @return string
+     */
     public function getController(){
         return $this->controller;
     }
 
+    /**
+     * @return string
+     */
     public function getAction(){
         return $this->action;
     }
 
+    /**
+     * @return string
+     */
     public function getControllerWithNamespace(){
-        return APP_NAMESPACE.$this->controller;
+        return "\App\\".$this->controller;
     }
 
+    /**
+     * @return array|false|mixed
+     */
     public function getMenuData(){
         return $this->routes;
     }
 
+    /**
+     * @return false|mixed
+     */
     public static function getListOfRoutes() {
         return yaml_parse_file(self::$routesPath);
     }
 
+    /**
+     * @return string
+     */
     public static function getBaseUrl() {
         return $_SERVER['REQUEST_SCHEME'] . '://' . $_SERVER['HTTP_HOST'];
     }
 
-    /*
-        /list-des-utilisateurs:
-          controller: Security
-          action: listofusers
+    public function redirectToInstaller() {
+        header('location: /installer');
+        exit(0);
+    }
+
+    /**
+     * @param $controller
+     * @param $action
+     * @return mixed
      */
     public function getUri($controller, $action){
 
@@ -77,24 +105,64 @@ class Routing{
         die("Aucun route ne correspond à ".$controller." -> ".$action );
     }
 
+    /**
+     * @param $loc
+     * @return string
+     */
+    static function writeUrlSitemap($loc) {
+        return '<url>
+                    <loc>'.$loc.'</loc>
+                    <lastmod>'.date('c',time()).'</lastmod>
+                </url>';
+    }
 
-}
-/*
-if(file_exists("routes.yml")){
-	$listOfRoutes = yaml_parse_file("routes.yml");
-	echo "<pre>";
-	print_r($listOfRoutes);
-	if(!empty($listOfRoutes[$uri])
-		&& !empty($listOfRoutes[$uri]["controller"])
-		&& !empty($listOfRoutes[$uri]["action"])){
+    /**
+     * Returns the elements to put in the sitemap.xml coming from the public roads included in the routes.yml file
+     * @param $routes
+     * @param $routes_exclude
+     * @return string
+     */
+    static function getBaseRouteSitemap($routes, $routes_exclude): string
+    {
+        $sitemap = "";
 
-		$c = $listOfRoutes[$uri]["controller"]."Controller";
-		$a = $listOfRoutes[$uri]["action"]."Action";
-		//Est-ce que j'ai les droits, si ce n'est pas le cas erreur access denied : 403
-	}else{
-		die("Erreur 404");
-	}
-}else{
-	die("Le fichier de routing n'existe pas");
+        foreach ($routes as $key => $route) {
+            if(!in_array($key, $routes_exclude) && !strpos($key, 'admin')) {
+                $loc = self::getBaseUrl() . $key;
+                //$priority = "1.0"; Impossible de déterminer une priorité pertinente sans crawler
+                $sitemap .= self::writeUrlSitemap($loc);
+            }
+        }
+        return $sitemap;
+    }
+
+    /**
+     * Returns the elements to put in the sitemap.xml coming from the routes coming from the articles and the pages created from the CMS
+     * @return string
+     */
+    static function getDynamicSitemap(): string
+    {
+        $sitemap = "";
+
+        $article = new \App\Models\Article();
+        $page = new \App\Models\Page();
+        $all_articles = $article->query(
+            ["uri"],
+            ["isDeleted" => "0"]
+        );
+        $all_pages = $page->query(
+            ["uri"],
+            ["isDeleted" => "0"]
+        );
+
+        foreach($all_articles as $article) {
+            $loc = self::getBaseUrl() . $article['uri'];
+            $sitemap .= self::writeUrlSitemap($loc);
+        }
+        foreach($all_pages as $page) {
+            $loc = self::getBaseUrl() . $page['uri'];
+            $sitemap .= self::writeUrlSitemap($loc);
+        }
+        return $sitemap;
+    }
 }
-*/

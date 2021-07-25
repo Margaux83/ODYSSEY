@@ -2,24 +2,26 @@
 namespace App;
 
 
-use App\Core\Routing; 
+use App\Core\Routing;
 use App\Core\ConstantManager;
 use App\Core\MenuBuilder;
 use App\Core\View;
 use App\Core\Security;
 use App\Core\FrontPage;
 use App\Core\Error;
+use App\Core\Installer;
 
 // Class PHPMailer
 require "Autoloader.php";
 Autoloader::register();
-new ConstantManager();
 
 date_default_timezone_set('Europe/Paris');
 
 $uriExploded = explode("?", $_SERVER["REQUEST_URI"]);
 $uri = $uriExploded[0];
-
+if($uri != "/make-install") {
+    new ConstantManager();
+}
 if (strpos($uri, '/actionfront/')) {
     $uri = '/actionfront' . explode("actionfront", $uri)[1];
 }
@@ -42,8 +44,7 @@ if( file_exists("./Controllers/".$c.".php")){
 		if(method_exists($cObject, $a)){
 			//$a = loginAction // defaultAction
             $security = Security::getInstance();
-            if(!$security->isConnected()
-                && MenuBuilder::needToBeConnected()){
+            if(!$security->isConnected() && MenuBuilder::needToBeConnected() && !Installer::checkIfEnvExist()){
                header('Location: /login');
             }else {
                 if(!Security::isAuthorized($uri)) {
@@ -51,19 +52,16 @@ if( file_exists("./Controllers/".$c.".php")){
                     header('location: /admin/dashboard');
                     session_write_close();
                 } else {
-
                     $cObject->$a();
                 }
             }
-    
-		}else{
+		} else {
             Error::errorPage(404, 'La page n\'existe pas');
         }
-
-    }else{
+    } else {
         die("La classe ".$c." n'existe pas");
     }
-}else {
+} else {
     FrontPage::findContentToShow($uri);
 }
 

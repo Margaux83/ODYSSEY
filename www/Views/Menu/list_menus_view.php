@@ -168,10 +168,10 @@
             if (selectedObject) {
                 document.getElementById(`ody_menuChecklist_${contentSelected.object.toLowerCase()}_${contentSelected.id}`).checked = true;
                 htmlContentSelectedMenu.push(`<li id="${contentSelected.id}" draggable="true">
-                    <div class="menuManagementListContent">
+                    <article class="menuManagementListContent">
                         <p>${selectedObject.title}</p>
                         <p>${contentSelected.object} : ${selectedObject.uri}</p>
-                    </div>
+                    </article>
                     <img onclick="ody_removeMenuObject(\'${contentSelected.id}\', \'${contentSelected.object}\')" src=<?php App\Core\View::getAssets("icons/times-solid.svg")?> alt="Supprimer"/>
                 </li>`);
             }else {

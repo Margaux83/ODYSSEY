@@ -12,7 +12,9 @@
     <form id="role-form" class="roles_edit" method="post" action="">
 
         <label>Titre du rôle</label>
-        <input type="text" class="form-control" name="name" value="<?= (!empty($_GET['role']) ? $roleResult['name'] : '')?>" required>
+        <input type="text" class="form-control" name="name" value="<?= (!empty($_GET['role']) ? $roleResult['name'] : '')?>" required><br>
+        <input type="checkbox" id="selectall" name="values[]" value="1">
+        <label for="">Tous sélectionner</label>
 
         <?php foreach($rolesList as $role => $role_data) { ?>
             <?php if(isset($role_data['title'])) { ?>
@@ -33,3 +35,10 @@
     <button onclick="window.location='/admin/roles'">Retour</button>
 
 </section>
+<script src=<?php App\Core\View::getAssets("jquery-3.3.1.js")?>></script>
+
+<script>
+    $('#selectall').click(function() {
+        $(this.form.elements).filter(':checkbox').prop('checked', this.checked);
+    });
+</script>

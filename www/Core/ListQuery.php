@@ -4,7 +4,13 @@ namespace App\Core;
 
 class ListQuery
 {
-    public static function getSimpleList($elementQuery) {
+
+    /**
+     * @param $elementQuery
+     * @return array|string[]
+     * TODO : Mettre un commentaire d'explication
+     */
+    public static function getSimpleList($elementQuery, $elementFilters = []) {
         $legendHtml = '<li class="legend">';
 
         $elementClass = "App\\Models\\".$elementQuery['element'];
@@ -12,7 +18,7 @@ class ListQuery
         if (class_exists($elementClass)){
             $entity = new $elementClass;
 
-            $resultsQuery = $entity->query(array_keys($elementQuery['columns']));
+            $resultsQuery = $entity->query(array_keys($elementQuery['columns']), $elementQuery['filter'] ?? []);
         }else {
             return [];
         }
@@ -48,12 +54,12 @@ class ListQuery
                         } 
                         
                         $resultHtml .= '<p class="flex-weight-'.($column['size'] ? $column['size'] : 1).'">'
-                                .implode(' ', $resultComboString)
+                                .htmlspecialchars(implode(' ', $resultComboString))
                             .'</p>';
                     }
                 }else {
                     $resultHtml .= '<p class="flex-weight-'.($column['size'] ? $column['size'] : 1).'">'
-                            .$result[$index]
+                            .htmlspecialchars($result[$index])
                         .'</p>';
                 }
                 $index ++;

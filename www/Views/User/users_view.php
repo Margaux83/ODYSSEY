@@ -8,27 +8,9 @@
 <section class="col-6" style="grid-column: 1 / 3; grid-row: 1 ;">
     <h1 class="titleSection"><img src=<?php App\Core\View::getAssets("icons/icon_user.png")?> alt="">Utilisateurs</h1>
     <div class="d-flex-wrap statisticsBasicContainer" id="dashboard-section-statisticsContainer">
-        <article class="statisticsBasic">
-            <h1>Utilisateurs</h1>
-            <div>
-                <h2 class="numberStat numberStat-negative">20</h2>
-                <p>Depuis hier</p>
-            </div>
-        </article>
-        <article class="statisticsBasic">
-            <h1>Connectés</h1>
-            <div>
-                <h2 class="numberStat numberStat-positive">13</h2>
-                <p>Depuis hier</p>
-            </div>
-        </article class="statisticsBasic">
-        <article class="statisticsBasic">
-            <h1>Augmentation inscriptions</h1>
-            <div>
-                <h2 class="numberStat numberStat-positive">15%</h2>
-                <p>Depuis la semaine dernière</p>
-            </div>
-        </article>
+        <?php foreach ($statistics as $key => $statistic) {
+            echo $statistic;
+        } ?>
     </div>
 </section>
 
@@ -42,9 +24,7 @@
             <th>Status</th>
             <th>Rôle</th>
             <th>Date d'inscription</th>
-            <th>Dernière connexion</th>
             <th>Action</th>
-
         </tr>
         </thead>
         <tbody>
@@ -65,10 +45,20 @@
                 <td>
                     <p class="listItem-cpt"><b><?= $user["email"] ?></b></p>
                 </td>
-                <td><?= $user["status"]?></td>
-                <td><?= $user["name"]?></td>
-                <td><?= $user["creationDate"]?></td>
-                <td><?= $user["lastConnexionDate"]?></td>
+                <td>
+                    <?php //Mettre le statut de l'user
+                    switch ($user["isVerified"]) {
+                        case 0:
+                            echo "Non vérifié";
+                            break;
+                        case 1:
+                            echo "Vérifié";
+                            break;
+                    }
+                    ?>
+                </td>
+                <td><?= $user['name'] ?></td>
+                <td><?= date("d/m/Y H:i", strtotime($user["creationDate"])) ?></td>
                 <td class="action-btn">
                     <div class="listItem-cpt listActions">
                         <a href="#" id="editUser" onclick="editUser(this)" data-id="<?= $user["id"] ?>">

@@ -1,6 +1,11 @@
 <?php
 namespace App\Core;
 
+/**
+ * Class Helpers
+ * @package App\Core
+ * Class that defines helper functions that can be used throughout the code
+ */
 class Helpers {
 
     public static function cleanFirstname($firstname) {
@@ -11,11 +16,19 @@ class Helpers {
         $_SESSION['alert']['danger'][] = $param;
     }
 
-    //dump le parametre
     public static function debug($param) {
         echo '<pre>';
         print_r($param);
         echo '</pre>';
+    }
+
+    public function filter(&$value) {
+        $value = htmlspecialchars($value, ENT_QUOTES, 'UTF-8');
+    }
+
+    static function cleanArray($array) {
+        array_walk_recursive($array, array(new Helpers() , 'filter'));
+        return $array;
     }
 
     /**
