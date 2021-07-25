@@ -3,7 +3,6 @@
 
 namespace App;
 
-use App\Core\Database;
 use App\Core\Form;
 use App\Core\Security;
 use App\Core\View;
@@ -14,7 +13,7 @@ class Article
 {
 
     /**
-     * Display the list of registered and undeleted items in the database
+     * Display the list of registered and undeleted articles in the database
      * Display of the list of articles added by the connected user
      */
     public function defaultAction()
@@ -33,7 +32,7 @@ class Article
 
 
     /**
-     * Function to add an item to the database
+     * Function to add an article to the database
      * With registration of the category of the article
      * We check if the uri already exists in the database, if so we send an error message
      * We add the prefix "/article/" before the uri to differentiate the uri of the articles and the pages

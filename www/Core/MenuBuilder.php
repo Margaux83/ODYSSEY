@@ -9,18 +9,33 @@ class MenuBuilder
     private static $_menuData;
     private static $_actualUri;
 
+    /**
+     * @return mixed
+     */
     public function getMenuData(){
         return self::$_menuData;
     }
+
+    /**
+     * @return mixed
+     */
     public function getActualUri(){
         return self::$_actualUri;
     }
 
+    /**
+     * MenuBuilder constructor.
+     * @param $menuData
+     * @param $actualUri
+     */
     private function __construct($menuData, $actualUri) {
         self::$_menuData = $menuData;
         self::$_actualUri = $actualUri;
     }
 
+    /**
+     * @return bool
+     */
     public static function needToBeConnected() {
         $pageInfo = self::getActualPageInfo();
         if (!empty($pageInfo['freeAccess'])){
@@ -29,6 +44,9 @@ class MenuBuilder
         return true;
     }
 
+    /**
+     * @return mixed
+     */
     public static function getActualPageInfo() {
         $menuData = self::getMenuData();
         if (!empty($menuData)){
@@ -39,6 +57,11 @@ class MenuBuilder
         }
     }
 
+    /**
+     * @param array $menuData
+     * @param string $actualUri
+     * @return MenuBuilder|null
+     */
     public static function getInstance($menuData = [], $actualUri = '') {
         if(is_null(self::$_instance)) {
             self::$_instance = new MenuBuilder($menuData, $actualUri);  
@@ -48,6 +71,9 @@ class MenuBuilder
         return self::$_instance;
     }
 
+    /**
+     * TODO : Mettre un commentaire d'explication
+     */
     public static function createMenu(){
         $menuData = self::$_menuData;
         $actualUri = self::$_actualUri;

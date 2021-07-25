@@ -9,19 +9,16 @@ class Role extends Database
     protected $name;
     protected $value;
 
-    /**
-     * User constructor.
-     */
     public function __construct(){
         parent::__construct();
     }
 
     /**
      * @param $id
+     * When an id is passed in parameter, we get the information of the corresponding role
      */
     public function setId($id){
         $this->id = $id;
-        //Il va chercher en BDD toutes les informations de l'utilisateur
         $data = array_diff_key(
             get_object_vars($this),
             get_class_vars(get_parent_class())
@@ -91,6 +88,10 @@ class Role extends Database
         return $this->value;
     }
 
+    /**
+     * @return array
+     * Function that fetches information from registered roles that are not deleted
+     */
     public function getAllRoles()
     {
         $db = new Database("Role");
@@ -100,6 +101,12 @@ class Role extends Database
         );
     }
 
+    /**
+     * @param $value
+     * @param $id
+     * @return false|mixed
+     * Function that fetches permissions from one role, the id of the role is passed in parameter
+     */
     public function getPerms($value, $id) {
         $db = new Database("Role");
         $result = $db->query(
@@ -110,6 +117,9 @@ class Role extends Database
         return $perms[$value] ?? false;
     }
 
+    /**
+     * @return array
+     */
     public function rolesList()
     {
         return [
@@ -217,7 +227,11 @@ class Role extends Database
         ];
     }
 
-    //Fonction qui permet de build les options du select du Role de l'user
+    /**
+     * @param null $selectedRoleId
+     * @return \string[][]
+     * Function to build the user's role select options
+     */
     public function buildAllRolesFormSelect($selectedRoleId = null) {
         $roles = $this->query(['id', 'name'], ['isDeleted'=>0]);
         $returnedArray = [

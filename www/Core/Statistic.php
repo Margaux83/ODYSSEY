@@ -3,7 +3,13 @@
 namespace App\Core;
 
 class Statistic {
-    
+
+    /**
+     * @param $elements
+     * @param string $intervalDays
+     * @return array
+     * TODO : Mettre un commentaire d'explication
+     */
     public static function getSimpleStatistics($elements, $intervalDays = '15') {
         $listStatistics = [];
         foreach ($elements as $key => $element) {

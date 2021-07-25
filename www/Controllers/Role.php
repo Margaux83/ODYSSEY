@@ -2,16 +2,16 @@
 
 namespace App;
 
-use App\Core\Form;
 use App\Core\View;
-use App\Models\User;
 use App\Models\Role as ModelRole;
-use App\Core\Helpers;
 use App\Core\Database;
-use function Sodium\add;
 
 class Role
 {
+
+    /**
+     * Display the list of registered and undeleted roles in the database
+     */
     public function defaultAction()
     {
         $role = new ModelRole;
@@ -21,6 +21,10 @@ class Role
         $view->assign("allRoles", $allRoles);
     }
 
+    /**
+     * Function to add a role and its permissions in the database
+     * The different permissions are added in an array in a json format
+     */
     public function addRoleAction()
     {
         $role = new ModelRole;
@@ -40,6 +44,11 @@ class Role
 
     }
 
+    /**
+     * Function to edit a role and its permissions
+     * The different permissions are added in an array in a json format
+     * Retrieve and display the information of the role in the form thanks to the setId which takes in parameter the id of the role
+     */
     public function editRoleAction()
     {
         $role = new ModelRole;
@@ -65,6 +74,9 @@ class Role
         $view->assign("roleResult", $result[0]);
     }
 
+    /**
+     * Deleting a role using its Id
+     */
     public function deleteRoleAction() {
         $role = new ModelRole;
         if (!empty($_POST)) {

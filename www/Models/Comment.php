@@ -140,7 +140,7 @@ class Comment extends Database
                     $results[$key]['firstname'] = $userSelected['firstname'];
                 }
                 if (!empty($result['id_Article'])) {
-                    $articleSelected = $article->query(['title'])[0];
+                    $articleSelected = $article->query(['title'],['id' => $result['id_Article']])[0];
                     $results[$key]['title'] = $articleSelected['title'];
                 }
             }
@@ -149,6 +149,10 @@ class Comment extends Database
         return $results;
     }
 
+    /**
+     * @param $idArticle
+     * @return array
+     */
     public function buildFormPostFront($idArticle)
     {
         return [

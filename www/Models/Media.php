@@ -110,6 +110,9 @@ class Media extends Database {
         return $this->isdeleted;
     }
 
+    /**
+     * @return array
+     */
     public function buildFormMedia()
     {
         return [
@@ -156,7 +159,9 @@ class Media extends Database {
         ];
     }
 
-
+    /**
+     * @return array
+     */
     public function buildFormMediaEdit()
     {
         return [

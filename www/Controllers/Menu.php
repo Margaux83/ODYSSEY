@@ -9,6 +9,12 @@ use App\Models\Article;
 
 class Menu
 {
+
+    /**
+     * Display of the Menu page from which you can add a new menu
+     * The header and footer menu already exist
+     * Visible pages and articles are displayed on the view so you can add them to a new menu with the checkout boxes
+     */
     public function defaultAction() {
         if (!empty($_POST)) {
             if (!empty($_POST['contentMenu'])) {

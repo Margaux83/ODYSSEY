@@ -91,6 +91,9 @@ class Category extends Database
         return $this->isdeleted;
     }
 
+    /**
+     * @return array
+     */
     public function buildFormCategory()
     {
         return [

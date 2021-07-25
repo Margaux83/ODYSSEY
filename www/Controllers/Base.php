@@ -14,7 +14,9 @@ class Base{
         header('location: /admin/dashboard');
     }
 
-	//Must be connected
+    /**
+     * Returns the list of undeleted statistics, users, pages, articles and comments on the dashboard page
+     */
 	public function dashboardAction(){
 		$security = Security::getInstance();
 		if(!$security->isConnected()){
@@ -148,6 +150,9 @@ class Base{
 		$view->assign("users", $listUsers);
 	}
 
+    /**
+     * Returns the sitemap of the CMS, it is possible to exclude uri from the sitemap
+     */
     public function sitemapAction() {
         header('Content-Type: text/xml; charset=UTF-8');
         //echo '<pre>';
@@ -159,7 +164,6 @@ class Base{
             "/newpasswordconfirm",
             "/logout",
             "/actionfront/postcommentfront",
-
         ];
         $sitemap = "";
         $sitemap .= '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">';
@@ -167,7 +171,6 @@ class Base{
         $sitemap .= Routing::getDynamicSitemap();
 
         $sitemap .= '</urlset>';
-        //var_dump($sitemap);
         echo $sitemap;
 	}
 }

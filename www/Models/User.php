@@ -19,9 +19,6 @@ class User extends Database
     protected $token;
     protected $isVerified;
 
-    /**
-     * User constructor.
-     */
     public function __construct($idUser = null){
         parent::__construct();
         if(!empty($idUser)) {
@@ -31,6 +28,7 @@ class User extends Database
 
     /**
      * @param $id
+     * When an id is passed in parameter, we get the information of the corresponding user
      */
     public function setId($id){
         $this->id = $id;
@@ -248,6 +246,12 @@ class User extends Database
         return $this->isVerified;
     }
 
+    /**
+     * @param $password
+     * @param $passwordConfirm
+     * @return bool
+     * Function used to check that the password and the confirmation password passed in parameter are identical and that they are longer than 8 characters
+     */
     public function verifyPassword($password, $passwordConfirm){
         if($password !== $passwordConfirm) {
             $_SESSION['alert']['danger'][] = 'Les deux mots de passe ne correspondent pas';
@@ -264,6 +268,11 @@ class User extends Database
         }
     }
 
+    /**
+     * @param $email
+     * @return bool
+     * Function used to check that the email address passed in parameter does not already exist in the database
+     */
     public function verifyEmail($email){
         $db = new Database("User");
         $result = $db->query(
@@ -280,6 +289,9 @@ class User extends Database
         }
     }
 
+    /**
+     * @return array
+     */
     public function buildFormProfile()
     {
         return [
@@ -613,6 +625,10 @@ class User extends Database
         ];
     }
 
+    /**
+     * @return array
+     * Recovery of the information of the users which are not deleted and which will be able to be posted on the views
+     */
     public function getAllUsers()
     {
         $results = $this->query(

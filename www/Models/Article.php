@@ -246,7 +246,7 @@ class Article extends Database
 
 
     /**
-     * Function that allows you to build the options of the item's status select
+     * Function that allows you to build the options of the article's status select
      **/
     public function buildAllStatusFormSelect() {
         $status = [
@@ -310,6 +310,9 @@ class Article extends Database
         return $returnedArray;
     }
 
+    /**
+     * @return array
+     */
     public function buildFormArticle()
     {
         $category = new Category();

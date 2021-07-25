@@ -1,8 +1,10 @@
 <?php
 namespace App\Core;
-use App\Core\Database;
 use App\Models\User;
 
+/*
+ * TODO : Mettre des commentaires d'explications
+ */
 class Installer {
 
     protected static $phpVersion = 7.2;
@@ -10,7 +12,6 @@ class Installer {
 
     public static function checkIfInstallPossible() {
         if(self::checkPhpVersion() && !self::checkIfEnvExist()) {
-            // A inverser checkIfEnvExist
             return true;
         }
         return false;

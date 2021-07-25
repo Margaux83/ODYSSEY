@@ -2,15 +2,10 @@
 
 namespace App\Core;
 
-use App\Core\Form;
-use App\Core\MenuBuilder;
-
 class View
 {
-	// front_tpl.php
-	private $template; // front ou back
-	// default_view.php
-	private $view; // default, dashboard, profile, ....
+	private $template;
+	private $view;
 	private $data = [];
 
 	public function __construct($view="default", $template="front", $templateView = false){
@@ -22,9 +17,12 @@ class View
 				$this->view = $templateView;
 			}
 		}
-		//$this->setErrorView($view);
 	}
 
+    /**
+     * @param string $nameFile
+     * Return the file passed in parameter and add it to a view or a template
+     */
 	public static function getAssets(string $nameFile){
 		$explodedNameFile = explode(".", trim($nameFile));
 		$nameFileType = array_pop($explodedNameFile);
@@ -44,11 +42,18 @@ class View
 		}
 	}
 
+    /**
+     * Return the title of the page
+     */
     public static function getActualPageTitle() {
 		$actualPageInfo = MenuBuilder::getActualPageInfo();
 		echo $actualPageInfo['label'] ?? '';
     }
 
+    /**
+     * @param $template
+     * Return the template passed in parameter
+     */
 	public function setTemplate($template){
 		if(file_exists("Views/Templates/".$template."_tpl.php")){
 			$this->template = "Views/Templates/".$template."_tpl.php";
@@ -57,6 +62,10 @@ class View
 		}
 	}
 
+    /**
+     * @param $view
+     * Return the view passed in parameter
+     */
 	public function setView($view){
 		if(file_exists("Views/".$view."_view.php")){
 			$this->view = "Views/".$view."_view.php";
@@ -65,24 +74,12 @@ class View
 		}
 	}
 
-    public function addModal($modal, $config = [])
-    {
-        $pathModal = "Views/modals/" . $modal . ".mod.php";
-        if (file_exists($pathModal)) {
-            include $pathModal;
-        } else {
-            die("Le modal n'existe pas :" . $pathModal);
-        }
-    }
 
 	public function assign($key, $value){
 		$this->data[$key] = $value;
 	}
 
-
-
 	public function __destruct(){
-		// $this->data = ["pseudo"=>"Prof"];  ----> $pseudo = "Prof";
 		extract($this->data);
 		include $this->template;
 	}

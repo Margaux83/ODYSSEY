@@ -7,6 +7,11 @@ class Database
     protected $pdo;
     protected $table;
 
+    /**
+     * Database constructor.
+     * @param null $class
+     * Login to the database
+     */
     public function __construct($class = null)
     {
         try {
@@ -19,7 +24,6 @@ class Database
             die ("Erreur SQL " . $e->getMessage());
         }
 
-        //echo get_called_class(); //  App\Models\User ici on peut récupérer le nom de la table
         $classExploded = $class !== null ? $class : explode("\\", get_called_class());
         $this->table = DBPREFIX . ($class !== null ? $class : end($classExploded));
 
@@ -30,6 +34,14 @@ class Database
         return array_keys(get_class_vars(__CLASS__));
     }
 
+    /**
+     * @param array $requestedParams
+     * @param array $filter
+     * @param string $filterString
+     * @param string $moreString
+     * @return array
+     * Function to create a SELECT request, $resuestedParams contains the columns that we want to return and the condition filters
+     */
     public function query($requestedParams = [], $filter = [], $filterString = '', $moreString = '')
     {
         $columnFilter = [];
@@ -40,7 +52,6 @@ class Database
                 } else {
                     $columnFilter[] = ltrim($key, $key[0]) . "!=:" . ltrim($key, $key[0]);
                 }
-                // $columnFilter[] = $key . "=:" . substr($key, strpos($key, '.') + 1);
             }
         }
         $sql = "SELECT " . implode(",", $requestedParams) . " FROM " . $this->table
@@ -63,11 +74,18 @@ class Database
         return $query->fetchAll();
     }
 
+    /**
+     * @return array
+     * Function to return de foreign key, used to save values in tables that contains foreign keys
+     */
     public function get_foreignKeys()
     {
         return [];
     }
 
+    /**
+     * Function to save information in the database, if an id exist, we execute an UPDATE request, if not we execute an INSERT INTO request
+     */
     public function save()
     {
         $data = array_diff_key(
@@ -117,6 +135,11 @@ class Database
         }
     }
 
+    /**
+     * @param $query
+     * @return bool
+     * Function to create the database
+     */
     public function createDatabase($query) {
         if(!empty($query)) {
             $query = $this->pdo->exec($query);
@@ -125,7 +148,10 @@ class Database
         return false;
     }
 
-    //On sélectionne l'id de la dernière entrée
+    /**
+     * @return array
+     * Select the id of the last entry
+     */
     public function getLastFromTable()
     {
         $selectLastId="SELECT id FROM " . $this->table . " ORDER BY id DESC LIMIT 1 ";
@@ -134,18 +160,30 @@ class Database
         return $querySelect->fetchAll();
     }
 
+    /**
+     * @param $id
+     * Function to "delete" an item, we set the isDeleted column to 1
+     */
     public function delete($id)
     {
         $query = $this->pdo->prepare("UPDATE " . $this->table . " SET isDeleted=1 WHERE id=" . $id);
         $query->execute();
     }
 
+    /**
+     * @param $id
+     * Function to verify an item (user or comment), we set the isVerified column to 1
+     */
     public function verify($id)
     {
         $query = $this->pdo->prepare("UPDATE " . $this->table . " SET isVerified=1 WHERE id=" . $id);
         $query->execute();
     }
 
+    /**
+     * @param array $data
+     * Function to update the data of an item
+     */
     public function updateWithData($data = [])
     {
         foreach ($data as $key => $value) {

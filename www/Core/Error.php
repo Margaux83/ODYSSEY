@@ -1,7 +1,6 @@
 <?php
 
 namespace App\Core;
-use App\Core\View;
 
 class Error 
 {
@@ -66,6 +65,11 @@ class Error
         '527' => '527: Railgun Error',
     ];
 
+    /**
+     * @param $responseCode
+     * @param string $messageSent
+     * Display of an error page with the error code and the corresponding message
+     */
     public static function errorPage($responseCode, $messageSent = ""){
         $responseMessage = $messageSent !== "" ? $messageSent : self::$_responseCodes[strval($responseCode)];
         header($responseMessage, true, $responseCode);
