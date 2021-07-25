@@ -313,7 +313,7 @@ class Article extends Database
     /**
      * @return array
      */
-    public function buildFormArticle()
+    public function buildFormArticle($csrf)
     {
         $category = new Category();
         return [
@@ -326,12 +326,15 @@ class Article extends Database
             ],
 
             "input"=>[
-
-                    "id"=>[
-                        "type"=>"hidden",
-                        "required"=>true,
-                        "defaultValue"=>$this->getID()
-                    ],
+                "id"=>[
+                    "type"=>"hidden",
+                    "required"=>true,
+                    "defaultValue"=>$this->getID()
+                ],
+                "csrf"=>[
+                    "type"=>"hidden",
+                    "defaultValue"=>$csrf
+                ],
                 "title"=>[
 
                     "type"=>"text",
