@@ -90,11 +90,11 @@ class MenuBuilder
                 //TODO : check the min-status
                 if ($data['menuData']['visible'] 
                     && (
-                        array_key_exists("all_perms", $perms)) 
+                        array_key_exists("all_perms", $perms) 
                         || array_key_exists($link, $perms)
                         || $link === '/admin/dashboard'
                         || $link === '/'
-                    ) {
+                    )) {
                     $subSectionSelected = false;
 
                     //Create the sub-menu
@@ -102,7 +102,8 @@ class MenuBuilder
                     if (!empty($data['menuData']['children'])) {
                         $htmlChildren = '<ul>';
                         foreach ($data['menuData']['children'] as $id => $linkChild) {
-                            if (array_key_exists($id, $perms)) {
+                            if (array_key_exists("all_perms", $perms) 
+                                || array_key_exists($linkChild, $perms)) {
                                 if ($actualUri === $linkChild) {
                                     $subSectionSelected = true;
                                 }
