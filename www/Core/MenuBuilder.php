@@ -67,6 +67,7 @@ class MenuBuilder
                         array_key_exists("all_perms", $perms)) 
                         || array_key_exists($link, $perms)
                         || $link === '/admin/dashboard'
+                        || $link === '/'
                     ) {
                     $subSectionSelected = false;
 
