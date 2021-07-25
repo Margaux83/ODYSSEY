@@ -55,21 +55,97 @@ class Base{
 						'combo' => [
 							'element' => 'User',
 							'columns' => ['firstname', 'lastname'],
-							'filterKey' => 'id'
-						]
+							'filterKey' => 'id',
+						],
+
+
 					],
 					'content' => [
 						'label' => 'Commentaires',
 						'size' => 3
 					],
-				]
+
+				],
+                'filter' => [
+                    'isDeleted' => 0
+                ]
+
 			]
 		);
 
-		//Affiche moi la vue dashboard;
+        $listUsers = ListQuery::getSimpleList(
+            [
+                'element' => 'User',
+                'columns' => [
+                    'id' => [
+                        'label' => 'Utilisateurs',
+                        'size' => 2,
+                        'combo' => [
+                            'element' => 'User',
+                            'columns' => ['firstname', 'lastname'],
+                            'filterKey' => 'id'
+                        ]
+                    ],
+                    'creationDate' => [
+                        'label' => 'Date d\'inscription',
+                        'size' => 3
+                    ]
+                ]
+            ]
+        );
+
+        $listArticles = ListQuery::getSimpleList(
+            [
+                'element' => 'Article',
+                'columns' => [
+                    'id_User' => [
+                        'label' => 'Utilisateurs',
+                        'size' => 2,
+                        'combo' => [
+                            'element' => 'User',
+                            'columns' => ['firstname', 'lastname'],
+                            'filterKey' => 'id'
+                        ]
+                    ],
+                    'title' => [
+                        'label' => 'Articles',
+                        'size' => 3
+                    ],
+                ],
+                'filter' => [
+                    'isDeleted' => 0
+                ]
+            ]
+        );
+
+        $listPages = ListQuery::getSimpleList(
+            [
+                'element' => 'Page',
+                'columns' => [
+                    'id_User' => [
+                        'label' => 'Utilisateurs',
+                        'size' => 2,
+                        'combo' => [
+                            'element' => 'User',
+                            'columns' => ['firstname', 'lastname'],
+                            'filterKey' => 'id'
+                        ]
+                    ],
+                    'title' => [
+                        'label' => 'Pages',
+                        'size' => 3
+                    ]
+                ],
+
+            ]
+        );
+
 		$view = new View("dashboard", "back");
 		$view->assign("statistics", $statisticsPages);
 		$view->assign("comments", $listComments);
+		$view->assign("articles", $listArticles);
+		$view->assign("pages", $listPages);
+		$view->assign("users", $listUsers);
 	}
 
     public function sitemapAction() {

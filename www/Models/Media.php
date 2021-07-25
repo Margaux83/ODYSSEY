@@ -22,6 +22,10 @@ class Media extends Database {
         return $this->id;
     }
 
+    /**
+     * @param $id
+     * Quand un id est passé en paramètre, on récupère les informations de le média correspondant
+     */
     public function setId($id){
         $this->id = $id;
 

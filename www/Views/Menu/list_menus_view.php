@@ -26,7 +26,7 @@
                         echo '<li id="ody_page_'.$page['id'].'">'
                             .'<input onchange="ody_toggleMenuObject(\''.$page['id'].'\', \'Page\')" id="ody_menuChecklist_page_'.$page['id'].'" type="checkbox">'
                             .'<div class="checklistContent">'
-                                . '<label for="ody_menuChecklist_page_'.$page['id'].'">'.$page['title'].'</label>'
+                                . '<label for="ody_menuChecklist_page_'.$page['id'].'">'.htmlspecialchars($page['title']).'</label>'
                             .'</div>'
                         .'</li>';
                     }

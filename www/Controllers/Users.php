@@ -18,14 +18,11 @@ class Users{
 
     public function defaultAction(){
 
-        //Instanciation de la classe User
         $user = new User();
         $allUsers = $user->getAllUsers();
 
-        //Affichage de la vue des utilisateur;
         $view = new View("User/users", "back");
 
-        //Statistique des utilisateurs
         $statisticsPages = Statistic::getSimpleStatistics(
             [
                 [
@@ -52,7 +49,6 @@ class Users{
             ]
         );
 
-        //Affiche la liste des utilisateurs enregistrés
         $view->assign('allUsers', $allUsers);
         $view->assign("statistics", $statisticsPages);
 
@@ -61,27 +57,20 @@ class Users{
     public function addUsersAction()
     {
         $security = Security::getInstance();
-        //Vérifie si l'utilisateur est connecté, sinon on le redirige sur la page de login
         if (!$security->isConnected()) {
             header('Location: /login');
         }
 
-        //Instanciation de la classe User
         $user = new User();
-        //Instanciation de la classe Mailer
         $mailer = new Mailer();
-        //Instanciation de la classe BodyMail
         $bodymail = new BodyMail();
 
-        //Affiche la vue pour ajouter un utilisateur
         $view = new View("User/add_users", "back");
         $token = rand(100000, 999999);
 
-        //Création du formBuilder des utilisateurs
-        $form = $user->buildFormRegisterBack();
+        $form = $user->buildFormUser();
         $view->assign("form", $form);
 
-        //On vérifie si des données sont bien envoyées
         if(!empty($_POST)){
             $view->assign("form", $form);
             $errors = Form::validator($_POST, $form);
@@ -108,7 +97,6 @@ class Users{
                 }
             }
             else{
-                //S'il y a des erreurs, on prépare leur affichage
                 $_SESSION['alert']['danger'][] = 'Les éléments du formulaire ne sont pas valides';
             }
 
@@ -124,14 +112,13 @@ class Users{
             return;
         }
 
-        //Affiche moi la vue pour confirmer son nouveau mot de passe
         $view = new View("User/newPasswordConfirm", "back_management");
+        $user = new User();
 
-        //On vérifie si des données sont bien envoyées
+        $form = $user->buildFormToken();
+        $view->assign("form", $form);
+
         if(!empty($_POST)) {
-            //Instanciation de la classe User
-            $user = new User();
-            //Instanciation de la classe Database avec la classe User passée en paramètre
             $db = new Database("User");
             $result = $db->query(
                 ["id"],
@@ -155,7 +142,6 @@ class Users{
                     session_write_close();
                 }
             } else {
-                //S'il y a des erreurs, on prépare leur affichage
                 $_SESSION['alert']['danger'][] = 'Token incorrect';
             }
         }
@@ -164,23 +150,17 @@ class Users{
     public function editUsersAction() {
 
         $security = Security::getInstance();
-        //Vérifie si l'utilisateur est connecté, sinon on le redirige sur la page de login
         if(!$security->isConnected()){
             header('Location: /login');
         }
 
-        //Instanciation de la classe User
         $user = new User();
-        //Affiche moi la vue pour modifier les utilisateurs
         $view = new View("User/edit_users", "back");
-        //On va récupérer les informations de l'utilisateur en envoyant l'id dans le setId
         $user->setId($_POST["id_user"]);
 
-        //Création du formBuilder des utilisateurs
-        $form = $user->buildFormUpdateBack();
+        $form = $user->buildFormUser();
         $view->assign("form", $form);
 
-        //On vérifie si des données sont bien envoyées et que le nom de famille n'est pas vide
         if(!empty($_POST) && !empty($_POST['lastname'])){
             $errors = Form::validator($_POST, $form);
             if(empty($errors)) {
@@ -191,7 +171,6 @@ class Users{
                     $user->setUpdateDate(date ('Y-m-d H:i:s'));
                     $user->setRole($_POST['role']);
 
-                    // Champs par défaut
                     $user->save();
 
                     $_SESSION['alert']['success'][] = 'Votre modification a bien été prise en compte';
@@ -199,7 +178,6 @@ class Users{
                     session_write_close();
                 }
             else{
-                //S'il y a des erreurs, on prépare leur affichage
                 $_SESSION['alert']['danger'][] = $errors[0];
             }
 
@@ -207,9 +185,7 @@ class Users{
     }
 
     public function deleteUserAction() {
-        //Instanciation de la classe User
         $user = new User();
-        //Suppression d'un utilisateur grâce à son id
         if (!empty($_POST)) {
             if (!empty($_POST['deleteUser'])) {
                 $user->delete($_POST['id_user']);

@@ -110,8 +110,7 @@
     label: Pages
     icon: icon_page
     children: [
-        /admin/add-page,
-        /admin/deleted-page
+        /admin/add-page
     ]
 
 /admin/add-page:
@@ -127,11 +126,6 @@
   controller: Page
   action: deletePage
 
-/admin/deleted-page:
-  controller: Page
-  action: listdeletedpage
-  label: Corbeille
-
 /admin/comments:
   controller: Comment
   action: default
@@ -142,6 +136,9 @@
     listId: basics
     icon: icon_comment
 
+/admin/delete-comment:
+  controller: comment
+  action: deleteComment
 
 /admin/medias:
   controller: Media

@@ -60,9 +60,10 @@ class Template
         $result = CoreTemplate::changeSelectedTheme($_GET['selected'] . '/');
 
         if ($result) {
+            $_SESSION['alert']['success'][] = 'Le template a bien été modifié !';
             header("Location: /admin/template");
         }else {
-            Error::errorPage(400, 'Le changement de template a échouée.');
+            Error::errorPage(400, 'Le changement de template a échoué.');
         }
     }
 }

@@ -30,7 +30,6 @@ class Security
 
         if (in_array($uri, self::$_alwaysAuthorizedUri)) return true;
         if(!(new Security)->isConnected()) return true;
-
         self::$_actualUri = $uri;
         $user = new User($_SESSION['userId']);
         $role = new Role();
@@ -72,7 +71,8 @@ class Security
 		);
 
 		if (count($result) && password_verify($pwdUserLogin, $result[0]["password"])){
-		    if($result[0]["isVerified"] == "1") {
+
+            if($result[0]["isVerified"] == "1") {
                     $_SESSION["userId"] = $result[0]["id"];
                     $_SESSION['alert']['success'][] = 'Vous êtes désormais connecté';
                     return true;

@@ -4,7 +4,6 @@
 namespace App\Models;
 
 use App\Core\Database;
-use App\Models\Category;
 
 class Article extends Database
 {
@@ -20,7 +19,6 @@ class Article extends Database
     protected $isdeleted;
     protected $id_user;
     protected $uri;
-   // protected $media;
 
     public function __construct(){
         parent::__construct();
@@ -31,6 +29,10 @@ class Article extends Database
         return $this->id;
     }
 
+    /**
+     * @param $id
+     * Quand un id est passé en paramètre, on récupère les informations de l'article correspondant
+     */
     public function setId($id){
         $this->id = $id;
 
@@ -67,22 +69,6 @@ class Article extends Database
             }
         }
     }
-
-    /**
-     * @param $id
-     * *
-    public function setID($id)
-    {
-        $this->id = $id;
-    }
-
-    /**
-     * @return mixed
-
-    public function getID()
-    {
-        return $this->id;
-    }*/
 
     /**
      * @param $title
@@ -265,7 +251,9 @@ class Article extends Database
         return ['category'];
     }
 
-    //Fonction qui va récupérer la catégorie de l'article sélectionné
+    /**
+     * Fonction qui va récupérer la catégorie de l'article sélectionné
+     **/
     public function searchCategory() {
         $categoryArticle = new Category_Article();
         $resultCategory = $categoryArticle->query(['id_category'], ['id_article' => $this->getId()])[0];
@@ -273,7 +261,9 @@ class Article extends Database
     }
 
 
-    //Fonction qui permet de build les options du select de Statut de l'article
+    /**
+     * Fonction qui permet de build les options du select de Statut de l'article
+     **/
     public function buildAllStatusFormSelect() {
         $status = [
             '' => [
@@ -305,7 +295,9 @@ class Article extends Database
         return $returnedArray;
     }
 
-    //Fonction qui permet de build les options du select de Visibilté de l'article
+    /**
+     * Fonction qui permet de build les options du select de Visibilté de l'article
+     **/
     public function buildAllVisibilityFormSelect() {
         $status = [
             '' => [
@@ -435,7 +427,11 @@ class Article extends Database
     }
 
 
-
+    /**
+     * @param null $id_user
+     * @return array
+     * Récupération des informations des articles qui ne sont pas supprimés et qui vont pouvoir être affichés sur les views
+     */
     public function getAllArticles($id_user = null): array
     {
         $filter["isDeleted"] = "0";
@@ -476,7 +472,9 @@ class Article extends Database
     }
 
 
-    //Retourne l'uri d'un article si elle existe déjà dans la base de données
+    /**
+     * Retourne l'uri d'un article si elle existe déjà dans la base de données
+     **/
     public function getUriForVerification($id,$uri)
     {
         return Article::query(
@@ -485,13 +483,20 @@ class Article extends Database
         );
     }
 
-    //Mise à jour de la catégorie d'un article
+    /**
+     * Mise à jour de la catégorie d'un article
+     **/
     public function updateCategoryOfArticle($id, $id_category)
     {
         $query = $this->pdo->prepare("UPDATE ody_Category_Article SET id_Category=".$id_category." WHERE id_Article=" . $id);
         $query->execute();
     }
 
+    /**
+     * @param $category
+     * @param $id_Article
+     * Sauvegarde de l'id de la catégrie et de l'id de l'article dans la table intermédiaire ody_Category_Article
+     */
     public function saveArticleCategory($category,$id_Article)
     {
         $category_article = new Category_Article();

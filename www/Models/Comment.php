@@ -119,6 +119,10 @@ class Comment extends Database
         $this->isVerified = $isVerified;
     }
 
+    /**
+     * @return array
+     * Récupération des informations des commentaires qui ne sont pas supprimés et qui vont pouvoir être affichés sur les views et sur le front
+     **/
     public function getAllComments()
     {
         $results = $this->query(
@@ -131,7 +135,7 @@ class Comment extends Database
             $article = new Article();
             foreach ($results as $key => $result) {
                 if (!empty($result['id_User'])) {
-                    $userSelected = $user->query(['lastname', 'firstname'])[0];
+                    $userSelected = $user->query(['firstname', 'lastname'], ['id' => $result['id_User']])[0];
                     $results[$key]['lastname'] = $userSelected['lastname'];
                     $results[$key]['firstname'] = $userSelected['firstname'];
                 }
