@@ -4,7 +4,6 @@
 namespace App\Models;
 
 use App\Core\Database;
-use App\Models\Category;
 
 class Article extends Database
 {
@@ -20,7 +19,6 @@ class Article extends Database
     protected $isdeleted;
     protected $id_user;
     protected $uri;
-   // protected $media;
 
     public function __construct(){
         parent::__construct();
@@ -31,6 +29,10 @@ class Article extends Database
         return $this->id;
     }
 
+    /**
+     * @param $id
+     * Quand un id est passé en paramètre, on récupère les informations de l'article correspondant
+     */
     public function setId($id){
         $this->id = $id;
 
@@ -67,22 +69,6 @@ class Article extends Database
             }
         }
     }
-
-    /**
-     * @param $id
-     * *
-    public function setID($id)
-    {
-        $this->id = $id;
-    }
-
-    /**
-     * @return mixed
-
-    public function getID()
-    {
-        return $this->id;
-    }*/
 
     /**
      * @param $title
@@ -265,7 +251,9 @@ class Article extends Database
         return ['category'];
     }
 
-    //Fonction qui va récupérer la catégorie de l'article sélectionné
+    /**
+     * Fonction qui va récupérer la catégorie de l'article sélectionné
+     **/
     public function searchCategory() {
         $categoryArticle = new Category_Article();
         $resultCategory = $categoryArticle->query(['id_category'], ['id_article' => $this->getId()])[0];
@@ -273,7 +261,9 @@ class Article extends Database
     }
 
 
-    //Fonction qui permet de build les options du select de Statut de l'article
+    /**
+     * Fonction qui permet de build les options du select de Statut de l'article
+     **/
     public function buildAllStatusFormSelect() {
         $status = [
             '' => [
@@ -305,7 +295,9 @@ class Article extends Database
         return $returnedArray;
     }
 
-    //Fonction qui permet de build les options du select de Visibilté de l'article
+    /**
+     * Fonction qui permet de build les options du select de Visibilté de l'article
+     **/
     public function buildAllVisibilityFormSelect() {
         $status = [
             '' => [
@@ -344,8 +336,6 @@ class Article extends Database
                 "Action"=>"",
                 "Submit"=>"Publier",
                 "class"=>"",
-                "enctype"=>"multipart/form-data"
-
             ],
 
             "input"=>[
@@ -365,7 +355,7 @@ class Article extends Database
                     "error"=>"Le titre de l'article doit faire entre 2 et 255 caractères",
                     "placeholder"=>"Votre titre",
 
-                    "defaultValue"=>$this->getTitle()
+                    "defaultValue"=> (empty($this->getTitle())) ? (empty($_POST['title'])) ? '' : $_POST['title'] : $this->getTitle()
                 ],
                 "uri"=>[
 
@@ -377,7 +367,7 @@ class Article extends Database
                     "class"=>"input",
                     "error"=>"L'uri l'article doit faire entre 2 et 255 caractères",
                     "placeholder"=>"Votre uri",
-                    "defaultValue"=>substr($this->getUri(), 9)
+                    "defaultValue"=> (empty(substr($this->getUri(), 9))) ? (empty($_POST['uri'])) ? '' : $_POST['uri'] : substr($this->getUri(), 9)
                 ],
                     "content"=>[
                         "type"=>"textarea",
@@ -385,21 +375,20 @@ class Article extends Database
                         "lengthMin"=>"2",
                         "error"=>"Le contenu de l'article doit faire entre 2 et 255 caractères",
                         "id"=>"full-featured-non-premium",
-                        "required"=>true,
                         "placeholder"=>"Votre contenu",
-                        "defaultValue"=>$this->getContent()
+                        "defaultValue"=> (empty($this->getContent())) ? (empty($_POST['content'])) ? '' : $_POST['content'] : $this->getContent()
                     ],
                     "description"=>[
                         "type"=>"textarea",
-                        "label"=>"Description",
-                        "lengthMax"=>"255",
+                        "label"=>"Description (SEO)",
                         "lengthMin"=>"2",
-                        "error"=>"La description de l'article doit faire entre 2 et 255 caractères",
+                        "lengthMax"=>"150",
+                        "error"=>"Le contenu de votre description doit faire entre 2 et 150 caractères",
                         "id"=>"content",
-                        "required"=>false,
+                        "required"=>true,
                         "class"=>"textareaComment d-flex",
                         "placeholder"=>"Votre contenu",
-                        "defaultValue"=>$this->getDescription()
+                        "defaultValue"=> (empty($this->getDescription())) ? (empty($_POST['description'])) ? '' : $_POST['description'] : $this->getDescription()
                     ],
                     "category"=>[
                         "type"=>"select",
@@ -438,5 +427,81 @@ class Article extends Database
     }
 
 
+    /**
+     * @param null $id_user
+     * @return array
+     * Récupération des informations des articles qui ne sont pas supprimés et qui vont pouvoir être affichés sur les views
+     */
+    public function getAllArticles($id_user = null): array
+    {
+        $filter["isDeleted"] = "0";
+        if(!empty($id_user)) {
+            $filter["id_User"] = $id_user;
+        }
+        $results = Article::query(
+            ["id" ,"uri", "title", "content", "description", "status", "creationDate", "updateDate", "isDeleted", "id_User"],
+            $filter
+        );
+        if (count($results)) {
+            $user = new User();
+            $category_article = new Category_Article();
+            $category = new Category();
+            // INNER JOIN ON TABLE ody_user
+            foreach ($results as $key => $result) {
+                if (!empty($result['id_User'])) {
+                    $userSelected = $user->query(['firstname', 'lastname'], ['id' => $result['id_User']])[0];
+                    $results[$key]['firstname'] = $userSelected['firstname'];
+                    $results[$key]['lastname'] = $userSelected['lastname'];
+                }
+            }
+            // DOUBLE JOIN ON TABLE ody_Category_Article and ody_Category
+            foreach ($results as $key => $result) {
+                $results_category = $category_article->query(
+                    ["id_Category"],
+                    ["id_Article" => $results[$key]['id']]
+                );
+                foreach($results_category as $result2) {
+                    if (!empty($result2["id_Category"])) {
+                        $categorySelected = $category->query(['label'], ['id' => $result2['id_Category']])[0];
+                        $results[$key]['label'] = $categorySelected['label'];
+                    }
+                }
+            }
+        }
+        return $results;
+    }
 
+
+    /**
+     * Retourne l'uri d'un article si elle existe déjà dans la base de données
+     **/
+    public function getUriForVerification($id,$uri)
+    {
+        return Article::query(
+            ["uri"],
+            ["isDeleted" => "0", "uri" => $uri, "!id" => $id]
+        );
+    }
+
+    /**
+     * Mise à jour de la catégorie d'un article
+     **/
+    public function updateCategoryOfArticle($id, $id_category)
+    {
+        $query = $this->pdo->prepare("UPDATE ody_Category_Article SET id_Category=".$id_category." WHERE id_Article=" . $id);
+        $query->execute();
+    }
+
+    /**
+     * @param $category
+     * @param $id_Article
+     * Sauvegarde de l'id de la catégrie et de l'id de l'article dans la table intermédiaire ody_Category_Article
+     */
+    public function saveArticleCategory($category,$id_Article)
+    {
+        $category_article = new Category_Article();
+        $category_article->setIdCategory($category);
+        $category_article->setIdArticle($id_Article);
+        $category_article->save();
+    }
 }

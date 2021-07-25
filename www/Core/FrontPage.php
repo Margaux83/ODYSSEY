@@ -6,6 +6,7 @@ use App\Models\Article;
 use App\Core\View;
 use App\Core\Form;
 use App\Core\Error;
+use App\Core\Template;
 use App\Models\User;
 use App\Models\Page;
 use App\Models\Menu;
@@ -13,11 +14,11 @@ use App\Models\Comment;
 
 class FrontPage extends Database
 {
-    private static $_themeSelected = 'theme_classic/';
+    private static $_themeSelected;
     private static $_actualUri;
 
     public static function getTemplateCss() {
-        return self::$_themeSelected.'front.css';
+        return 'themes/'.Template::getSelectedTheme().'front.css';
     }
 
     public static function getCommentarySection($idArticle = null) {
@@ -27,7 +28,7 @@ class FrontPage extends Database
         }
 
         $comment = new Comment();
-        $resultComments = $comment->query(['id', 'content', 'id_User', 'id_Comment'], ['id_article' => $idArticle]);
+        $resultComments = $comment->query(['id', 'content', 'id_User', 'id_Comment'], ['id_article' => $idArticle, 'isDeleted'=>0]);
 
         $html = '<section class="commentsSection"><h2>Commentaires ('
             . count($resultComments)
@@ -93,44 +94,50 @@ class FrontPage extends Database
 
     public static function findContentToShow($uri) {
         self::$_actualUri = $uri;
-        if ($uri === '/'){
-            $view = new View("front_home", "front");
-        }elseif (strpos($uri, 'article')) {
-            $article = new Article();
-            $resultArticle = $article->query(
-                ['id', 'title', 'content', 'description'],
-                [
-                    'uri' => $uri,
-                    'isVisible' => 1
-                ]
-            );
-            if ($resultArticle) {
-                $view = new View("front_page", "front");
-                $view->assign("idArticle", $resultArticle[0]['id']);
-                $view->assign("title", $resultArticle[0]['title']);
-                $view->assign("description", $resultArticle[0]['description']);
-                $view->assign("content", $resultArticle[0]['content']);
-            }else {
-                Error::errorPage(404, 'L\'article n\'existe pas');
-            }
-        }else {
-            $page = new Page();
-            $resultPage = $page->query(
-                ['id', 'title', 'content', 'description'],
-                [
-                    'uri' => $uri,
-                    'isVisible' => 1
-                    ]
-            );
 
-            if ($resultPage) {
-                $view = new View("front_page", "front");
-                $view->assign("idArticle", $resultPage[0]['id']);
-                $view->assign("title", $resultPage[0]['title']);
-                $view->assign("description", $resultPage[0]['description']);
-                $view->assign("content", $resultPage[0]['content']);
+        if (Template::searchPageSelectedTheme($uri)) {
+            $view = new View("front_home", "front", Template::searchPageSelectedTheme($uri));
+        }else {
+            if ($uri === '/'){
+                $view = new View("front_home", "front", Template::searchPageSelectedTheme('home'));
+                $view->assign("title", 'Accueil');
+            }elseif (strpos($uri, 'article')) {
+                $article = new Article();
+                $resultArticle = $article->query(
+                    ['id', 'title', 'content', 'description'],
+                    [
+                        'uri' => $uri,
+                        'isVisible' => 1
+                    ]
+                );
+                if ($resultArticle) {
+                    $view = new View("front_page", "front");
+                    $view->assign("idArticle", $resultArticle[0]['id']);
+                    $view->assign("title", $resultArticle[0]['title']);
+                    $view->assign("description", $resultArticle[0]['description']);
+                    $view->assign("content", $resultArticle[0]['content']);
+                }else {
+                    Error::errorPage(404, 'L\'article n\'existe pas');
+                }
             }else {
-                Error::errorPage(404, 'La page n\'existe pas');
+                $page = new Page();
+                $resultPage = $page->query(
+                    ['id', 'title', 'content', 'description'],
+                    [
+                        'uri' => $uri,
+                        'isVisible' => 1
+                        ]
+                );
+    
+                if ($resultPage) {
+                    $view = new View("front_page", "front");
+                    $view->assign("idArticle", false);
+                    $view->assign("title", $resultPage[0]['title']);
+                    $view->assign("description", $resultPage[0]['description']);
+                    $view->assign("content", $resultPage[0]['content']);
+                }else {
+                    Error::errorPage(404, 'La page n\'existe pas');
+                }
             }
         }
     }

@@ -85,24 +85,63 @@ class Routing{
         die("Aucun route ne correspond à ".$controller." -> ".$action );
     }
 
+    static function writeUrlSitemap($loc) {
+        return '<url>
+                    <loc>'.$loc.'</loc>
+                    <lastmod>'.date('c',time()).'</lastmod>
+                </url>';
+    }
 
-}
-/*
-if(file_exists("routes.yml")){
-	$listOfRoutes = yaml_parse_file("routes.yml");
-	echo "<pre>";
-	print_r($listOfRoutes);
-	if(!empty($listOfRoutes[$uri])
-		&& !empty($listOfRoutes[$uri]["controller"])
-		&& !empty($listOfRoutes[$uri]["action"])){
+    /**
+     * Returns the elements to put in the sitemap.xml coming from the public roads included in the routes.yml file
+     * @param $routes
+     * @param $routes_exclude
+     * @return string
+     */
+    static function getBaseRouteSitemap($routes, $routes_exclude): string
+    {
+        $sitemap = "";
 
-		$c = $listOfRoutes[$uri]["controller"]."Controller";
-		$a = $listOfRoutes[$uri]["action"]."Action";
-		//Est-ce que j'ai les droits, si ce n'est pas le cas erreur access denied : 403
-	}else{
-		die("Erreur 404");
-	}
-}else{
-	die("Le fichier de routing n'existe pas");
+        foreach ($routes as $key => $route) {
+            if(!in_array($key, $routes_exclude) && !strpos($key, 'admin')) {
+                $loc = self::getBaseUrl() . $key;
+                //$priority = "1.0"; Impossible de déterminer une priorité pertinente sans crawler
+                $sitemap .= self::writeUrlSitemap($loc);
+            }
+        }
+        return $sitemap;
+    }
+
+    /**
+     *
+     * Returns the elements to put in the sitemap.xml coming from the routes coming from the articles and the pages created from the CMS
+     * @return string
+     */
+    static function getDynamicSitemap(): string
+    {
+        $sitemap = "";
+
+        $article = new \App\Models\Article();
+        $page = new \App\Models\Page();
+        $all_articles = $article->query(
+            ["uri"],
+            ["isDeleted" => "0"]
+        );
+        $all_pages = $page->query(
+            ["uri"],
+            ["isDeleted" => "0"]
+        );
+
+        foreach($all_articles as $article) {
+            $loc = self::getBaseUrl() . $article['uri'];
+            //$priority = "1.0"; Impossible de déterminer une priorité pertinente sans crawler
+            $sitemap .= self::writeUrlSitemap($loc);
+        }
+        foreach($all_pages as $page) {
+            $loc = self::getBaseUrl() . $page['uri'];
+            //$priority = "1.0"; Impossible de déterminer une priorité pertinente sans crawler
+            $sitemap .= self::writeUrlSitemap($loc);
+        }
+        return $sitemap;
+    }
 }
-*/

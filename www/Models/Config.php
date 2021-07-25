@@ -3,12 +3,13 @@
 
 namespace App\Models;
 
+use App\Core\Database;
 
-class Config
+class Config extends Database
 {
-    protected $id=null;
+    protected $id = null;
     protected $options;
-    protected $values;
+    protected $value;
 
     /**
      * @param $id
@@ -43,19 +44,18 @@ class Config
     }
 
     /**
-     * @param mixed $values
+     * @param mixed $value
      */
-    public function setValues($values)
+    public function setValue($value)
     {
-        $this->values = $values;
+        $this->value = $value;
     }
 
     /**
      * @return mixed
      */
-    public function getValues()
+    public function getValue()
     {
-        return $this->values;
+        return $this->value;
     }
-
 }

@@ -2,6 +2,7 @@
 namespace App\Models;
 
 use App\Core\Database;
+use App\Core\Helpers;
 
 class Role extends Database
 {
@@ -162,13 +163,13 @@ class Role extends Database
                         "desc" => "Voir les articles"
                     ],
                     "/admin/add-article" => [
-                        'desc' => 'Ajouter une article'
+                        'desc' => 'Ajouter un article'
                     ],
                     "/admin/edit-article" => [
-                        'desc' => 'Modifier une article'
+                        'desc' => 'Modifier un article'
                     ],
                     "/admin/delete-article" => [
-                        'desc' => 'Supprimer une article'
+                        'desc' => 'Supprimer un article'
                     ]
                 ]
             ],
@@ -219,7 +220,7 @@ class Role extends Database
 
     //Fonction qui permet de build les options du select du Role de l'user
     public function buildAllRolesFormSelect($selectedRoleId = null) {
-        $roles = $this->query(['id', 'name']);
+        $roles = $this->query(['id', 'name'], ['isDeleted'=>0]);
         $returnedArray = [
             '' => [
                 "label" => "Choisir un rôle"
@@ -227,12 +228,13 @@ class Role extends Database
         ];
 
         foreach ($roles as $key => $role) {
-            $returnedArray[$key+1] = [
+            $returnedArray[$role['id']] = [
                 "label" => $role['name'],
                 "selected" => $role['id'] === $selectedRoleId
             ];
 
         }
-        return $returnedArray;
+        return Helpers::cleanArray($returnedArray);
+
     }
 }

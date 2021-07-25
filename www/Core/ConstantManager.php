@@ -11,7 +11,6 @@ class ConstantManager
 	private $data = [];
 
 	public function __construct(){
-
 		if(!file_exists($this->envFile) || !Installer::checkIfEnvExist()) {
 		    return;
         }

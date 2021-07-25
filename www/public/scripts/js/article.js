@@ -15,7 +15,6 @@ $(document).ready(function() {
 
     });
 });
-
 /**
  * Fonction pour modifier l'article en fonction de son id, redirige sur la page edit-article
  * @param e

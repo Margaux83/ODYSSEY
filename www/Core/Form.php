@@ -6,7 +6,6 @@ class Form
 {
     public static function validator($data, $config){
         $errors = [];
-
         if( count($data) == count($config["input"])) {
 
             foreach ($config["input"] as $name => $configInput) {
@@ -30,7 +29,7 @@ class Form
     }
 
     public static function showForm($form, $echoDirectly = true){
-        $html = "<form ".(!empty($form["config"]["id"]) ? "id='ody_form_".$form["config"]["id"]."'": "")." class='".($form["config"]["class"]??"")."' method='".( self::cleanWord($form["config"]["method"]) ?? "GET" )."' action='".( $form["config"]["action"] ?? "" )."'>";
+        $html = "<form ".(!empty($form["config"]["id"]) ? "id='ody_form_".$form["config"]["id"]."'": "")." class='".($form["config"]["class"]??"")."' method='".( self::cleanWord($form["config"]["method"]) ?? "GET" )."' action='".( $form["config"]["action"] ?? "" )."'  enctype='".( $form["config"]["enctype"] ?? "" )."'>";
 
         foreach ($form["input"] as $name => $dataInput) {
             $html .= "<div id='ody_inputContainer_".$name."' " . ($dataInput["type"] === "hidden" ? "" : "class='formElement'") . ">";

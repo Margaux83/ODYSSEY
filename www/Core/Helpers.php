@@ -18,6 +18,15 @@ class Helpers {
         echo '</pre>';
     }
 
+    public function filter(&$value) {
+        $value = htmlspecialchars($value, ENT_QUOTES, 'UTF-8');
+    }
+
+    static function cleanArray($array) {
+        array_walk_recursive($array, array(new Helpers() , 'filter'));
+        return $array;
+    }
+
     /**
      * @param $targetDirProp
      * @param $name

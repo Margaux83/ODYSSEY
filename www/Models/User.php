@@ -76,22 +76,6 @@ class User extends Database
     }
 
     /**
-     * @param $id_user
-     */
-    public function setId_user($id_user)
-    {
-        $this->id_user = $id_user;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getId_user()
-    {
-        return $this->id_user;
-    }
-
-    /**
      * @param $firstname
      */
     public function setFirstname($firstname){
@@ -348,6 +332,50 @@ class User extends Database
     /**
      * @return array
      */
+    public function buildFormLogin(){
+
+        return [
+            "config"=>[
+                "method"=>"POST",
+                "Action"=>"",
+                "reset" => "Annuler",
+                "Submit"=>"Se connecter",
+                "class"=>"formElement"
+            ],
+            "input"=>[
+                "login-email"=>[
+                    "class"=>"requiredLabel",
+                    "id"=>"login-email",
+                    "type"=>"email",
+                    "label"=>"Adresse Mail",
+                    "lengthMin"=>"8",
+                    "lengthMax"=>"320",
+                    "required"=>true,
+                    "error"=>"Votre email doit faire entre 8 et 320 caractères",
+                    "placeholder"=>"Votre email"
+                ],
+                "login-pwd"=>[
+                    "class"=>"requiredLabel",
+                    "type"=>"password",
+                    "id"=>"login-pwd",
+                    "label"=>"Mot de passe",
+                    "lengthMin"=>"8",
+                    "required"=>true,
+                    "error"=>"Votre mot de passe doit faire plus de 8 caractères",
+                    "placeholder"=>"Votre mot de passe"
+                ]
+            ],
+            "button"=>[
+                "class"=>"primary",
+                "name"=>""
+            ]
+
+        ];
+    }
+
+    /**
+     * @return array
+     */
     public function buildFormRegister(){
         return [
             "config"=>[
@@ -361,21 +389,23 @@ class User extends Database
                 "lastname"=>[
                     "type"=>"text",
                     "label"=>"Nom",
-                    "lengthMax"=>"255",
                     "lengthMin"=>"2",
+                    "lengthMax"=>"120",
                     "required"=>true,
-                    "error"=>"Votre nom doit faire entre 2 et 255 caractères",
-                    "placeholder"=>"Votre nom"
+                    "error"=>"Votre nom doit faire entre 2 et 120 caractères",
+                    "placeholder"=>"Votre nom",
+                    "defaultValue" => (empty($this->getLastname())) ? (empty($_POST['lastname'])) ? '' : $_POST['lastname'] : $this->getLastname()
                 ],
                 "firstname"=>[
                     "type"=>"text",
                     "class"=>"form_input",
                     "label"=>"Prénom",
-                    "lengthMax"=>"120",
                     "lengthMin"=>"2",
+                    "lengthMax"=>"120",
                     "required"=>true,
                     "error"=>"Votre prénom doit faire entre 2 et 120 caractères",
                     "placeholder"=>"Votre prénom",
+                    "defaultValue" => (empty($this->getFirstname())) ? (empty($_POST['firstname'])) ? '' : $_POST['firstname'] : $this->getFirstname()
                 ],
                 "email"=>[
                     "type"=>"email",
@@ -384,7 +414,8 @@ class User extends Database
                     "lengthMin"=>"8",
                     "required"=>true,
                     "error"=>"Votre email doit faire entre 8 et 320 caractères",
-                    "placeholder"=>"Votre email"
+                    "placeholder"=>"Votre email",
+                    "defaultValue" => (empty($this->getEmail())) ? (empty($_POST['email'])) ? '' : $_POST['email'] : $this->getEmail()
                 ],
                 "password"=>[
                     "type"=>"password",
@@ -394,28 +425,122 @@ class User extends Database
                     "error"=>"Votre mot de passe doit faire plus de 8 caractères",
                     "placeholder"=>"Votre mot de passe"
                 ],
-                /*"pwdConfirm"=>[
+                "password-confirm"=>[
                     "type"=>"password",
-                    "label"=>"Confirmation de mot de passe",
-                    "confirm"=>"pwd",
+                    "label"=>"Confirmation du mot de passe",
+                    "lengthMin"=>"8",
                     "required"=>true,
-                    "error"=>"Votre mot de passe de confirmation est incorrect",
-                    "placeholder"=>"Confirmation"
-                ],*/
+                    "error"=>"Votre mot de passe doit faire plus de 8 caractères",
+                    "placeholder"=>"Votre mot de passe"
+                ],
                 "phone"=>[
                     "type"=>"text",
                     "label"=>"Numéro de téléphone",
                     "lengthMin"=>"10",
+                    "lengthMax"=>"10",
                     "required"=>true,
                     "error"=>"Votre numéro de téléphone doit contenir 10 chiffres",
-                    "placeholder"=>"Votre numéro de téléphone"
+                    "placeholder"=>"Votre numéro de téléphone",
+                    "defaultValue" => (empty($this->getPhone())) ? (empty($_POST['phone'])) ? '' : $_POST['phone'] : $this->getPhone()
                 ],
+            ],
+            "button"=>[
+                "class"=>"primary",
+                "name"=>""
             ]
 
         ];
     }
 
-    public function buildFormRegisterBack(){
+    /**
+     * @return array
+     */
+    public function buildFormResetPassword(){
+
+        return [
+            "config"=>[
+                "method"=>"POST",
+                "Action"=>"",
+                "reset" => "Annuler",
+                "Submit"=>"Envoyer",
+                "class"=>"formElement"
+            ],
+            "input"=>[
+                "email"=>[
+                    "class"=>"requiredLabel",
+                    "id"=>"email",
+                    "type"=>"email",
+                    "label"=>"Adresse Mail",
+                    "lengthMin"=>"8",
+                    "lengthMax"=>"320",
+                    "required"=>true,
+                    "error"=>"Votre email doit faire entre 8 et 320 caractères",
+                    "placeholder"=>"Votre email"
+                ],
+            ],
+            "button"=>[
+                "class"=>"primary",
+                "name"=>""
+            ]
+
+        ];
+    }
+
+    /**
+     * @return array
+     */
+    public function buildFormToken(){
+
+        return [
+            "config"=>[
+                "method"=>"POST",
+                "Action"=>"",
+                "reset" => "Annuler",
+                "Submit"=>"Enregistrer",
+                "class"=>"formElement"
+            ],
+            "input"=>[
+                "token"=>[
+                    "class"=>"requiredLabel",
+                    "id"=>"token",
+                    "type"=>"text",
+                    "label"=>"Token",
+                    "lengthMin"=>"6",
+                    "lengthMax"=>"6",
+                    "required"=>true,
+                    "error"=>"Votre token doit contenir 6 chiffres",
+                    "placeholder"=> "",
+                    "defaultValue" => isset($_GET['token']) ? $_GET['token'] : ""
+                ],
+                "password"=>[
+                    "type"=>"password",
+                    "label"=>"Mot de passe",
+                    "lengthMin"=>"8",
+                    "required"=>true,
+                    "error"=>"Votre mot de passe doit faire plus de 8 caractères",
+                    "placeholder"=>"Votre mot de passe"
+                ],
+                "password-confirm"=>[
+                    "type"=>"password",
+                    "label"=>"Confirmation du mot de passe",
+                    "lengthMin"=>"8",
+                    "required"=>true,
+                    "error"=>"Votre mot de passe doit faire plus de 8 caractères",
+                    "placeholder"=>"Votre mot de passe"
+                ],
+            ],
+            "button"=>[
+                "class"=>"primary",
+                "name"=>""
+            ]
+
+        ];
+    }
+
+    /**
+     * @return array
+     */
+    public function buildFormUser(){
         $role = new Role();
 
         return [
@@ -427,6 +552,10 @@ class User extends Database
                 "class"=>"form-group"
             ],
             "input"=>[
+                "id_user"=>[
+                    "type"=>"hidden",
+                    "defaultValue"=>$this->getId()
+                ],
                 "lastname"=>[
                     "type"=>"text",
                     "label"=>"Nom",
@@ -434,7 +563,8 @@ class User extends Database
                     "lengthMin"=>"2",
                     "required"=>true,
                     "error"=>"Votre nom doit faire entre 2 et 255 caractères",
-                    "placeholder"=>"Votre nom"
+                    "placeholder"=>"Votre nom",
+                    "defaultValue" => (empty($this->getLastname())) ? (empty($_POST['lastname'])) ? '' : $_POST['lastname'] : $this->getLastname()
                 ],
                 "firstname"=>[
                     "type"=>"text",
@@ -445,6 +575,7 @@ class User extends Database
                     "required"=>true,
                     "error"=>"Votre prénom doit faire entre 2 et 120 caractères",
                     "placeholder"=>"Votre prénom",
+                    "defaultValue" => (empty($this->getFirstname())) ? (empty($_POST['firstname'])) ? '' : $_POST['firstname'] : $this->getFirstname()
                 ],
                 "email"=>[
                     "type"=>"email",
@@ -453,15 +584,18 @@ class User extends Database
                     "lengthMin"=>"8",
                     "required"=>true,
                     "error"=>"Votre email doit faire entre 8 et 320 caractères",
-                    "placeholder"=>"Votre email"
+                    "placeholder"=>"Votre email",
+                    "defaultValue" => (empty($this->getEmail())) ? (empty($_POST['email'])) ? '' : $_POST['email'] : $this->getEmail()
                 ],
                 "phone"=>[
                     "type"=>"text",
                     "label"=>"Numéro de téléphone",
                     "lengthMin"=>"10",
+                    "lengthMax"=>"10",
                     "required"=>true,
                     "error"=>"Votre numéro de téléphone doit contenir 10 chiffres",
-                    "placeholder"=>"Votre numéro de téléphone"
+                    "placeholder"=>"Votre numéro de téléphone",
+                    "defaultValue" => (empty($this->getPhone())) ? (empty($_POST['phone'])) ? '' : $_POST['phone'] : $this->getPhone()
                 ],
                 "role"=>[
                     "type"=>"select",
@@ -479,86 +613,10 @@ class User extends Database
         ];
     }
 
-    public function buildFormUpdateBack(){
-        $role = new Role();
-
-        return [
-            "config"=>[
-                "method"=>"POST",
-                "Action"=>"users",
-                "reset" => "Annuler",
-                "Submit"=>"Enregistrer",
-                "class"=>"form-group"
-
-            ],
-            "input"=>[
-                "id_user"=>[
-                    "type"=>"hidden",
-                    "defaultValue"=>$this->getId()
-                ],
-                "lastname"=>[
-                    "type"=>"text",
-                    "label"=>"Nom",
-                    "lengthMax"=>"255",
-                    "lengthMin"=>"2",
-                    "required"=>true,
-                    "error"=>"Votre nom doit faire entre 2 et 255 caractères",
-                    "placeholder"=>"Votre nom",
-                    "defaultValue" => $this->getLastname()
-
-                ],
-                "firstname"=>[
-                    "type"=>"text",
-                    "label"=>"Prénom",
-                    "lengthMax"=>"120",
-                    "lengthMin"=>"2",
-                    "required"=>true,
-                    "error"=>"Votre prénom doit faire entre 2 et 120 caractères",
-                    "placeholder"=>"Votre prénom",
-                    "defaultValue" => $this->getFirstname()
-                ],
-                "email"=>[
-                    "type"=>"email",
-                    "label"=>"Adresse Mail",
-                    "lengthMax"=>"320",
-                    "lengthMin"=>"8",
-                    "required"=>true,
-                    "readonly"=>true,
-                    "error"=>"Votre email doit faire entre 8 et 320 caractères",
-                    "placeholder"=>"Votre email",
-                    "defaultValue" => $this->getEmail()
-                ],
-                "phone"=>[
-                    "type"=>"text",
-                    "label"=>"Numéro de téléphone",
-                    "lengthMax"=>"10",
-                    "required"=>true,
-                    "error"=>"Votre numéro de téléphone doit contenir 10 chiffres",
-                    "placeholder"=>"Votre numéro de téléphone",
-                    "defaultValue" => $this->getPhone()
-                ],
-                "role"=>[
-                    "type"=>"select",
-                    "label"=>"Rôle",
-                    "required"=>true,
-                    "error"=>"Veuillez sélectionner un élément",
-                    "placeholder"=>"Choisir un rôle",
-                    "options"=>
-                        $role->buildAllRolesFormSelect($this->role)
-
-                ],
-            ],
-            "button"=>[
-                "class"=>"buttonComponent d-flex floatRight",
-                "name"=>""
-            ]
-        ];
-    }
-
     public function getAllUsers()
     {
         $results = $this->query(
-            ["id", "firstname", "lastname", "email", "status", "role", "creationDate", "lastConnexionDate"],
+            ["id", "firstname", "lastname", "email", "status", "role", "isVerified", "creationDate", "lastConnexionDate", "updateDate"],
             ["isDeleted" => "0"]
         );
 
@@ -566,7 +624,7 @@ class User extends Database
             $role = new Role();
             foreach ($results as $key => $result) {
                 if (!empty($result['role'])) {
-                    $userSelected = $role->query(['name'])[0];
+                    $userSelected = $role->query(['name'], ['id' => $result['role']])[0];
                     $results[$key]['name'] = $userSelected['name'];
                 }
             }

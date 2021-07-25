@@ -19,6 +19,10 @@ class Category extends Database
         return $this->id;
     }
 
+    /**
+     * @param $id
+     * Quand un id est passé en paramètre, on récupère les informations de la catégorie correspondante
+     */
     public function setId($id){
         $this->id = $id;
 
@@ -124,7 +128,9 @@ class Category extends Database
         ];
     }
 
-    //Fonction qui permet de build les options du select de Catégorie de l'article
+    /**
+     * Fonction qui permet de build les options du select de Catégorie de l'article
+     **/
     public function buildAllCategoriesFormSelect($selectedCategoryId = null) {
         $categories = $this->query(['id', 'label'],['isDeleted'=>0]);
         $returnedArray = [
@@ -141,5 +147,16 @@ class Category extends Database
 
         }
         return $returnedArray;
+    }
+
+    /**
+     * Retourne le label d'une catégorie si elle existe déjà dans la base de données
+     **/
+    public function getCategoryForVerification($id,$label)
+    {
+        return Category::query(
+            ["label"],
+            ["isDeleted" => "0", "label" => $label]
+        );
     }
 }

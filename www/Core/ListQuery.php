@@ -48,12 +48,12 @@ class ListQuery
                         } 
                         
                         $resultHtml .= '<p class="flex-weight-'.($column['size'] ? $column['size'] : 1).'">'
-                                .implode(' ', $resultComboString)
+                                .htmlspecialchars(implode(' ', $resultComboString))
                             .'</p>';
                     }
                 }else {
                     $resultHtml .= '<p class="flex-weight-'.($column['size'] ? $column['size'] : 1).'">'
-                            .$result[$index]
+                            .htmlspecialchars($result[$index])
                         .'</p>';
                 }
                 $index ++;
