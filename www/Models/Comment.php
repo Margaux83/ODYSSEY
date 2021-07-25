@@ -121,7 +121,7 @@ class Comment extends Database
 
     /**
      * @return array
-     * Récupération des informations des commentaires qui ne sont pas supprimés et qui vont pouvoir être affichés sur les views et sur le front
+     * Recovering information from comments that are not deleted and that can be displayed on the views and on the front
      **/
     public function getAllComments()
     {

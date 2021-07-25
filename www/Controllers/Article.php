@@ -14,8 +14,8 @@ class Article
 {
 
     /**
-     * Affichage de la liste des articles enregistrés et non supprimés dans la base de données
-     * Affichage de la liste des articles ajoutés par l'utilisateur connecté
+     * Display the list of registered and undeleted items in the database
+     * Display of the list of articles added by the connected user
      */
     public function defaultAction()
     {
@@ -33,10 +33,10 @@ class Article
 
 
     /**
-     * Fonction d'ajout d'un article dans la base de données
-     * Avec enregistrement de la catégorie de l'article
-     * On vérifie si l'uri existe déjà dans la base de données, on envoie un message d'erreur
-     * On ajout le préfixe "/article/" devant l'uri pour différencier les articles et les pages
+     * Function to add an item to the database
+     * With registration of the category of the article
+     * We check if the uri already exists in the database, if so we send an error message
+     * We add the prefix "/article/" before the uri to differentiate the uri of the articles and the pages
      */
     public function addArticleAction()
     {
@@ -100,11 +100,11 @@ class Article
     }
 
     /**
-     * Fonction de modification d'un article dans la base de données
-     * Avec enregistrement de la catégorie de l'article
-     * On vérifie si l'uri existe déjà dans la base de données, on envoie un message d'erreur
-     * On ajoute le préfixe "/article/" devant l'uri pour différencier les articles et les pages
-     * Récupération et affichage des informations de l'article dans le formulaire grâce au setId qui prend en paramètre l'id de l'article
+     * Function to modify an article in the database
+     * With registration of the category of the article
+     * We check if the uri already exists in the database, if so we send an error message
+     * We add the prefix "/article/" before the uri to differentiate the uri of the articles and the pages
+     * Retrieve and display the information of the article in the form thanks to the setId which takes in parameter the id of the article
      */
     public static function editArticleAction()
     {
@@ -180,7 +180,7 @@ class Article
     }
 
     /**
-     * Suppression d'un article grâce à son Id
+     * Deleting an article using its Id
      */
     public function deleteArticleAction() {
         $article = new Article_Model();
@@ -193,8 +193,8 @@ class Article
     }
 
     /**
-     * Affichage de la liste des catégories enregistrées et non supprimées dans la base de données
-     * Posibilité d'ajouter une catégorie à partir de cette page, on ne peut pas ajouter une catégorie qui existe déjà dans la base de données
+     * Displaythe list of registered and undeleted categories in the database
+     * Possibility to add a category from this page, you cannot add a category that already exists in the database
      */
     public function categoriesAction()
     {
@@ -244,8 +244,8 @@ class Article
 
 
     /**
-     * Fonction de modification d'une catégorie, on ne peut pas lui donner le nom d'une catégorie qui existe déjà dans la base de données
-     * Récupération et affichage du nom de la catégorie dans le formulaire grâce au setId qui prend en paramètre l'id de celle-ci
+     * Function to modify a category, it cannot be given the name of a category that already exists in the database
+     * Retrieve and display the category name in the form thanks to the setId which takes the id of the category in parameter
      **/
     public function editCategoryAction()
     {
@@ -299,7 +299,7 @@ class Article
     }
 
     /**
-     * Suppression d'une catéorie grâce à son Id
+     * Deleting a category using its Id
      */
     public function deleteCategoryAction() {
         $category = new Category();
