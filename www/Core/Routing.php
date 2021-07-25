@@ -85,10 +85,10 @@ class Routing{
         die("Aucun route ne correspond à ".$controller." -> ".$action );
     }
 
-    static function writeUrlSitemap($loc, $lastmod) {
+    static function writeUrlSitemap($loc) {
         return '<url>
                     <loc>'.$loc.'</loc>
-                    <lastmod>'.$lastmod.'</lastmod>
+                    <lastmod>'.date('c',time()).'</lastmod>
                 </url>';
     }
 
@@ -105,9 +105,8 @@ class Routing{
         foreach ($routes as $key => $route) {
             if(!in_array($key, $routes_exclude) && !strpos($key, 'admin')) {
                 $loc = self::getBaseUrl() . $key;
-                $lastmod = date('c',time());
                 //$priority = "1.0"; Impossible de déterminer une priorité pertinente sans crawler
-                $sitemap .= self::writeUrlSitemap($loc, $lastmod);
+                $sitemap .= self::writeUrlSitemap($loc);
             }
         }
         return $sitemap;
@@ -135,35 +134,14 @@ class Routing{
 
         foreach($all_articles as $article) {
             $loc = self::getBaseUrl() . $article['uri'];
-            $lastmod = date('c',time());
             //$priority = "1.0"; Impossible de déterminer une priorité pertinente sans crawler
-            $sitemap .= self::writeUrlSitemap($loc, $lastmod);
+            $sitemap .= self::writeUrlSitemap($loc);
         }
         foreach($all_pages as $page) {
             $loc = self::getBaseUrl() . $page['uri'];
-            $lastmod = date('c',time());
             //$priority = "1.0"; Impossible de déterminer une priorité pertinente sans crawler
-            $sitemap .= self::writeUrlSitemap($loc, $lastmod);
+            $sitemap .= self::writeUrlSitemap($loc);
         }
         return $sitemap;
     }
 }
-/*
-if(file_exists("routes.yml")){
-	$listOfRoutes = yaml_parse_file("routes.yml");
-	echo "<pre>";
-	print_r($listOfRoutes);
-	if(!empty($listOfRoutes[$uri])
-		&& !empty($listOfRoutes[$uri]["controller"])
-		&& !empty($listOfRoutes[$uri]["action"])){
-
-		$c = $listOfRoutes[$uri]["controller"]."Controller";
-		$a = $listOfRoutes[$uri]["action"]."Action";
-		//Est-ce que j'ai les droits, si ce n'est pas le cas erreur access denied : 403
-	}else{
-		die("Erreur 404");
-	}
-}else{
-	die("Le fichier de routing n'existe pas");
-}
-*/
