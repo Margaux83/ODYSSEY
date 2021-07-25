@@ -26,11 +26,7 @@ class Security
         return self::$_instance;
     }
 
-    public static function isAuthorized($uri) {
-
-        if (in_array($uri, self::$_alwaysAuthorizedUri)) return true;
-        if(!(new Security)->isConnected()) return true;
-        self::$_actualUri = $uri;
+    static function getPermsFromConnectedUser() {
         $user = new User($_SESSION['userId']);
         $role = new Role();
 
@@ -39,7 +35,16 @@ class Security
             ["id" => $user->getRole()]
         );
 
-        $perms = json_decode($result[0]['value'], true);
+        return json_decode($result[0]['value'], true);
+    }
+
+    public static function isAuthorized($uri) {
+
+        if (in_array($uri, self::$_alwaysAuthorizedUri)) return true;
+        if(!(new Security)->isConnected()) return true;
+        self::$_actualUri = $uri;
+        $perms = self::getPermsFromConnectedUser();
+
         if (array_key_exists($uri, $perms) || array_key_exists("all_perms", $perms)) {
             // TODO Redirection à faire autre part que /dashboard
             return true;

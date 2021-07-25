@@ -2,6 +2,9 @@
 
 namespace App\Core;
 
+use App\Models\Role;
+use App\Models\User;
+
 class MenuBuilder
 {
     private static $_instance = null;
@@ -49,46 +52,49 @@ class MenuBuilder
     }
 
     public static function createMenu(){
+        $perms = Security::getPermsFromConnectedUser();
+
         $menuData = self::$_menuData;
+
         $actualUri = self::$_actualUri;
         $menuListBuilder = [];
         $html = '';
         foreach ($menuData as $link => $data) {
             if (!empty($data['menuData'])){
                 //TODO : check the min-status
-                if ($data['menuData']['visible']){
+                if ($data['menuData']['visible'] && (array_key_exists("all_perms", $perms))) {
                     $subSectionSelected = false;
 
                     //Create the sub-menu
                     $htmlChildren = '';
-                    if (!empty($data['menuData']['children'])){
+                    if (!empty($data['menuData']['children'])) {
                         $htmlChildren = '<ul>';
                         foreach ($data['menuData']['children'] as $id => $linkChild) {
                             if ($actualUri === $linkChild) {
                                 $subSectionSelected = true;
                             }
                             $classChildren = $actualUri == $linkChild ? ' class="selected"' : '';
-                            $htmlChildren .= '<li'.$classChildren.'><a href="'.$linkChild.'">'.$menuData[$linkChild]['label'].'</li>';
+                            $htmlChildren .= '<li' . $classChildren . '><a href="' . $linkChild . '">' . $menuData[$linkChild]['label'] . '</li>';
                         }
                         $htmlChildren .= '</ul>';
                     }
-                    
+
                     $class = ' class="'
-                        . ($actualUri == $link ? 'selected ' : '') 
-                        . ($subSectionSelected ? 'subChildrenSelected ' : '') 
+                        . ($actualUri == $link ? 'selected ' : '')
+                        . ($subSectionSelected ? 'subChildrenSelected ' : '')
                         . '"';
 
-                    $html= '<li'.$class.'><a href="'.$link.'">'
-                        .'<img src="'.Routing::getBaseUrl().'/public/images/icons/'.$data['menuData']['icon'].'.png" alt="" class="icon iconWhite"><p>'.$data['label'].'</p></a>'
-                        .'</a>';
+                    $html = '<li' . $class . '><a href="' . $link . '">'
+                        . '<img src="' . Routing::getBaseUrl() . '/public/images/icons/' . $data['menuData']['icon'] . '.png" alt="" class="icon iconWhite"><p>' . $data['label'] . '</p></a>'
+                        . '</a>';
 
                     //Adding the sub-menu
                     $html .= $htmlChildren;
 
                     $html .= '</li>';
-                    if (array_key_exists($data['menuData']['listId'], $menuListBuilder)){
+                    if (array_key_exists($data['menuData']['listId'], $menuListBuilder)) {
                         $menuListBuilder[$data['menuData']['listId']] .= $html;
-                    }else {
+                    } else {
                         $menuListBuilder[$data['menuData']['listId']] = $html;
                     }
                 }
