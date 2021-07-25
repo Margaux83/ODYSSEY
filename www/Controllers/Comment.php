@@ -4,6 +4,7 @@
 namespace App;
 use App\Core\Security;
 use App\Core\View;
+use App\Core\Helpers;
 use App\Models\Comment as ModelComment;
 use App\Models\Article;
 

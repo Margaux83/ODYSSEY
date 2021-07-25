@@ -5,6 +5,7 @@ namespace App;
 use App\Core\View;
 use App\Models\Role as ModelRole;
 use App\Core\Database;
+use App\Core\Helpers;
 
 class Role
 {

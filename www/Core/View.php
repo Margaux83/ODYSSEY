@@ -74,6 +74,15 @@ class View
 		}
 	}
 
+    public function addModal($modal, $config = [])
+    {
+        $pathModal = "Views/modals/" . $modal . ".mod.php";
+        if (file_exists($pathModal)) {
+            include $pathModal;
+        } else {
+            die("Le modal n'existe pas :" . $pathModal);
+        }
+    }
 
 	public function assign($key, $value){
 		$this->data[$key] = $value;

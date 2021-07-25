@@ -4,6 +4,7 @@ namespace App;
 
 use App\Core\Form;
 use App\Core\View;
+use App\Core\Helpers;
 use App\Models\Page as ModelPage;
 
 class Page{
