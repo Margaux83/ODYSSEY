@@ -4,6 +4,12 @@ namespace App\Core;
 
 class ListQuery
 {
+
+    /**
+     * @param $elementQuery
+     * @return array|string[]
+     * TODO : Mettre un commentaire d'explication
+     */
     public static function getSimpleList($elementQuery) {
         $legendHtml = '<li class="legend">';
 

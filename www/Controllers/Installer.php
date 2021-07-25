@@ -3,11 +3,14 @@
 namespace App;
 
 use App\Core\View;
-use App\Models\User;
-use App\Core\Form;
 use App\Core\Installer as InstallerCore;
 use App\Core\Routing;
 
+/**
+ * Class Installer
+ * @package App
+ * TODO : Mettre des commentaires d'explication
+ */
 
 class Installer{
     public function setupAction(){

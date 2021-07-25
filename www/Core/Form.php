@@ -4,6 +4,12 @@ namespace App\Core;
 
 class Form
 {
+    /**
+     * @param $data
+     * @param $config
+     * @return array
+     * Check if there's en error on the form's data
+     */
     public static function validator($data, $config){
         $errors = [];
         if( count($data) == count($config["input"])) {
@@ -25,9 +31,16 @@ class Form
                 }
             }
         }
-        return $errors; //tableau des erreurs
+        return $errors;
     }
 
+    /**
+     * @param $form
+     * @param bool $echoDirectly
+     * @return string
+     * Build the form with the information passed in the formbuilder array
+     * Return the form and its properties
+     */
     public static function showForm($form, $echoDirectly = true){
         $html = "<form ".(!empty($form["config"]["id"]) ? "id='ody_form_".$form["config"]["id"]."'": "")." class='".($form["config"]["class"]??"")."' method='".( self::cleanWord($form["config"]["method"]) ?? "GET" )."' action='".( $form["config"]["action"] ?? "" )."'  enctype='".( $form["config"]["enctype"] ?? "" )."'>";
 
@@ -125,11 +138,18 @@ class Form
         }
     }
 
+    /**
+     * @param $word
+     * @return array|string|string[]
+     * Replace replace the apostrophe with a unicode
+     */
     public static function cleanWord($word){
         return str_replace("'", "&apos;", $word);
     }
 
-    //Fonction qui permet de build les options du select de Visibilté de l'article
+    /**
+     * Function that allows you to build the options of the page's Visibility selector
+     **/
     public function buildAllVisibilityFormSelect($object) {
         $status = [
             '' => [
@@ -158,7 +178,9 @@ class Form
         return $returnedArray;
     }
 
-    //Fonction qui permet de build les options du select de Statut de l'article
+    /**
+     * Function that allows you to build the options of the page's status select
+     **/
     public function buildAllStatusFormSelect($object) {
         $status = [
             '' => [

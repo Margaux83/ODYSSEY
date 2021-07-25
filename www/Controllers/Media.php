@@ -11,7 +11,7 @@ use App\Core\Helpers;
 
 class Media {
     /**
-     * Affiche la page principale des médias où on va retrouver la liste des médias enregistrés dans la base de données
+     * Display of the main page of the media where we will find the list of the media registered and not deleted in the database
      */
     public function defaultAction() {
         $security = Security::getInstance();
@@ -27,8 +27,8 @@ class Media {
     }
 
     /**
-     * Affiche la page d'ajout des médias où on va enregistrer un nouveau média dans la base de données
-     * Upload des fichiers dans le dossier /www/public/uploads avec vérification de la validité des fichiers (extensions, taille, espaces dans le nom du fichier)
+     * Display of the form for adding media where we will register a new media in the database
+     * Upload files in the folder /www/public/uploads with verification of the validity of the files (extensions, size, spaces in the file name)
      */
     public function addMediaAction() {
         $security = Security::getInstance();
@@ -117,8 +117,8 @@ class Media {
     }
 
     /**
-     * Affiche la page d'ajout des médias où on va modifier un média déjà existant dans la base de données
-     * Récupération et affichage du nom du media dans le formulaire grâce au setId qui prend en paramètre l'id de celui-ci
+     * Display of the media modification form where we will modify the name of a media
+     * Retrieve and display the name of the media in the form thanks to the setId which takes the id of the media in parameter
      */
     public function editMediaAction()
     {
@@ -174,7 +174,7 @@ class Media {
     }
 
     /**
-     * Suppression d'un média grâce à son Id
+     * Deleting media with its Id
      */
     public function deleteMediaAction() {
         $media = new ModelMedia();

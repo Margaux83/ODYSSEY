@@ -19,8 +19,8 @@ class Security{
     }
 
     /**
-     * Fonction qui permet d'ajouter un utilisateur dans la base de données quand il s'inscrit
-     * Un mail lui est envoyé pour qu'il confirme son compte
+     * Function that allows to add a user in the database when he registers
+     * An email is sent to him to confirm his account
      */
     public function registerAction(){
         $coreSecurity = coreSecurity::getInstance();
@@ -71,7 +71,7 @@ class Security{
     }
 
     /**
-     * Fonction qui permet de vérifier le compte de l'utilisateur, un token lui est envoyé par mail pour confirmer son identité
+     * Function which allows to verify the account of the user, a token is sent to him by email to confirm his identity
      */
     public function verificationAction() {
         if (!empty($_GET)) {
@@ -98,7 +98,7 @@ class Security{
     }
 
     /**
-     * Fonction qui permet à l'utilisateur de se connecter au CMS, une fois connecté, il est rédirigé sur la page de dashboard
+     * Function that allows the user to connect to the CMS, once connected, he is redirected to the dashboard page
      */
     public function loginAction(){
 
@@ -117,7 +117,7 @@ class Security{
     }
 
     /**
-     * Fonction de déconnexion
+     * Disconnection function
      */
     public function logoutAction(){
         $coreSecurity = coreSecurity::getInstance();
@@ -126,8 +126,8 @@ class Security{
     }
 
     /**
-     * Fonction qui permet d'envoyer un mail à un utilisateur qui aurait oublié son mot de passe
-     * Dans le mail se trouve un lien qui le redirigera sur la page de réinitialisation de mot de passe
+     * Function that allows you to send an email to a user who has forgotten his password
+     * In the email is a link that will redirect him to the password reset page
      */
     public function forgotPasswordAction(){
         $coreSecurity = coreSecurity::getInstance();
@@ -179,8 +179,8 @@ class Security{
     }
 
     /**
-     * Lorsqu'il arrive sur le formulaire de réinitialisation du mot de passe, l'utilisateur peut entrer un nouveau mot de passe et le confirmer
-     * Le changement de mot de passe sera pris en compte dans la base de données
+     * Upon reaching the password reset form, the user can enter a new password and confirm it
+     * The change of password will be taken into account in the database
      */
     public function forgotPasswordConfirmAction(){
         $coreSecurity = coreSecurity::getInstance();

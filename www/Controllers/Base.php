@@ -14,7 +14,9 @@ class Base{
         header('location: /admin/dashboard');
     }
 
-	//Must be connected
+    /**
+     * Returns the list of undeleted statistics, users, pages, articles and comments on the dashboard page
+     */
 	public function dashboardAction(){
 		$security = Security::getInstance();
 		if(!$security->isConnected()){
@@ -148,6 +150,9 @@ class Base{
 		$view->assign("users", $listUsers);
 	}
 
+    /**
+     * Returns the sitemap of the CMS, it is possible to exclude uri from the sitemap
+     */
     public function sitemapAction() {
         header('Content-Type: text/xml; charset=UTF-8');
         $routes = Routing::getListOfRoutes();

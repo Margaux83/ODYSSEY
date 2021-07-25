@@ -4,18 +4,16 @@
 namespace App;
 use App\Core\Security;
 use App\Core\View;
-use App\Models\Comment as ModelComment;
 use App\Core\Helpers;
-use App\Models\User;
+use App\Models\Comment as ModelComment;
 use App\Models\Article;
-use function Sodium\add;
 
 class Comment
 {
 
     /**
-     * Affichage de la liste des commentaires enregistrés et non supprimés dans la base de données
-     * Vérification du commentaire par un administrateur
+     * Display the list of saved and undeleted comments in the database
+     * Verification of the comment by an administrator
      */
     public function defaultAction()
     {
@@ -37,7 +35,7 @@ class Comment
     }
 
     /**
-     * Ajout d'un commentaire à partir du front, sur la page d'un article
+     * Add a comment from the front, on the page of an article
      */
     public function postCommentFromFrontAction() {
         $selectedArticle = null;
@@ -69,7 +67,7 @@ class Comment
     }
 
     /**
-     * Suppression d'un commentaire grâce à son Id
+     * Deleting a comment using its Id
      */
     public function deleteCommentAction() {
         $category = new ModelComment();

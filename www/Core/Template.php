@@ -6,6 +6,9 @@ use App\Models\Config;
 
 class Template
 {
+    /**
+     * @return mixed
+     */
     public static function getSelectedTheme() {
         $config = new Config();
         $configResults = $config->query(['value'], ['options' => 'theme']);
@@ -17,6 +20,10 @@ class Template
         }
     }
 
+    /**
+     * @param $newTheme
+     * @return bool
+     */
     public static function changeSelectedTheme($newTheme) {
         $config = new Config();
         $config->setOptions('theme');
@@ -30,6 +37,10 @@ class Template
         return true;
     }
 
+    /**
+     * @param $uri
+     * @return false|string
+     */
     public static function searchPageSelectedTheme($uri) {
         $config = new Config();
         $configResults = $config->query(['value'], ['options' => 'theme']);

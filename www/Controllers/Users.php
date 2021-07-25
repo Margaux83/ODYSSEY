@@ -17,6 +17,10 @@ use App\Core\Helpers;
 
 class Users{
 
+    /**
+     * Display the list of registered and undeleted users in the database
+     * Display de statistics of the users
+     */
     public function defaultAction(){
 
         $user = new User();
@@ -55,6 +59,10 @@ class Users{
 
     }
 
+    /**
+     * Function to add a user to the database
+     * An email is sent to the user so that he can enter a password and access the cms
+     */
     public function addUsersAction()
     {
         $security = Security::getInstance();
@@ -105,6 +113,14 @@ class Users{
 
     }
 
+    /**
+     * Function so that the user can reset his password when he clicks on forgotten password
+     * Once he has entered his email address, an email is sent to it, containing the token with which he can reset his password
+     * He can either stay on the page where he was redirected to enter a new password,
+     * or click on the link in the email that will send him back to the same form with the pre-filled token
+     * We check that the token is the one sent in the email and that the passwords are valid
+     * Once he has entered his new password, he is redirected to the login page
+     */
     public function newPasswordConfirmAction(){
         $coreSecurity = coreSecurity::getInstance();
         if ($coreSecurity->getConnectedUser()){
@@ -148,6 +164,9 @@ class Users{
         }
     }
 
+    /**
+     * Function to edit a user
+     */
     public function editUsersAction() {
 
         $security = Security::getInstance();
@@ -185,6 +204,9 @@ class Users{
         }
     }
 
+    /**
+     * Deleting a user using its Id
+     */
     public function deleteUserAction() {
         $user = new User();
         if (!empty($_POST)) {

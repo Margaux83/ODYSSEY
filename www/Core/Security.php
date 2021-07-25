@@ -2,7 +2,6 @@
 
 namespace App\Core;
 
-use App\Core\Database;
 use App\Models\Role;
 use App\Models\User;
 
@@ -17,6 +16,11 @@ class Security
         self::$_userConnectedId = $_userConnectedId;
     }
 
+    /**
+     * @param null $_userConnectedId
+     * @return Security|null
+     * Return the instance of the connected user
+     */
     public static function getInstance($_userConnectedId = null) {
         if(is_null(self::$_instance)) {
 			session_start();
@@ -26,11 +30,7 @@ class Security
         return self::$_instance;
     }
 
-    public static function isAuthorized($uri) {
-
-        if (in_array($uri, self::$_alwaysAuthorizedUri)) return true;
-        if(!(new Security)->isConnected()) return true;
-        self::$_actualUri = $uri;
+    static function getPermsFromConnectedUser() {
         $user = new User($_SESSION['userId']);
         $role = new Role();
 
@@ -38,8 +38,20 @@ class Security
             ["value"],
             ["id" => $user->getRole()]
         );
+        if (count($result)) {
+            return json_decode($result[0]['value'], true);
+        }else {
+            return [];
+        }
+    }
 
-        $perms = json_decode($result[0]['value'], true);
+    public static function isAuthorized($uri) {
+
+        if (in_array($uri, self::$_alwaysAuthorizedUri)) return true;
+        if(!(new Security)->isConnected()) return true;
+        self::$_actualUri = $uri;
+        $perms = self::getPermsFromConnectedUser();
+
         if (array_key_exists($uri, $perms) || array_key_exists("all_perms", $perms)) {
             // TODO Redirection à faire autre part que /dashboard
             return true;
@@ -51,6 +63,10 @@ class Security
 		return isset($_SESSION["userId"]);
 	}
 
+    /**
+     * @return bool|void
+     * Check if the user is connected
+     */
 	public function getConnectedUser(){
 		if ($this->isConnected()){
             $_SESSION['alert']['danger'][] = 'Vous êtes déjà connecté';

@@ -3,10 +3,6 @@
 
 namespace App\Core;
 use App\Models\Article;
-use App\Core\View;
-use App\Core\Form;
-use App\Core\Error;
-use App\Core\Template;
 use App\Models\User;
 use App\Models\Page;
 use App\Models\Menu;
@@ -17,10 +13,19 @@ class FrontPage extends Database
     private static $_themeSelected;
     private static $_actualUri;
 
+    /**
+     * @return string
+     * Function that return the selected theme in the CMS
+     */
     public static function getTemplateCss() {
         return 'themes/'.Template::getSelectedTheme().'front.css';
     }
 
+    /**
+     * @param null $idArticle
+     * @return string
+     * Return the comments and the number of comment added to an article, the article's id is passed in parameter
+     */
     public static function getCommentarySection($idArticle = null) {
         if (empty($idArticle)) return '';
         if (!empty($_POST)) {
@@ -53,6 +58,11 @@ class FrontPage extends Database
         return $html;
     }
 
+    /**
+     * @param string $nameMenu
+     * @return string
+     * Return the menu on the front page
+     */
     public static function getFrontMenu($nameMenu = '') {
         $menu = new Menu();
         $page = new Page();
@@ -92,6 +102,10 @@ class FrontPage extends Database
         return $html;
     }
 
+    /**
+     * @param $uri
+     * Return the content of the article or the page in order to display them on the front page
+     */
     public static function findContentToShow($uri) {
         self::$_actualUri = $uri;
 
