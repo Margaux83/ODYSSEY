@@ -259,11 +259,11 @@
   label: Connexion
   freeAccess: true
 
-/register:
-  controller: Security
-  action: register
-  label: S'inscrire
-  freeAccess: true
+#/register:
+#  controller: Security
+#  action: register
+#  label: S'inscrire
+#  freeAccess: true
 
 /logout:
   controller: Security
@@ -315,7 +315,7 @@
   label: Installation
 ### ### ###
 
-/temporary-install:
-  controller: Installer
-  action: temporaryInstall
-  label: Installation
+#/temporary-install:
+#  controller: Installer
+#  action: temporaryInstall
+#  label: Installation
