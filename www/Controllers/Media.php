@@ -6,6 +6,8 @@ use App\Core\Form;
 use App\Core\Security;
 use App\Core\View;
 use App\Models\Media as ModelMedia;
+use App\Core\Helpers;
+
 
 class Media {
     /**
@@ -21,8 +23,7 @@ class Media {
         $medias = new ModelMedia();
 
         $mediaInfos = $medias->query(['id', 'name', 'media', 'creationDate', 'updateDate'], ['isDeleted'=>0]);
-        $view->assign("mediaInfos",$mediaInfos);
-
+        $view->assign("mediaInfos", Helpers::cleanArray($mediaInfos));
     }
 
     /**

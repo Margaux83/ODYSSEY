@@ -18,7 +18,7 @@ class Role
         $allRoles = $role->getAllRoles();
 
         $view = new View("Role/roles", "back");
-        $view->assign("allRoles", $allRoles);
+        $view->assign("allRoles", Helpers::cleanArray($allRoles));
     }
 
     public function addRoleAction()
@@ -62,7 +62,7 @@ class Role
         $view = new View("Role/add_role", "back");
         $view->assign("rolesList", $role->rolesList());
         $view->assign("roleClass", $role);
-        $view->assign("roleResult", $result[0]);
+        $view->assign("roleResult", Helpers::cleanArray($result[0]));
     }
 
     public function deleteRoleAction() {

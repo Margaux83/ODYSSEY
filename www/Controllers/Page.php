@@ -11,6 +11,7 @@ use function Sodium\add;
 
 class Page{
 
+
     public function defaultAction(){
 
         $pages = new ModelPage;
@@ -19,10 +20,9 @@ class Page{
         $allPagesByUser = $pages->getAllPages($_SESSION["userId"]);
 
         $view = new View("Page/pages", "back");
-
-        $view->assign("allPages", $allPages);
-        $view->assign("allPagesByUser", $allPagesByUser);
-
+        //Affiche la liste de toutes pages
+        $view->assign("allPages", Helpers::cleanArray($allPages));
+        $view->assign("allPagesByUser", Helpers::cleanArray($allPagesByUser));
     }
 
     public function addPageAction(){

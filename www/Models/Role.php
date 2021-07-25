@@ -2,6 +2,7 @@
 namespace App\Models;
 
 use App\Core\Database;
+use App\Core\Helpers;
 
 class Role extends Database
 {
@@ -233,7 +234,7 @@ class Role extends Database
             ];
 
         }
-        return $returnedArray;
+        return Helpers::cleanArray($returnedArray);
 
     }
 }

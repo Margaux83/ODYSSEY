@@ -28,11 +28,11 @@ class Comment
         $allComments = $comments->getAllComments();
 
         $view = new View("Comment/comment", "back");
-        $view->assign("allComments", $allComments);
+        $view->assign("allComments", Helpers::cleanArray($allComments));
 
 
         if (!empty($_POST)) {
-                $comments->verify($_POST['id_comment']);
+            $comments->verify($_POST['id_comment']);
         }
     }
 

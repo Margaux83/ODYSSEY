@@ -3,6 +3,8 @@
 namespace App;
 
 use App\Core\View;
+use App\Core\Helpers;
+
 use App\Models\Menu as ModelMenu;
 use App\Models\Page;
 use App\Models\Article;
@@ -40,8 +42,8 @@ class Menu
             $view->assign("menuSelected", $menuToSave->getId() ?? '');
         }
         $view->assign("menus", $resultsMenus);
-        $view->assign("pages", $resultsPages);
-        $view->assign("articles", $resultsArticles);
+        $view->assign("pages", Helpers::cleanArray($resultsPages));
+        $view->assign("articles", Helpers::cleanArray($resultsArticles));
         $view->assign("formMenuCreation", $menus->buildCreationForm());
     }
 }

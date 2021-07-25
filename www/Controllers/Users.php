@@ -11,6 +11,7 @@ use App\Models\User as User;
 use App\Core\Mailer;
 use App\Models\BodyMail;
 use App\Core\Statistic;
+use App\Core\Helpers;
 
 
 
@@ -49,7 +50,7 @@ class Users{
             ]
         );
 
-        $view->assign('allUsers', $allUsers);
+        $view->assign('allUsers', Helpers::cleanArray($allUsers));
         $view->assign("statistics", $statisticsPages);
 
     }
