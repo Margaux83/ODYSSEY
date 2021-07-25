@@ -99,7 +99,7 @@ class Article extends Database
      */
     public function getContent()
     {
-        return $this->content;
+        return stripslashes($this->content);
     }
 
     /**

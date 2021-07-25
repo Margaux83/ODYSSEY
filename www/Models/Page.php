@@ -95,7 +95,7 @@ class Page extends Database
      */
     public function getContent()
     {
-        return $this->content;
+        return stripcslashes($this->content);
     }
 
     /**
