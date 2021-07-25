@@ -4,7 +4,7 @@ services:
     build: site
     container_name: apache-ODYSSEY
     ports :
-     - "8080:80"
+     - "80:80"
     volumes:
      - ./www:/var/www/html/
      - ./server/000-default.conf:/etc/apache2/sites-available/000-default.conf
@@ -20,8 +20,7 @@ services:
       - "3306:3306"
     environment:
       MYSQL_DATABASE: odyssey
-      MYSQL_ROOT_PASSWORD: password
-      MYSQL_PASSWORD: password
+      MYSQL_ROOT_PASSWORD: NotAnEasyPass@2696
     volumes:
       - ./db_data:/var/lib/mysql
     restart: always
