@@ -93,22 +93,14 @@ class Database
             get_class_vars(get_class())
         );
 
-        foreach ($data as $key => $value) {
-            if (is_string($value)) {
-                if ($key === 'updateDate') {
-                    $updateDate = new \DateTime();
-                    $data[$key] = $updateDate->format('Y-m-d H:i:s');
-                }else {
-                    $data[$key] = addslashes($value);
-                }
-            }
-        }
-
         $data = array_filter($data, function($value, $key) {
             if (!in_array($key, $this->get_foreignKeys())) {
                 return [$key => $value];
             }
         }, ARRAY_FILTER_USE_BOTH);
+
+        $columns = array_keys($data);
+        $values = array_values($data);
 
         $columnForUpdate = [];
 
