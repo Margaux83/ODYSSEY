@@ -52,7 +52,7 @@ class MenuBuilder
     }
 
     public static function createMenu(){
-        $perms = Security::getPermsFromConnectedUser();
+        $perms = Security::getPermsFromConnectedUser() ?? [];
 
         $menuData = self::$_menuData;
 
@@ -62,7 +62,12 @@ class MenuBuilder
         foreach ($menuData as $link => $data) {
             if (!empty($data['menuData'])){
                 //TODO : check the min-status
-                if ($data['menuData']['visible'] && (array_key_exists("all_perms", $perms))) {
+                if ($data['menuData']['visible'] 
+                    && (
+                        array_key_exists("all_perms", $perms)) 
+                        || array_key_exists($link, $perms)
+                        || $link === '/admin/dashboard'
+                    ) {
                     $subSectionSelected = false;
 
                     //Create the sub-menu
@@ -70,11 +75,13 @@ class MenuBuilder
                     if (!empty($data['menuData']['children'])) {
                         $htmlChildren = '<ul>';
                         foreach ($data['menuData']['children'] as $id => $linkChild) {
-                            if ($actualUri === $linkChild) {
-                                $subSectionSelected = true;
+                            if (array_key_exists($id, $perms)) {
+                                if ($actualUri === $linkChild) {
+                                    $subSectionSelected = true;
+                                }
+                                $classChildren = $actualUri == $linkChild ? ' class="selected"' : '';
+                                $htmlChildren .= '<li' . $classChildren . '><a href="' . $linkChild . '">' . $menuData[$linkChild]['label'] . '</li>';
                             }
-                            $classChildren = $actualUri == $linkChild ? ' class="selected"' : '';
-                            $htmlChildren .= '<li' . $classChildren . '><a href="' . $linkChild . '">' . $menuData[$linkChild]['label'] . '</li>';
                         }
                         $htmlChildren .= '</ul>';
                     }

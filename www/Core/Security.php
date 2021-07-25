@@ -34,8 +34,11 @@ class Security
             ["value"],
             ["id" => $user->getRole()]
         );
-
-        return json_decode($result[0]['value'], true);
+        if (count($result)) {
+            return json_decode($result[0]['value'], true);
+        }else {
+            return [];
+        }
     }
 
     public static function isAuthorized($uri) {
