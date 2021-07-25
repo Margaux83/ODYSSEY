@@ -9,8 +9,7 @@ class Installer {
     protected static $query;
 
     public static function checkIfInstallPossible() {
-        if(self::checkPhpVersion() && !self::checkIfEnvExist()) {
-            // A inverser checkIfEnvExist
+        if(self::checkPhpVersion() && (!self::checkIfEnvExist())) {
             return true;
         }
         return false;
@@ -37,14 +36,15 @@ class Installer {
     }
 
     public static function makeDatabase() {
-        $query = self::getDatabaseQuery();
+        $query = self::getDatabaseQuery($_POST['database']['fakeDatas']);
         $database = new Database();
         $install = $database->createDatabase($query);
-        var_dump($install);
         return $install;
     }
 
-    public static function getDatabaseQuery() {
+    public static function getDatabaseQuery($fakeDatas) {
+        if($fakeDatas)
+            return file_get_contents('odyssey_with_fake_datas.sql');
         return file_get_contents('odyssey.sql');
     }
 
@@ -62,6 +62,10 @@ class Installer {
         return false;
     }
 
+    public static function checkIfTablesExists() {
+        return true;
+    }
+
     public static function checkDatabaseConnection() {
         try {
             $conn = new \PDO(
@@ -72,14 +76,6 @@ class Installer {
         } catch(\PDOException $ex) {
             return false;
         }
-    }
-
-    public static function checkIfDatabaseExist() {
-        var_dump($_POST['database']);
-
-        exit(0);
-        return false;
-
     }
 
     public static function writeEnvFiles($config, $database) {

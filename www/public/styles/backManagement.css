@@ -209,6 +209,11 @@ body main section form .formElement label.requiredLabel::after {
   color: red;
 }
 
+body main section form .formElement label.installFakeDatas {
+  max-width: 1000px !important;
+  flex: none !important;
+}
+
 body main section form .formElement input,
 body main section form .formElement select {
   min-width: 250px;
