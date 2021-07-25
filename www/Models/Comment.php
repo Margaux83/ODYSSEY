@@ -4,6 +4,7 @@
 namespace App\Models;
 
 use App\Core\Database;
+use App\Core\Helpers;
 use App\Models\User;
 use App\Models\Article;
 
@@ -163,6 +164,10 @@ class Comment extends Database
                 "class" => "ody_frontForm"
             ],
             "input" => [
+                "csrf"=>[
+                    "type"=>"hidden",
+                    "defaultValue"=>Helpers::generateCsrfToken()
+                ],
                 "content"=>[
                     "type"=>"text",
                     "label"=>"Contenu",

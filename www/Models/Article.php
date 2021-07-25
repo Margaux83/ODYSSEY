@@ -4,6 +4,7 @@
 namespace App\Models;
 
 use App\Core\Database;
+use App\Core\Helpers;
 
 class Article extends Database
 {
@@ -313,11 +314,10 @@ class Article extends Database
     /**
      * @return array
      */
-    public function buildFormArticle($csrf)
+    public function buildFormArticle()
     {
         $category = new Category();
         return [
-
             "config"=>[
                 "method"=>"POST",
                 "Action"=>"",
@@ -326,14 +326,14 @@ class Article extends Database
             ],
 
             "input"=>[
+                "csrf"=>[
+                    "type"=>"hidden",
+                    "defaultValue"=>Helpers::generateCsrfToken()
+                ],
                 "id"=>[
                     "type"=>"hidden",
                     "required"=>true,
                     "defaultValue"=>$this->getID()
-                ],
-                "csrf"=>[
-                    "type"=>"hidden",
-                    "defaultValue"=>$csrf
                 ],
                 "title"=>[
 

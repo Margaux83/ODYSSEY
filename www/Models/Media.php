@@ -3,6 +3,7 @@ namespace App\Models;
 
 use App\Core\Database;
 use App\Core\Form;
+use App\Core\Helpers;
 
 class Media extends Database {
 
@@ -126,7 +127,10 @@ class Media extends Database {
             ],
 
             "input"=>[
-
+                "csrf"=>[
+                    "type"=>"hidden",
+                    "defaultValue"=>Helpers::generateCsrfToken()
+                ],
                 "id"=>[
                     "type"=>"hidden",
                     "required"=>true,
@@ -175,7 +179,10 @@ class Media extends Database {
             ],
 
             "input"=>[
-
+                "csrf"=>[
+                    "type"=>"hidden",
+                    "defaultValue"=>Helpers::generateCsrfToken()
+                ],
                 "id"=>[
                     "type"=>"hidden",
                     "required"=>true,

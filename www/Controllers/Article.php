@@ -48,9 +48,7 @@ class Article
 
         $view = new View("Article/add_articles", "back");
 
-        $csrf = Helpers::generateCsrfToken();
-
-        $form = $article->buildFormArticle($csrf);
+        $form = $article->buildFormArticle();
         $view->assign("form", $form);
 
         if (!empty($_POST['insert_article'])) {
@@ -66,31 +64,27 @@ class Article
                 $errors = Form::validator($dataArticle, $form);
                 if (empty($errors)) {
                     if(empty($article->query(['id'],["uri"=>"/article/".$dataArticle['uri']]))){
-                        if(!empty($_POST['csrf']) && hash_equals($_SESSION['csrf'], $_POST['csrf'])) {
-                            $article->setTitle($dataArticle['title']);
-                            $article->setContent($dataArticle['content']);
-                            $article->setStatus($dataArticle['status']);
-                            $article->setIsvisible($dataArticle['isvisible']);
-                            if ($dataArticle['status'] == "Brouillon") {
-                                $article->setIsdraft(1);
-                            } else {
-                                $article->setIsdraft(0);
-                            }
-                            $article->setIsdeleted(0);
-                            $article->setDescription($dataArticle["description"]);
-                            $article->setId_user($_SESSION["userId"]);
-                            $article->setUri(str_replace(' ', '_', "/article/".$dataArticle['uri']));
-
-                            $article->save();
-                            $result = $article->getLastFromTable();
-                            $article->saveArticleCategory($dataArticle['category'], $result[0]["id"]);
-
-                            $_SESSION['alert']['success'][] = 'L\'article a bien été enregistré !';
-                            header('location: /admin/articles');
-                            session_write_close();
+                        $article->setTitle($dataArticle['title']);
+                        $article->setContent($dataArticle['content']);
+                        $article->setStatus($dataArticle['status']);
+                        $article->setIsvisible($dataArticle['isvisible']);
+                        if ($dataArticle['status'] == "Brouillon") {
+                            $article->setIsdraft(1);
                         } else {
-                            $_SESSION['alert']['danger'][] = 'Formulaire non valide';
+                            $article->setIsdraft(0);
                         }
+                        $article->setIsdeleted(0);
+                        $article->setDescription($dataArticle["description"]);
+                        $article->setId_user($_SESSION["userId"]);
+                        $article->setUri(str_replace(' ', '_', "/article/".$dataArticle['uri']));
+
+                        $article->save();
+                        $result = $article->getLastFromTable();
+                        $article->saveArticleCategory($dataArticle['category'], $result[0]["id"]);
+
+                        $_SESSION['alert']['success'][] = 'L\'article a bien été enregistré !';
+                        header('location: /admin/articles');
+                        session_write_close();
                     } else {
                         $_SESSION['alert']['danger'][] = 'Cette uri existe déjà';
                     }
