@@ -228,7 +228,7 @@ class Role extends Database
 
         foreach ($roles as $key => $role) {
             $returnedArray[$key+1] = [
-                "label" => $role['name'],
+                "label" => htmlspecialchars($role['name']),
                 "selected" => $role['id'] === $selectedRoleId
             ];
 

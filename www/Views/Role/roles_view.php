@@ -18,7 +18,7 @@
         <?php foreach($allRoles as $role) { ?>
             <tr class="text-center">
                 <td><?= $role['id'] ?></td>
-                <td><?= htmlspecialchars($role['name']) ?></td>
+                <td><?= $role['name'] ?></td>
                 <td class="action-btn">
                     <div class="listItem-cpt listActions">
                         <a href="edit-role?role=<?= $role['id'] ?>" id="editPage" onclick="editPage(this)" data-id="">

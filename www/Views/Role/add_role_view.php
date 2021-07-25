@@ -16,7 +16,7 @@
 
         <?php foreach($rolesList as $role => $role_data) { ?>
             <?php if(isset($role_data['title'])) { ?>
-                <h3><?= htmlspecialchars($role_data['title']) ?></h3>
+                <h3><?= $role_data['title'] ?></h3>
             <?php } ?>
 
             <?php foreach($role_data['values'] as $perm => $perm_data) { ?>

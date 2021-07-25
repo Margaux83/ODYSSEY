@@ -116,7 +116,7 @@ class Installer {
         $user->setFirstname($user_info['userAdminFirstName']);
         $user->setLastname($user_info['userAdminLastName']);
         $user->setEmail($user_info['userAdminEmail']);
-        $user->setPassword(password_hash(htmlspecialchars(addslashes($user_info['userAdminPwd'])), PASSWORD_BCRYPT));
+        $user->setPassword(password_hash($user_info['userAdminPwd'], PASSWORD_BCRYPT));
         $user->setPhone("0659737458");
         $user->setRole("1");
         $user->setIsDeleted(0);

@@ -59,7 +59,7 @@
                     }
                     ?>
                 </td>
-                <td><?= $user['name']?></td>
+                <td><?= $user['name'] ?></td>
                 <td><?= date("d/m/Y H:i", strtotime($user["creationDate"])) ?></td>
                 <td><?= date("d/m/Y H:i", strtotime($user["lastConnexionDate"])) ?></td>
                 <td class="action-btn">
