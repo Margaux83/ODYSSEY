@@ -14,11 +14,18 @@ use App\Core\Routing;
 
 class Installer{
     public function setupAction(){
-        if(InstallerCore::checkIfInstallPossible()) {
-            $view = new View("installer", "back_management");
+        if(!empty($_POST)) {
+            if(InstallerCore::checkDatabaseConnection()) {
+                echo 'true';
+            }
         } else {
-            header('location:' . Routing::getBaseUrl());
+            if(InstallerCore::checkIfInstallPossible()) {
+                $view = new View("installer", "back_management");
+            } else {
+                header('location:' . Routing::getBaseUrl());
+            }
         }
+
     }
 
     public function makeInstallAction() {

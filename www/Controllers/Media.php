@@ -6,6 +6,8 @@ use App\Core\Form;
 use App\Core\Security;
 use App\Core\View;
 use App\Models\Media as ModelMedia;
+use App\Core\Helpers;
+
 
 class Media {
     /**
@@ -21,8 +23,7 @@ class Media {
         $medias = new ModelMedia();
 
         $mediaInfos = $medias->query(['id', 'name', 'media', 'creationDate', 'updateDate'], ['isDeleted'=>0]);
-        $view->assign("mediaInfos",$mediaInfos);
-
+        $view->assign("mediaInfos", Helpers::cleanArray($mediaInfos));
     }
 
     /**
@@ -68,8 +69,8 @@ class Media {
                             unlink($target_file);
                             move_uploaded_file($_FILES["media"]["tmp_name"], $target_file);
                             $_SESSION['alert']['success'][] = 'Le média a bien été uploadé !';
-                            $media->setName(htmlspecialchars(addslashes($dataArticle['name'])));
-                            $media->setMedia(htmlspecialchars(addslashes($_FILES['media']["name"])));
+                            $media->setName($dataArticle['name']);
+                            $media->setMedia($_FILES['media']["name"]);
                             $media->setIsdeleted(0);
                             $media->save();
                             $_SESSION['alert']['success'][] = 'Le média a bien été enregistré !';
@@ -96,8 +97,8 @@ class Media {
                                 $_SESSION['alert']['danger'][] = "Votre fichier n'a pas pu être uploadé";
                             } else {
                                 move_uploaded_file($_FILES["media"]["tmp_name"], $target_file);
-                                $media->setName(htmlspecialchars(addslashes($dataArticle['name'])));
-                                $media->setMedia(htmlspecialchars(addslashes($_FILES['media']["name"])));
+                                $media->setName($dataArticle['name']);
+                                $media->setMedia($_FILES['media']["name"]);
                                 $media->setIsdeleted(0);
                                 $media->save();
                                 $_SESSION['alert']['success'][] = 'Le média a bien été enregistré !';
@@ -157,7 +158,7 @@ class Media {
                     if(!empty($media->query(['id'],['name'=>$dataArticle['name']]))){
                         $_SESSION['alert']['danger'][] = 'Le média existe déjà';
                     }else {
-                        $media->setName(htmlspecialchars(addslashes($dataArticle['name'])));
+                        $media->setName($dataArticle['name']);
                         $media->setIsdeleted(0);
                         $media->save();
                         $_SESSION['alert']['success'][] = 'Le média a bien été modifié !';

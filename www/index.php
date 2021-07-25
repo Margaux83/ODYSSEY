@@ -2,7 +2,7 @@
 namespace App;
 
 
-use App\Core\Routing; 
+use App\Core\Routing;
 use App\Core\ConstantManager;
 use App\Core\MenuBuilder;
 use App\Core\View;
@@ -44,9 +44,7 @@ if( file_exists("./Controllers/".$c.".php")){
 		if(method_exists($cObject, $a)){
 			//$a = loginAction // defaultAction
             $security = Security::getInstance();
-            if(!$security->isConnected()
-                && MenuBuilder::needToBeConnected()
-                && Installer::checkIfEnvExist()){
+            if(!$security->isConnected() && MenuBuilder::needToBeConnected() && !Installer::checkIfEnvExist()){
                header('Location: /login');
             }else {
                 if(!Security::isAuthorized($uri)) {
@@ -57,15 +55,13 @@ if( file_exists("./Controllers/".$c.".php")){
                     $cObject->$a();
                 }
             }
-    
-		}else{
+		} else {
             Error::errorPage(404, 'La page n\'existe pas');
         }
-
-    }else{
+    } else {
         die("La classe ".$c." n'existe pas");
     }
-}else {
+} else {
     FrontPage::findContentToShow($uri);
 }
 

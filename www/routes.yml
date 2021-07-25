@@ -245,6 +245,11 @@
   controller: Profile
   action: default
   label: Profil
+
+/admin/password-change:
+  controller: Profile
+  action: changePassword
+  label: Profil
 ### ### ###
 
 ### SECURITY ###

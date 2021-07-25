@@ -15,6 +15,7 @@
     <script src=<?php App\Core\View::getAssets("menu.js")?>></script>
     <script src=<?php App\Core\View::getAssets("chart.js")?>></script>
     <script src=<?php App\Core\View::getAssets("sweetalert2.all.min.js")?>></script>
+    <script src=<?php App\Core\View::getAssets("jquery-3.3.1.js")?>></script>
 
 </head>
 <body class="preload" style="min-height: 0;">

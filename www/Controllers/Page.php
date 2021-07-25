@@ -20,10 +20,9 @@ class Page{
         $allPagesByUser = $pages->getAllPages($_SESSION["userId"]);
 
         $view = new View("Page/pages", "back");
-
-        $view->assign("allPages", $allPages);
-        $view->assign("allPagesByUser", $allPagesByUser);
-
+        //Affiche la liste de toutes pages
+        $view->assign("allPages", Helpers::cleanArray($allPages));
+        $view->assign("allPagesByUser", Helpers::cleanArray($allPagesByUser));
     }
 
     /**
@@ -76,7 +75,7 @@ class Page{
     /**
      * Function to modify a page in the database
      * Retrieve and display the information of the page in the form thanks to the setId which takes in parameter the id of the page
-     */
+     **/
     public function editPageAction() {
         if(empty($_POST)) {
             $_SESSION['alert']['danger'][] = 'Vous ne pouvez pas aller sur ce lien';

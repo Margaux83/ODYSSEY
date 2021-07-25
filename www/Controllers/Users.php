@@ -11,6 +11,7 @@ use App\Models\User as User;
 use App\Core\Mailer;
 use App\Models\BodyMail;
 use App\Core\Statistic;
+use App\Core\Helpers;
 
 
 
@@ -53,7 +54,7 @@ class Users{
             ]
         );
 
-        $view->assign('allUsers', $allUsers);
+        $view->assign('allUsers', Helpers::cleanArray($allUsers));
         $view->assign("statistics", $statisticsPages);
 
     }
@@ -84,12 +85,14 @@ class Users{
             $errors = Form::validator($_POST, $form);
 
             if(empty($errors)) {
-                if ($user->verifyEmail(htmlspecialchars(addslashes($_POST['email'])))) {
-                    $user->setFirstname(htmlspecialchars(addslashes($_POST['firstname'])));
-                    $user->setLastname(htmlspecialchars(addslashes($_POST['lastname'])));
-                    $user->setEmail(htmlspecialchars(addslashes($_POST['email'])));
-                    $user->setPhone(htmlspecialchars(addslashes($_POST['phone'])));
-                    $user->setRole(htmlspecialchars(addslashes($_POST['role'])));
+                //S'il n'y a pas d'erreurs, on envoie les données dans la requête pour ajouter l'utilisateur
+                //On vérifie si l'email a bien été renseigné
+                if ($user->verifyEmail($_POST['email'])) {
+                    $user->setFirstname($_POST['firstname']);
+                    $user->setLastname($_POST['lastname']);
+                    $user->setEmail($_POST['email']);
+                    $user->setPhone($_POST['phone']);
+                    $user->setRole($_POST['role']);
                     $user->setIsDeleted(0);
                     $user->setToken($token);
                     $user->setIsVerified(0);
@@ -140,12 +143,14 @@ class Users{
             );
             if(count($result)) {
                 $user->setId($result[0]["id"]);
-                if(!$user->verifyPassword(htmlspecialchars(addslashes($_POST['password'])), htmlspecialchars(addslashes($_POST['password-confirm'])))) {
+                //On vérifie que le nouveau mot de passe et le mot de passe de confirmation sont égaux
+                if(!$user->verifyPassword($_POST['password'], $_POST['password-confirm'])) {
                     $_SESSION['alert']['danger'][] = 'Les deux mots de passe ne correspondent pas';
                     header('location: /newpasswordconfirm');
                     session_write_close();
                 } else {
-                    $user->setPassword(password_hash(htmlspecialchars(addslashes($_POST['password'])), PASSWORD_BCRYPT));
+                    //Si les mots de passe sont égaux, on enregistre le nouveau de passe dans la base de données avec une clé de chiffrement
+                    $user->setPassword(password_hash($_POST['password'], PASSWORD_BCRYPT));
                     $user->setToken("");
                     $user->setIsVerified(1);
                     $user->save();
@@ -179,9 +184,10 @@ class Users{
         if(!empty($_POST) && !empty($_POST['lastname'])){
             $errors = Form::validator($_POST, $form);
             if(empty($errors)) {
-                    $user->setFirstname(htmlspecialchars(addslashes($_POST['firstname'])));
-                    $user->setLastname(htmlspecialchars(addslashes($_POST['lastname'])));
-                    $user->setPhone(htmlspecialchars(addslashes($_POST['phone'])));
+                //S'il n'y a pas d'erreurs, on envoie les données dans la requête pour ajouter l'utilisateur
+                    $user->setFirstname($_POST['firstname']);
+                    $user->setLastname($_POST['lastname']);
+                    $user->setPhone($_POST['phone']);
                     $user->setUpdateDate(date ('Y-m-d H:i:s'));
                     $user->setRole($_POST['role']);
 

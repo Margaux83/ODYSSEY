@@ -4,6 +4,7 @@
 namespace App;
 
 use App\Core\Form;
+use App\Core\Helpers;
 use App\Core\Security;
 use App\Core\View;
 use App\Models\Article as Article_Model;
@@ -25,9 +26,8 @@ class Article
          $articles = new Article_Model();
 
         $view = new View("Article/articles", "back");
-
-        $view->assign("infoArticles", $articles->getAllArticles());
-        $view->assign("infoArticlesByUser", $articles->getAllArticles($_SESSION["userId"]));
+        $view->assign("infoArticles", Helpers::cleanArray($articles->getAllArticles()));
+        $view->assign("infoArticlesByUser", Helpers::cleanArray($articles->getAllArticles($_SESSION["userId"])));
     }
 
 
@@ -205,7 +205,7 @@ class Article
         $view = new View("Categories/categories", "back");
         $category = new Category();
         $listCategories = $category->query(['id','label', 'creationDate', 'updateDate'],['isDeleted'=>0]);
-        $view->assign("listCategories", $listCategories);
+        $view->assign("listCategories", Helpers::cleanArray($listCategories));
 
         $formCategory = $category->buildFormCategory();
         $view->assign("formCategory", $formCategory);
@@ -263,7 +263,7 @@ class Article
         }
 
         $formCategory = $category->buildFormCategory();
-        $view->assign("formCategory", $formCategory);
+        $view->assign("formCategory", Helpers::cleanArray($formCategory));
 
         if(!empty($_POST['insert_category'])){
             $dataArticle = $_POST;

@@ -57,7 +57,7 @@
                     }
                     ?>
                 </td>
-                <td><?= $user['name']?></td>
+                <td><?= $user['name'] ?></td>
                 <td><?= date("d/m/Y H:i", strtotime($user["creationDate"])) ?></td>
                 <td class="action-btn">
                     <div class="listItem-cpt listActions">

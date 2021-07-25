@@ -18,7 +18,7 @@ class Role
         $allRoles = $role->getAllRoles();
 
         $view = new View("Role/roles", "back");
-        $view->assign("allRoles", $allRoles);
+        $view->assign("allRoles", Helpers::cleanArray($allRoles));
     }
 
     /**
@@ -51,6 +51,9 @@ class Role
      */
     public function editRoleAction()
     {
+        // Edit Admin role forbidden
+        if($_GET['role'] === "1") header('location: /admin/roles');
+
         $role = new ModelRole;
         $actualRole = $_GET['role'];
         $role->setId($actualRole);
@@ -71,7 +74,7 @@ class Role
         $view = new View("Role/add_role", "back");
         $view->assign("rolesList", $role->rolesList());
         $view->assign("roleClass", $role);
-        $view->assign("roleResult", $result[0]);
+        $view->assign("roleResult", Helpers::cleanArray($result[0]));
     }
 
     /**

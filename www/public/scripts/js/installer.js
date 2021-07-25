@@ -71,7 +71,6 @@ function installer_loadSection(index){
 }
 
 function installer_checkDbConnection(event) {
-    console.log('qzd');
     var bddName = document.getElementById('config-bddName').value;
     var bddHost = document.getElementById('config-bddHost').value;
     var bddUser = document.getElementById('config-bddUser').value;
@@ -79,23 +78,38 @@ function installer_checkDbConnection(event) {
     if(bddName.length === 0 || bddHost.length === 0 || bddUser.length === 0 || bddPwd.length === 0) {
         alert("Veuillez saisir tous les champs ci-dessus afin de tester la connectivité de la base de données !");
     } else {
-        // WORK
-        /*
-$.ajax({
-    type: 'POST',
-    url: "/",
-    data: post_data,
-    success: function(responseText) {  if(responseText == 1) {
-        $('#response', form).html('<p class="message">Error...</p>');
-    } else { if(responseText == "") {
-        $(form).fadeOut(500, function(){
-            form.html(msg).fadeIn();
+        var form = $("form");
+        var post_data = form.serialize();
+        // Fire off the request to /installer with POST datas
+        request = $.ajax({
+            url: "/installer",
+            type: "post",
+            data: post_data
         });
 
-    }
-    }
-    }
-});
-*/
+        // Callback handler that will be called on success
+        request.done(function (response, textStatus, jqXHR){
+            // Fire a success message if database connection is correct / error message if incorrect
+            if(response === "true") {
+                Swal.fire(
+                    'Succès',
+                    'Les informations de connexion à la base de données sont correctes',
+                    'success'
+                )
+            } else {
+                Swal.fire(
+                    'Erreur',
+                    'Les informations de connexion à la base de données sont incorrectes',
+                    'error'
+                )
+            }
+        });
+        // Callback handler that will be called on failure
+        request.fail(function (jqXHR, textStatus, errorThrown){
+            // Alert the error to the console
+            alert("Erreur : " + textStatus, errorThrown);
+        });
+
+
     }
 }

@@ -2,6 +2,7 @@
 namespace App\Models;
 
 use App\Core\Database;
+use App\Core\Helpers;
 
 class Role extends Database
 {
@@ -122,14 +123,16 @@ class Role extends Database
      */
     public function rolesList()
     {
-        return [
-            "all" => [
-                "values" => [
-                    "all_perms" => [
-                        "desc" => "Donner tous les droits"
-                    ]
+        /*
+        "all" => [
+            "values" => [
+                "all_perms" => [
+                    "desc" => "Donner tous les droits"
                 ]
-            ],
+            ]
+        ],
+         */
+        return [
             "users" => [
                 "title" => "Gestion des utilisateurs",
                 "values" => [
@@ -145,7 +148,6 @@ class Role extends Database
                     "/admin/delete-user" => [
                         "desc" => "Supprimer un utilisateur"
                     ]
-
                 ]
             ],
             'pages' => [
@@ -247,7 +249,7 @@ class Role extends Database
             ];
 
         }
-        return $returnedArray;
+        return Helpers::cleanArray($returnedArray);
 
     }
 }

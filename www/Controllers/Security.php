@@ -42,13 +42,13 @@ class Security{
         if(!empty($_POST)){
             $errors = Form::validator($_POST, $form);
             if(empty($errors)){
-                if($user->verifyPassword(htmlspecialchars(addslashes($_POST['password'])), htmlspecialchars(addslashes($_POST['password-confirm'])))) {
-                    if($user->verifyEmail(htmlspecialchars(addslashes($_POST['email'])))) {
-                        $user->setFirstname(htmlspecialchars(addslashes($_POST['firstname'])));
-                        $user->setLastname(htmlspecialchars(addslashes($_POST['lastname'])));
-                        $user->setEmail(htmlspecialchars(addslashes($_POST['email'])));
-                        $user->setPassword(password_hash(htmlspecialchars(addslashes($_POST['password'])), PASSWORD_BCRYPT));
-                        $user->setPhone(htmlspecialchars(addslashes($_POST['phone'])));
+                if($user->verifyPassword($_POST['password'], $_POST['password-confirm'])) {
+                    if($user->verifyEmail($_POST['email'])) {
+                        $user->setFirstname($_POST['firstname']);
+                        $user->setLastname($_POST['lastname']);
+                        $user->setEmail($_POST['email']);
+                        $user->setPassword(password_hash($_POST['password'], PASSWORD_BCRYPT));
+                        $user->setPhone($_POST['phone']);
                         $user->setRole(1);
                         $user->setIsDeleted(0);
                         $user->setToken($token);
@@ -206,12 +206,12 @@ class Security{
             if(count($result)) {
 
                 $user->setId($result[0]["id"]);
-                if(!$user->verifyPassword(htmlspecialchars(addslashes($_POST['password'])), htmlspecialchars(addslashes($_POST['password-confirm'])))) {
+                if(!$user->verifyPassword($_POST['password'], $_POST['password-confirm'])) {
                     $_SESSION['alert']['danger'][] = 'Les deux mots de passe ne correspondent pas';
                     header('location: /forgotpasswordconfirm');
                     session_write_close();
                 } else {
-                    $user->setPassword(password_hash(htmlspecialchars(addslashes($_POST['password'])), PASSWORD_BCRYPT));
+                    $user->setPassword(password_hash($_POST['password'], PASSWORD_BCRYPT));
                     $user->setToken("");
                     $user->save();
                     $_SESSION['alert']['success'][] = 'Votre mot de passe a bien été modifié';

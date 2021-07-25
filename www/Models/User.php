@@ -341,6 +341,53 @@ class User extends Database
         ];
     }
 
+    public function buildFormPassword() {
+        return [
+            "config" => [
+                "method" => "POST",
+                "action" => "/admin/password-change",
+                "Submit" => "Changer le mot de passe",
+                "class" => "form_register"
+            ],
+            "input" => [
+                "password"=> [
+                    "type"=>"password",
+                    "class"=>"requiredLabel",
+                    "label"=>"Ancien mot de passe",
+                    "lengthMax"=>"120",
+                    "lengthMin"=>"8",
+                    "required"=>true,
+                    "error"=>"Votre mot de passe doit faire plus de 8 caractères",
+                    "placeholder"=>"Votre ancien mot de passe"
+                ],
+                "new-password"=> [
+                    "type"=>"password",
+                    "class"=>"requiredLabel",
+                    "label"=>"Nouveau mot de passe",
+                    "lengthMax"=>"120",
+                    "lengthMin"=>"8",
+                    "required"=>true,
+                    "error"=>"Votre nouveau mot de passe doit faire plus de 8 caractères",
+                    "placeholder"=>"Votre nouveau mot de passe"
+                ],
+                "confirm-new-password"=> [
+                    "type"=>"password",
+                    "class"=>"requiredLabel",
+                    "label"=>"Confirmer",
+                    "lengthMax"=>"120",
+                    "lengthMin"=>"8",
+                    "required"=>true,
+                    "error"=>"Votre confirmation de mot de passe doit faire plus de 8 caractères",
+                    "placeholder"=>"Confirmer le nouveau mot de passe"
+                ],
+            ],
+            "button"=>[
+                "class"=>"buttonComponent d-flex floatRight",
+                "name"=>""
+            ]
+        ];
+    }
+
     /**
      * @return array
      */

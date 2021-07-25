@@ -161,6 +161,10 @@
                 <label for="config-userAdminFirstName" class="requiredLabel">Prénom</label>
                 <input name="user[userAdminFirstName]" id="config-userAdminFirstName" type="text" required>
             </div>
+            <div class="formElement">
+                <label for="config-userAdminLastName" class="installFakeDatas">Installation avec de fausses données (pour examen)</label>
+                <input name="database[fakeDatas]" id="config-userAdminLastname" type="checkbox">
+            </div>
             <!--
             <div class="formElement">
                 <label for="config-userAdminMail" class="requiredLabel">Prénom</label>
