@@ -28,7 +28,7 @@ class Installer {
         if($install > 0) {
             echo 'Install de la bdd faites';
             self::createFirstUser($_POST['user']);
-            $_SESSION['alert']['danger'][] = 'GG';
+            $_SESSION['alert']['success'][] = "L'installation du CMS s'est effectuée avec succès ! (pas de bug pendant l'exam please)";
             header('location: /login');
             session_write_close();
         } else {
