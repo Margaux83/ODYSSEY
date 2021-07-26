@@ -12,7 +12,6 @@ class Page extends Database
     protected $content;
     protected $description;
     protected $isvisible;
-    protected $status;
     protected $isdeleted;
     protected $updateDate;
     protected $id_user;
@@ -129,22 +128,6 @@ class Page extends Database
     public function getIsvisible()
     {
         return $this->isvisible;
-    }
-
-    /**
-     * @param $status
-     */
-    public function setStatus($status)
-    {
-        $this->status = $status;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getStatus()
-    {
-        return $this->status;
     }
 
     /**

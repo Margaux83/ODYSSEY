@@ -13,7 +13,6 @@ class User extends Database
     protected $email;
     protected $password;
     protected $phone;
-    protected $status;
     protected $role;
     protected $isDeleted;
     protected $updateDate;
@@ -157,18 +156,6 @@ class User extends Database
     public function getCountry()
     {
         return $this->country;
-    }
-
-    /**
-     * @param $status
-     */
-    public function setStatus($status){
-        $this->status = $status;
-    }
-
-    public function getStatus()
-    {
-        return $this->status;
     }
 
     /**
@@ -708,7 +695,7 @@ class User extends Database
     public function getAllUsers()
     {
         $results = $this->query(
-            ["id", "firstname", "lastname", "email", "status", "role", "isVerified", "creationDate", "lastConnexionDate", "updateDate"],
+            ["id", "firstname", "lastname", "email", "role", "isVerified", "creationDate", "lastConnexionDate", "updateDate"],
             ["isDeleted" => "0"]
         );
 

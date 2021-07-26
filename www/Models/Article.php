@@ -13,10 +13,8 @@ class Article extends Database
     protected $id;
     protected $title;
     protected $content;
-    protected $status;
     protected $isvisible;
     protected $category;
-    protected $isdraft;
     protected $description;
     protected $isdeleted;
     protected $id_user;
@@ -105,22 +103,6 @@ class Article extends Database
     }
 
     /**
-     * @param $status
-     */
-    public function setStatus($status)
-    {
-        $this->status = $status;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getStatus()
-    {
-        return $this->status;
-    }
-
-    /**
      * @param $isvisible
      */
     public function setIsvisible($isvisible)
@@ -150,22 +132,6 @@ class Article extends Database
     public function getCategory()
     {
         return $this->category;
-    }
-
-    /**
-     * @param $isdraft
-     */
-    public function setIsdraft($isdraft)
-    {
-        $this->isdraft = $isdraft;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getIsdraft()
-    {
-        return $this->isdraft;
     }
 
     /**

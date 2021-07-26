@@ -66,13 +66,7 @@ class Article
                     if(empty($article->query(['id'],["uri"=>"/article/".$dataArticle['uri']]))){
                         $article->setTitle($dataArticle['title']);
                         $article->setContent($dataArticle['content']);
-                        //$article->setStatus($dataArticle['status']);
                         $article->setIsvisible($dataArticle['isvisible']);
-                        if ($dataArticle['status'] == "Brouillon") {
-                            $article->setIsdraft(1);
-                        } else {
-                            $article->setIsdraft(0);
-                        }
                         $article->setIsdeleted(0);
                         $article->setDescription($dataArticle["description"]);
                         $article->setId_user($_SESSION["userId"]);
@@ -140,7 +134,6 @@ class Article
                         $article->setTitle($dataArticle['title']);
                         $article->setContent($dataArticle['content']);
                         $article->setDescription($dataArticle['description']);
-                        //$article->setStatus($dataArticle['status']);
                         $article->setIsvisible($dataArticle['isvisible']);
                         $article->setId_user($_SESSION["userId"]);
 
