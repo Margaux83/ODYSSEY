@@ -79,17 +79,55 @@
     </table>
 </section>
 
+<script src=<?php App\Core\View::getAssets("libraries/datatables.js")?>></script>
+<script src=<?php App\Core\View::getAssets("libraries/jquery.redirect.js")?>></script>
 
-<section class="col-8" style="grid-column: 1 / 7; grid-row: 2;">
-    <h1 class="titleSection"><img src=<?php App\Core\View::getAssets("icons/icon_stat.png")?> alt="">Evolution du nombre de connexion</h1>
-    <canvas id="bar-chart" width="775" height="400"></canvas>
-</section>
+<script>
+    $(document).ready(function() {
+        $('#table_all_users').DataTable({
 
-<section class="col-8" style="grid-column: 7 / 13; grid-row: 2;">
-    <h1 class="titleSection"><img src=<?php App\Core\View::getAssets("icons/icon_stat.png")?> alt="">Evolution des inscriptions</h1>
-    <canvas id="line-chart" width="775" height="400"></canvas>
-</section>
+        });
+    });
 
-<script src=<?php App\Core\View::getAssets("datatables.js")?>></script>
-<script src=<?php App\Core\View::getAssets("jquery.redirect.js")?>></script>
-<script src=<?php App\Core\View::getAssets("users.js")?>></script>
+    function editUser(e) {
+
+        let id = $(e).attr("data-id");
+        console.log(id);
+        $.redirect('edit-user', {'id_user': id});
+    }
+
+    function deleteUser(e) {
+        let id = $(e).attr("data-id");
+
+        swal.fire({
+            title: 'Êtes-vous sûr ?',
+            text: "Vous ne pourrez pas revenir en arrière",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Oui, supprimer!',
+            cancelButtonText: 'Non, annuler!',
+            reverseButtons: true
+        }).then((result) => {
+            if (result.isConfirmed) {
+                swal.fire(
+                    'Supprimé!',
+                    'L\'utilisateur a bien été supprimé.',
+                    'success'
+                ).then(function() {
+                    $.post( "delete-user", { id_user: id, deleteUser: "true" })
+                        .done(function( data ) {
+                            location.reload();
+                        });
+                });
+            } else if (
+                result.dismiss === Swal.DismissReason.cancel
+            ) {
+                swal.fire(
+                    'Annulé',
+                    'L\'utilisateur n\'a pas été supprimé',
+                    'error'
+                )
+            }
+        })
+    }
+</script>

@@ -35,7 +35,7 @@
     <button onclick="window.location='/admin/roles'">Retour</button>
 
 </section>
-<script src=<?php App\Core\View::getAssets("jquery-3.3.1.js")?>></script>
+<script src=<?php App\Core\View::getAssets("libraries/jquery-3.3.1.js")?>></script>
 
 <script>
     $('#selectall').click(function() {
