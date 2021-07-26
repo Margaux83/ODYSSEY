@@ -44,7 +44,7 @@ if( file_exists("./Controllers/".$c.".php")){
 		if(method_exists($cObject, $a)){
 			//$a = loginAction // defaultAction
             $security = Security::getInstance();
-            if(!$security->isConnected() && MenuBuilder::needToBeConnected() && Installer::checkIfEnvExist()){
+            if(!$security->isConnected() && MenuBuilder::needToBeConnected() && Installer::checkIfEnvExist() && $uri != "/sitemap.xml"){
                header('Location: /login');
             }else {
                 if(!Security::isAuthorized($uri)) {

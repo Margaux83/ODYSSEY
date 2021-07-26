@@ -60,6 +60,7 @@
                 <td><?= $user['name'] ?></td>
                 <td><?= date("d/m/Y H:i", strtotime($user["creationDate"])) ?></td>
                 <td class="action-btn">
+                    <?php if($user['id'] !== '1') { ?>
                     <div class="listItem-cpt listActions">
                         <a href="#" id="editUser" onclick="editUser(this)" data-id="<?= $user["id"] ?>">
                             <img src=<?php App\Core\View::getAssets("icons/pen-solid.svg")?> alt="" height="20" width="20">
@@ -68,6 +69,7 @@
                             <img src=<?php App\Core\View::getAssets("icons/trash-solid.svg")?> alt="" height="20" width="20">
                         </a>
                     </div>
+                    <?php } ?>
                 </td>
             </tr>
         <?php } ?>
