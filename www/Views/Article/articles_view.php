@@ -5,11 +5,10 @@
     }
 </style>
 
-<form action="add-article">
-    <button type="submit" class="buttonComponent d-flex"><img src=<?php App\Core\View::getAssets("icons/plus-solid.svg")?> height="15" width="15">Ajouter article</button>
-</form>
-
 <section class="col-12" style="grid-column: 1/ 13; grid-row: 1;">
+    <div class="sectionHeader d-flex">
+        <h1 class="titleSection d-flex"><img src=<?php App\Core\View::getAssets("icons/icon_page.png")?> alt="">Tous les articles</h1>
+    </div>
     <table id="table_all_articles" class="table thead-dark">
         <thead>
         <tr>
@@ -80,7 +79,10 @@
     </table>
 </section>
 
-<section class="col-12" style="grid-column: 1 / 7; grid-row: 2;">
+<section class="col-12" style="grid-column: 1 / 8; grid-row: 2;">
+    <div class="sectionHeader d-flex">
+        <h1 class="titleSection d-flex"><img src=<?php App\Core\View::getAssets("icons/icon_page.png")?> alt="">Mes articles</h1>
+    </div>
     <table id="table_all_articles_user" class="table thead-dark">
         <thead>
         <tr>

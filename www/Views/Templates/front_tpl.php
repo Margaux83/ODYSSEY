@@ -75,15 +75,6 @@
 			<p>Navigation</p>
 			<?php echo App\Core\FrontPage::getFrontMenu('Menu footer');?>
 		</nav>
-		<nav>
-			<p>Assistance</p>
-			<ul>
-                <li><a href="/politique-de-confidentialite">Politique de confidentialité</a></li>
-				<li>Mesures Covid</li>
-				<li>Centre d'aide</li>
-				<li>Confiance et sécurité</li>
-			</ul>
-		</nav>
 	</footer>
 
 </body>

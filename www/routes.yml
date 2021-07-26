@@ -231,15 +231,16 @@
     listId: settings
     icon: icon_web
 
-/admin/settings:
-  controller: Settings
-  action: default
-  label: Paramètres
-  menuData:
-    visible: true
-    min-statut: true
-    listId: settings
-    icon: icon_settings
+#/admin/settings:
+#  controller: Settings
+#  action: default
+#  label: Paramètres
+#  menuData:
+#    visible: true
+#    min-statut: true
+#    listId: settings
+#    icon: icon_settings
+
 
 /admin/profile:
   controller: Profile

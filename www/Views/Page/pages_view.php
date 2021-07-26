@@ -5,6 +5,9 @@
     }
 </style>
 <section class="col-12" style="grid-column: 1/ 13; grid-row: 1;">
+    <div class="sectionHeader d-flex">
+        <h1 class="titleSection d-flex"><img src=<?php App\Core\View::getAssets("icons/icon_page.png")?> alt="">Toutes les pages</h1>
+    </div>
     <table id="table_all_pages" class="table thead-dark">
         <thead>
         <tr>
@@ -59,7 +62,7 @@
     </table>
 </section>
 
-<section class="col-12" style="grid-column: 1 / 7; grid-row: 2;">
+<section class="col-12" style="grid-column: 1 / 8; grid-row: 2;">
     <div class="sectionHeader d-flex">
         <h1 class="titleSection d-flex"><img src=<?php App\Core\View::getAssets("icons/icon_page.png")?> alt="">Mes pages</h1>
     </div>
