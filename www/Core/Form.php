@@ -154,23 +154,19 @@ class Form
             '' => [
                 "label" => "Choisir une visibilité"
             ],
+            "0"=>[
+                "label" => "Brouillon",
+            ],
             "1"=>[
-                "label" => "Public",
-            ],
-            "2"=>[
-                "label" => "Protégé",
-            ],
-            "3"=>[
-                "label" => "Privé"
+                "label" => "Validé et posté",
             ]
         ];
 
         $returnedArray = [];
-
         foreach ($status as $key => $singleStatus) {
             $returnedArray[$key] = [
                 'label' => $singleStatus['label'],
-                'selected' => $key === $object->getIsvisible()
+                'selected' => ($key === $object->getIsvisible() || $key == "0")
             ];
         }
 

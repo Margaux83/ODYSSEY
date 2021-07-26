@@ -39,17 +39,11 @@
             <td><?= $article["firstname"]." ".$article["lastname"] ?></td>
             <td>
                 <?php //Mettre le statut de l'article
-                switch ($article["status"]) {
-                    case 1:
+                switch ($article["isVisible"]) {
+                    case 0:
                         echo "Brouillon";
                         break;
-                    case 2:
-                        echo "Créé";
-                        break;
-                    case 3:
-                        echo "En attente de validation";
-                        break;
-                    case 4:
+                    case 1:
                         echo "Validé et posté";
                         break;
                 }
@@ -117,17 +111,11 @@
                     <td><?= $articleByUser["firstname"]." ".$articleByUser["lastname"] ?></td>
                     <td>
                         <?php //Mettre le statut de l'article
-                        switch ($articleByUser["status"]) {
-                            case 1:
+                        switch ($articleByUser["isVisible"]) {
+                            case 0:
                                 echo "Brouillon";
                                 break;
-                            case 2:
-                                echo "Créé";
-                                break;
-                            case 3:
-                                echo "En attente de validation";
-                                break;
-                            case 4:
+                            case 1:
                                 echo "Validé et posté";
                                 break;
                         }

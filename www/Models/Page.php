@@ -274,14 +274,6 @@ class Page extends Database
                     "placeholder"=>"Votre contenu",
                     "defaultValue"=> (empty($this->getDescription())) ? (empty($_POST['description'])) ? '' : $_POST['description'] : $this->getDescription()
                 ],
-                "status"=>[
-                    "type"=>"select",
-                    "label"=>"Statut",
-                    "required"=>true,
-                    "error"=>"Veuillez sélectionner un élément",
-                    "placeholder"=>"Choisir un statut",
-                    "options"=>$form->buildAllStatusFormSelect($this)
-                ],
                 "isvisible"=>[
                     "type"=>"select",
                     "label"=>"Visibilité",
@@ -311,7 +303,7 @@ class Page extends Database
             $filter["id_User"] = $id_user;
         }
         $results = Page::query(
-            ["id" ,"title", "description", "status", "uri", "creationDate", "updateDate", "id_User"],
+            ["id" ,"title", "description", "isVisible", "uri", "creationDate", "updateDate", "id_User"],
             $filter
         );
         if (count($results)) {

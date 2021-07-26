@@ -54,7 +54,7 @@ class Page{
                 $page->setContent($dataPage['content']);
                 $page->setDescription($dataPage['description']);
                 $page->setUri(str_replace(' ', '_', "/".$dataPage['uri']));
-                $page->setStatus($dataPage['status']);
+                //$page->setStatus($dataPage['status']);
                 $page->setIsvisible($dataPage['isvisible']);
                 $page->setId_user($_SESSION["userId"]);
                 $page->setIsdeleted(0);
@@ -110,7 +110,7 @@ class Page{
                 $page->setContent($dataPage['content']);
                 $page->setDescription($dataPage['description']);
                 $page->setUri(str_replace(' ', '_', "/".$dataPage['uri']));
-                $page->setStatus($dataPage['status']);
+                //$page->setStatus($dataPage['status']);
                 $page->setIsvisible($dataPage['isvisible']);
                 $page->setId_user($_SESSION["userId"]);
                 $page->setUpdateDate(date ('Y-m-d H:i:s'));
