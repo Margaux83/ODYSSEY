@@ -46,8 +46,8 @@ class Installer {
 
     public static function getDatabaseQuery($fakeDatas) {
         if($fakeDatas)
-            return file_get_contents('odyssey_with_fake_datas.sql');
-        return file_get_contents('odyssey.sql');
+            return preg_replace("/{DBPREFIX}/", DBPREFIX, file_get_contents('odyssey_with_fake_datas.sql'));
+        return preg_replace("/{DBPREFIX}/", DBPREFIX, file_get_contents("odyssey.sql"));
     }
 
     public static function checkPhpVersion() {
