@@ -60,7 +60,7 @@ class Media {
                         $_SESSION['alert']['danger'][] = 'Le média existe déjà';
                     } else {
 
-                        $target_dir = $_SERVER["DOCUMENT_ROOT"] . "/public/images/uploads/";
+                        $target_dir = "public/images/uploads/";
                         $target_file = $target_dir . basename($_FILES["media"]["name"]);
                         $uploadOk = 1;
 

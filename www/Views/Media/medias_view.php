@@ -1,4 +1,6 @@
-<link rel="stylesheet" type="text/css" href=<?php App\Core\View::getAssets("datatables.css")?>>
+<link rel="stylesheet" type="text/css" href=<?php use App\Core\Routing;
+
+App\Core\View::getAssets("datatables.css")?>>
 <style>
     table tbody td {
         min-width: 100px;
@@ -24,9 +26,7 @@
         <?php
         if(!empty($mediaInfos)){
 
-
         foreach ($mediaInfos as $media){
-
         ?>
                 <tr class="text-center">
                     <td>
@@ -37,11 +37,11 @@
                         <p class="listItem-cpt"><?= $media["name"] ?></p>
                     </td>
                     <td>
-                        <img src=<?php App\Core\View::getAssets("uploads/".utf8_decode($media["media"]))?> alt="" height="50" width="50"></p>
+                        <img src="<?php echo Routing::getBaseUrl() . '/public/images/uploads/' . $media['media'] ?>" alt="" height="50" width="50"></p>
                     </td>
                     <td class="action-btn">
                         <div class="listItem-cpt listActions">
-                            <a href="">
+                            <a href="javascript: navigator.clipboard.writeText('<?php echo Routing::getBaseUrl() . '/public/images/uploads/' . $media['media']; ?>').then(function() { copyboard() }, function() { alert('Failed'); });">
                                 <img src=<?php App\Core\View::getAssets("icons/icon-clipboard.png")?> alt="" height="20" width="20">
                             </a>
                             <a href="#" id="editMedia" onclick="editMedia(this)" data-id="<?= $media["id"] ?>">
@@ -80,6 +80,18 @@
     function editMedia(e) {
         let id= $(e).attr("data-id");
         $.redirect('edit-medias', {'id': id});
+    }
+
+    /**
+     * Message de succès pour copier le média dans le presse-papier
+     * @param e
+     */
+    function copyboard() {
+        Swal.fire(
+            'Succès',
+            'Le média a bien été copié dans le presse-papier',
+            'success'
+        )
     }
 
     /**
