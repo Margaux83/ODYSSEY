@@ -28,9 +28,6 @@ class FrontPage extends Database
      */
     public static function getCommentarySection($idArticle = null) {
         if (empty($idArticle)) return '';
-        if (!empty($_POST)) {
-            var_dump($_POST);
-        }
 
         $comment = new Comment();
         $resultComments = $comment->query(['id', 'content', 'id_User', 'id_Comment'], ['id_article' => $idArticle, 'isDeleted'=>0]);
@@ -129,7 +126,7 @@ class FrontPage extends Database
                     $view->assign("idArticle", $resultArticle[0]['id']);
                     $view->assign("title", $resultArticle[0]['title']);
                     $view->assign("description", $resultArticle[0]['description']);
-                    $view->assign("content", $resultArticle[0]['content']);
+                    $view->assign("content", stripslashes($resultArticle[0]['content']));
                 }else {
                     Error::errorPage(404, 'L\'article n\'existe pas');
                 }
@@ -148,7 +145,7 @@ class FrontPage extends Database
                     $view->assign("idArticle", false);
                     $view->assign("title", $resultPage[0]['title']);
                     $view->assign("description", $resultPage[0]['description']);
-                    $view->assign("content", $resultPage[0]['content']);
+                    $view->assign("content", stripslashes($resultPage[0]['content']));
                 }else {
                     Error::errorPage(404, 'La page n\'existe pas');
                 }

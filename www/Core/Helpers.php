@@ -31,6 +31,13 @@ class Helpers {
         return $array;
     }
 
+    static function generateCsrfToken() {
+        if (empty($_SESSION['csrf'])) {
+            $_SESSION['csrf'] = bin2hex(random_bytes(32));
+        }
+        return $_SESSION['csrf'];
+    }
+
     /**
      * @param $targetDirProp
      * @param $name

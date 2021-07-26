@@ -2,6 +2,7 @@
 namespace App\Models;
 
 use App\Core\Database;
+use App\Core\Helpers;
 use App\Models\Role;
 
 class User extends Database
@@ -12,7 +13,6 @@ class User extends Database
     protected $email;
     protected $password;
     protected $phone;
-    protected $status;
     protected $role;
     protected $isDeleted;
     protected $updateDate;
@@ -159,18 +159,6 @@ class User extends Database
     }
 
     /**
-     * @param $status
-     */
-    public function setStatus($status){
-        $this->status = $status;
-    }
-
-    public function getStatus()
-    {
-        return $this->status;
-    }
-
-    /**
      * @param $role
      */
     public function setRole($role){
@@ -302,6 +290,10 @@ class User extends Database
                 "class" => "form_register"
             ],
             "input" => [
+                "csrf"=>[
+                    "type"=>"hidden",
+                    "defaultValue"=>Helpers::generateCsrfToken()
+                ],
                 "firstname"=>[
                     "type"=>"text",
                     "class"=>"form_input",
@@ -350,6 +342,10 @@ class User extends Database
                 "class" => "form_register"
             ],
             "input" => [
+                "csrf"=>[
+                    "type"=>"hidden",
+                    "defaultValue"=>Helpers::generateCsrfToken()
+                ],
                 "password"=> [
                     "type"=>"password",
                     "class"=>"requiredLabel",
@@ -402,6 +398,10 @@ class User extends Database
                 "class"=>"formElement"
             ],
             "input"=>[
+                "csrf"=>[
+                    "type"=>"hidden",
+                    "defaultValue"=>Helpers::generateCsrfToken()
+                ],
                 "login-email"=>[
                     "class"=>"requiredLabel",
                     "id"=>"login-email",
@@ -445,6 +445,10 @@ class User extends Database
                 "class"=>"formElement"
             ],
             "input"=>[
+                "csrf"=>[
+                    "type"=>"hidden",
+                    "defaultValue"=>Helpers::generateCsrfToken()
+                ],
                 "lastname"=>[
                     "type"=>"text",
                     "label"=>"Nom",
@@ -525,6 +529,10 @@ class User extends Database
                 "class"=>"formElement"
             ],
             "input"=>[
+                "csrf"=>[
+                    "type"=>"hidden",
+                    "defaultValue"=>Helpers::generateCsrfToken()
+                ],
                 "email"=>[
                     "class"=>"requiredLabel",
                     "id"=>"email",
@@ -559,6 +567,10 @@ class User extends Database
                 "class"=>"formElement"
             ],
             "input"=>[
+                "csrf"=>[
+                    "type"=>"hidden",
+                    "defaultValue"=>Helpers::generateCsrfToken()
+                ],
                 "token"=>[
                     "class"=>"requiredLabel",
                     "id"=>"token",
@@ -611,6 +623,10 @@ class User extends Database
                 "class"=>"form-group"
             ],
             "input"=>[
+                "csrf"=>[
+                    "type"=>"hidden",
+                    "defaultValue"=>Helpers::generateCsrfToken()
+                ],
                 "id_user"=>[
                     "type"=>"hidden",
                     "defaultValue"=>$this->getId()
@@ -679,7 +695,7 @@ class User extends Database
     public function getAllUsers()
     {
         $results = $this->query(
-            ["id", "firstname", "lastname", "email", "status", "role", "isVerified", "creationDate", "lastConnexionDate", "updateDate"],
+            ["id", "firstname", "lastname", "email", "role", "isVerified", "creationDate", "lastConnexionDate", "updateDate"],
             ["isDeleted" => "0"]
         );
 

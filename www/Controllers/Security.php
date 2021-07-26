@@ -142,16 +142,12 @@ class Security{
         $user = new User();
         $token = rand(100000, 999999);
 
+        $view = new View("User/forgotPasswordSend", "back_management");
 
-        if(empty($_POST)){
-            $view = new View("User/forgotPasswordSend", "back_management");
+        $form = $user->buildFormResetPassword();
+        $view->assign("form", $form);
 
-            $form = $user->buildFormResetPassword();
-            $view->assign("form", $form);
-
-        } else {
-            $view = new View("User/forgotPasswordSend", "back_management");
-
+        if(!empty($_POST)){
             $db = new Database("User");
             $result = $db->query(
                 ["id", "isVerified", "firstname", "lastname"],
@@ -172,9 +168,9 @@ class Security{
                 }
             } else {
                 $_SESSION['alert']['success'][] = 'Un mail contenant le token vient de vous être envoyé';
+                header('location: /forgotpasswordconfirm');
+                session_write_close();
             }
-
-
         }
     }
 

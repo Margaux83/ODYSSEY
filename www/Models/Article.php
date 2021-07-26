@@ -4,6 +4,8 @@
 namespace App\Models;
 
 use App\Core\Database;
+use App\Core\Helpers;
+use App\Core\Form;
 
 class Article extends Database
 {
@@ -11,10 +13,8 @@ class Article extends Database
     protected $id;
     protected $title;
     protected $content;
-    protected $status;
     protected $isvisible;
     protected $category;
-    protected $isdraft;
     protected $description;
     protected $isdeleted;
     protected $id_user;
@@ -99,23 +99,7 @@ class Article extends Database
      */
     public function getContent()
     {
-        return $this->content;
-    }
-
-    /**
-     * @param $status
-     */
-    public function setStatus($status)
-    {
-        $this->status = $status;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getStatus()
-    {
-        return $this->status;
+        return stripslashes($this->content);
     }
 
     /**
@@ -148,22 +132,6 @@ class Article extends Database
     public function getCategory()
     {
         return $this->category;
-    }
-
-    /**
-     * @param $isdraft
-     */
-    public function setIsdraft($isdraft)
-    {
-        $this->isdraft = $isdraft;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getIsdraft()
-    {
-        return $this->isdraft;
     }
 
     /**
@@ -280,44 +248,13 @@ class Article extends Database
     }
 
     /**
-     * Function that allows you to build the options of the article's Visibility selector
-     **/
-    public function buildAllVisibilityFormSelect() {
-        $status = [
-            '' => [
-                "label" => "Choisir une visibilité"
-            ],
-            "1"=>[
-                "label" => "Public",
-            ],
-            "2"=>[
-                "label" => "Protégé",
-            ],
-            "3"=>[
-                "label" => "Privé"
-            ]
-        ];
-
-        $returnedArray = [];
-
-        foreach ($status as $key => $singleStatus) {
-            $returnedArray[$key] = [
-                'label' => $singleStatus['label'],
-                'selected' => $key === $this->getIsvisible()
-            ];
-        }
-
-        return $returnedArray;
-    }
-
-    /**
      * @return array
      */
     public function buildFormArticle()
     {
         $category = new Category();
+        $form = new Form();
         return [
-
             "config"=>[
                 "method"=>"POST",
                 "Action"=>"",
@@ -326,12 +263,15 @@ class Article extends Database
             ],
 
             "input"=>[
-
-                    "id"=>[
-                        "type"=>"hidden",
-                        "required"=>true,
-                        "defaultValue"=>$this->getID()
-                    ],
+                "csrf"=>[
+                    "type"=>"hidden",
+                    "defaultValue"=>Helpers::generateCsrfToken()
+                ],
+                "id"=>[
+                    "type"=>"hidden",
+                    "required"=>true,
+                    "defaultValue"=>$this->getID()
+                ],
                 "title"=>[
 
                     "type"=>"text",
@@ -387,21 +327,13 @@ class Article extends Database
                             $category->buildAllCategoriesFormSelect($this->category)
 
                     ],
-                    "status"=>[
-                        "type"=>"select",
-                        "label"=>"Statut",
-                        "required"=>true,
-                        "error"=>"Veuillez sélectionner un élément",
-                        "placeholder"=>"Choisir un statut",
-                        "options"=>$this->buildAllStatusFormSelect()
-                    ],
                     "isvisible"=>[
                         "type"=>"select",
                         "label"=>"Visibilité",
                         "required"=>true,
                         "error"=>"Veuillez sélectionner un élément",
                         "placeholder"=>"Choisir une visibilité",
-                        "options"=>$this->buildAllVisibilityFormSelect()
+                        "options"=>$form->buildAllVisibilityFormSelect($this)
                     ],
 
                 ],
@@ -426,7 +358,7 @@ class Article extends Database
             $filter["id_User"] = $id_user;
         }
         $results = Article::query(
-            ["id" ,"uri", "title", "content", "description", "status", "creationDate", "updateDate", "isDeleted", "id_User"],
+            ["id" ,"uri", "title", "content", "description", "isVisible", "creationDate", "updateDate", "isDeleted", "id_User"],
             $filter
         );
         if (count($results)) {

@@ -13,23 +13,22 @@ class Form
     public static function validator($data, $config){
         $errors = [];
         if( count($data) == count($config["input"])) {
-
             foreach ($config["input"] as $name => $configInput) {
-
                 if (!empty($configInput["lengthMin"])
                     && is_numeric($configInput["lengthMin"])
                     && strlen($data[$name]) < $configInput["lengthMin"]) {
                     $errors[] = $configInput["error"];
-
                 }
 
                 if (!empty($configInput["lengthMax"])
                     && is_numeric($configInput["lengthMax"])
                     && strlen($data[$name]) > $configInput["lengthMax"]) {
                     $errors[] = $configInput["error"];
-
                 }
             }
+        }
+        if(empty($_POST['csrf']) || !hash_equals($_SESSION['csrf'], $_POST['csrf'])) {
+            $errors[] = "Formulaire non valide !";
         }
         return $errors;
     }
@@ -155,23 +154,19 @@ class Form
             '' => [
                 "label" => "Choisir une visibilité"
             ],
+            "0"=>[
+                "label" => "Brouillon",
+            ],
             "1"=>[
-                "label" => "Public",
-            ],
-            "2"=>[
-                "label" => "Protégé",
-            ],
-            "3"=>[
-                "label" => "Privé"
+                "label" => "Validé et posté",
             ]
         ];
 
         $returnedArray = [];
-
         foreach ($status as $key => $singleStatus) {
             $returnedArray[$key] = [
                 'label' => $singleStatus['label'],
-                'selected' => $key === $object->getIsvisible()
+                'selected' => ($key === $object->getIsvisible() || $key == "0")
             ];
         }
 

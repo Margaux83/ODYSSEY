@@ -3,6 +3,7 @@ namespace App\Models;
 
 use App\Core\Database;
 use App\Core\Form;
+use App\Core\Helpers;
 
 class Page extends Database
 {
@@ -11,7 +12,6 @@ class Page extends Database
     protected $content;
     protected $description;
     protected $isvisible;
-    protected $status;
     protected $isdeleted;
     protected $updateDate;
     protected $id_user;
@@ -95,7 +95,7 @@ class Page extends Database
      */
     public function getContent()
     {
-        return $this->content;
+        return stripcslashes($this->content);
     }
 
     /**
@@ -128,22 +128,6 @@ class Page extends Database
     public function getIsvisible()
     {
         return $this->isvisible;
-    }
-
-    /**
-     * @param $status
-     */
-    public function setStatus($status)
-    {
-        $this->status = $status;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getStatus()
-    {
-        return $this->status;
     }
 
     /**
@@ -224,6 +208,10 @@ class Page extends Database
             ],
 
             "input"=>[
+                "csrf"=>[
+                    "type"=>"hidden",
+                    "defaultValue"=>Helpers::generateCsrfToken()
+                ],
                 "id_page"=>[
                     "type"=>"hidden",
                     "defaultValue"=>$this->getId()
@@ -269,14 +257,6 @@ class Page extends Database
                     "placeholder"=>"Votre contenu",
                     "defaultValue"=> (empty($this->getDescription())) ? (empty($_POST['description'])) ? '' : $_POST['description'] : $this->getDescription()
                 ],
-                "status"=>[
-                    "type"=>"select",
-                    "label"=>"Statut",
-                    "required"=>true,
-                    "error"=>"Veuillez sélectionner un élément",
-                    "placeholder"=>"Choisir un statut",
-                    "options"=>$form->buildAllStatusFormSelect($this)
-                ],
                 "isvisible"=>[
                     "type"=>"select",
                     "label"=>"Visibilité",
@@ -306,7 +286,7 @@ class Page extends Database
             $filter["id_User"] = $id_user;
         }
         $results = Page::query(
-            ["id" ,"title", "description", "status", "uri", "creationDate", "updateDate", "id_User"],
+            ["id" ,"title", "description", "isVisible", "uri", "creationDate", "updateDate", "id_User"],
             $filter
         );
         if (count($results)) {

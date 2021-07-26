@@ -184,8 +184,11 @@ class Database
     public function updateWithData($data = [])
     {
         foreach ($data as $key => $value) {
-            $setAction = 'set' . ucfirst(trim($key));
-            $this->$setAction($value);
+            if($key != 'csrf') {
+                $setAction = 'set' . ucfirst(trim($key));
+                $this->$setAction($value);
+            }
+
         }
     }
 }

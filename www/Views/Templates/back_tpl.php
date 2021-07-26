@@ -18,18 +18,16 @@
 
 
     <script src=<?php App\Core\View::getAssets("menu.js")?>></script>
-    <script src=<?php App\Core\View::getAssets("libraries/chart.js")?>></script>
     <script src=<?php App\Core\View::getAssets("libraries/jquery-3.5.1.min.js")?>></script>
 
-    <script src=<?php App\Core\View::getAssets("chart.js")?>></script>
-    <script src=<?php App\Core\View::getAssets("sweetalert2.all.min.js")?>></script>
+    <script src=<?php App\Core\View::getAssets("libraries/sweetalert2.all.min.js")?>></script>
 
 
 </head>
 <body>
     <header>
         <img src=<?php App\Core\View::getAssets("logos/odyssey_logo_v2.svg")?> alt="Odyssey" class="back-mainPage-header-logo">
-        <p class="back-mainPage-header-websiteName">Mon projet annuel Web</p>
+        <p class="back-mainPage-header-websiteName"><?= SITENAME ?></p>
         <div class="back-mainPage-header-actionContainer">
             <a href="/" class="fullButton"><img src=<?php App\Core\View::getAssets("icons/icon_web.png")?> alt="Accès au site" class="iconWhite"></a>
             <a href="/admin/profile" ><button class="fullButton"><img src=<?php App\Core\View::getAssets("icons/icon_user.png")?> alt="Profil" class="iconWhite"></button></a>

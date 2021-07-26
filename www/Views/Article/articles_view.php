@@ -39,17 +39,11 @@
             <td><?= $article["firstname"]." ".$article["lastname"] ?></td>
             <td>
                 <?php //Mettre le statut de l'article
-                switch ($article["status"]) {
-                    case 1:
+                switch ($article["isVisible"]) {
+                    case 0:
                         echo "Brouillon";
                         break;
-                    case 2:
-                        echo "Créé";
-                        break;
-                    case 3:
-                        echo "En attente de validation";
-                        break;
-                    case 4:
+                    case 1:
                         echo "Validé et posté";
                         break;
                 }
@@ -117,17 +111,11 @@
                     <td><?= $articleByUser["firstname"]." ".$articleByUser["lastname"] ?></td>
                     <td>
                         <?php //Mettre le statut de l'article
-                        switch ($articleByUser["status"]) {
-                            case 1:
+                        switch ($articleByUser["isVisible"]) {
+                            case 0:
                                 echo "Brouillon";
                                 break;
-                            case 2:
-                                echo "Créé";
-                                break;
-                            case 3:
-                                echo "En attente de validation";
-                                break;
-                            case 4:
+                            case 1:
                                 echo "Validé et posté";
                                 break;
                         }
@@ -164,18 +152,72 @@
     </table>
 </section>
 
+<script src=<?php App\Core\View::getAssets("libraries/datatables.js")?>></script>
+<script src=<?php App\Core\View::getAssets("libraries/jquery.redirect.js")?>></script>
 
+<script>
+    /**
+     * Affiche le datatable pour la liste de tous les articles
+     */
+    $(document).ready(function() {
+        $('#table_all_articles').DataTable({
 
-<section class="col-12" style="grid-column: 7 / 13; grid-row: 2;">
-    <div class="sectionHeader d-flex">
-        <h1 class="titleSection d-flex">Evolution du nombre de vues par articles</h1>
-    </div>
-    <canvas id="viewPerChart" width="775" height="400"></canvas>
-</section>
+        });
+    });
 
+    /**
+     * Affiche le datatable pour la liste des articles de l'utilisateur connecté
+     */
+    $(document).ready(function() {
+        $('#table_all_articles_user').DataTable({
 
-<script src=<?php App\Core\View::getAssets("article.js")?>></script>
-<script src=<?php App\Core\View::getAssets("charts.js")?>></script>
+        });
+    });
+    /**
+     * Fonction pour modifier l'article en fonction de son id, redirige sur la page edit-article
+     * @param e
+     */
+    function editArticle(e) {
+        let id= $(e).attr("data-id");
+        $.redirect('edit-article', {'id': id});
+    }
 
-<script src=<?php App\Core\View::getAssets("datatables.js")?>></script>
-<script src=<?php App\Core\View::getAssets("jquery.redirect.js")?>></script>
+    /**
+     * Fonction pour supprimer un article en fonction de son id, envoie l'id dans l'action "articles" du controller Article
+     * @param e
+     */
+    function deleteArticle(e) {
+        let id = $(e).attr("data-id");
+
+        swal.fire({
+            title: 'Êtes-vous sûr ?',
+            text: "Vous ne pourrez pas revenir en arrière",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Oui, supprimer!',
+            cancelButtonText: 'Non, annuler!',
+            reverseButtons: true
+        }).then((result) => {
+            if (result.isConfirmed) {
+                swal.fire(
+                    'Supprimé!',
+                    'Votre article a bien été supprimé.',
+                    'success'
+                ).then(function() {
+                    $.post( "delete-article", { id_article: id, deleteArticle: "true" })
+                        .done(function( data ) {
+                            location.reload();
+                        });
+                });
+            } else if (
+                result.dismiss === Swal.DismissReason.cancel
+            ) {
+                swal.fire(
+                    'Annulé',
+                    'Votre article n\'a pas été supprimé',
+                    'error'
+                )
+            }
+        })
+    }
+</script>

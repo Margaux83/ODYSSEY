@@ -18,9 +18,6 @@ class Installer {
     }
 
     public static function makeInstall() {
-        // TODO Ecriture des fichiers d'environnement .env et .end.prod
-        echo '<pre>';
-        var_dump($_POST);
         self::writeEnvFiles($_POST['config'], $_POST['database']);
         new ConstantManager();
         $install = self::makeDatabase();
@@ -28,7 +25,7 @@ class Installer {
         if($install > 0) {
             echo 'Install de la bdd faites';
             self::createFirstUser($_POST['user']);
-            $_SESSION['alert']['danger'][] = 'GG';
+            $_SESSION['alert']['success'][] = "L'installation du CMS s'est effectuée avec succès ! (pas de bug pendant l'exam please)";
             header('location: /login');
             session_write_close();
         } else {
@@ -46,8 +43,8 @@ class Installer {
 
     public static function getDatabaseQuery($fakeDatas) {
         if($fakeDatas)
-            return file_get_contents('odyssey_with_fake_datas.sql');
-        return file_get_contents('odyssey.sql');
+            return preg_replace("/{DBPREFIX}/", DBPREFIX, file_get_contents('odyssey_with_fake_datas.sql'));
+        return preg_replace("/{DBPREFIX}/", DBPREFIX, file_get_contents("odyssey.sql"));
     }
 
     public static function checkPhpVersion() {

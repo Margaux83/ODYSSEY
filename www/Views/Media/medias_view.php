@@ -1,4 +1,6 @@
-<link rel="stylesheet" type="text/css" href=<?php App\Core\View::getAssets("datatables.css")?>>
+<link rel="stylesheet" type="text/css" href=<?php use App\Core\Routing;
+
+App\Core\View::getAssets("datatables.css")?>>
 <style>
     table tbody td {
         min-width: 100px;
@@ -24,9 +26,7 @@
         <?php
         if(!empty($mediaInfos)){
 
-
         foreach ($mediaInfos as $media){
-
         ?>
                 <tr class="text-center">
                     <td>
@@ -37,11 +37,11 @@
                         <p class="listItem-cpt"><?= $media["name"] ?></p>
                     </td>
                     <td>
-                        <img src=<?php App\Core\View::getAssets("uploads/".utf8_decode($media["media"]))?> alt="" height="50" width="50"></p>
+                        <img src="<?php echo Routing::getBaseUrl() . '/public/images/uploads/' . $media['media'] ?>" alt="" height="50" width="50"></p>
                     </td>
                     <td class="action-btn">
                         <div class="listItem-cpt listActions">
-                            <a href="">
+                            <a href="javascript: navigator.clipboard.writeText('<?php echo Routing::getBaseUrl() . '/public/images/uploads/' . $media['media']; ?>').then(function() { copyboard() }, function() { alert('Failed'); });">
                                 <img src=<?php App\Core\View::getAssets("icons/icon-clipboard.png")?> alt="" height="20" width="20">
                             </a>
                             <a href="#" id="editMedia" onclick="editMedia(this)" data-id="<?= $media["id"] ?>">
@@ -60,8 +60,76 @@
     </table>
 </section>
 
+<script src=<?php App\Core\View::getAssets("libraries/datatables.js")?>></script>
+<script src=<?php App\Core\View::getAssets("libraries/jquery.redirect.js")?>></script>
 
-<script src=<?php App\Core\View::getAssets("media.js")?>></script>
+<script>
+    /**
+     * Affiche le datatable pour la liste de tous les médias
+     */
+    $(document).ready(function() {
+        $('#table_all_medias').DataTable({
 
-<script src=<?php App\Core\View::getAssets("datatables.js")?>></script>
-<script src=<?php App\Core\View::getAssets("jquery.redirect.js")?>></script>
+        });
+    });
+
+    /**
+     * Fonction pour modifier l'article en fonction de son id, redirige sur la page edit-article
+     * @param e
+     */
+    function editMedia(e) {
+        let id= $(e).attr("data-id");
+        $.redirect('edit-medias', {'id': id});
+    }
+
+    /**
+     * Message de succès pour copier le média dans le presse-papier
+     * @param e
+     */
+    function copyboard() {
+        Swal.fire(
+            'Succès',
+            'Le média a bien été copié dans le presse-papier',
+            'success'
+        )
+    }
+
+    /**
+     * Fonction pour supprimer un article en fonction de son id, envoie l'id dans l'action "articles" du controller Article
+     * @param e
+     */
+    function deleteMedia(e) {
+        let id = $(e).attr("data-id");
+
+        swal.fire({
+            title: 'Êtes-vous sûr ?',
+            text: "Vous ne pourrez pas revenir en arrière",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Oui, supprimer!',
+            cancelButtonText: 'Non, annuler!',
+            reverseButtons: true
+        }).then((result) => {
+            if (result.isConfirmed) {
+                swal.fire(
+                    'Supprimé!',
+                    'Le media a bien été supprimé.',
+                    'success'
+                ).then(function() {
+                    $.post( "delete-media", { id_media: id, deleteMedia: "true" })
+                        .done(function( data ) {
+                            location.reload();
+                        });
+                });
+            } else if (
+                result.dismiss === Swal.DismissReason.cancel
+            ) {
+                swal.fire(
+                    'Annulé',
+                    'Votre média n\'a pas été supprimé',
+                    'error'
+                )
+            }
+        })
+    }
+</script>
