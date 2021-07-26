@@ -28,9 +28,6 @@ class FrontPage extends Database
      */
     public static function getCommentarySection($idArticle = null) {
         if (empty($idArticle)) return '';
-        if (!empty($_POST)) {
-            var_dump($_POST);
-        }
 
         $comment = new Comment();
         $resultComments = $comment->query(['id', 'content', 'id_User', 'id_Comment'], ['id_article' => $idArticle, 'isDeleted'=>0]);

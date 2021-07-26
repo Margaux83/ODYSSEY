@@ -18,9 +18,6 @@ class Installer {
     }
 
     public static function makeInstall() {
-        // TODO Ecriture des fichiers d'environnement .env et .end.prod
-        echo '<pre>';
-        var_dump($_POST);
         self::writeEnvFiles($_POST['config'], $_POST['database']);
         new ConstantManager();
         $install = self::makeDatabase();

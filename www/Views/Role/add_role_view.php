@@ -1,14 +1,5 @@
 
 <section class="col-12" style="grid-column: 1/ 13; grid-row: 1;">
-    <?php
-    /*
-    echo '<pre>';
-    var_dump($_POST);
-    echo '</pre>';
-    $test = json_encode($_POST['values']);
-    var_dump($test);
-    */
-    ?>
     <form id="role-form" class="roles_edit" method="post" action="">
 
         <label>Titre du rôle</label>
