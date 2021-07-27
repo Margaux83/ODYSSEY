@@ -375,3 +375,20 @@ main {
   min-height: 15vh;
 }
 
+.ody_frontForm label {
+  display: inline-block;
+  min-width: 130px;
+  margin-bottom: 10px;
+}
+.ody_frontForm input, .ody_frontForm textarea{
+  width: 100%;
+  max-width: 300px;
+  padding: 5px;
+  border: 1px solid lightgrey;
+  border-radius: 5px;
+}
+.ody_frontForm label.requiredLabel::after {
+  content: '*';
+  color: red;
+}
+

@@ -43,7 +43,7 @@ class FrontPage extends Database
             . ')</h2>'
             . (Security::getInstance()->isconnected()
                 ? Form::showForm($comment->buildFormPostFront($idArticle), false)
-                : '')
+                : Form::showForm($comment->buildFormPostFrontNotConnected($idArticle), false))
             . '<ul>';
 
         if (!empty($resultComments)) {

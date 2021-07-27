@@ -62,7 +62,7 @@ class Form
 
             if ($dataInput["type"] === "textarea"){
                 $html .= "<textarea 
-                             id='".$dataInput["id"]."'
+                             id='".($dataInput["id"]??"")."'
                              class='".($dataInput["class"]??"")."' 
                             name='".$name."'
                             ".((!empty($dataInput["required"]))?"required='required'":"")."
