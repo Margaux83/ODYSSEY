@@ -80,8 +80,8 @@ class Security
             return;
 		}
 
-		$emailUserLogin = htmlspecialchars(addslashes($_POST['login-email']));
-		$pwdUserLogin = htmlspecialchars(addslashes($_POST['login-pwd']));
+		$emailUserLogin = $_POST['login-email'];
+		$pwdUserLogin = $_POST['login-pwd'];
 
 		$user = new User();
 		$result = $user->query(
