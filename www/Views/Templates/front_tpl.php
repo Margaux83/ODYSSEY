@@ -38,23 +38,10 @@
     <?php } ?>
     <header>
         <div class="header-topElements">
-			<a class="titlePage" href="/"><img src=<?php App\Core\View::getAssets("logos/odyssey_logo_v2.svg")?> alt="Odyssey" class="back-mainPage-header-logo"></a>
+			<a class="titlePage" href="/"><?= SITENAME ?></a>
             <nav>
 				<?php echo App\Core\FrontPage::getFrontMenu('Menu header');?>
             </nav>
-        </div>
-        <div class="header-content">
-            <h1>Un nouveau moyen de créer du contenu</h1>
-            <p>
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Impedit rem laudantium eveniet nostrum itaque cumque harum. Numquam assumenda, cumque, sed illum fuga incidunt quidem fugiat magnam exercitationem modi dolor ex.
-            </p>
-            
-            <div class="inputButton">
-                <input placeholder="Rechercher">
-                <button>
-                    <i class="fa fa-search"></i>
-                </button>
-            </div>
         </div>
     </header>
 

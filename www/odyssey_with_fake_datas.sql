@@ -139,7 +139,8 @@ CREATE TABLE `{DBPREFIX}Role` (
 INSERT INTO `{DBPREFIX}Role` (`id`, `name`, `value`, `isDeleted`) VALUES
 (1, 'Admin', '{\"all_perms\":\"1\"}', 0),
 (2, 'Editeur', '{\"\\/admin\\/pages\":\"1\",\"\\/admin\\/add-page\":\"1\",\"\\/admin\\/edit-page\":\"1\",\"\\/admin\\/delete-page\":\"1\",\"\\/admin\\/articles\":\"1\",\"\\/admin\\/add-article\":\"1\",\"\\/admin\\/edit-article\":\"1\",\"\\/admin\\/delete-article\":\"1\",\"\\/admin\\/comments\":\"1\"}', 0),
-(3, 'Auteur', '{\"\\/admin\\/pages\":\"1\",\"\\/admin\\/add-page\":\"1\",\"\\/admin\\/articles\":\"1\",\"\\/admin\\/add-article\":\"1\"}', 0);
+(3, 'Auteur', '{\"\\/admin\\/pages\":\"1\",\"\\/admin\\/add-page\":\"1\",\"\\/admin\\/articles\":\"1\",\"\\/admin\\/add-article\":\"1\"}', 0),
+(4, 'Visiteur', '', 0);
 
 CREATE TABLE `{DBPREFIX}User` (
   `id` int(11) UNSIGNED NOT NULL,

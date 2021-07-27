@@ -4,6 +4,7 @@ namespace App\Core;
 
 use App\Models\Role;
 use App\Models\User;
+use App\Core\Installer;
 
 class Security
 {
@@ -31,8 +32,7 @@ class Security
     }
 
     static function getPermsFromConnectedUser() {
-        if (!self::isConnected()) return [];
-        
+        if (!self::isConnected() || !Installer::checkIfEnvExist()) return [];
         $user = new User($_SESSION['userId']);
         $role = new Role();
 

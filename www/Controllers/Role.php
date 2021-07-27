@@ -53,7 +53,7 @@ class Role
     public function editRoleAction()
     {
         // Edit Admin role forbidden
-        if($_GET['role'] === "1") header('location: /admin/roles');
+        if($_GET['role'] === "1" || $_GET['role'] === "4") header('location: /admin/roles');
 
         $role = new ModelRole;
         $actualRole = $_GET['role'];

@@ -115,64 +115,75 @@ class FrontPage extends Database
 
         self::$_actualUri = $uri;
 
-        if (Template::searchPageSelectedTheme($uri)) {
-            $view = new View("front_home", "front", Template::searchPageSelectedTheme($uri));
-        }else {
-            if ($uri === '/'){
-                $view = new View("front_home", "front", Template::searchPageSelectedTheme('home'));
-                $view->assign("title", 'Accueil');
-            }elseif (strpos($uri, 'article')) {
-                $article = new Article();
-                $category_article = new Category_Article();
-                $category = new Category();
+        if (strpos($uri, 'article')) {
+            $article = new Article();
+            $category_article = new Category_Article();
+            $category = new Category();
 
-                $resultArticle = $article->query(
+            $resultArticle = $article->query(
+                ['id', 'title', 'content', 'description'],
+                [
+                    'uri' => $uri,
+                    'isVisible' => 1
+                ]
+            );
+            // DOUBLE JOIN ON TABLE ody_Category_Article and ody_Category
+            foreach ($resultArticle as $key => $result) {
+                $results_category = $category_article->query(
+                    ["id_Category"],
+                    ["id_Article" => $resultArticle[$key]['id']]
+                );
+                foreach($results_category as $result2) {
+                    if (!empty($result2["id_Category"])) {
+                        $categorySelected = $category->query(['label'], ['id' => $result2['id_Category']])[0];
+                        $resultArticle[$key]['label'] = $categorySelected['label'];
+                    }
+                }
+            }
+            if ($resultArticle) {
+                $view = new View("front_page", "front");
+                $view->assign("idArticle", $resultArticle[0]['id']);
+                $view->assign("title", htmlspecialchars($resultArticle[0]['title']));
+                $view->assign("description", htmlspecialchars($resultArticle[0]['description']));
+                $view->assign("content", stripslashes($resultArticle[0]['content']));
+                $view->assign("label", htmlspecialchars($resultArticle[0]['label']));
+            }else {
+                Error::errorPage(404, 'L\'article n\'existe pas');
+            }
+        }else {
+            $page = new Page();
+            if ($uri === '/'){
+                $resultPage = $page->query(
+                    ['id', 'title', 'content', 'description'],
+                    [
+                        'uri' => "/home",
+                        'isVisible' => 1
+                    ]
+                );
+                if(!count($resultPage)) {
+                    $view = new View("front_home", "front", Template::searchPageSelectedTheme('home'));
+                    $view->assign("title", 'Accueil');
+                    return;
+                }
+            }else {
+                $resultPage = $page->query(
                     ['id', 'title', 'content', 'description'],
                     [
                         'uri' => $uri,
                         'isVisible' => 1
                     ]
                 );
-                // DOUBLE JOIN ON TABLE ody_Category_Article and ody_Category
-                foreach ($resultArticle as $key => $result) {
-                    $results_category = $category_article->query(
-                        ["id_Category"],
-                        ["id_Article" => $resultArticle[$key]['id']]
-                    );
-                    foreach($results_category as $result2) {
-                        if (!empty($result2["id_Category"])) {
-                            $categorySelected = $category->query(['label'], ['id' => $result2['id_Category']])[0];
-                            $resultArticle[$key]['label'] = $categorySelected['label'];
-                        }
-                    }
-                }
-                if ($resultArticle) {
-                    $view = new View("front_page", "front");
-                    $view->assign("idArticle", $resultArticle[0]['id']);
-                    $view->assign("title", htmlspecialchars($resultArticle[0]['title']));
-                    $view->assign("description", htmlspecialchars($resultArticle[0]['description']));
-                    $view->assign("content", stripslashes($resultArticle[0]['content']));
-                    $view->assign("label", htmlspecialchars($resultArticle[0]['label']));
-                }else {
-                    Error::errorPage(404, 'L\'article n\'existe pas');
-                }
+            }
+            if ($resultPage) {
+                $view = new View("front_page", "front");
+                $view->assign("idArticle", false);
+                $view->assign("title", htmlspecialchars($resultPage[0]['title']));
+                $view->assign("description", htmlspecialchars($resultPage[0]['description']));
+                $view->assign("content", stripslashes($resultPage[0]['content']));
             }else {
-                $page = new Page();
-                $resultPage = $page->query(
-                    ['id', 'title', 'content', 'description'],
-                    [
-                        'uri' => $uri,
-                        'isVisible' => 1
-                        ]
-                );
-    
-                if ($resultPage) {
-                    $view = new View("front_page", "front");
-                    $view->assign("idArticle", false);
-                    $view->assign("title", htmlspecialchars($resultPage[0]['title']));
-                    $view->assign("description", htmlspecialchars($resultPage[0]['description']));
-                    $view->assign("content", stripslashes($resultPage[0]['content']));
-                }else {
+                if (Template::searchPageSelectedTheme($uri)) {
+                    $view = new View("front_home", "front", Template::searchPageSelectedTheme($uri));
+                } else {
                     Error::errorPage(404, 'La page n\'existe pas');
                 }
             }
