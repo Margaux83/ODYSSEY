@@ -51,8 +51,8 @@ class FrontPage extends Database
             foreach ($resultComments as $key => $resultComment) {
                 $userSelected = $user->query(['firstname', 'lastname'], ['id' => $resultComment['id_User']])[0];
                 $html .= '<li>'
-                    . '<p class="commentUser">' . $userSelected['firstname'] . ' ' . $userSelected['lastname'] . '</p>'
-                    . '<p class="commentContent">' . $resultComment['content'] . '</p>'
+                    . '<p class="commentUser">' . htmlspecialchars(addslashes($userSelected['firstname'])) . ' ' . htmlspecialchars($userSelected['lastname']) . '</p>'
+                    . '<p class="commentContent">' . htmlspecialchars($resultComment['content']) . '</p>'
                     . '</li>';
             }
         }else {

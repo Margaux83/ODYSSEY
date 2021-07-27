@@ -10,7 +10,7 @@ class Security
 	private static $_instance = null;
     private static $_userConnectedId = null;
     private static $_actualUri;
-    private static $_alwaysAuthorizedUri = ['/login', '/logout', '/register', '/admin/dashboard', '/admin/profile', '/forgotpassword', '/forgotpasswordconfirm', '/installer' ,'/make-install', '/temporary-install'];
+    private static $_alwaysAuthorizedUri = ['/login', '/logout', '/register', '/admin/dashboard', '/admin/profile', '/forgotpassword', '/forgotpasswordconfirm', '/actionfront/postcommentfront','/installer' ,'/make-install', '/temporary-install'];
 
 	private function __construct($_userConnectedId = null) {
         self::$_userConnectedId = $_userConnectedId;
@@ -41,10 +41,11 @@ class Security
             ["id" => $user->getRole()]
         );
         if (count($result)) {
-            return json_decode($result[0]['value'], true);
-        }else {
-            return [];
+            if(!empty($result[0]['value'])) {
+                return json_decode($result[0]['value'], true);
+            }
         }
+        return [];
     }
 
     public static function isAuthorized($uri) {

@@ -31,7 +31,7 @@
             </ul>
         </nav>
     </div>
-    <?php if(App\Core\Security::isConnected()) { ?>
+    <?php if(count(App\Core\Security::getPermsFromConnectedUser())) { ?>
     <div class="top-bar">
         <a href="/admin/dashboard">Panel admin</a>
     </div>
