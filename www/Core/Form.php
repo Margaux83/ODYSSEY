@@ -30,6 +30,7 @@ class Form
         if(empty($_POST['csrf']) || !hash_equals($_SESSION['csrf'], $_POST['csrf'])) {
             $errors[] = "Formulaire non valide !";
         }
+        unset($_SESSION['csrf']);
         return $errors;
     }
 

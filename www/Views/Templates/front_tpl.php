@@ -31,6 +31,11 @@
             </ul>
         </nav>
     </div>
+    <?php if(App\Core\Security::isConnected()) { ?>
+    <div class="top-bar">
+        <a href="/admin/dashboard">Panel admin</a>
+    </div>
+    <?php } ?>
     <header>
         <div class="header-topElements">
 			<a class="titlePage" href="/"><img src=<?php App\Core\View::getAssets("logos/odyssey_logo_v2.svg")?> alt="Odyssey" class="back-mainPage-header-logo"></a>

@@ -59,7 +59,7 @@ class Security
         return false;
     }
 
-	public function isConnected(){
+	public static function isConnected(){
 		return isset($_SESSION["userId"]);
 	}
 
