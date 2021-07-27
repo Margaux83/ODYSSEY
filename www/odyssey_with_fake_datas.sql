@@ -161,7 +161,7 @@ CREATE TABLE `{DBPREFIX}User` (
 
 INSERT INTO `{DBPREFIX}User` (`id`, `firstname`, `lastname`, `email`, `password`, `role`, `phone`, `token`, `isVerified`, `lastConnexionDate`, `isDeleted`, `creationDate`, `updateDate`) VALUES
 (1, 'Admin', 'Louis', 'admin@gmail.com', '$2y$10$6xFy/sQZDlDdrH8upXyQRuj1tJSLCfgVAEzSVLQpIv34PBycjOEYe', 1, '0764859586', '', 1, '2021-07-24 08:44:45', 0, '2021-07-23 22:13:34', '2021-07-24 00:29:04'),
-(2, 'Margaux', 'HEBERT', 'margauxhebert83@gmail.com', '$2y$10$WG.3paYCoOlaeuK9fvU90eFxQTHrs0NJV0qycwo2pwTIp22pJ0aWm', 3, '0154785424', '', 1, '2021-07-25 10:59:05', 0, '2021-07-24 20:14:18', '2021-07-24 23:08:17');
+(2, 'Margaux', 'HEBERT', 'margauxhebert83@gmail.com', '$2y$10$WG.3paYCoOlaeuK9fvU90eFxQTHrs0NJV0qycwo2pwTIp22pJ0aWm', 2, '0154785424', '', 1, '2021-07-25 10:59:05', 0, '2021-07-24 20:14:18', '2021-07-24 23:08:17');
 
 ALTER TABLE `{DBPREFIX}Article`
   ADD PRIMARY KEY (`id`) USING BTREE,

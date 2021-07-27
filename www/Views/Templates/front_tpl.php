@@ -55,13 +55,7 @@
 	
 	<footer>
 		<div>
-			<h2>Odyssey</h2>
-			<div class="inputButton">
-				<input placeholder="Rechercher">
-				<button>
-					<i class="fa fa-search"></i>
-				</button>
-			</div>
+			<h2><?= SITENAME ?></h2>
 		</div>
 		<nav>
 			<p>Navigation</p>
