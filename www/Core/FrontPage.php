@@ -2,7 +2,9 @@
 
 
 namespace App\Core;
+
 use App\Models\Article;
+use App\Core\Security;
 use App\Models\User;
 use App\Models\Page;
 use App\Models\Menu;
@@ -32,10 +34,14 @@ class FrontPage extends Database
         $comment = new Comment();
         $resultComments = $comment->query(['id', 'content', 'id_User', 'id_Comment'], ['id_article' => $idArticle, 'isDeleted'=>0]);
 
+        $security = Security::getInstance();
+
         $html = '<section class="commentsSection"><h2>Commentaires ('
             . count($resultComments)
             . ')</h2>'
-            . Form::showForm($comment->buildFormPostFront($idArticle), false)
+            . (Security::getInstance()->isconnected()
+                ? Form::showForm($comment->buildFormPostFront($idArticle), false)
+                : '')
             . '<ul>';
 
         if (!empty($resultComments)) {
@@ -66,7 +72,6 @@ class FrontPage extends Database
         $article = new Article();
 
         $menuData = $menu->query(['contentMenu'], ['name' => $nameMenu])[0];
-
         //Adding the home page
         $html = '<ul>'
             . '<li class="'.(self::$_actualUri === '/' ? 'selected' : '').'"><a href="/">Accueil</a></li>';
@@ -104,6 +109,8 @@ class FrontPage extends Database
      * Return the content of the article or the page in order to display them on the front page
      */
     public static function findContentToShow($uri) {
+        $security = Security::getInstance();
+
         self::$_actualUri = $uri;
 
         if (Template::searchPageSelectedTheme($uri)) {
