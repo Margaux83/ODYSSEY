@@ -47,7 +47,7 @@ if( file_exists("./Controllers/".$c.".php")){
             if(!$security->isConnected() && MenuBuilder::needToBeConnected() && Installer::checkIfEnvExist() && $uri != "/sitemap.xml"){
                header('Location: /login');
             }else {
-                if(!count(Security::getPermsFromConnectedUser()) && $uri === '/admin/dashboard') {
+                if(!count(Security::getPermsFromConnectedUser($uri)) && $uri === '/admin/dashboard') {
                     return Error::errorPage(401, 'Vous n\'avez pas accès à cette page');
                 }else if(!Security::isAuthorized($uri)) {
                     $_SESSION['alert']['danger'][] = 'Vous n\'avez pas le rôle requis';
