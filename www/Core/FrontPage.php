@@ -5,6 +5,8 @@ namespace App\Core;
 
 use App\Models\Article;
 use App\Core\Security;
+use App\Models\Category_Article;
+use App\Models\Category;
 use App\Models\User;
 use App\Models\Page;
 use App\Models\Menu;
@@ -83,13 +85,13 @@ class FrontPage extends Database
                     case 'Page':
                         $pageData = $page->query(['uri', 'title'], ['id' => $value['id']]);
                         if (!empty($pageData)) {
-                            $html .= '<li class="'.($pageData[0]['uri'] === self::$_actualUri ? 'selected' : '').'"><a href="'. $pageData[0]['uri'].'">'. $pageData[0]['title'] .'</a></li>';
+                            $html .= '<li class="'.($pageData[0]['uri'] === self::$_actualUri ? 'selected' : '').'"><a href="'. $pageData[0]['uri'].'">'. htmlspecialchars($pageData[0]['title']) .'</a></li>';
                         }
                         break;
                     case 'Article':
                         $articleData = $article->query(['uri', 'title'], ['id' => $value['id']]);
                         if (!empty($articleData)) {
-                            $html .= '<li class="'.($articleData[0]['uri'] === self::$_actualUri ? 'selected' : '').'"><a href="'. $articleData[0]['uri'].'">'. $articleData[0]['title'] .'</a></li>';
+                            $html .= '<li class="'.($articleData[0]['uri'] === self::$_actualUri ? 'selected' : '').'"><a href="'. $articleData[0]['uri'].'">'. htmlspecialchars($articleData[0]['title']) .'</a></li>';
                         }
                         break;
                     default:
@@ -121,6 +123,9 @@ class FrontPage extends Database
                 $view->assign("title", 'Accueil');
             }elseif (strpos($uri, 'article')) {
                 $article = new Article();
+                $category_article = new Category_Article();
+                $category = new Category();
+
                 $resultArticle = $article->query(
                     ['id', 'title', 'content', 'description'],
                     [
@@ -128,12 +133,26 @@ class FrontPage extends Database
                         'isVisible' => 1
                     ]
                 );
+                // DOUBLE JOIN ON TABLE ody_Category_Article and ody_Category
+                foreach ($resultArticle as $key => $result) {
+                    $results_category = $category_article->query(
+                        ["id_Category"],
+                        ["id_Article" => $resultArticle[$key]['id']]
+                    );
+                    foreach($results_category as $result2) {
+                        if (!empty($result2["id_Category"])) {
+                            $categorySelected = $category->query(['label'], ['id' => $result2['id_Category']])[0];
+                            $resultArticle[$key]['label'] = $categorySelected['label'];
+                        }
+                    }
+                }
                 if ($resultArticle) {
                     $view = new View("front_page", "front");
                     $view->assign("idArticle", $resultArticle[0]['id']);
-                    $view->assign("title", $resultArticle[0]['title']);
-                    $view->assign("description", $resultArticle[0]['description']);
+                    $view->assign("title", htmlspecialchars($resultArticle[0]['title']));
+                    $view->assign("description", htmlspecialchars($resultArticle[0]['description']));
                     $view->assign("content", stripslashes($resultArticle[0]['content']));
+                    $view->assign("label", htmlspecialchars($resultArticle[0]['label']));
                 }else {
                     Error::errorPage(404, 'L\'article n\'existe pas');
                 }
@@ -150,8 +169,8 @@ class FrontPage extends Database
                 if ($resultPage) {
                     $view = new View("front_page", "front");
                     $view->assign("idArticle", false);
-                    $view->assign("title", $resultPage[0]['title']);
-                    $view->assign("description", $resultPage[0]['description']);
+                    $view->assign("title", htmlspecialchars($resultPage[0]['title']));
+                    $view->assign("description", htmlspecialchars($resultPage[0]['description']));
                     $view->assign("content", stripslashes($resultPage[0]['content']));
                 }else {
                     Error::errorPage(404, 'La page n\'existe pas');
