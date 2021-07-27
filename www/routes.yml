@@ -302,6 +302,11 @@
   action: postCommentFromFront
   label: Créer un commentaire
   freeAccess: true
+/actionfront/postcommentfrontnotconnected:
+  controller: Comment
+  action: postCommentFromFrontNotConnected
+  label: Créer un commentaire
+  freeAccess: true
 ### ### ###
 
 # INSTALLER #

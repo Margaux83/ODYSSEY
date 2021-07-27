@@ -31,6 +31,8 @@ class Security
     }
 
     static function getPermsFromConnectedUser() {
+        if (!self::isConnected()) return [];
+        
         $user = new User($_SESSION['userId']);
         $role = new Role();
 
