@@ -15,9 +15,7 @@ CREATE TABLE `{DBPREFIX}Article` (
   `title` varchar(255) COLLATE utf8_bin NOT NULL,
   `content` longtext COLLATE utf8_bin NOT NULL,
   `description` text COLLATE utf8_bin,
-  `status` tinyint(4) NOT NULL,
   `isVisible` tinyint(4) NOT NULL,
-  `isDraft` tinyint(4) NOT NULL,
   `isDeleted` tinyint(4) NOT NULL DEFAULT '0',
   `creationDate` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updateDate` datetime DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
@@ -32,6 +30,9 @@ CREATE TABLE `{DBPREFIX}Category` (
   `updateDate` datetime DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
   `isDeleted` tinyint(11) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+INSERT INTO `{DBPREFIX}Category` (`id`, `label`, `creationDate`, `updateDate`, `isDeleted`) VALUES
+(1, 'Pas de catÃ©gorie', '2021-07-24 19:55:02', NULL, 0);
 
 CREATE TABLE `{DBPREFIX}Category_Article` (
   `id` int(11) NOT NULL,
@@ -78,8 +79,8 @@ CREATE TABLE `{DBPREFIX}Menu` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 INSERT INTO `{DBPREFIX}Menu` (`id`, `name`, `contentMenu`, `isDeleted`, `creationDate`, `updateDate`) VALUES
-(1, 'Menu header', '[{\"object\":\"Article\",\"id\":\"55\",\"order\":0},{\"id\":\"7\",\"object\":\"Article\",\"order\":0},{\"object\":\"Page\",\"id\":\"1\",\"order\":1},{\"id\":\"3\",\"object\":\"Page\",\"order\":2},{\"id\":\"2\",\"object\":\"Article\",\"order\":3},{\"id\":\"7\",\"object\":\"Page\",\"order\":\"100\"}]', 0, '2021-06-23 16:11:10', '2021-07-13 17:22:10'),
-(2, 'Menu footer', '[{\"id\":\"1\",\"object\":\"Page\",\"order\":\"100\"}]', 0, '2021-06-23 22:21:36', '2021-07-24 08:30:03');
+(1, 'Menu header', '[]', 0, '2021-07-26 23:21:21', '2021-07-27 20:35:43'),
+(2, 'Menu footer', '[]', 0, '2021-07-26 23:25:31', '2021-07-27 20:35:48');
 
 CREATE TABLE `{DBPREFIX}Page` (
   `id` int(11) UNSIGNED NOT NULL,
@@ -87,7 +88,6 @@ CREATE TABLE `{DBPREFIX}Page` (
   `content` text COLLATE utf8_bin NOT NULL,
   `description` text COLLATE utf8_bin,
   `isVisible` tinyint(4) NOT NULL,
-  `status` tinyint(4) NOT NULL,
   `isDeleted` tinyint(4) NOT NULL DEFAULT '0',
   `creationDate` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updateDate` datetime DEFAULT NULL,
@@ -95,8 +95,9 @@ CREATE TABLE `{DBPREFIX}Page` (
   `uri` varchar(255) COLLATE utf8_bin NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
-INSERT INTO `{DBPREFIX}Page` (`id`, `title`, `content`, `description`, `isVisible`, `status`, `isDeleted`, `creationDate`, `updateDate`, `id_User`, `uri`) VALUES
-(6, 'Accueil', '  Bienvenue sur la page d\'accueil :)', 'accueil', 1, 4, 0, '2021-07-13 17:04:55', '2021-07-13 19:21:52', 1, '/accueil');
+INSERT INTO `{DBPREFIX}Page` (`id`, `title`, `content`, `description`, `isVisible`, `isDeleted`, `creationDate`, `updateDate`, `id_User`, `uri`) VALUES
+(1, 'Accueil', '<p>Page d\'accueil</p>', 'Accueil', 1, 0, '2021-07-13 17:04:55', '2021-07-27 22:33:27', 1, '/home'),
+(2, 'Contact', '<p>Page de contact</p>', 'Page de contact', 1, 0, '2021-07-27 19:47:41', '2021-07-27 22:33:47', 1, '/contact');
 
 CREATE TABLE `{DBPREFIX}Role` (
   `id` int(11) NOT NULL,
@@ -106,7 +107,10 @@ CREATE TABLE `{DBPREFIX}Role` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 INSERT INTO `{DBPREFIX}Role` (`id`, `name`, `value`, `isDeleted`) VALUES
-(1, 'Admin', '{\"all_perms\":\"1\"}', 0);
+(1, 'Administrateur', '{\"all_perms\":\"1\"}', 0),
+(2, 'Editeur', '{\"\\/admin\\/pages\":\"1\",\"\\/admin\\/add-page\":\"1\",\"\\/admin\\/edit-page\":\"1\",\"\\/admin\\/delete-page\":\"1\",\"\\/admin\\/articles\":\"1\",\"\\/admin\\/add-article\":\"1\",\"\\/admin\\/edit-article\":\"1\",\"\\/admin\\/delete-article\":\"1\",\"\\/admin\\/comments\":\"1\"}', 0),
+(3, 'Auteur', '{\"\\/admin\\/pages\":\"1\",\"\\/admin\\/add-page\":\"1\",\"\\/admin\\/articles\":\"1\",\"\\/admin\\/add-article\":\"1\"}', 0),
+(4, 'Visiteur', '', 0);
 
 CREATE TABLE `{DBPREFIX}User` (
   `id` int(11) UNSIGNED NOT NULL,
@@ -116,7 +120,6 @@ CREATE TABLE `{DBPREFIX}User` (
   `password` varchar(255) COLLATE utf8_bin DEFAULT NULL,
   `role` tinyint(4) NOT NULL DEFAULT '1',
   `phone` varchar(10) COLLATE utf8_bin NOT NULL,
-  `status` tinyint(4) DEFAULT NULL,
   `token` varchar(255) COLLATE utf8_bin DEFAULT NULL,
   `isVerified` tinyint(4) NOT NULL DEFAULT '0',
   `lastConnexionDate` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
@@ -125,8 +128,8 @@ CREATE TABLE `{DBPREFIX}User` (
   `updateDate` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
-INSERT INTO `{DBPREFIX}User` (`id`, `firstname`, `lastname`, `email`, `password`, `role`, `phone`, `status`, `token`, `isVerified`, `lastConnexionDate`, `isDeleted`, `creationDate`, `updateDate`) VALUES
-(1, 'Admin', 'Louis', 'admin@gmail.com', '$2y$10$WG.3paYCoOlaeuK9fvU90eFxQTHrs0NJV0qycwo2pwTIp22pJ0aWm', 1, '0764859586', NULL, '', 1, '2021-07-24 08:44:45', 0, '2021-07-23 22:13:34', '2021-07-24 00:29:04');
+INSERT INTO `{DBPREFIX}User` (`id`, `firstname`, `lastname`, `email`, `password`, `role`, `phone`, `token`, `isVerified`, `lastConnexionDate`, `isDeleted`, `creationDate`, `updateDate`) VALUES
+(1, 'Admin', 'Louis', 'admin@gmail.com', '$2y$10$6xFy/sQZDlDdrH8upXyQRuj1tJSLCfgVAEzSVLQpIv34PBycjOEYe', 1, '0764859586', '', 1, '2021-07-24 08:44:45', 0, '2021-07-23 22:13:34', '2021-07-24 00:29:04');
 
 ALTER TABLE `{DBPREFIX}Article`
   ADD PRIMARY KEY (`id`) USING BTREE,
