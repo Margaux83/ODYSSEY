@@ -1,19 +1,21 @@
-# 3IW3-2020 - Groupe 44
-Projet annuel de 3ème année de Bachelor Ingénierie du Web à l'ESGI.
-Conception d'un CMS from scratch.
+# Odyssey
+Annual project for the 3rd year of the Bachelor in Web Engineering at ESGI.
+
+Design of a CMS from scratch only written in php which allows any company to create their own website from our solution.
+
+[![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](https://github.com/Margaux83/ODYSSEY/blob/main/LICENSE)
 
 ## Requirements
-* [Install Docker](https://docs.docker.com/get-docker/)
+* [Install Docker](https://docs.docker.com/get-docker/) (with [docker-compose](https://docs.docker.com/compose/install/))
 
 ## Getting Started
+Make a git clone of this repository and in the created folder, run this command line :
 ```sh
-git clone https://github.com/Margaux83/ODYSSEY.git
-cd ODYSSEY
 docker-compose up -d
 ```
 
 ## Usage
-Open [http://localhost:8080](http://localhost:8080) for the first installation
+With the current docker-compose.yml, go to [http://localhost:8080](http://localhost:8080) for the web application and [http://localhost:8888](http://localhost:8888) to acces phpMyAdmin.
 
 ## Contributors
 * **Margaux Hebert** - *Travail Initial* - [Margaux83](https://github.com/Margaux83)

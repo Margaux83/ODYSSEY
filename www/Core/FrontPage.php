@@ -2,7 +2,11 @@
 
 
 namespace App\Core;
+
 use App\Models\Article;
+use App\Core\Security;
+use App\Models\Category_Article;
+use App\Models\Category;
 use App\Models\User;
 use App\Models\Page;
 use App\Models\Menu;
@@ -32,10 +36,14 @@ class FrontPage extends Database
         $comment = new Comment();
         $resultComments = $comment->query(['id', 'content', 'id_User', 'id_Comment'], ['id_article' => $idArticle, 'isDeleted'=>0]);
 
+        $security = Security::getInstance();
+
         $html = '<section class="commentsSection"><h2>Commentaires ('
             . count($resultComments)
             . ')</h2>'
-            . Form::showForm($comment->buildFormPostFront($idArticle), false)
+            . (Security::getInstance()->isconnected()
+                ? Form::showForm($comment->buildFormPostFront($idArticle), false)
+                : Form::showForm($comment->buildFormPostFrontNotConnected($idArticle), false))
             . '<ul>';
 
         if (!empty($resultComments)) {
@@ -43,8 +51,8 @@ class FrontPage extends Database
             foreach ($resultComments as $key => $resultComment) {
                 $userSelected = $user->query(['firstname', 'lastname'], ['id' => $resultComment['id_User']])[0];
                 $html .= '<li>'
-                    . '<p class="commentUser">' . $userSelected['firstname'] . ' ' . $userSelected['lastname'] . '</p>'
-                    . '<p class="commentContent">' . $resultComment['content'] . '</p>'
+                    . '<p class="commentUser">' . htmlspecialchars(addslashes($userSelected['firstname'])) . ' ' . htmlspecialchars($userSelected['lastname']) . '</p>'
+                    . '<p class="commentContent">' . htmlspecialchars($resultComment['content']) . '</p>'
                     . '</li>';
             }
         }else {
@@ -66,7 +74,6 @@ class FrontPage extends Database
         $article = new Article();
 
         $menuData = $menu->query(['contentMenu'], ['name' => $nameMenu])[0];
-
         //Adding the home page
         $html = '<ul>'
             . '<li class="'.(self::$_actualUri === '/' ? 'selected' : '').'"><a href="/">Accueil</a></li>';
@@ -78,13 +85,13 @@ class FrontPage extends Database
                     case 'Page':
                         $pageData = $page->query(['uri', 'title'], ['id' => $value['id']]);
                         if (!empty($pageData)) {
-                            $html .= '<li class="'.($pageData[0]['uri'] === self::$_actualUri ? 'selected' : '').'"><a href="'. $pageData[0]['uri'].'">'. $pageData[0]['title'] .'</a></li>';
+                            $html .= '<li class="'.($pageData[0]['uri'] === self::$_actualUri ? 'selected' : '').'"><a href="'. $pageData[0]['uri'].'">'. htmlspecialchars($pageData[0]['title']) .'</a></li>';
                         }
                         break;
                     case 'Article':
                         $articleData = $article->query(['uri', 'title'], ['id' => $value['id']]);
                         if (!empty($articleData)) {
-                            $html .= '<li class="'.($articleData[0]['uri'] === self::$_actualUri ? 'selected' : '').'"><a href="'. $articleData[0]['uri'].'">'. $articleData[0]['title'] .'</a></li>';
+                            $html .= '<li class="'.($articleData[0]['uri'] === self::$_actualUri ? 'selected' : '').'"><a href="'. $articleData[0]['uri'].'">'. htmlspecialchars($articleData[0]['title']) .'</a></li>';
                         }
                         break;
                     default:
@@ -104,49 +111,79 @@ class FrontPage extends Database
      * Return the content of the article or the page in order to display them on the front page
      */
     public static function findContentToShow($uri) {
+        $security = Security::getInstance();
+
         self::$_actualUri = $uri;
 
-        if (Template::searchPageSelectedTheme($uri)) {
-            $view = new View("front_home", "front", Template::searchPageSelectedTheme($uri));
+        if (strpos($uri, 'article')) {
+            $article = new Article();
+            $category_article = new Category_Article();
+            $category = new Category();
+
+            $resultArticle = $article->query(
+                ['id', 'title', 'content', 'description'],
+                [
+                    'uri' => $uri,
+                    'isVisible' => 1
+                ]
+            );
+            // DOUBLE JOIN ON TABLE ody_Category_Article and ody_Category
+            foreach ($resultArticle as $key => $result) {
+                $results_category = $category_article->query(
+                    ["id_Category"],
+                    ["id_Article" => $resultArticle[$key]['id']]
+                );
+                foreach($results_category as $result2) {
+                    if (!empty($result2["id_Category"])) {
+                        $categorySelected = $category->query(['label'], ['id' => $result2['id_Category']])[0];
+                        $resultArticle[$key]['label'] = $categorySelected['label'];
+                    }
+                }
+            }
+            if ($resultArticle) {
+                $view = new View("front_page", "front");
+                $view->assign("idArticle", $resultArticle[0]['id']);
+                $view->assign("title", htmlspecialchars($resultArticle[0]['title']));
+                $view->assign("description", htmlspecialchars($resultArticle[0]['description']));
+                $view->assign("content", stripslashes($resultArticle[0]['content']));
+                $view->assign("label", htmlspecialchars($resultArticle[0]['label']));
+            }else {
+                Error::errorPage(404, 'L\'article n\'existe pas');
+            }
         }else {
+            $page = new Page();
             if ($uri === '/'){
-                $view = new View("front_home", "front", Template::searchPageSelectedTheme('home'));
-                $view->assign("title", 'Accueil');
-            }elseif (strpos($uri, 'article')) {
-                $article = new Article();
-                $resultArticle = $article->query(
+                $resultPage = $page->query(
+                    ['id', 'title', 'content', 'description'],
+                    [
+                        'uri' => "/home",
+                        'isVisible' => 1
+                    ]
+                );
+                if(!count($resultPage)) {
+                    $view = new View("front_home", "front", Template::searchPageSelectedTheme('home'));
+                    $view->assign("title", 'Accueil');
+                    return;
+                }
+            }else {
+                $resultPage = $page->query(
                     ['id', 'title', 'content', 'description'],
                     [
                         'uri' => $uri,
                         'isVisible' => 1
                     ]
                 );
-                if ($resultArticle) {
-                    $view = new View("front_page", "front");
-                    $view->assign("idArticle", $resultArticle[0]['id']);
-                    $view->assign("title", $resultArticle[0]['title']);
-                    $view->assign("description", $resultArticle[0]['description']);
-                    $view->assign("content", stripslashes($resultArticle[0]['content']));
-                }else {
-                    Error::errorPage(404, 'L\'article n\'existe pas');
-                }
+            }
+            if ($resultPage) {
+                $view = new View("front_page", "front");
+                $view->assign("idArticle", false);
+                $view->assign("title", htmlspecialchars($resultPage[0]['title']));
+                $view->assign("description", htmlspecialchars($resultPage[0]['description']));
+                $view->assign("content", stripslashes($resultPage[0]['content']));
             }else {
-                $page = new Page();
-                $resultPage = $page->query(
-                    ['id', 'title', 'content', 'description'],
-                    [
-                        'uri' => $uri,
-                        'isVisible' => 1
-                        ]
-                );
-    
-                if ($resultPage) {
-                    $view = new View("front_page", "front");
-                    $view->assign("idArticle", false);
-                    $view->assign("title", $resultPage[0]['title']);
-                    $view->assign("description", $resultPage[0]['description']);
-                    $view->assign("content", stripslashes($resultPage[0]['content']));
-                }else {
+                if (Template::searchPageSelectedTheme($uri)) {
+                    $view = new View("front_home", "front", Template::searchPageSelectedTheme($uri));
+                } else {
                     Error::errorPage(404, 'La page n\'existe pas');
                 }
             }

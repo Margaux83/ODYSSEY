@@ -4,13 +4,14 @@ namespace App\Core;
 
 use App\Models\Role;
 use App\Models\User;
+use App\Core\Installer;
 
 class Security
 {
 	private static $_instance = null;
     private static $_userConnectedId = null;
     private static $_actualUri;
-    private static $_alwaysAuthorizedUri = ['/login', '/logout', '/register', '/admin/dashboard', '/forgotpassword', '/forgotpasswordconfirm', '/installer' ,'/make-install', '/temporary-install'];
+    private static $_alwaysAuthorizedUri = ['/login', '/logout', '/register', '/admin/dashboard', '/admin/profile', '/forgotpassword', '/forgotpasswordconfirm', '/actionfront/postcommentfront','/installer' ,'/make-install', '/temporary-install'];
 
 	private function __construct($_userConnectedId = null) {
         self::$_userConnectedId = $_userConnectedId;
@@ -31,6 +32,7 @@ class Security
     }
 
     static function getPermsFromConnectedUser() {
+        if (!self::isConnected() || !Installer::checkIfEnvExist()) return [];
         $user = new User($_SESSION['userId']);
         $role = new Role();
 
@@ -39,10 +41,11 @@ class Security
             ["id" => $user->getRole()]
         );
         if (count($result)) {
-            return json_decode($result[0]['value'], true);
-        }else {
-            return [];
+            if(!empty($result[0]['value'])) {
+                return json_decode($result[0]['value'], true);
+            }
         }
+        return [];
     }
 
     public static function isAuthorized($uri) {
@@ -59,7 +62,7 @@ class Security
         return false;
     }
 
-	public function isConnected(){
+	public static function isConnected(){
 		return isset($_SESSION["userId"]);
 	}
 
@@ -77,8 +80,8 @@ class Security
             return;
 		}
 
-		$emailUserLogin = htmlspecialchars(addslashes($_POST['login-email']));
-		$pwdUserLogin = htmlspecialchars(addslashes($_POST['login-pwd']));
+		$emailUserLogin = $_POST['login-email'];
+		$pwdUserLogin = $_POST['login-pwd'];
 
 		$user = new User();
 		$result = $user->query(

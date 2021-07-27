@@ -34,12 +34,14 @@
             </td>
             <td class="action-btn">
                 <div class="listItem-cpt listActions">
+                <?php if($category['id'] !== "1") { ?>
                     <a href="#" id="editCategory" onclick="editCategory(this)" data-id="<?= $category["id"] ?>">
                         <img src=<?php App\Core\View::getAssets("icons/pen-solid.svg")?> alt="" height="20" width="20">
                     </a>
                     <a href="#" id="deleteCategory" onclick="deleteCategory(this)" data-id="<?= $category["id"] ?>">
                         <img src=<?php App\Core\View::getAssets("icons/trash-solid.svg")?> alt="" height="20" width="20">
                     </a>
+                <?php } ?>
                 </div>
             </td>
 

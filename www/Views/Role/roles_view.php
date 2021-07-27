@@ -21,7 +21,7 @@
                 <td><?= $role['name'] ?></td>
                 <td class="action-btn">
                     <div class="listItem-cpt listActions">
-                        <?php if($role['id'] !== "1") { ?>
+                        <?php if($role['id'] !== "1" && $role['id'] !== "4") { ?>
                         <a href="edit-role?role=<?= $role['id'] ?>" id="editPage" onclick="editPage(this)" data-id="">
                             <img src=<?php App\Core\View::getAssets("icons/pen-solid.svg")?> alt="" height="20" width="20">
                         </a>

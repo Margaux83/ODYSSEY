@@ -3,12 +3,14 @@
 
 namespace App;
 
+use App\Core\Database;
 use App\Core\Form;
 use App\Core\Helpers;
 use App\Core\Security;
 use App\Core\View;
 use App\Models\Article as Article_Model;
 use App\Models\Category;
+use App\Models\Category_Article;
 
 class Article
 {
@@ -290,10 +292,19 @@ class Article
      * Deleting a category using its Id
      */
     public function deleteCategoryAction() {
-        $category = new Category();
-
         if (!empty($_POST)) {
             if (!empty($_POST['deleteCategory'])) {
+                $category = new Category();
+                $category_article = new Category_Article();
+                $result = $category_article->query(
+                    ['id'],
+                    ['id_Category' => $_POST['id_category']]
+                );
+                foreach($result as $item) {
+                    $category_article->setId($item['id']);
+                    $category_article->setIdCategory("1");
+                    $category_article->save();
+                }
                 $category->delete($_POST['id_category']);
             }
         }

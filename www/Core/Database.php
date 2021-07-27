@@ -121,7 +121,6 @@ class Database
 
             $sql = "UPDATE " . $this->table . " SET " . implode(",", $columnForUpdate) . " WHERE id=" . $this->getId();
             $query = $this->pdo->prepare($sql);
-
             foreach ($data as $key => $value) {
                 if (!is_null($value)) {
                     $query->bindValue(":$key", $value);

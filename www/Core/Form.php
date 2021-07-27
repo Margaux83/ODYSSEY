@@ -30,6 +30,7 @@ class Form
         if(empty($_POST['csrf']) || !hash_equals($_SESSION['csrf'], $_POST['csrf'])) {
             $errors[] = "Formulaire non valide !";
         }
+        unset($_SESSION['csrf']);
         return $errors;
     }
 
@@ -61,7 +62,7 @@ class Form
 
             if ($dataInput["type"] === "textarea"){
                 $html .= "<textarea 
-                             id='".$dataInput["id"]."'
+                             id='".($dataInput["id"]??"")."'
                              class='".($dataInput["class"]??"")."' 
                             name='".$name."'
                             ".((!empty($dataInput["required"]))?"required='required'":"")."

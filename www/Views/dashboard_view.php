@@ -96,6 +96,22 @@
             <p class="quickAccessTitle">Commentaires</p>
             <img src=<?php App\Core\View::getAssets("icons/icon_comment.png")?> alt="">
         </li>
+        <li onclick="window.location.assign('/admin/medias')">
+            <p class="quickAccessTitle">Média</p>
+            <img src=<?php App\Core\View::getAssets("icons/icon_media.png")?> alt="">
+        </li>
+        <li onclick="window.location.assign('/admin/roles')">
+            <p class="quickAccessTitle">Rôles</p>
+            <img src=<?php App\Core\View::getAssets("icons/icon_menu.png")?> alt="">
+        </li>
+        <li onclick="window.location.assign('/admin/template')">
+            <p class="quickAccessTitle">Templates</p>
+            <img src=<?php App\Core\View::getAssets("icons/icon_page.png")?> alt="">
+        </li>
+        <li onclick="window.location.assign('/admin/menu-management')">
+            <p class="quickAccessTitle">Menu</p>
+            <img src=<?php App\Core\View::getAssets("icons/icon_menu.png")?> alt="">
+        </li>
         <li onclick="window.location.assign('/admin/users')">
             <p class="quickAccessTitle">Utilisateurs</p>
             <img src=<?php App\Core\View::getAssets("icons/icon_user.png")?> alt="">

@@ -31,25 +31,17 @@
             </ul>
         </nav>
     </div>
+    <?php if(count(App\Core\Security::getPermsFromConnectedUser())) { ?>
+    <div class="top-bar">
+        <a href="/admin/dashboard">Panel admin</a>
+    </div>
+    <?php } ?>
     <header>
         <div class="header-topElements">
-			<a class="titlePage" href="/"><img src=<?php App\Core\View::getAssets("logos/odyssey_logo_v2.svg")?> alt="Odyssey" class="back-mainPage-header-logo"></a>
+			<a class="titlePage" href="/"><?= SITENAME ?></a>
             <nav>
 				<?php echo App\Core\FrontPage::getFrontMenu('Menu header');?>
             </nav>
-        </div>
-        <div class="header-content">
-            <h1>Un nouveau moyen de créer du contenu</h1>
-            <p>
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Impedit rem laudantium eveniet nostrum itaque cumque harum. Numquam assumenda, cumque, sed illum fuga incidunt quidem fugiat magnam exercitationem modi dolor ex.
-            </p>
-            
-            <div class="inputButton">
-                <input placeholder="Rechercher">
-                <button>
-                    <i class="fa fa-search"></i>
-                </button>
-            </div>
         </div>
     </header>
 
@@ -63,26 +55,11 @@
 	
 	<footer>
 		<div>
-			<h2>Odyssey</h2>
-			<div class="inputButton">
-				<input placeholder="Rechercher">
-				<button>
-					<i class="fa fa-search"></i>
-				</button>
-			</div>
+			<h2><?= SITENAME ?></h2>
 		</div>
 		<nav>
 			<p>Navigation</p>
 			<?php echo App\Core\FrontPage::getFrontMenu('Menu footer');?>
-		</nav>
-		<nav>
-			<p>Assistance</p>
-			<ul>
-                <li><a href="/politique-de-confidentialite">Politique de confidentialité</a></li>
-				<li>Mesures Covid</li>
-				<li>Centre d'aide</li>
-				<li>Confiance et sécurité</li>
-			</ul>
 		</nav>
 	</footer>
 

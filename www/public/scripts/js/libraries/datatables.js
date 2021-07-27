@@ -21882,7 +21882,7 @@ return jQuery;
 			 *      } );
 			 *    } );
 			 */
-			"sEmptyTable": "No data available in table",
+			"sEmptyTable": "Aucune donnée disponible",
 	
 	
 			/**
@@ -21935,7 +21935,7 @@ return jQuery;
 			 *      } );
 			 *    } );
 			 */
-			"sInfoEmpty": "Showing 0 to 0 of 0 entries",
+			"sInfoEmpty": "Affichage des éléments 0 à 0 sur 0 entrées",
 	
 	
 			/**
