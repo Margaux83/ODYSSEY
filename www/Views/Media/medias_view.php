@@ -41,7 +41,7 @@ App\Core\View::getAssets("datatables.css")?>>
                     </td>
                     <td class="action-btn">
                         <div class="listItem-cpt listActions">
-                            <a href="javascript: navigator.clipboard.writeText('<?php echo Routing::getBaseUrl() . '/public/images/uploads/' . $media['media']; ?>').then(function() { copyboard() }, function() { alert('Failed'); });">
+                            <a class="clipboard" href="<?php echo Routing::getBaseUrl() . '/public/images/uploads/' . $media['media']; ?>">
                                 <img src=<?php App\Core\View::getAssets("icons/icon-clipboard.png")?> alt="" height="20" width="20">
                             </a>
                             <a href="#" id="editMedia" onclick="editMedia(this)" data-id="<?= $media["id"] ?>">
@@ -64,6 +64,23 @@ App\Core\View::getAssets("datatables.css")?>>
 <script src=<?php App\Core\View::getAssets("libraries/jquery.redirect.js")?>></script>
 
 <script>
+
+    /**
+     * Clipboard
+     */
+    $('.clipboard').click(function (e) {
+        e.preventDefault();
+        var copyText = $(this).attr('href');
+
+        document.addEventListener('copy', function(e) {
+            e.clipboardData.setData('text/plain', copyText);
+            e.preventDefault();
+        }, true);
+
+        document.execCommand('copy');
+        copyboard();
+    });
+
     /**
      * Affiche le datatable pour la liste de tous les médias
      */
