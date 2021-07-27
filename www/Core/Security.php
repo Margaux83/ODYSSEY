@@ -30,8 +30,7 @@ class Security
         return self::$_instance;
     }
 
-    static function getPermsFromConnectedUser($uri) {
-        if (in_array($uri, self::$_alwaysAuthorizedUri)) return [];
+    static function getPermsFromConnectedUser() {
         if (!self::isConnected()) return [];
         
         $user = new User($_SESSION['userId']);
