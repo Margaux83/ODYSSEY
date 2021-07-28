@@ -127,7 +127,7 @@
 
             <div class="formElement">
                 <label for="config-bddPwd" class="requiredLabel">Mot de passe</label>
-                <input name="database[dbpwd]" id="config-bddPwd" type="text" required>
+                <input name="database[dbpwd]" id="config-bddPwd" type="password" required>
             </div>
             <div class="formElement">
                 <label for="config-bddPrefix">Préfixe</label>
