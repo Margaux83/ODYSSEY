@@ -1,6 +1,7 @@
 <?php
-namespace App;
 
+namespace App;
+error_reporting(0);
 
 use App\Core\Routing;
 use App\Core\ConstantManager;
